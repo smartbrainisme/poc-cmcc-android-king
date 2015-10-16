@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@id/talk_layout_content" 	android:layout_width="fill_parent"  android:layout_height="fill_parent" android:orientation="vertical" xmlns:android="http://schemas.android.com/apk/res/android" android:background="?theme_main_bg">
+	<RelativeLayout android:layout_width="fill_parent"  android:layout_height="fill_parent" >
+	  
+		<LinearLayout android:orientation="vertical" android:id="@id/talk_layout_session_content" android:layout_height="fill_parent" android:layout_width="fill_parent" >
+			<RelativeLayout android:layout_width="fill_parent"  android:layout_height="fill_parent" android:layout_weight="1">
+				<com.airtalkee.widget.MListView android:id="@id/talk_lv_session_member"  android:layout_width="fill_parent"  android:layout_height="fill_parent"  android:cacheColorHint="#00000000"  android:dividerHeight="1dip"  android:divider="?theme_divider_h"    android:descendantFocusability="blocksDescendants" />
+			</RelativeLayout>
+			<LinearLayout android:id="@id/talk_btn_layout" android:layout_width="fill_parent"  android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:background="@drawable/selector_group_item_dark" >
+			    <View android:layout_width="fill_parent" android:layout_height="1dip" android:background="?theme_divider_h"   />
+				<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"  android:gravity="center" android:layout_marginRight="10dp" android:layout_marginLeft="10dp" >
+					<LinearLayout android:id="@id/talk_btn_layout_call_center" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" >
+						<TextView android:id="@id/talk_btn_call_center" android:layout_width="fill_parent" android:layout_height="50dip" android:text="@string/talk_tools_call_center" android:textColor="?theme_button_text_color" android:textSize="14dip" android:gravity="center"
+						 android:paddingLeft="15dip"	android:layout_marginRight="5dip" android:layout_marginBottom="5dip" android:layout_marginTop="4dip" android:background="?theme_button_1" android:drawableLeft="?theme_call_center"/>
+					</LinearLayout>
+					<LinearLayout android:id="@id/talk_btn_layout_alert_channel" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" >
+						<TextView android:id="@id/talk_lv_session_call" android:layout_width="fill_parent" android:layout_height="50dip" android:text="@string/talk_session_alert_channel" android:textColor="?theme_button_text_color" android:textSize="14dip" android:gravity="center"
+							 android:paddingLeft="15dip" android:layout_marginLeft="5dip" android:layout_marginBottom="5dip" android:layout_marginTop="4dip" android:background="?theme_button_1" android:drawableLeft="?theme_call_in_member"/>
+					</LinearLayout>
+				 </LinearLayout>
+			</LinearLayout>
+			<View android:layout_width="fill_parent" android:layout_height="1dip" android:background="?theme_divider_h"/>
+			<LinearLayout android:layout_width="fill_parent"  android:layout_height="wrap_content" android:gravity="center" >
+					<LinearLayout  android:visibility="gone" android:id="@id/talk_layout_session_m_bottom" android:layout_width="fill_parent" android:layout_height="85dip" android:layout_alignParentBottom="true" android:orientation="horizontal" >
+						<Button android:id="@id/talk_btn_session_call" android:layout_width="fill_parent"  android:layout_height="fill_parent" android:text="@string/talk_session_call" android:drawableTop="?theme_call_center" android:padding="8dip" android:background="@drawable/selector_btn" android:layout_weight="1"  android:textColor="?theme_button_text_color" android:textSize="18.0sp" android:shadowDx="0"  android:shadowDy="0.0"  android:shadowRadius="0.0"/>
+						<View  android:layout_width="1dip"  android:layout_height="fill_parent"    android:background="?theme_divider_v"/>
+						<Button android:id="@id/talk_btn_session_msg" android:layout_width="fill_parent"  android:layout_height="fill_parent" android:text="@string/talk_session_msg" android:drawableTop="?theme_menu_msg1" android:padding="8dip" android:background="@drawable/selector_btn" android:layout_weight="1"  android:textColor="?theme_button_text_color" android:textSize="18.0sp" android:shadowDx="0"  android:shadowDy="0.0"  android:shadowRadius="0.0"/>
+						<View  android:layout_width="1dip"  android:layout_height="fill_parent"    android:background="?theme_divider_v"/>
+						<LinearLayout android:id="@id/talk_layout_session_delete" android:layout_width="fill_parent"   android:layout_height="fill_parent" android:layout_weight="1">
+							<Button android:id="@id/talk_btn_session_delete" android:layout_width="fill_parent"  android:layout_height="fill_parent" android:text="@string/talk_channel_create_member_del" android:drawableTop="?theme_menu_del" android:padding="8dip" android:background="@drawable/selector_btn" android:layout_weight="1"  android:textColor="?theme_button_text_color" android:textSize="18.0sp" android:shadowDx="0"  android:shadowDy="0.0"  android:shadowRadius="0.0"/>
+							<View  android:layout_width="1dip"  android:layout_height="fill_parent"    android:background="?theme_divider_v"/>
+						</LinearLayout>
+						<Button android:id="@id/talk_btn_session_cancel" android:layout_width="fill_parent"   android:layout_height="fill_parent" android:text="@string/talk_session_call_cancel" android:drawableTop="?theme_menu_cancel" android:padding="8dip" android:background="@drawable/selector_btn" android:layout_weight="1" android:textColor="?theme_button_text_color" android:textSize="18.0sp" android:shadowDx="0"  android:shadowDy="0.0"  android:shadowRadius="0.0"/>
+					</LinearLayout>
+			</LinearLayout>
+		</LinearLayout>
+		<LinearLayout android:layout_height="wrap_content" android:layout_width="fill_parent"  android:gravity="right" >
+			<ImageView android:id="@+id/talk_label_ptt_right" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="?theme_label_right" android:clickable="true" android:gravity="center" />
+		</LinearLayout>
+	</RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.airtalkee.widget.MacRecordingView xmlns:android="http://schemas.android.com/apk/res/android"  android:visibility="invisible"  android:id="@+id/mac_talking" android:gravity="center" android:layout_width="fill_parent" android:layout_height="fill_parent" >
+	<LinearLayout android:id="@+id/mac_recording" android:orientation="vertical" android:gravity="center" android:layout_width="@dimen/mac_width" android:layout_height="wrap_content" android:background="@drawable/chat_recoder_bg">
+			<LinearLayout android:orientation="horizontal"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:gravity="center_vertical" android:visibility="gone">
+				<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/recording_led" android:layout_marginRight="5dip"/>
+				<Chronometer android:textSize="18dp" android:textStyle="bold" android:id="@+id/chronometer"  android:layout_width="fill_parent"   android:layout_height="wrap_content"  android:text="" android:gravity="center" />	
+			</LinearLayout>
+			<RelativeLayout  android:layout_width="fill_parent" android:layout_height="wrap_content"  android:padding="10dp">
+				<RelativeLayout android:id="@+id/pro_lay"  android:layout_width="114dip"  android:layout_height="wrap_content" android:layout_centerInParent="true" android:layout_marginTop="5dip" >
+					<ProgressBar   android:layout_width="40dp" android:layout_height="30dp" style="@style/talkstyle1"  android:id="@+id/progress_small" android:layout_centerHorizontal="true" />
+					<ImageView android:id="@+id/mac" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/voice_0" android:layout_centerInParent="true" android:layout_below="@+id/progress_small"/>
+				</RelativeLayout>
+			    <ImageView android:id="@+id/image" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerHorizontal="true"/>
+			    <ImageView android:id="@+id/cancel" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_voice_del"  android:layout_centerInParent="true" />
+			</RelativeLayout> 	   
+			<TextView android:textSize="18dp" android:textColor="#ffffff"  android:id="@+id/text" android:text="@string/talk_rec_cancel" android:layout_width="wrap_content" android:padding="10dip" android:layout_height="wrap_content"/>
+	</LinearLayout>
+</com.airtalkee.widget.MacRecordingView>

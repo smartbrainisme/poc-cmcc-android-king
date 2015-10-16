@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="fill_parent"  android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical">
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="40dp" android:id="@+id/tab_contaner" android:orientation="horizontal" android:layout_marginLeft="50dp" android:layout_marginRight="50dp" android:layout_marginTop="10dp">  
+    	<TextView android:id="@+id/tab_member_session" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1"  android:background="@drawable/selector_tab_member_session" android:text="频道成员" android:gravity="center" />    
+    	<TextView android:id="@+id/tab_member_all" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" android:background="@drawable/selector_tab_member_all" android:text="全部成员" android:gravity="center" />    
+    </LinearLayout>
+    <com.airtalkee.widget.MListView android:id="@+id/talk_lv_member"  android:layout_width="fill_parent"  android:layout_height="fill_parent"  android:cacheColorHint="#00000000"  android:dividerHeight="0.5dp"  android:divider="@drawable/divider_line"    android:descendantFocusability="afterDescendants" android:layout_marginTop="10dp" android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>    
+</LinearLayout>

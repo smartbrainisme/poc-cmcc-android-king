@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="white">#ffffffff</color>
+    <color name="white_1">#5fffffff</color>
+    <color name="button_text_color">#ff9a00</color>
+    <color name="transparent">#00000000</color>
+    <color name="yellow">#e2992a</color>
+    <color name="color_tv1">#fffdbf01</color>
+    <color name="color_tv1_pressed">#affdbf01</color>
+    
+</resources>

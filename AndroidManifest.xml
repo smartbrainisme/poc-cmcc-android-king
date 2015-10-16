@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.airtalkee" android:versionCode="46" android:versionName="V2.3.5 R20150731" >
+	<uses-sdk android:minSdkVersion="9" />
+	<application android:persistent="true" android:icon="@drawable/icon_cmcc" android:label="@string/app_name_cmcc" android:theme="@style/AppTheme_Dark"
+		android:debuggable="true" android:name=".application.MainApplication">
+		<activity android:name=".activity.AccountActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter> 
+		</activity>
+		<activity android:name=".activity.home.HomeActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MainActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.UserAllActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MoreActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.UserRegisterPrepareActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.UserRegisterCompleteActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.ChannelActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.ChannelManageActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuDefectReportActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuGpsActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuReportActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuReportViewActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuReportAsPicActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuReportAsVidActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuTaskDetailsActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuTaskActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuAttendanceActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuNoticeActivity" android:configChanges="orientation|keyboardHidden" />
+		<activity android:name=".activity.MenuManualActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuSettingActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuSettingPttActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.TempSessionActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.TempSessionSelectedActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.TempSessionManageActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.UserChangePasswordActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.ActivityImagePager"   android:configChanges="orientation|keyboardHidden" />
+		<activity android:name=".activity.VideoRecordActivity"   android:configChanges="orientation|keyboardHidden"     android:theme="@style/talk_theme"   android:screenOrientation="portrait"/>
+		<activity android:name=".bluetooth.BluetoothDeviceListActivity"  android:label="@string/bluetooth_select_device"   android:theme="@style/MyDialog"   android:configChanges="orientation|keyboardHidden" android:launchMode="singleTop" />
+		<activity android:name=".widget.VideoCamera" android:windowSoftInputMode="stateHidden"   android:label="@string/app_name"     android:screenOrientation="portrait" />
+		<service android:exported="false" android:enabled="true" android:name=".services.AirServices" android:targetPackage="com.airtalkee">
+			<intent-filter android:priority="1000">
+				<action android:name="com.airtalkee.services.AirServices" />
+			</intent-filter>
+		</service>
+		<service android:exported="false" android:enabled="true" android:name=".services.PttKeyServices" android:targetPackage="com.airtalkee">
+			<intent-filter android:priority="1000">
+				<action android:name="com.airtalkee.services.PttKeyServices" />
+			</intent-filter>
+		</service>
+		<service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"></service>
+		<receiver android:name="com.airtalkee.sdk.engine.AirTimer" />
+		<receiver android:name="com.airtalkee.Util.AirMmiTimer" />
+		<!-- 创建Receive监控打电话和接电话 -->
+		<receiver android:name=".receiver.ReceiverPhoneState">
+			<intent-filter>
+				<action android:name="android.intent.action.PHONE_STATE" />
+				<action android:name="android.intent.action.NEW_OUTGOING_CALL" />
+			</intent-filter>
+		</receiver>
+		<!-- 创建 Receive监控耳机按键 -->
+		<receiver android:name=".receiver.ReceiverMediaButton">
+		 
+		</receiver>
+		
+		<!-- 创建 Receive监控开机启动 -->
+		<receiver android:name=".receiver.ReceiverBoot">
+			<intent-filter>
+				<action android:name="android.intent.action.BOOT_COMPLETED" />
+			</intent-filter>
+		</receiver>
+
+		<!-- 监听屏幕 SCREEN ON OR OFF -->
+		<receiver android:name=".receiver.ReceiverScreenOff">
+			<intent-filter android:priority="10000">
+				<action android:name="android.intent.action.SCREEN_OFF" />
+			</intent-filter>
+		</receiver>
+		
+		<meta-data android:value="5332a62856240b280a022cdc" android:name="UMENG_APPKEY" />
+		<meta-data android:value="Umeng" android:name="UMENG_CHANNEL"/>
+	</application>
+	
+	<uses-permission android:name="android.permission.RECORD_VIDEO"/> 
+	<uses-permission android:name="android.permission.CAMERA" /> 
+	<uses-feature android:name="android.hardware.camera" /> 
+	<uses-feature android:name="android.hardware.camera.autofocus" />  
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.RECORD_AUDIO" />
+	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" /> 
+	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+	<uses-permission android:name="android.permission.WAKE_LOCK" />
+	<uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+	<uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+	<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+	<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+	<uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
+	<uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.SEND_SMS" />
+	<uses-permission android:name="android.permission.READ_CONTACTS" />
+	<uses-permission android:name="android.permission.CALL_PHONE" />
+	<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+	<uses-permission android:name="android.permission.READ_LOGS" />
+	<uses-permission android:name="android.permission.WRITE_SETTINGS" />
+	<uses-permission android:name="android.permission.BLUETOOTH" />
+	<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+	<uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+	<uses-permission android:name="android.permission.BROADCAST_STICKY" />
+	<uses-permission android:name="com.sonim.permission.USE_PTT_KEY" />
+
+</manifest>

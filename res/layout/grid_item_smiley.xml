@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--表情列表页面 列表项-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_gravity="center"
+	android:layout_width="34dip" 
+	android:layout_height="31dip"
+	android:gravity="center">
+	
+		<ImageView android:id="@+id/icon"
+			android:layout_width="21dip"
+			android:layout_height="21dip"
+			android:layout_margin="5dip"
+			/>
+
+</LinearLayout>

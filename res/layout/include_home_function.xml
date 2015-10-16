@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+ <FrameLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical"  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" >
+	  <FrameLayout android:id="@+id/media_ptt_content"  android:orientation="horizontal" android:layout_width="fill_parent"  android:layout_height="wrap_content"   >
+	 		<com.airtalkee.activity.home.widget.StatusTalkBtn android:id="@+id/status_talk_btn" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center" />
+	 		 
+	 		 <LinearLayout android:id="@+id/media_ptt_left" android:layout_gravity="center" android:layout_width="50dp"  android:layout_height="50dp"  android:layout_marginRight="95dp"   android:orientation="vertical" />
+	 		
+			 <LinearLayout android:id="@+id/media_ptt_right"  android:layout_gravity="center"  android:layout_width="50dp"  android:layout_height="50dp"  android:layout_marginLeft="95dp"  android:orientation="vertical" />
+	  </FrameLayout>
+	  <LinearLayout android:id="@+id/tools_bar" android:layout_width="match_parent" android:layout_height="60dp" android:orientation="vertical" android:layout_gravity="bottom"  android:layout_marginTop="180dp"/>
+	  <com.airtalkee.widget.PageIndicator android:id="@+id/indicator"  android:layout_width="match_parent" android:layout_height="20dp"    android:gravity="bottom|center_horizontal"  app:indicator_spacing="5dp"  app:indicator_type="circle" />
+ </FrameLayout>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content" >
+	  <TextView android:id="@+id/sessionDate" android:layout_width="fill_parent" android:layout_height="wrap_content" android:singleLine="true" android:textSize="13dip" android:gravity="center" android:textColor="#848484" android:text="" android:layout_marginRight="10dip" android:layout_marginLeft="10dip" android:layout_marginTop="7dip" android:layout_marginBottom="7dip" />
+	  <TextView android:visibility="visible" android:id="@+id/tv_system"   android:layout_width="fill_parent" android:layout_height="wrap_content"  android:textSize="13dip" android:gravity="center_vertical" android:textColor="@color/selector_color_tv1" android:text=""   android:background="?theme_system_msg_bg"  android:layout_margin="20dip"  android:padding="10dip" />
+</LinearLayout>

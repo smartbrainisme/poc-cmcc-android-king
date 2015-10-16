@@ -1,0 +1,49 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"  android:layout_width="fill_parent" android:layout_height="fill_parent"  >
+    <LinearLayout android:id="@+id/bottom" android:layout_width="fill_parent" android:layout_height="60dip" android:orientation="vertical" android:layout_alignParentBottom="true"/>
+    <com.airtalkee.sdk.video.gl.SurfaceView android:id="@+id/surface" android:layout_width="fill_parent"  android:layout_height="fill_parent" android:layout_gravity="center" android:layout_centerHorizontal="true" android:layout_alignParentTop="true" />
+ 
+    <TextView  android:id="@+id/bitrate" android:layout_above="@id/bottom" android:layout_width="wrap_content"  android:layout_height="wrap_content" android:layout_alignParentLeft="true" android:layout_margin="10dip" android:padding="3dip" android:text="0 kbps"  android:textColor="@android:color/white" android:background="#5f000000" />
+    <ImageButton android:id="@+id/start" android:layout_above="@id/bottom" android:layout_width="wrap_content" android:layout_height="wrap_content" android:contentDescription="Start/Stop Streaming" android:src="@drawable/ic_switch_video" android:background="#00000000" android:layout_marginRight="5dp" android:text="Start/Stop Streaming" android:layout_alignParentRight="true" />
+    <FrameLayout  android:layout_width="wrap_content" android:layout_height="wrap_content"  android:layout_alignParentBottom="true"  android:layout_alignParentRight="true" >
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal" >
+            <ImageButton
+                android:id="@+id/flash"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="Flash"
+                android:visibility="gone"
+                android:src="@drawable/ic_flash_on_holo_light" />
+            <ImageButton
+                android:id="@+id/camera"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="Camera"
+                android:visibility="gone"
+                android:src="@drawable/ic_switch_photo_facing_holo_light" />
+            <ImageButton
+                android:id="@+id/settings"
+                android:layout_width="50dip"
+                android:layout_height="match_parent"
+                android:background="#0fffffff"
+                android:contentDescription="Video Settings"
+                android:visibility="gone"
+                android:src="@drawable/ic_settings_holo_light"  />
+            <ImageButton
+                android:id="@+id/mic"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:contentDescription="mic"
+                android:visibility="gone"
+                android:src="@drawable/ic_microphone_off" />
+        </LinearLayout>
+    </FrameLayout>
+    
+	<ProgressBar android:visibility="gone" android:layout_gravity="center" android:id="@+id/progress_bar"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:progressDrawable="@drawable/progress_large_white" android:layout_centerInParent="true" />
+
+</RelativeLayout>

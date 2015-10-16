@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout android:orientation="vertical" android:id="@+id/main_report"
+	android:layout_width="fill_parent" android:layout_height="fill_parent"
+	xmlns:android="http://schemas.android.com/apk/res/android" >
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="vertical">
+		<include layout="@layout/include_main_header" />
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+		android:orientation="vertical">
+		<ScrollView android:scrollbars="none" android:layout_width="fill_parent" android:layout_height="fill_parent">
+			<LinearLayout android:gravity="center" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+				<ImageView android:id="@+id/report_image" android:src="@drawable/report_default_pic"
+						android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10dip"/>
+				<VideoView android:id="@+id/report_video" android:layout_width="240dip" android:layout_height="240dip" android:clickable="true" android:layout_margin="10dip" />
+				<TextView android:id="@+id/report_content" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="content" android:textSize="14dip" android:textColor="#ffffff" android:layout_margin="10dip"/>
+				<TextView android:id="@+id/report_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="time" android:textSize="10dip" android:textColor="#888888" android:layout_margin="10dip"/>
+				<Button android:id="@+id/report_resend" android:layout_width="fill_parent" android:layout_height="40dip" android:background="?theme_button" 
+					android:layout_marginTop="5dip" android:layout_marginBottom="10dip" android:layout_marginLeft="30dip" android:layout_marginRight="30dip"
+					android:text="@string/talk_report_upload_resend" android:textColor="?theme_button_text_color" android:textSize="14dip"/>
+			</LinearLayout>
+		</ScrollView>
+	</LinearLayout>
+</LinearLayout>

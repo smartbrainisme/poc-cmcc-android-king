@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" >
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="wrap_content" android:orientation="vertical"
+		android:layout_marginBottom="-1dip">
+		<include layout="@layout/include_main_header" />
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent" android:layout_height="140dip" android:orientation="vertical"  android:background="#444444" >
+	    <ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content">
+			<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="10dip" >
+				<TextView android:id="@+id/talk_title"
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content" android:textSize="16dip" android:textColor="#ffffff" 
+						android:text="@string/talk_task_details_name" android:gravity="center" />
+				<TextView android:id="@+id/talk_leader_name"
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content" android:textSize="16dip" android:textColor="#ffffff" 
+						android:text="@string/talk_task_details_leader" android:gravity="center" />
+				<TextView android:id="@+id/talk_creater_name"
+						android:layout_height="wrap_content"
+						android:layout_width="wrap_content" android:textSize="16dip" android:textColor="#ffffff" 
+						android:text="@string/talk_task_details_creater" android:gravity="center" />
+				<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">
+					<TextView 
+							android:layout_height="wrap_content"
+							android:layout_width="wrap_content" android:textSize="16dip" android:textColor="#ffffff" android:layout_marginTop="10dip"
+							android:text="@string/talk_task_details_desc" />
+					<TextView android:id="@+id/talk_desc"
+							android:layout_height="wrap_content"
+							android:layout_width="fill_parent" android:textSize="16dip" android:textColor="#bbbbbb" android:layout_marginLeft="10dip" android:layout_marginRight="10dip"
+							android:text="@string/talk_task_details_desc" />
+				</LinearLayout>
+			</LinearLayout>
+		</ScrollView>
+	</LinearLayout>
+			
+	<View android:id="@+id/line_divider" android:layout_width="fill_parent"
+		android:layout_height="1dip" android:background="?theme_divider_h"
+		android:layout_alignParentBottom="true" />
+	<LinearLayout android:layout_width="fill_parent"
+		android:layout_height="fill_parent" android:orientation="vertical">
+			<com.airtalkee.widget.MListView
+				android:id="@+id/talk_report_list" android:layout_height="fill_parent"
+				android:layout_weight="1"
+				android:layout_width="fill_parent"
+				android:cacheColorHint="#00000000" android:groupIndicator="@null" />
+			<LinearLayout  android:id="@+id/layout_task" android:layout_width="fill_parent" android:layout_height="50dip" android:orientation="horizontal">
+			     <Button android:id="@+id/btn_task_report"
+					android:layout_alignParentBottom="true"
+					android:layout_margin="3dip"
+					android:layout_weight="1"
+					android:clickable="true" android:background="?theme_button"
+					android:layout_width="fill_parent" android:text="@string/talk_task_action_upload"
+					android:textSize="14dip" android:layout_height="fill_parent"
+					android:textColor="?theme_button_text_color" android:gravity="center" />
+			    <Button android:id="@+id/btn_task_excute"
+					android:layout_alignParentBottom="true" 
+					android:clickable="true" android:background="?theme_button"
+					android:layout_width="fill_parent" android:text="@string/talk_task_action_start"
+					android:textSize="14dip" android:layout_height="fill_parent"
+					android:layout_margin="3dip"
+					android:layout_weight="1"
+					android:textColor="?theme_button_text_color" android:gravity="center" />
+			</LinearLayout>
+	</LinearLayout>
+	
+</LinearLayout>

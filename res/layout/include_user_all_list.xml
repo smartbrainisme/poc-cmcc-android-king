@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"
+	android:layout_height="fill_parent" android:orientation="vertical"
+	android:layout_above="@id/talk_user_member_opr">
+	<RelativeLayout android:id="@+id/user_all_path_layout"
+		android:gravity="center" android:layout_width="fill_parent"
+		android:layout_height="40dip" android:clickable="true"
+		android:background="?theme_selector_group_item">
+		<ImageView android:id="@+id/user_all_search"
+			android:layout_width="40dip" android:layout_height="40dip"
+			android:background="?theme_selector_group_item" android:src="?theme_ic_search"
+			android:padding="5dip" android:layout_alignParentRight="true"
+			android:clickable="true" />
+		<View android:id="@+id/user_all_line8" android:layout_width="1dip"
+			android:layout_height="fill_parent" android:background="?theme_divider_v"
+			android:layout_toLeftOf="@id/user_all_search" />
+		<RelativeLayout android:id="@+id/user_all_path_selector"
+			android:gravity="center" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:clickable="true"
+			android:background="?theme_selector_group_item"
+			android:layout_toLeftOf="@id/user_all_line8">
+			<ImageView android:id="@+id/user_all_path_point"
+				android:layout_alignParentRight="true" android:layout_width="wrap_content"
+				android:layout_height="fill_parent" android:src="@drawable/point_item"
+				android:layout_marginLeft="5dip" android:layout_marginRight="5dip" />
+			<TextView android:id="@+id/user_all_path" android:gravity="center|left"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:singleLine="true" android:text="@string/talk_user_title"
+				android:textColor="?theme_button_text_color" android:padding="5dip"
+				android:drawablePadding="10dip"
+				android:layout_toLeftOf="@id/user_all_path_point"
+				android:drawableLeft="?theme_menu_left_icon1" />
+		</RelativeLayout>
+	</RelativeLayout>
+	<View android:id="@+id/user_all_line1" android:layout_below="@id/user_all_path_layout"
+		android:layout_width="fill_parent" android:layout_height="1dip"
+		android:background="?theme_divider_h" />
+	<com.airtalkee.widget.MListView
+		android:id="@+id/user_all_list" android:layout_below="@id/user_all_line1"
+		android:layout_width="fill_parent" android:layout_height="fill_parent"
+		android:cacheColorHint="#00000000" android:dividerHeight="1dip"
+		android:divider="?theme_divider_h"
+		android:descendantFocusability="blocksDescendants" />
+</RelativeLayout>

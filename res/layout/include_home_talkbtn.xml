@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@+id/media_ptt_box" android:layout_gravity="center"  android:layout_width="wrap_content"  android:layout_height="wrap_content"   xmlns:android="http://schemas.android.com/apk/res/android"  >
+    <ImageView android:visibility="invisible" android:id="@+id/media_ptt_talk_press_bg" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/btn_talk_press_new" android:layout_gravity="center" android:contentDescription="@string/app_name"/>
+    <ImageView  android:layout_width="wrap_content" android:id="@+id/media_ptt_talk_press_bg_front"  android:layout_height="wrap_content" android:src="@drawable/btn_talk_empy" android:layout_gravity="center" android:contentDescription="@string/app_name"/>
+    <LinearLayout android:id="@+id/media_talk_text_lay" android:layout_width="wrap_content"   android:layout_height="wrap_content" android:layout_gravity="center" android:orientation="vertical" android:gravity="center">
+        <TextView  android:layout_width="wrap_content" android:id="@+id/media_ptt_talk_text1" android:layout_height="wrap_content" android:textSize="22sp" android:textColor="#694E00" android:layout_marginBottom="5dp" android:textStyle="bold" android:text="2"/>	
+        <TextView android:layout_width="wrap_content" android:id="@+id/media_ptt_talk_text2" android:layout_height="wrap_content" android:textSize="16sp" android:textColor="#694E00" android:text="排队中"/>	
+    </LinearLayout>
+</FrameLayout>

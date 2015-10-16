@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <LinearLayout  android:id="@+id/pop_image"  xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent"  android:layout_height="fill_parent" android:gravity="center" android:orientation="horizontal" 	>
+	<RelativeLayout  android:layout_width="wrap_content" android:layout_height="wrap_content"   android:padding="5dip" 	>
+	  <VideoView  android:id="@+id/image_video"  android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+	</RelativeLayout>
+ </LinearLayout>

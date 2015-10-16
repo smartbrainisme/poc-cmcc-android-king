@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="98dp"
+     >
+
+    <LinearLayout
+        android:id="@+id/baseview"
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:background="@drawable/selector_listitem_channel"
+        android:orientation="vertical" >
+
+       
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"
+            android:text="4G行业团队测试频道"
+            android:textColor="@android:color/white" />
+         <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="15dp"
+             android:text="12/4"
+            android:textSize="12sp"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+    
+     <TextView
+            android:id="@+id/tv_unread_count"
+            android:layout_width="wrap_content"
+            android:textSize="16sp"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black" 
+          	android:layout_above="@+id/baseview"
+          	android:layout_gravity="right"
+            />
+
+</FrameLayout>

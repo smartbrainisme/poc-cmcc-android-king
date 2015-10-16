@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="gps_state">
+		<item>Enable</item>
+		<item>Disable</item>
+	</string-array>
+	<string-array name="gps_frequence">
+		<item>High precision mode</item>
+		<item>1 minute</item>
+		<item>5 minutes</item>
+		<item>15 minutes</item>
+		<item>30 minutes</item>
+		<item>60 minutes</item>
+	</string-array>
+	<string-array name="hb_setting">
+		<item>High performance</item>
+		<item>Fast</item>
+		<item>Medium</item>
+		<item>Normal mode</item>
+	</string-array>
+	<array name="tools_icon_array">
+		<item>@drawable/emotion_over</item>
+		<item>@drawable/menu_camera_select</item>
+		<item>@drawable/menu_pic_select</item>
+	</array>
+	<string-array name="handle_session_operation">
+		<item>Delete this history</item>
+	</string-array>
+	<string-array name="handle_message_send_fail">
+		<item>Clean all</item>
+		<item>Delete</item>
+		<item>Re-send</item>
+		<item>Copy</item>
+	</string-array>
+	<string-array name="handle_message_txt">
+		<item>Clean all</item>
+		<item>Delete</item>
+		<item>Copy</item>
+	</string-array>
+	<string-array name="handle_message_send_fail1">
+		<item>Clean all</item>
+		<item>Delete</item>
+		<item>Re-send</item>
+	</string-array>
+	<string-array name="handle_message_txt1">
+		<item>Clean all</item>
+		<item>Delete</item>
+	</string-array>
+	<string-array name="handle_report">
+		<item>View</item>
+		<item>Delete</item>
+	</string-array>
+	<array name="play_mode_icon_array">
+		<item>@drawable/actionbar_button_audio_speaker_dark</item>
+		<item>@drawable/actionbar_button_audio_phone_dark</item>
+		<item>@drawable/actionbar_button_audio_bluetooth_dark</item>
+	</array>
+	<string-array name="play_mode">
+		<item>@string/talk_tools_setting_voice_mode_earphone</item>
+		<item>@string/talk_tools_setting_voice_mode_speaker</item>
+		<item>@string/talk_tools_setting_voice_mode_bluetooth</item>
+	</string-array>
+	<string-array name="picture_quality">
+		<item>@string/talk_unscathed</item>
+		<item>@string/talk_scathed</item>
+	</string-array>
+	<!-- Smiley resource id array, must be one to one mapped to code array -->
+    <string-array name="smiley_code_array">
+        <item>(你好)</item>
+        <item>(握手)</item>
+        <item>(鄙视)</item>
+        <item>(牛)</item>
+        <item>(囧)</item>
+        <item>(好的)</item>
+        <item>(佩服)</item>
+        <item>(胜利)</item>
+        <item>(委屈)</item>
+        <item>(折磨)</item>
+        <item>(臭)</item>
+        <item>(纠结)</item>
+        <item>(挨打)</item>
+        <item>(墨镜)</item>
+        <item>(迷惑)</item>
+        <item>(极端)</item>
+        <item>(心情好)</item>
+        <item>(吃饭)</item>
+        <item>(震惊)</item>
+        <item>(伤心)</item>
+        <item>(色)</item>
+        <item>(流口水)</item>
+        <item>(吻)</item>
+        <item>(累)</item>
+        <item>(哭)</item>
+        <item>(惊讶)</item>
+		<item>(砖打)</item>
+        <item>(美)</item>
+        <item>(大笑)</item>
+        <item>(烧香)</item>
+        <item>(谨慎)</item>
+        <item>(酷)</item>
+        <item>(寒)</item>
+        <item>(强)</item>
+        <item>(大哭)</item>
+        <item>(尴尬)</item>
+        <item>(怀疑)</item>
+        <item>(鼻血)</item>
+        <item>(冤枉)</item>
+        <item>(财迷)</item>
+        <item>(图片)</item>
+        <item>(录音)</item>
+        <item>(呼叫未接)</item>
+        <item>(呼叫拒接)</item>
+        <item>(呼入)</item>
+        <item>(呼出)</item>
+    </string-array>
+    <array name="smiley_resid_array">
+        <item>@drawable/f001</item>
+        <item>@drawable/f002</item>
+        <item>@drawable/f003</item>
+        <item>@drawable/f004</item>
+        <item>@drawable/f005</item>
+        <item>@drawable/f006</item>
+        <item>@drawable/f007</item>
+        <item>@drawable/f008</item>
+        <item>@drawable/f009</item>
+        <item>@drawable/f010</item>
+        <item>@drawable/f011</item>
+        <item>@drawable/f012</item>
+        <item>@drawable/f013</item>
+        <item>@drawable/f014</item>
+        <item>@drawable/f015</item>
+        <item>@drawable/f016</item>
+        <item>@drawable/f017</item>
+        <item>@drawable/f018</item>
+        <item>@drawable/f019</item>
+        <item>@drawable/f020</item>
+        <item>@drawable/f021</item>
+        <item>@drawable/f022</item>
+        <item>@drawable/f023</item>
+        <item>@drawable/f024</item>
+        <item>@drawable/f025</item>
+        <item>@drawable/f026</item>
+        <item>@drawable/f027</item>
+        <item>@drawable/f028</item>
+        <item>@drawable/f029</item>
+        <item>@drawable/f030</item>
+        <item>@drawable/f031</item>
+        <item>@drawable/f032</item>
+        <item>@drawable/f033</item>
+        <item>@drawable/f034</item>
+        <item>@drawable/f035</item>
+        <item>@drawable/f036</item>
+        <item>@drawable/f037</item>
+        <item>@drawable/f038</item>
+        <item>@drawable/f039</item>
+        <item>@drawable/f040</item>
+        <item>@drawable/icon_images</item>
+        <item>@drawable/icon_sound</item>
+        <item>@drawable/ic_call_missed</item>
+        <item>@drawable/ic_call_rejected</item>
+        <item>@drawable/ic_call_incoming</item>
+        <item>@drawable/ic_call_outgoing</item>
+    </array>
+</resources>

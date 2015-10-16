@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- BOTTOM_BAR  BEGIN -->	
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/bottom_ic" android:layout_width="fill_parent"  android:layout_height="wrap_content" android:orientation="vertical" android:layout_alignParentBottom="true" >
+	<View android:layout_width="fill_parent" android:layout_height="1dip" android:background="?theme_divider_h"  />
+	<LinearLayout android:id="@+id/talk_pannel" android:layout_width="fill_parent"  android:layout_height="58dip" android:gravity="center_vertical" >
+          	<ImageView android:id="@+id/menu_btn"  android:layout_width="50dip" android:layout_marginLeft="2dip" android:layout_marginRight="2dip" android:layout_marginTop="5dip" android:layout_marginBottom="7dip" android:layout_height="wrap_content" android:src="?theme_btn_more" android:background="?theme_menu_bg" />
+          	<RelativeLayout android:layout_width="fill_parent" android:minHeight="55dip" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="right|center_vertical" >
+				<EditText  android:id="@+id/EditText" android:maxLength="300" android:background="?theme_bg_input" android:focusableInTouchMode="false" android:layout_width="fill_parent" android:minHeight="50dip" android:layout_height="wrap_content" android:bufferType="spannable" 	android:gravity="center_vertical" android:textColor="?theme_color_text1" android:padding="5dip" />
+				<LinearLayout android:layout_width="fill_parent"  android:layout_height="50dip" android:gravity="right" >
+					<ImageView android:id="@+id/talk_btn_record" android:layout_width="115dip" android:layout_height="50dip" android:paddingRight="2dip" android:paddingTop="1dip" android:src="?theme_talk_button" />
+				</LinearLayout>
+          	</RelativeLayout>
+		<ImageView  android:id="@+id/send"   android:src="?theme_btn_send" android:layout_width="50dip" android:layout_marginLeft="2dip" android:layout_marginRight="2dip" android:layout_marginTop="5dip" android:layout_marginBottom="7dip" android:layout_height="wrap_content" android:background="?theme_menu_bg" />
+	</LinearLayout>
+	<LinearLayout android:id="@+id/emotion" android:layout_width="fill_parent"  	android:layout_height="wrap_content" android:gravity="center" android:layout_alignParentBottom="true" android:background="#000000" android:paddingLeft="2dip" android:visibility="gone">
+		<GridView   android:id="@+id/gridview"   android:layout_width="wrap_content"  android:layout_height="fill_parent"    android:numColumns="auto_fit"  android:columnWidth="34dip"    android:stretchMode="columnWidth"   android:gravity="center"   android:scrollbars="none" android:drawSelectorOnTop="false"  android:listSelector="@drawable/grid_selector" /> 
+	</LinearLayout>
+</LinearLayout>

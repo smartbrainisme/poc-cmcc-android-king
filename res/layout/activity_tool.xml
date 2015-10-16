@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 更多 -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@id/talk_layout_session_member"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="?theme_sider_bg"
+    android:orientation="horizontal" >
+
+    <LinearLayout
+        android:id="@+id/layout_top"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <include layout="@layout/include_main_header" />
+
+        <LinearLayout
+            android:id="@id/talk_tv_user_name_panel"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="?theme_sider_title_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@id/talk_tv_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="45dip"
+                android:drawableLeft="?theme_user"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dip"
+                android:text="NAME"
+                android:textColor="?theme_color_text"
+                android:textSize="18dip" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="@drawable/left_divider_line" />
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_above="@id/layout_bottom" >
+
+                <ScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dip"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical" >
+
+                        <!-- 音量 -->
+
+                        <LinearLayout
+                            android:id="@id/talk_setting_voice_volume"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="left|center_vertical"
+                            android:orientation="horizontal" >
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="40dip"
+                                android:layout_margin="10dip"
+                                android:layout_marginLeft="5dip"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/talk_tools_setting_voice_volume"
+                                android:textColor="?theme_button_text_color"
+                                android:textSize="15dip" />
+
+                            <RelativeLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5.0dip"
+                                android:layout_toLeftOf="@+id/ButtonFullScreenMode"
+                                android:layout_toRightOf="@+id/Volume"
+                                android:orientation="vertical" >
+
+                                <RelativeLayout
+                                    android:id="@+id/SoundSettingBarLayout"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="22.0dip" >
+
+                                    <SeekBar
+                                        android:id="@+id/SoundSettingBarView"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="wrap_content"
+                                        android:max="7"
+                                        android:maxHeight="5.0dip"
+                                        android:minHeight="5.0dip"
+                                        android:paddingLeft="40.0dip"
+                                        android:paddingRight="20.0dip"
+                                        android:progressDrawable="@drawable/playvideo_volume_seekbar_background"
+                                        android:thumb="@drawable/playvideo_volume_seekbar_thumb" />
+                                </RelativeLayout>
+
+                                <LinearLayout
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@id/SoundSettingBarLayout"
+                                    android:layout_marginLeft="40.0dip"
+                                    android:layout_marginRight="20.0dip"
+                                    android:orientation="horizontal" >
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="0%"
+                                        android:textSize="9.0dip" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1.0" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="50%"
+                                        android:textSize="9.0dip" />
+
+                                    <LinearLayout
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1.0" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="100%"
+                                        android:textSize="9.0dip" />
+                                </LinearLayout>
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <!-- 音量end -->
+
+                        <View
+                            android:id="@id/talk_lv_tool_gps_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/left_divider_line" />
+
+                        <!-- <LinearLayout ></LinearLayout> -->
+
+                        <View
+                            android:id="@id/talk_lv_tool_gps_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="15dip"
+                            android:background="@drawable/left_divider_line" />
+
+                        <!-- 对讲设置 -->
+
+                        <LinearLayout
+                            android:id="@id/talk_setting_voice"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?theme_selector_group_item"
+                            android:gravity="center_vertical"
+                            android:padding="10dip" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dip"
+                                android:text="@string/talk_tools_setting_voice"
+                                android:textColor="?theme_color_text"
+                                android:textSize="16dip" />
+                        </LinearLayout>
+                        <!-- 对讲设置end -->
+
+                        <View
+                            android:id="@id/talk_lv_tool_gps_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/left_divider_line" />
+
+                        <!-- 位置回传 -->
+
+                        <LinearLayout
+                            android:id="@id/talk_lv_tool_gps"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?theme_selector_group_item"
+                            android:gravity="center_vertical"
+                            android:padding="10dip" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dip"
+                                android:text="@string/talk_tools_location"
+                                android:textColor="?theme_color_text"
+                                android:textSize="16dip" />
+                        </LinearLayout>
+                        <!-- 位置回传end -->
+
+                        <View
+                            android:id="@id/talk_lv_tool_gps_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/left_divider_line" />
+
+                        <LinearLayout
+                            android:id="@+id/talk_lv_tools_task"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?theme_selector_group_item"
+                            android:gravity="center_vertical"
+                            android:padding="10dip"
+                            android:visibility="gone" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dip"
+                                android:text="@string/talk_tools_task"
+                                android:textColor="?theme_color_text"
+                                android:textSize="16dip" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/talk_lv_tool_task_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/left_divider_line"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:id="@+id/talk_lv_tools_attend"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?theme_selector_group_item"
+                            android:gravity="center_vertical"
+                            android:padding="10dip"
+                            android:visibility="gone" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dip"
+                                android:text="@string/talk_tools_attend"
+                                android:textColor="?theme_color_text"
+                                android:textSize="16dip" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/talk_lv_tool_attend_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/left_divider_line"
+                            android:visibility="gone" />
+
+                        <!-- 广播 -->
+
+                        <LinearLayout
+                            android:id="@id/talk_lv_tool_infosys"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?theme_selector_group_item"
+                            android:gravity="center_vertical"
+                            android:padding="10dip" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dip"
+                                android:text="@string/talk_tools_notice"
+                                android:textColor="?theme_color_text"
+                                android:textSize="16dip" />
+                        </LinearLayout>
+                        <!-- 广播end -->
+
+                        <View
+                            android:id="@id/talk_lv_tool_infosys_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/left_divider_line" />
+
+                        <LinearLayout
+                            android:id="@id/talk_lv_tool_call"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?theme_selector_group_item"
+                            android:gravity="center_vertical"
+                            android:padding="10dip" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dip"
+                                android:text="@string/talk_tools_call_center"
+                                android:textColor="?theme_color_text"
+                                android:textSize="16dip" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@id/talk_lv_tool_call_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/left_divider_line" />
+
+                        <LinearLayout
+                            android:id="@id/talk_lv_tool_manual"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?theme_selector_group_item"
+                            android:gravity="center_vertical"
+                            android:padding="10dip" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dip"
+                                android:text="@string/talk_tools_manual"
+                                android:textColor="?theme_color_text"
+                                android:textSize="16dip" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@id/talk_lv_tool_manual_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/left_divider_line" />
+
+                        <LinearLayout
+                            android:id="@id/talk_lv_tool_defect"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?theme_selector_group_item"
+                            android:gravity="center_vertical"
+                            android:padding="10dip" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dip"
+                                android:text="@string/talk_tools_defect"
+                                android:textColor="?theme_color_text"
+                                android:textSize="16dip" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@id/talk_lv_tool_defect_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/left_divider_line" />
+
+                        <LinearLayout
+                            android:id="@id/talk_lv_tool_update"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?theme_selector_group_item"
+                            android:gravity="center_vertical"
+                            android:padding="10dip" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dip"
+                                android:text="@string/talk_tools_setting"
+                                android:textColor="?theme_color_text"
+                                android:textSize="16dip" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@id/talk_lv_tool_update_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/left_divider_line" />
+
+                        <LinearLayout
+                            android:id="@+id/talk_change_theme"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?theme_selector_group_item"
+                            android:gravity="center_vertical"
+                            android:padding="10dip" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dip"
+                                android:text="@string/talk_change_theme"
+                                android:textColor="?theme_color_text"
+                                android:textSize="16dip" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/talk_change_theme_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/left_divider_line" />
+
+                        <LinearLayout
+                            android:id="@id/talk_lv_tool_exit"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?theme_selector_group_item"
+                            android:gravity="center_vertical"
+                            android:padding="10dip" >
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:paddingLeft="10dip"
+                                android:text="@string/talk_exit"
+                                android:textColor="#f81818"
+                                android:textSize="16dip" />
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/talk_exit_divider"
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/left_divider_line" />
+                    </LinearLayout>
+                </ScrollView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@id/layout_bottom"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginTop="10dip"
+                android:gravity="center"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:id="@id/talk_tv_logo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="5dip"
+                        android:src="?theme_logo_icon" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dip"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@id/talk_tv_version"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dip"
+                        android:gravity="center"
+                        android:text="V1.0"
+                        android:textColor="#cccccc"
+                        android:textSize="11sp" />
+
+                    <LinearLayout
+                        android:id="@id/talk_tv_statistic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dip"
+                        android:layout_marginRight="3dip"
+                        android:background="?theme_menu_bg"
+                        android:gravity="center_vertical"
+                        android:minWidth="150dip"
+                        android:orientation="vertical" >
+
+                        <TextView
+                            android:id="@id/talk_tv_statistic_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dip"
+                            android:gravity="center"
+                            android:text="@string/talk_statistic_time"
+                            android:textColor="#cccccc"
+                            android:textSize="11sp" />
+
+                        <TextView
+                            android:id="@id/talk_tv_statistic_bytes"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="@string/talk_statistic_bytes"
+                            android:textColor="#cccccc"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@id/talk_copyright_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dip"
+                        android:layout_marginTop="2dip"
+                        android:gravity="center"
+                        android:text="@string/copyright"
+                        android:textColor="#8fffffff"
+                        android:textSize="11dip"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.airtalkee.widget.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sliding_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top"
+    sothree:umanoDragView="@+id/dragView"
+    sothree:umanoOverlay="true"
+    sothree:umanoPanelHeight="40dp"
+    
+    sothree:umanoScrollableView="@+id/list"
+    sothree:umanoShadowHeight="0dp" >
+
+    <!-- MAIN CONTENT -->
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <com.airtalkee.activity.home.widget.StatusBarTitle
+                android:id="@+id/media_status_title_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/home_activity_page_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/media_status_function_bar_lay"
+                android:layout_below="@+id/media_status_title_bar" />
+
+            <FrameLayout
+                android:id="@+id/media_status_function_bar_lay"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true" >
+
+                <com.airtalkee.activity.home.widget.MediaStatusBar
+                    android:id="@+id/media_status_function_bar"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    
+                     />
+            </FrameLayout>
+        </RelativeLayout>
+    </FrameLayout>
+
+    <!-- SLIDING LAYOUT -->
+
+    <LinearLayout
+       	android:id="@+id/sliding_layout_contaner"
+         android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:orientation="vertical" >
+        
+             
+    </LinearLayout>
+
+</com.airtalkee.widget.SlidingUpPanelLayout>

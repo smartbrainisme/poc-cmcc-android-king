@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" >
+	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginBottom="-1dip">
+		<include layout="@layout/include_main_header" />
+	</LinearLayout>
+	<RelativeLayout   android:layout_width="fill_parent"  	android:layout_height="fill_parent" >
+		<TextView android:id="@id/talk_et_channel_title" android:layout_width="fill_parent" android:layout_height="50dip" android:padding="10dip" android:gravity="center" android:text="1123" android:textColor="?theme_button_text_color" android:textSize="22dip" />
+		<EditText android:gravity="center_vertical" android:layout_height="50dip" android:hint="@string/talk_input_channel_name" android:id="@id/talk_et_channel_name"  android:textSize="15dip" android:layout_width="fill_parent"   android:layout_margin="5dip"    android:maxLength="9"  android:textColor="?theme_color_text1" android:background="?theme_bg_input"  android:paddingLeft="10dip" android:layout_below="@id/talk_et_channel_title" />
+		<LinearLayout android:layout_height="fill_parent" android:layout_width="fill_parent" android:layout_above="@id/talk_layout_channel_create" android:layout_below="@id/talk_et_channel_name" android:orientation="vertical">
+			<TextView android:id="@+id/tv_tip"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:paddingLeft="10dip" android:text="@string/talk_channel_contact" android:gravity="center_vertical" android:layout_marginBottom="5dip"  android:visibility="gone" />
+			<View  android:layout_width="fill_parent"  android:layout_height="1dip"    android:background="?theme_divider_h"   android:visibility="gone" />
+			<ListView android:layout_weight="1" android:id="@+id/talk_lv_contact"  android:layout_width="fill_parent"  android:layout_height="fill_parent"  android:cacheColorHint="#00000000"  android:dividerHeight="1dip"  android:divider="@drawable/left_divider_line"    android:listSelector="@drawable/selector_group_listview" android:fastScrollEnabled="true" />
+		</LinearLayout>
+		<LinearLayout  android:id="@id/talk_layout_channel_create"  android:layout_width="fill_parent"  android:layout_height="60dip" android:orientation="vertical" android:gravity="top" android:layout_alignParentBottom="true">
+				<View  android:layout_width="fill_parent"  android:layout_height="1dip"    android:background="?theme_divider_h"/>
+				<LinearLayout android:layout_width="fill_parent"  android:layout_height="fill_parent" android:orientation="horizontal">
+					<Button android:id="@id/talk_btn_channel_create" android:layout_weight="1" android:layout_width="fill_parent" android:layout_height="fill_parent"  android:background="@drawable/selector_btn" android:textColor="?theme_button_text_color" android:textSize="21dip" />
+					<View  android:layout_width="1dip"  android:layout_height="fill_parent"    android:background="?theme_divider_v"/>
+					<Button android:id="@id/talk_btn_channel_canncel" android:layout_weight="1"  android:text="@string/talk_channel_action_cancel" android:layout_width="fill_parent" android:layout_height="fill_parent"  android:background="@drawable/selector_btn"  android:textColor="?theme_button_text_color" android:textSize="21dip"  />
+				</LinearLayout>
+		</LinearLayout>
+	</RelativeLayout> 
+</LinearLayout>

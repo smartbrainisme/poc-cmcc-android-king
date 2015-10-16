@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent" >
+	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginBottom="-1dip">
+		<include layout="@layout/include_main_header" />
+	</LinearLayout>
+	<RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent" >
+		<com.airtalkee.widget.MListView android:id="@id/talk_attendance_list"  android:layout_width="fill_parent"  android:layout_height="fill_parent"  android:cacheColorHint="#00000000"  android:dividerHeight="1dip"  android:divider="?theme_divider_h"    android:descendantFocusability="blocksDescendants" />
+	</RelativeLayout>
+</LinearLayout>

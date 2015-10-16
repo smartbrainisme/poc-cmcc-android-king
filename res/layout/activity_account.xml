@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical" android:layout_width="fill_parent"
+	android:id="@+id/main_content" 
+	android:layout_height="fill_parent" >
+	
+		<LinearLayout android:id="@id/talk_login_layout_input"
+			android:orientation="vertical" android:layout_width="fill_parent"
+			android:layout_height="fill_parent" android:gravity="center_horizontal"
+			android:layout_above="@id/talk_login_layout_logo">
+			<ScrollView android:id="@id/talk_scroll_login"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:scrollbars="none" android:layout_centerInParent="true">
+				<LinearLayout android:layout_width="fill_parent"
+					android:layout_height="wrap_content" android:orientation="vertical"
+					android:gravity="center" android:layout_centerInParent="true">
+					<LinearLayout android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:orientation="vertical" android:gravity="center_horizontal|bottom" android:layout_marginBottom="50dip">
+					    <ImageView  android:layout_width="wrap_content" android:layout_height="wrap_content"   android:src="@drawable/icon_cmcc" android:background="@drawable/ic_light" android:scaleType="center" android:paddingTop="25dp"/>
+						<TextView android:layout_width="wrap_content" android:id="@+id/logo" android:layout_height="wrap_content" android:gravity="center"  	android:textSize="28dip" android:textColor="?theme_color_logo_text"  android:text="" />
+					</LinearLayout>
+					<LinearLayout android:id="@+id/talk_account_input"
+						android:layout_width="fill_parent" android:layout_height="fill_parent"
+						android:orientation="vertical" android:gravity="center">
+						<LinearLayout android:orientation="vertical"
+							android:layout_width="fill_parent" android:layout_height="120dip"
+							android:layout_marginLeft="20dip" android:layout_marginRight="20dip"
+							android:background="?theme_bg_input">
+							<EditText android:drawableLeft="@drawable/ic_login_author"
+								android:gravity="center_vertical" android:layout_height="60dip"
+								android:hint="@string/talk_input_id" android:id="@+id/talk_et_ipocid"
+								android:textSize="15dip" android:layout_width="fill_parent"
+								android:layout_marginLeft="20dp" android:drawablePadding="20dp"
+								android:inputType="phone" android:maxLength="64"
+								android:background="#00000000" android:textColor="?theme_color_text1" android:textColorHint="?theme_color_hint"
+								android:focusableInTouchMode="false" />
+							<View android:layout_height="1px" android:layout_width="fill_parent" android:background="@drawable/ic_login_divider"  android:layout_marginLeft="20dp"  android:layout_marginRight="20dp"/>
+							<EditText android:drawableLeft="@drawable/ic_login_lock"
+								android:gravity="center_vertical" android:layout_height="60dip"
+								android:hint="@string/talk_input_pwd" android:id="@+id/talk_et_ipocpwd"
+								android:textSize="15dip" android:layout_width="fill_parent"
+								android:layout_marginLeft="20dp" android:drawablePadding="20dp"
+								android:layout_alignParentTop="true" android:background="#00000000"
+								android:inputType="number" android:textColor="?theme_color_text1" android:textColorHint="?theme_color_hint"
+								android:password="true" android:maxLength="20"
+								android:singleLine="true" android:digits="@string/talk_name_digits"
+								android:isScrollContainer="true" android:focusableInTouchMode="false" />
+					
+						</LinearLayout>
+						<Button android:layout_height="50dip" android:id="@+id/talk_btn_login"
+							android:text="@string/talk_login" android:textSize="18dip"
+							android:textColor="?theme_button_text_color" android:layout_width="fill_parent"
+							android:layout_marginLeft="18dip" android:layout_marginRight="18dip"
+							android:layout_marginTop="30dip" android:layout_marginBottom="20dip"
+							android:background="?theme_button"
+							android:layout_weight="1" />
+					</LinearLayout>
+					<LinearLayout android:visibility="gone"
+						android:id="@+id/talk_account_waiting" android:layout_width="fill_parent"
+						android:layout_height="fill_parent" android:orientation="vertical"
+						android:gravity="center">
+						<LinearLayout android:layout_width="fill_parent"
+							android:layout_height="fill_parent" android:orientation="horizontal"
+							android:gravity="center">
+							<ProgressBar style="?android:attr/progressBarStyleSmall"
+								android:layout_width="wrap_content" android:layout_height="wrap_content" />
+							<TextView android:id="@+id/talk_account_info"
+								android:layout_width="wrap_content" android:layout_height="wrap_content"
+								android:text="@string/talk_logining" android:textColor="?theme_button_text_color"
+								android:gravity="center" android:layout_margin="20dip" />
+						</LinearLayout>
+						<Button android:visibility="gone" android:layout_height="50dip"
+							android:id="@+id/talk_btn_login_cancel" android:text="@string/talk_login_cancel"
+							android:textSize="18dip" android:textColor="?theme_button_text_color"
+							android:layout_width="fill_parent" android:layout_marginLeft="18dip"
+							android:layout_marginRight="18dip" android:layout_marginTop="30dip"
+							android:background="?theme_button"
+							android:layout_weight="1" />
+					</LinearLayout>
+				</LinearLayout>
+			</ScrollView>
+		</LinearLayout>
+		<LinearLayout android:id="@id/talk_login_layout_logo"
+			android:orientation="vertical" android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:layout_alignParentBottom="true" >
+			<ImageView android:id="@id/talk_copyright_logo"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:layout_marginBottom="6dip" android:layout_marginTop="20dip" />
+			<TextView android:id="@id/talk_copyright_text" android:text="@string/copyright"
+				android:layout_width="fill_parent" android:layout_height="wrap_content"
+				android:textColor="?theme_color_text1" android:textSize="11dip"
+				android:gravity="center" android:layout_marginBottom="20dip" />
+		</LinearLayout>
+</RelativeLayout>

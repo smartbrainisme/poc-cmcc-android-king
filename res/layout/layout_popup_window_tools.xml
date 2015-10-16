@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <LinearLayout   android:layout_width="fill_parent"  android:layout_height="wrap_content" android:gravity="center" android:orientation="horizontal" xmlns:android="http://schemas.android.com/apk/res/android" >
+	<RelativeLayout  android:id="@+id/layout_pup_content"  android:layout_width="wrap_content" android:layout_height="wrap_content"  android:background="?theme_pop_up_pannel"  >
+	  	<GridView    android:id="@+id/tools_gridview" android:layout_width="wrap_content"  android:layout_height="wrap_content" android:numColumns="auto_fit"  android:verticalSpacing="0.5dp"   android:gravity="center"   android:scrollbars="none"   android:columnWidth="48dip"   android:drawSelectorOnTop="false" android:listSelector="@drawable/grid_selector"  />  
+	</RelativeLayout>
+</LinearLayout>
