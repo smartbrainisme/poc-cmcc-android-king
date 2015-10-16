@@ -39,7 +39,7 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 	private boolean allowRole = false;
 	private View layoutBtns; 
 	private CheckedCallBack checkedCallBack; 
-	public interface CheckedCallBack{
+	public interface CheckedCallBack{ //shiyishi
 		public void onChecked(boolean isChecked);
 	}
 	
