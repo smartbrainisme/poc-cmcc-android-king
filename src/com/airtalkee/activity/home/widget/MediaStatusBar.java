@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.airtalkee.R;
@@ -128,9 +129,10 @@ public class MediaStatusBar extends LinearLayout implements OnBarItemClickListen
 			StatusBarBottom bar = bars.get(pageIndex);
 			if(null != bar)
 			{
-				for(int i=0;i<bar.getChildCount();i++)
+				ViewGroup grop = (ViewGroup)bar.getChildAt(0);
+				for(int i=0;i<grop.getChildCount();i++)
 				{
-					View child = bar.getChildAt(i);
+					View child = grop.getChildAt(i);
 					child.setEnabled(enabled);
 				}
 			}

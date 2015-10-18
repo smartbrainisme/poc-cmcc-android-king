@@ -249,22 +249,27 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 				public void onCheckedChanged(CompoundButton arg0, boolean isCheck)
 				{
 					putSelected(position, member, isCheck);
-					if (vMemberBottom != null)
-					{
+					
 						if (isSelected.size() > 0)
 						{
+							if (vMemberBottom != null)
 							vMemberBottom.setVisibility(View.VISIBLE);
+							if(layoutBtns != null)
 							layoutBtns.setVisibility(View.GONE);
+							if(checkedCallBack != null)
 							checkedCallBack.onChecked(true);
 						}
 						else
 						{
+							if (vMemberBottom != null)
 							vMemberBottom.setVisibility(View.GONE);
+							if(layoutBtns != null)
 							layoutBtns.setVisibility(View.VISIBLE);
+							if(checkedCallBack != null)
 							checkedCallBack.onChecked(false);
 						}
 					}
-				}
+				
 			});
 			holder.checkBox.setChecked(!(isSelected != null && isSelected.get(position) == null));
 			if (!allowCheck)
