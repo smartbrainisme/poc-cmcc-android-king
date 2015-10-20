@@ -1,15 +1,13 @@
 package com.airtalkee.Util;
 
-import com.airtalkee.R;
-
 import android.content.Context;
-import android.text.Html;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airtalkee.R;
 
 public class Toast extends android.widget.Toast
 {
@@ -24,19 +22,17 @@ public class Toast extends android.widget.Toast
 		// TODO Auto-generated constructor stub
 	}
 	
-	public static Toast makeText(Context context,String textString,int duration)
+	public static Toast makeText1(Context context,int icon,String text,int duration)
 	{
-		return make(context, "", textString, duration);
+		return make(context, icon, text, duration);
 	}
-	public static Toast makeText(Context context,int res,int duration)
+	
+	public static Toast makeText1(Context context,String textString,int duration)
 	{
-		return make(context, "", context.getString(res), duration);
+		return make(context,0, textString, duration);
 	}
-	public static Toast makeText(Context context,String name,String textString,int duration)
-	{
-		return make(context, name, textString, duration);
-	}
-	private  static Toast make(Context context,String name, String textString,int duration)
+	
+	private  static Toast make(Context context, int icon,String textString,int duration)
 	{
 		if(context !=null)
 		{
@@ -48,23 +44,32 @@ public class Toast extends android.widget.Toast
 					toastText =(TextView)toastView.findViewById(R.id.toast_text);
 					toastImg = (ImageView)toastView.findViewById(R.id.toast_img);
 				}
-				String build = String.format("<font color=#5aaff3>%s</font> %s", name,textString);
-				toastText.setText(Html.fromHtml(build));
+				
+				toastText.setText(textString);
+				if(icon != 0)
+				{
+					toastImg.setVisibility(View.VISIBLE);
+					toastImg.setImageResource(icon);
+				}
+				else
+				{
+					toastImg.setVisibility(View.GONE);
+				}
 				if(toast == null)
 				{
 					toast =new Toast(context);
-					toast.setGravity(Gravity.TOP, 0,Gravity.TOP);
+					toast.setGravity(Gravity.CENTER, 0,Gravity.TOP);
 					toast.setMargin(0, 0);
 				}
+				
 				toast.setDuration(duration);
 				toast.setView(toastView);
+				
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
 		}
 		return toast;
 	}
-	
-	
 
 }

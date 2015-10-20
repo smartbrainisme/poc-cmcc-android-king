@@ -346,7 +346,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 					{
 						if (pwd.length() < 6)
 						{
-							Util.Toast(this, getString(R.string.talk_pwd_error));
+							Util.Toast(this, getString(R.string.talk_pwd_error),R.drawable.ic_error);
 							return;
 						}
 
@@ -368,7 +368,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 					}
 					else
 					{
-						Util.Toast(this, getString(R.string.talk_account_isnotnull));
+						Util.Toast(this, getString(R.string.talk_account_isnotnull),R.drawable.ic_error);
 					}
 				}
 				// else
@@ -408,7 +408,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 		else
 		{
 			accountStateShow(STATE_IDLE);
-			Util.Toast(this, getString(R.string.talk_login_login_failed_user_or_password));
+			Util.Toast(this, getString(R.string.talk_login_login_failed_user_or_password),R.drawable.ic_error);
 		}
 	}
 
@@ -489,12 +489,12 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 		}
 		else if(state == 1)
 		{
-			Util.Toast(this, getString(R.string.talk_account_bind_error));
-			Util.Toast(this, getString(R.string.talk_account_get_error));
+			Util.Toast(this, getString(R.string.talk_account_bind_error),R.drawable.ic_error);
+			Util.Toast(this, getString(R.string.talk_account_get_error),R.drawable.ic_error);
 		}
 		else
 		{
-			Util.Toast(this, getString(R.string.talk_account_get_error));
+			Util.Toast(this, getString(R.string.talk_account_get_error),R.drawable.ic_error);
 		}
 	}
 
@@ -532,7 +532,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 			}
 			else
 			{
-				Util.Toast(this, Util.loginInfo(result, this));
+				Util.Toast(this, Util.loginInfo(result, this),R.drawable.ic_error);
 			}
 		}
 	}
@@ -564,7 +564,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 		{
 			Log.i(AccountActivity.class, "AccountActivity onChannelListGet Fail!");
 			accountStateShow(STATE_IDLE);
-			Util.Toast(this, getString(R.string.talk_channel_list_getfail));
+			Util.Toast(this, getString(R.string.talk_channel_list_getfail),R.drawable.ic_error);
 		}
 	}
 
