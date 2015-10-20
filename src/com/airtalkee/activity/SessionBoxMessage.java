@@ -786,7 +786,7 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 	}
 
 	private String currentFilePath = "";
-
+	
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		switch (requestCode)
