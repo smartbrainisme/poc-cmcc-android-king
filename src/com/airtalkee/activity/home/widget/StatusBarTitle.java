@@ -137,12 +137,12 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 					if (session.isVoiceLocked())
 					{
 						AirtalkeeSessionManager.getInstance().SessionLock(session, false);
-						ivBtnLeft.setImageResource(R.drawable.ic_topbar_lock_open);
+						ivBtnLeft.setImageResource(R.drawable.ic_unlock);
 					}
 					else
 					{
 						AirtalkeeSessionManager.getInstance().SessionLock(session, true);
-						ivBtnLeft.setImageResource(R.drawable.ic_topbar_lock_close);
+						ivBtnLeft.setImageResource(R.drawable.ic_lock);
 					}
 				}
 				break;

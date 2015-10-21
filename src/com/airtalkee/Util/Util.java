@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.app.Notification;
@@ -30,7 +31,7 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.format.Time;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
+import com.airtalkee.Util.Toast;
 
 import com.airtalkee.R;
 import com.airtalkee.sdk.AirtalkeeAccount;
@@ -51,7 +52,7 @@ public class Util
 	public static final int NOTIFI_ID_TASK_DISPATCH = 4;
 
 	static NotificationManager nm = null;
-	@SuppressWarnings("deprecation")
+	@SuppressLint("NewApi") @SuppressWarnings("deprecation")
 	public static void showNotification(int id, Context context, Intent intent, String from, String ticker, String message, Object object)
 	{
 		nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -584,7 +585,7 @@ public class Util
 		}
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressLint("NewApi") @SuppressWarnings("deprecation")
 	public static void textClip(Context context, String clipStr)
 	{
 		try
@@ -654,13 +655,20 @@ public class Util
 	{
 		try
 		{
-			if (mToast == null)
-			{
-				mToast = Toast.makeText(context, "", Toast.LENGTH_LONG);	
-				//mToast.setGravity(Gravity.CENTER, 0, 0);
-			}
-			mToast.setText(content);
-			mToast.show();
+			Toast.makeText1(context, content, Toast.LENGTH_LONG).show();
+			TTSManager.getInstance().synth(content);
+		}
+		catch (Exception e)
+		{
+			// TODO: handle exception
+		}
+	}
+	
+	public static void Toast(Context context, String content,int icon)
+	{
+		try
+		{
+			Toast.makeText1(context, icon,content, Toast.LENGTH_LONG).show();
 			TTSManager.getInstance().synth(content);
 		}
 		catch (Exception e)

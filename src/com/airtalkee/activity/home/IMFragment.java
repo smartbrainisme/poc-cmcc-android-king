@@ -1,6 +1,7 @@
 package com.airtalkee.activity.home;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -41,6 +42,7 @@ import com.airtalkee.Util.Smilify;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
+import com.airtalkee.activity.ActivityImagePager;
 import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.SessionBoxMessage;
 import com.airtalkee.adapter.AdapterSessionMessage;
@@ -48,6 +50,7 @@ import com.airtalkee.control.AirMessageTransaction;
 import com.airtalkee.listener.OnMmiMessageListener;
 import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.OnMessageListListener;
+import com.airtalkee.sdk.controller.AccountController;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
@@ -75,7 +78,7 @@ public class IMFragment extends BaseFragment implements OnClickListener, OnMessa
 	private MacRecordingView mvRecording;
 	private boolean recordCancel = false;
 	private float startY = 0;
-	
+	public String menuArray[];
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -167,6 +170,39 @@ public class IMFragment extends BaseFragment implements OnClickListener, OnMessa
 			}
 		}
 	}
+	
+	@Override
+	public boolean onLongClick(View v)
+	{
+		// TODO Auto-generated method stub
+		
+		if (v.getId() == R.id.body_content)
+		{
+			if (v.getTag() != null)
+			{
+				currentMessage = (AirMessage) v.getTag();
+				if (currentMessage != null)
+				{
+					if (currentMessage.getType() == AirMessage.TYPE_CUSTOM_RELATION)
+					{
+						return false;
+					}
+					boolean isPic = (currentMessage.getType() == AirMessage.TYPE_PICTURE || currentMessage.getType() == AirMessage.TYPE_RECORD) ? true : false;
+					menuArray = getResources().getStringArray(!isPic ? R.array.handle_message_txt : R.array.handle_message_txt1);
+					int dialogId = R.id.talk_dialog_message_txt;
+					if (currentMessage.getIpocidFrom().equals(AccountController.getUserInfo().getIpocId()))
+					{
+						dialogId = R.id.talk_dialog_message_txt_send_fail;
+						menuArray = getResources().getStringArray(!isPic ? R.array.handle_message_send_fail : R.array.handle_message_send_fail1);
+					}
+					getActivity().removeDialog(dialogId);
+					getActivity().showDialog(dialogId);
+				}
+			}
+		}
+		
+		return false;
+	}
 
 	@Override
 	public void onClick(View v)
@@ -183,6 +219,85 @@ public class IMFragment extends BaseFragment implements OnClickListener, OnMessa
 			case R.id.send:
 				messageSend();
 				break;
+			case R.id.body_content:
+			{
+				if (session != null && v.getTag() != null)
+				{
+					currentMessage = (AirMessage) v.getTag();
+					if (currentMessage != null)
+					{
+						if (currentMessage.getType() == AirMessage.TYPE_RECORD)
+						{
+							messageRecordPlay(v);
+						}
+						else if (currentMessage.getType() == AirMessage.TYPE_PICTURE)
+						{
+							if (getActivity() != null)
+							{
+								try
+								{
+									Intent intent = new Intent(getActivity(), ActivityImagePager.class);
+									String[] position = new String[] { currentMessage.getImageUri() };
+									ArrayList<String> images = adapterMessage.getPicUrls(position);
+									Bundle b = new Bundle();
+									b.putStringArrayList("images", images);
+									b.putInt("position", Integer.parseInt(position[0]));
+									intent.putExtras(b);
+									startActivity(intent);
+								}
+								catch (Exception e)
+								{
+									// TODO: handle exception
+								}
+							}
+						}
+					}
+				}
+				break;
+			}
+		}
+	}
+	
+	private void messageRecordPlay(View view)
+	{
+		if (session != null)
+		{
+			view.findViewById(R.id.record_layout).setTag(currentMessage.getMessageCode());
+			if (!currentMessage.isRecordPlaying() && currentMessage.getImageUri() != null)
+			{
+				if (currentMessage.getRecordType() == AirMessage.RECORD_TYPE_PTT)
+				{
+					if (AirtalkeeMessage.getInstance().MessageRecordPlayStartLocal(currentMessage) == false)
+					{
+						Util.Toast(getActivity(),getString(R.string.talk_msg_no_local_file),R.drawable.ic_error);
+					}
+				}
+				else
+				{
+					AirtalkeeMessage.getInstance().MessageRecordPlayStart(session, currentMessage);
+				}
+			}
+			else
+			{
+				if (currentMessage.getImageUri() != null)
+				{
+					AirtalkeeMessage.getInstance().MessageRecordPlayStop();
+				}
+				else
+				{
+					if (currentMessage.getRecordType() == AirMessage.RECORD_TYPE_PTT)
+					{
+						if (AirtalkeeMessage.getInstance().MessageRecordPlayStartLocal(currentMessage) == false)
+						{
+							Util.Toast(getActivity(), getString(R.string.talk_msg_no_local_file),R.drawable.ic_error);
+						}
+					}
+					else
+					{
+						AirtalkeeMessage.getInstance().MessageRecordPlayStart(session, currentMessage);
+					}
+				}
+			}
 		}
 	}
 
@@ -290,13 +405,7 @@ public class IMFragment extends BaseFragment implements OnClickListener, OnMessa
 		}
 	}
 
-	@Override
-	public boolean onLongClick(View v)
-	{
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count, int after)
 	{
