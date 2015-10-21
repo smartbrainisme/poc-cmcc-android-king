@@ -37,6 +37,9 @@
 	<string name="talk_user_title">全体成员</string>
 	<string name="talk_group_title">频道</string>
 	<string name="talk_session_title">会话</string>
+	<string name="talk_user_ipocid">用户ID</string>
+	<string name="talk_user_username">名称</string>
+	<string name="talk_user_password">密码</string>
 	<string name="talk_user_info_update_name">更改名称</string>
 	<string name="talk_user_info_update_name_doing">正在更新...</string>
 	<string name="talk_user_info_update_name_error">名称不能超过11个字！</string>
@@ -54,6 +57,7 @@
 	<string name="talk_tools_setting">设置</string>
 	<string name="talk_tools_setting_voice">对讲设置</string>
 	<string name="talk_tools_setting_voice_volume">音量</string>
+	<string name="talk_tools_setting_voice_listen_mode">收听模式</string>
 	<string name="talk_tools_setting_voice_amplifier">声音放大器</string>
 	<string name="talk_tools_setting_voice_amplifier_tip">启用放大器可将外放音量适当增大</string>
 	<string name="talk_tools_setting_voice_mode_earphone">听筒模式</string>
@@ -70,12 +74,14 @@
 	<string name="talk_tools_setting_ptt_volume">音量按键</string>
 	<string name="talk_tools_setting_ptt_volume_tip">是否将上下音量键作为PTT物理按键</string>
 	<string name="talk_tools_pwd_update">修改密码</string>
+	<string name="talk_tools_help">使用和帮助</string>
 	<string name="talk_tools_manual">使用手册</string>
 	<string name="talk_tools_defect">意见反馈</string>
 	<string name="talk_tools_defect_title">告诉我们您在使用中遇到的问题或宝贵建议：</string>
 	<string name="talk_tools_defect_report">反馈</string>
 	<string name="talk_tools_defect_report_tip">感谢您的反馈，我们会尽快处理您提出的问题或建议，再次感谢！</string>
 	<string name="talk_tools_defect_report_error">网络连接失败，请重新尝试！</string>
+	<string name="talk_tools_about">关于版本</string>
 	<string name="talk_tools_notice">广播</string>
 	<string name="talk_tools_notice_comment_tip">输入您的评论</string>
 	<string name="talk_tools_notice_comment_send">发表</string>
@@ -187,6 +193,7 @@
 	<string name="talk_gps_data_t">最近上报：</string>
 	<string name="talk_gps_data_error">获取位置信息失败！</string>
 	<string name="talk_report_upload">上报</string>
+	<string name="talk_report_upload_record">上报记录</string>
 	<string name="talk_report_upload_resend">再次上报</string>
 	<string name="talk_report_upload_retry">重试</string>
 	<string name="talk_report_upload_cleanall">清理记录</string>

@@ -37,6 +37,9 @@
 	<string name="talk_user_title">All members</string>
 	<string name="talk_group_title">Channel</string>
 	<string name="talk_session_title">History</string>
+	<string name="talk_user_ipocid">Account</string>
+	<string name="talk_user_username">Display name</string>
+	<string name="talk_user_password">Password</string>
 	<string name="talk_user_info_update_name">Change display name</string>
 	<string name="talk_user_info_update_name_doing">Updating...</string>
 	<string name="talk_user_info_update_name_error">The display name should not longer than 11 words!</string>
@@ -45,6 +48,7 @@
 	<string name="talk_tools">More</string>
 	<string name="talk_tools_infosys"></string>
 	<string name="talk_tools_infosys_null"></string>
+	<string name="talk_tools_help">Help</string> 
 	<string name="talk_tools_report">Submission</string>
 	<string name="talk_tools_report_pic">Picture Submit</string>
 	<string name="talk_tools_report_vid">Video Submit</string>
@@ -56,6 +60,7 @@
 	<string name="talk_tools_setting_voice_volume">Volume</string>
 	<string name="talk_tools_setting_voice_amplifier">Volume amplifier</string>
 	<string name="talk_tools_setting_voice_amplifier_tip">By enabling amplifier, the voice volume can be increased.</string>
+	<string name="talk_tools_setting_voice_listen_mode">Listen mode</string> 
 	<string name="talk_tools_setting_voice_mode_earphone">Earphone mode</string>
 	<string name="talk_tools_setting_voice_mode_speaker">Speaker mode</string>
 	<string name="talk_tools_setting_voice_mode_bluetooth">Bluetooth mode</string>
@@ -76,6 +81,7 @@
 	<string name="talk_tools_defect_report">Feed back</string>
 	<string name="talk_tools_defect_report_tip">Thanks for your feedback! We will do our best to deal with it as soon as possible.</string>
 	<string name="talk_tools_defect_report_error">Network error! Please try again.</string>
+	<string name="talk_tools_about">About</string>
 	<string name="talk_tools_notice">Notice</string>
 	<string name="talk_tools_notice_comment_tip">Input your comments</string>
 	<string name="talk_tools_notice_comment_send">Send</string>
@@ -187,6 +193,7 @@
 	<string name="talk_gps_data_t">Submit Time:</string>
 	<string name="talk_gps_data_error">Failed to obtain the location!</string>
 	<string name="talk_report_upload">Upload</string>
+	<string name="talk_report_upload_record">Upload record</string> 
 	<string name="talk_report_upload_resend">Upload again</string>
 	<string name="talk_report_upload_retry">Retry</string>
 	<string name="talk_report_upload_cleanall">Cleanup</string>

@@ -1,225 +1,321 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" >
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:orientation="vertical">
-		<include layout="@layout/include_main_header" />
-	</LinearLayout>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="?theme_sider_bg"
+    android:orientation="vertical" >
 
-	<ScrollView android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:scrollbars="none"
-		android:layout_centerInParent="true">
-		<LinearLayout android:layout_width="fill_parent"
-			android:layout_height="fill_parent" android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-			<LinearLayout android:id="@id/talk_setting_voice_volume"
-				android:orientation="horizontal" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:gravity="left|center_vertical">
-				<TextView android:textColor="?theme_button_text_color" android:gravity="left|center_vertical"
-					android:layout_margin="10dip" android:text="@string/talk_tools_setting_voice_volume"
-					android:textSize="18dip" android:layout_width="wrap_content"
-					android:layout_height="40dip" />
-				<RelativeLayout android:orientation="vertical"
-					android:layout_width="fill_parent" android:layout_height="wrap_content"
-					android:layout_marginTop="5.0dip" android:layout_toLeftOf="@+id/ButtonFullScreenMode"
-					android:layout_toRightOf="@+id/Volume">
-					<RelativeLayout android:id="@+id/SoundSettingBarLayout"
-						android:layout_width="fill_parent" android:layout_height="22.0dip">
-						<SeekBar android:id="@+id/SoundSettingBarView"
-							android:max="7" android:paddingLeft="40.0dip"
-							android:paddingRight="20.0dip" android:layout_width="fill_parent"
-							android:layout_height="wrap_content" android:maxHeight="5.0dip"
-							android:progressDrawable="@drawable/playvideo_volume_seekbar_background"
-							android:minHeight="5.0dip" android:thumb="@drawable/playvideo_volume_seekbar_thumb" />
-					</RelativeLayout>
-					<LinearLayout android:orientation="horizontal"
-						android:layout_width="fill_parent" android:layout_height="wrap_content"
-						android:layout_marginLeft="40.0dip" android:layout_marginRight="20.0dip"
-						android:layout_below="@id/SoundSettingBarLayout">
-						<TextView android:textSize="9.0dip" android:layout_width="wrap_content"
-							android:layout_height="wrap_content" android:text="0%" />
-						<LinearLayout android:layout_width="wrap_content"
-							android:layout_height="wrap_content" android:layout_weight="1.0" />
-						<TextView android:textSize="9.0dip" android:layout_width="wrap_content"
-							android:layout_height="wrap_content" android:text="50%" />
-						<LinearLayout android:layout_width="wrap_content"
-							android:layout_height="wrap_content" android:layout_weight="1.0" />
-						<TextView android:textSize="9.0dip" android:layout_width="wrap_content"
-							android:layout_height="wrap_content" android:text="100%" />
-					</LinearLayout>
-				</RelativeLayout>
-			</LinearLayout>
-			<View android:layout_width="fill_parent" android:layout_height="1dip"
-				android:background="?theme_divider_h" />
+        <include layout="@layout/include_main_header" />
+    </LinearLayout>
 
-			<LinearLayout android:id="@id/talk_setting_voice_mode" android:visibility="gone"
-				android:orientation="horizontal" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:background="?theme_selector_group_item"
-				android:gravity="left|center_vertical">
-				<TextView android:id="@id/talk_setting_voice_mode_text"
-					android:textColor="?theme_button_text_color" android:textSize="18dip"
-					android:layout_weight="3" android:gravity="left|center_vertical"
-					android:layout_margin="10dip"
-					android:text="@string/talk_tools_setting_voice_mode_speaker"
-					android:layout_width="wrap_content" android:layout_height="40dip" />
-				<ImageView android:id="@id/talk_setting_voice_mode_on"
-					android:gravity="center" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:background="@drawable/menu_setting_speak_on"
-					android:layout_marginRight="10dip" />
-				<ImageView android:id="@id/talk_setting_voice_mode_off"
-					android:gravity="center" android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:background="@drawable/menu_setting_speak_off"
-					android:layout_marginRight="10dip" />
-			</LinearLayout>
-			<View android:layout_width="fill_parent" android:layout_height="1dip"
-				android:background="?theme_divider_h"  android:visibility="gone"/>
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:scrollbars="none" >
 
-			<LinearLayout android:id="@id/talk_setting_voice_amplifier"
-				android:orientation="horizontal" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:background="?theme_selector_group_item"
-				android:gravity="left|center_vertical">
-				<LinearLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:layout_weight="3"
-					android:layout_marginTop="10dip" android:layout_marginBottom="10dip"
-					android:orientation="vertical">
-					<TextView android:textColor="?theme_button_text_color" android:textSize="18dip"
-						android:gravity="left|center_vertical" android:layout_marginLeft="10dip"
-						android:layout_marginBottom="3dip" android:text="@string/talk_tools_setting_voice_amplifier"
-						android:layout_width="wrap_content" android:layout_height="wrap_content" />
-					<TextView android:textColor="#666666" android:textSize="12dip"
-						android:gravity="left|center_vertical" android:layout_marginLeft="15dip"
-						android:text="@string/talk_tools_setting_voice_amplifier_tip"
-						android:layout_width="wrap_content" android:layout_height="wrap_content" />
-				</LinearLayout>
-				<CheckBox android:id="@id/talk_setting_voice_amplifier_check"
-					android:layout_width="wrap_content" android:layout_height="fill_parent"
-					android:layout_marginRight="10dip" android:button="?theme_btn_check" />
-			</LinearLayout>
-			<View android:layout_width="fill_parent" android:layout_height="1dip"
-				android:background="?theme_divider_h" />
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
 
-			<LinearLayout android:id="@id/talk_setting_ptt_click"
-				android:orientation="horizontal" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:background="?theme_selector_group_item"
-				android:gravity="left|center_vertical">
-				<LinearLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:layout_weight="3"
-					android:layout_marginTop="10dip" android:layout_marginBottom="10dip"
-					android:orientation="vertical">
-					<TextView android:textColor="?theme_button_text_color" android:textSize="18dip"
-						android:gravity="left|center_vertical" android:layout_marginLeft="10dip"
-						android:layout_marginBottom="3dip" android:text="@string/talk_tools_setting_ptt_click"
-						android:layout_width="wrap_content" android:layout_height="wrap_content" />
-					<TextView android:textColor="#666666" android:textSize="12dip"
-						android:gravity="left|center_vertical" android:layout_marginLeft="15dip"
-						android:text="@string/talk_tools_setting_ptt_click_tip"
-						android:layout_width="wrap_content" android:layout_height="wrap_content" />
-				</LinearLayout>
-				<CheckBox android:id="@id/talk_setting_ptt_click_check"
-					android:layout_width="wrap_content" android:layout_height="fill_parent"
-					android:layout_marginRight="10dip" android:button="?theme_btn_check" />
-			</LinearLayout>
-			<View android:id="@id/talk_setting_ptt_click_line" android:layout_width="fill_parent" android:layout_height="1dip"
-				android:background="?theme_divider_h" />
+            <LinearLayout
+                android:id="@id/talk_setting_voice_amplifier"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="?theme_sider_title_bg"
+                android:gravity="left|center_vertical"
+                android:orientation="horizontal" >
 
-			<LinearLayout android:id="@id/talk_setting_ptt_volume"
-				android:orientation="horizontal" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:background="?theme_selector_group_item"
-				android:gravity="left|center_vertical">
-				<LinearLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:layout_weight="3"
-					android:layout_marginTop="10dip" android:layout_marginBottom="10dip"
-					android:orientation="vertical">
-					<TextView android:textColor="?theme_button_text_color" android:textSize="18dip"
-						android:gravity="left|center_vertical" android:layout_marginLeft="10dip"
-						android:layout_marginBottom="3dip"
-						android:text="@string/talk_tools_setting_ptt_volume"
-						android:layout_width="wrap_content" android:layout_height="wrap_content" />
-					<TextView android:textColor="#666666" android:textSize="12dip"
-						android:gravity="left|center_vertical" android:layout_marginLeft="15dip"
-						android:text="@string/talk_tools_setting_ptt_volume_tip"
-						android:layout_width="wrap_content" android:layout_height="wrap_content" />
-				</LinearLayout>
-				<CheckBox android:id="@id/talk_setting_ptt_volume_check"
-					android:layout_width="wrap_content" android:layout_height="fill_parent"
-					android:layout_marginRight="10dip" android:button="?theme_btn_check" />
-			</LinearLayout>
-			<View android:id="@id/talk_setting_ptt_volume_line" android:layout_width="fill_parent" android:layout_height="1dip"
-				android:background="?theme_divider_h" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_weight="3"
+                    android:orientation="vertical" >
 
-			<LinearLayout android:id="@id/talk_setting_answer"
-				android:orientation="horizontal" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:background="?theme_selector_group_item"
-				android:gravity="left|center_vertical">
-				<LinearLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:layout_weight="3"
-					android:layout_marginTop="10dip" android:layout_marginBottom="10dip"
-					android:orientation="vertical">
-					<TextView android:textColor="?theme_button_text_color" android:textSize="18dip"
-						android:gravity="left|center_vertical" android:layout_marginLeft="10dip"
-						android:layout_marginBottom="3dip"
-						android:text="@string/talk_tools_setting_answer_mode"
-						android:layout_width="wrap_content" android:layout_height="wrap_content" />
-					<TextView android:textColor="#666666" android:textSize="12dip"
-						android:gravity="left|center_vertical" android:layout_marginLeft="15dip"
-						android:text="@string/talk_tools_setting_answer_mode_tip"
-						android:layout_width="wrap_content" android:layout_height="wrap_content" />
-				</LinearLayout>
-				<CheckBox android:id="@id/talk_setting_answer_check"
-					android:layout_width="wrap_content" android:layout_height="fill_parent"
-					android:layout_marginRight="10dip" android:button="?theme_btn_check" />
-			</LinearLayout>
-			<View android:layout_width="fill_parent" android:layout_height="1dip"
-				android:background="?theme_divider_h" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dip"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/talk_tools_setting_voice_amplifier"
+                        android:textColor="?theme_button_text_color"
+                        android:textSize="18dip" />
 
-			<LinearLayout android:id="@id/talk_setting_isb"
-				android:orientation="horizontal" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:background="?theme_selector_group_item"
-				android:gravity="left|center_vertical">
-				<LinearLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:layout_weight="3"
-					android:layout_marginTop="10dip" android:layout_marginBottom="10dip"
-					android:orientation="vertical">
-					<TextView android:textColor="?theme_button_text_color" android:textSize="18dip"
-						android:gravity="left|center_vertical" android:layout_marginLeft="10dip"
-						android:layout_marginBottom="3dip"
-						android:text="@string/talk_tools_setting_isb"
-						android:layout_width="wrap_content" android:layout_height="wrap_content" />
-					<TextView android:textColor="#666666" android:textSize="12dip"
-						android:gravity="left|center_vertical" android:layout_marginLeft="15dip"
-						android:text="@string/talk_tools_setting_isb_tip"
-						android:layout_width="wrap_content" android:layout_height="wrap_content" />
-				</LinearLayout>
-				<CheckBox android:id="@id/talk_setting_isb_check"
-					android:layout_width="wrap_content" android:layout_height="fill_parent"
-					android:layout_marginRight="10dip" android:button="?theme_btn_check" />
-			</LinearLayout>
-			<View android:layout_width="fill_parent" android:layout_height="1dip"
-				android:background="?theme_divider_h" />
-			
-			<LinearLayout android:id="@id/talk_setting_hb"
-				android:orientation="horizontal" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" android:background="?theme_selector_group_item"
-				android:gravity="left|center_vertical">
-				<LinearLayout android:layout_width="wrap_content"
-					android:layout_height="wrap_content" android:layout_weight="3"
-					android:layout_marginTop="10dip" android:layout_marginBottom="10dip"
-					android:orientation="vertical">
-					<TextView android:id="@id/talk_setting_hb_text" android:textColor="?theme_button_text_color" android:textSize="18dip"
-						android:gravity="left|center_vertical" android:layout_marginLeft="10dip"
-						android:layout_marginBottom="3dip"
-						android:text="@string/talk_tools_setting_hb"
-						android:layout_width="wrap_content" android:layout_height="wrap_content" />
-					<TextView android:textColor="#666666" android:textSize="12dip"
-						android:gravity="left|center_vertical" android:layout_marginLeft="15dip" android:layout_marginRight="15dip"
-						android:text="@string/talk_tools_setting_hb_tip"
-						android:layout_width="wrap_content" android:layout_height="wrap_content" />
-				</LinearLayout>
-			</LinearLayout>
-			<View android:id="@id/talk_setting_hb_line" android:layout_width="fill_parent" android:layout_height="1dip"
-				android:background="?theme_divider_h" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/talk_tools_setting_voice_amplifier_tip"
+                        android:textColor="#787878"
+                        android:textSize="12dip" />
+                </LinearLayout>
 
-		</LinearLayout>
-	</ScrollView>
+                <CheckBox
+                    android:id="@id/talk_setting_voice_amplifier_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="10dip"
+                    android:button="?theme_btn_check" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?theme_divider_h" />
+
+            <LinearLayout
+                android:id="@id/talk_setting_ptt_click"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="?theme_sider_title_bg"
+                android:gravity="left|center_vertical"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_weight="3"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dip"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/talk_tools_setting_ptt_click"
+                        android:textColor="?theme_button_text_color"
+                        android:textSize="18dip" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/talk_tools_setting_ptt_click_tip"
+                        android:textColor="#787878"
+                        android:textSize="12dip" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@id/talk_setting_ptt_click_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="10dip"
+                    android:button="?theme_btn_check" />
+            </LinearLayout>
+
+            <View
+                android:id="@id/talk_setting_ptt_click_line"
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?theme_divider_h" />
+
+            <LinearLayout
+                android:id="@id/talk_setting_ptt_volume"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="?theme_sider_title_bg"
+                android:gravity="left|center_vertical"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_weight="3"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dip"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/talk_tools_setting_ptt_volume"
+                        android:textColor="?theme_button_text_color"
+                        android:textSize="18dip" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/talk_tools_setting_ptt_volume_tip"
+                        android:textColor="#787878"
+                        android:textSize="12dip" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@id/talk_setting_ptt_volume_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="10dip"
+                    android:button="?theme_btn_check" />
+            </LinearLayout>
+
+            <View
+                android:id="@id/talk_setting_ptt_volume_line"
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?theme_divider_h" />
+
+            <LinearLayout
+                android:id="@id/talk_setting_answer"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="?theme_sider_title_bg"
+                android:gravity="left|center_vertical"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_weight="3"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dip"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/talk_tools_setting_answer_mode"
+                        android:textColor="?theme_button_text_color"
+                        android:textSize="18dip" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/talk_tools_setting_answer_mode_tip"
+                        android:textColor="#787878"
+                        android:textSize="12dip" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@id/talk_setting_answer_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="10dip"
+                    android:button="?theme_btn_check" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?theme_divider_h" />
+
+            <LinearLayout
+                android:id="@id/talk_setting_isb"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="?theme_sider_title_bg"
+                android:gravity="left|center_vertical"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_weight="3"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dip"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/talk_tools_setting_isb"
+                        android:textColor="?theme_button_text_color"
+                        android:textSize="18dip" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/talk_tools_setting_isb_tip"
+                        android:textColor="#787878"
+                        android:textSize="12dip" />
+                </LinearLayout>
+
+                <CheckBox
+                    android:id="@id/talk_setting_isb_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_marginRight="10dip"
+                    android:button="?theme_btn_check" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?theme_divider_h" />
+
+            <LinearLayout
+                android:id="@id/talk_setting_hb"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="?theme_sider_title_bg"
+                android:gravity="left|center_vertical"
+                android:orientation="horizontal" >
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_weight="3"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@id/talk_setting_hb_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dip"
+                        android:layout_marginLeft="10dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/talk_tools_setting_hb"
+                        android:textColor="?theme_button_text_color"
+                        android:textSize="18dip" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="15dip"
+                        android:layout_marginRight="15dip"
+                        android:gravity="left|center_vertical"
+                        android:text="@string/talk_tools_setting_hb_tip"
+                        android:textColor="#787878"
+                        android:textSize="12dip" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:id="@id/talk_setting_hb_line"
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?theme_divider_h" />
+        </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>

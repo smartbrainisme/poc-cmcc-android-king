@@ -2,13 +2,14 @@
 <resources>
 
     <!-- if you want to modify holo theme, you should modify theme_parent style instead of AppTheme_Dark style -->
-    <color name="color_main_bg_dark">#1f1f1f</color>
+    <color name="color_main_bg_dark">#F0F0F0</color>
     <color name="color_system_msg_bg">#2f000000</color>
-    <color name="color_hint_dark">#8fffffff</color>
+    <color name="color_hint_dark">#4A4A4A</color>
     <color name="color_hint_dark1">#5fffffff</color>
-    <color name="color_text_white_dark">#ffffffff</color>
-    <color name="color_orange_dark">#ff9a02</color> 
+    <color name="color_text_white_dark">#282828</color>
+    <color name="color_orange_dark">#ff9a02</color>
     <color name="color_sider_bg_dark">#161616</color>
+
     <drawable name="main_bg_dark">#222222</drawable>
     <drawable name="nowplaying_item_bg_dark">#161616</drawable>
 
@@ -22,7 +23,7 @@
         <item name="theme_color_hint">@color/color_hint_dark</item>
         <item name="theme_color_text">@color/color_text_white_dark</item>
         <item name="theme_color_text1">@color/color_hint_dark</item>
-        <item name="theme_sider_title_bg">@color/color_sider_bg_dark</item>
+        <item name="theme_sider_title_bg">@color/white</item>
         <item name="theme_bg_input">@drawable/shape_cmcc_bg</item>
         <item name="theme_bg_title">@drawable/title_bg_dark</item>
         <item name="theme_divider_login">@drawable/login_line</item>
@@ -30,13 +31,13 @@
         <item name="theme_color_group_bg">@drawable/exp_group</item>
         <item name="theme_talk_panel">@drawable/talk_panel_bg</item>
         <item name="theme_color_logo_text">@color/color_text_white_dark</item>
-        <item name="theme_button_text_color">@color/white</item>
+        <item name="theme_button_text_color">@color/black</item>
         <item name="theme_text_color">@color/color_hint_dark</item>
         <item name="theme_button">@drawable/selector_button</item>
         <item name="theme_button_1px">@drawable/selector_button</item>
         <item name="theme_button_1">@drawable/selector_btn_nav</item>
         <item name="theme_menu_left_icon">@drawable/ic_topbar_more</item>
-         <item name="theme_menu_left_icon1">@drawable/ic_topbar_more</item>
+        <item name="theme_menu_left_icon1">@drawable/ic_topbar_more</item>
         <item name="theme_menu_right_icon">@drawable/info</item>
         <item name="theme_menu_bg">@drawable/selector_btn_nav</item>
         <item name="theme_label_right">@drawable/selector_label_ptt_right</item>
@@ -44,7 +45,7 @@
         <item name="theme_label_msg">@drawable/selector_label_msg</item>
         <item name="theme_label_msg_new">@drawable/selector_label_msg_new</item>
         <item name="theme_label_member">@drawable/selector_label_member</item>
-        <item name="theme_divider_h">@drawable/left_divider_line</item>
+        <item name="theme_divider_h">@drawable/dicider_line2</item>
         <item name="theme_divider_v">@drawable/v_divider_line</item>
         <item name="theme_divider_title">@drawable/left_divider_line</item>
         <item name="theme_msg_audio_play">@drawable/msg_audio_play</item>
@@ -70,7 +71,8 @@
         <item name="theme_btn_send">@drawable/msg_send0</item>
         <item name="theme_msg_recv">@drawable/selector_chat_from</item>
         <item name="theme_msg_send">@drawable/selector_chat_to</item>
-        <item name="theme_user_head">@drawable/user_head</item>
+        <!-- <item name="theme_user_head">@drawable/user_head</item> -->
+        <item name="theme_user_head">@drawable/head_portrait</item>
         <item name="theme_group_me">@drawable/group_me</item>
         <item name="theme_group_others">@drawable/group_others</item>
         <item name="theme_group_all">@drawable/group_all</item>
@@ -112,8 +114,8 @@
         <item name="theme_video_share">@drawable/tool_video_share</item>
         <item name="theme_login_pwd">@drawable/login_pwd</item>
         <item name="theme_login_user">@drawable/login_user</item>
-         <item name="theme_btn_check">@drawable/selector_btn_check</item>
-        
+        <item name="theme_btn_check">@drawable/selector_btn_check</item>
+        <item name="theme_btn_listen_mode">@drawable/selector_btn_listen_mode</item>
         <item name="theme_title_menu_pading">4dip</item>
         <item name="theme_title_divider_height">1dip</item>
         <item name="theme_report_drawable_right_padding">10dip</item>

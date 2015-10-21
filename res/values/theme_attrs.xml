@@ -101,6 +101,7 @@
     <attr name="theme_login_pwd"  format="reference"/> 
     <attr name="theme_login_user" format="reference"/> 
     <attr name="theme_btn_check" format="reference"/> 
+    <attr name="theme_btn_listen_mode" format="reference"/> 
     
     
     

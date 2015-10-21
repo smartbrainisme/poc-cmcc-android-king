@@ -31,3 +31,9 @@ proguard/
 
 # Android Studio captures folder
 captures/
+
+# Mac file
+.DS_Store
+
+# SDK Dependence file
+project.properties

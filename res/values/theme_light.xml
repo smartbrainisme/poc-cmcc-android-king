@@ -6,8 +6,8 @@
     <color name="color_orange_transparent">#aff0502e</color>
     <color name="color_main_bg_light">#faf8e9</color>
     <color name="color_hint_light">#8f111111</color>
-    <color name="color_text_white_light">#72716d</color>
-    <color name="color_text_light">#cfffffff</color>
+    <color name="color_text_white_light">#4A4A4A</color>
+    <color name="color_text_light">#282828</color>
     <color name="color_sider_bg_light">#b1b1b1</color>
     <color name="color_grey">#d9d8ca</color>
 
@@ -22,11 +22,11 @@
         <item name="theme_logo_icon">@drawable/logo_icon_light</item>
         <item name="theme_color_title">@color/color_text_light</item>
         <item name="theme_main_bg">@color/color_main_bg_light</item>
-        <item name="theme_sider_bg">@drawable/weptt_bg</item>
+        <item name="theme_sider_bg">@color/color_main_bg_dark</item>
         <item name="theme_color_hint">@color/color_hint_light</item>
         <item name="theme_color_text">@color/color_text_light</item>
         <item name="theme_color_text1">@color/color_text_white_light</item>
-        <item name="theme_sider_title_bg">@color/transparent</item>
+        <item name="theme_sider_title_bg">@color/white_1</item>
         <item name="theme_bg_input">@drawable/shape_bp_bg</item>
         <item name="theme_bg_title">@drawable/title_bg_light</item>
         <item name="theme_divider_login">@color/color_orange</item>
@@ -117,8 +117,7 @@
         <item name="theme_login_pwd">@drawable/login_pwd_light</item>
         <item name="theme_login_user">@drawable/login_user_light</item>
         <item name="theme_btn_check">@drawable/selector_btn_check_light</item>
-        
-        
+        <item name="theme_btn_listen_mode">@drawable/selector_btn_listen_mode</item>
         <item name="theme_title_menu_pading">0dip</item>
         <item name="theme_title_divider_height">0dip</item>
         <item name="theme_report_drawable_right_padding">10dip</item>

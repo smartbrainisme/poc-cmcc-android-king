@@ -18,6 +18,7 @@
 		<activity android:name=".activity.ChannelActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.ChannelManageActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuAccountActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuDefectReportActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuGpsActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuReportActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
@@ -31,6 +32,7 @@
 		<activity android:name=".activity.MenuManualActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuSettingActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuSettingPttActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuHelpActivity"   android:configChanges="orientation|keyboardHidden"  android:launchMode="singleTask"/>
 		<activity android:name=".activity.TempSessionActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.TempSessionSelectedActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.TempSessionManageActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
