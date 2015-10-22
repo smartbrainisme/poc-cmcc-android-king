@@ -17,6 +17,8 @@
     <attr name="theme_color_group_bg" format="reference"/>
     <attr name="theme_color_logo_text" format="color"/>
     <attr name="theme_button" format="reference"/>
+    <attr name="theme_button_logout" format="reference"/>
+    <attr name="theme_button_new" format="reference"/>
     <attr name="theme_button_1px" format="reference"/>
     <attr name="theme_button_1" format="reference"/>
     <attr name="theme_button_text_color" format="color"/>
@@ -101,6 +103,7 @@
     <attr name="theme_login_pwd"  format="reference"/> 
     <attr name="theme_login_user" format="reference"/> 
     <attr name="theme_btn_check" format="reference"/> 
+    <attr name="theme_btn_check_new" format="reference"/> 
     <attr name="theme_btn_listen_mode" format="reference"/> 
     
     

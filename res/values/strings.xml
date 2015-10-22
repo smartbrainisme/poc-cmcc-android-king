@@ -37,8 +37,10 @@
 	<string name="talk_user_title">All members</string>
 	<string name="talk_group_title">Channel</string>
 	<string name="talk_session_title">History</string>
+	<string name="talk_user_account_manage">Account management</string>
 	<string name="talk_user_ipocid">Account</string>
 	<string name="talk_user_username">Display name</string>
+	<string name="talk_user_username_edit">Edit display name</string>
 	<string name="talk_user_password">Password</string>
 	<string name="talk_user_info_update_name">Change display name</string>
 	<string name="talk_user_info_update_name_doing">Updating...</string>
@@ -167,6 +169,7 @@
 	<string name="talk_name_digits"> 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
 	<string name="talk_pwd_error">Password should not less than 6 words!</string>
 	<string name="talk_pwd_outof_lenth">Password should not longer than 15 words!</string>
+	<string name="talk_pwd_confirm_not_equals">the new password must be the same as above/as following!</string>
 	<string name="talk_account_isnotnull">Account or password should not be empty!</string>
 	<string name="talk_special_forbid_invite">Can not invite others into this conversation!</string>
 	<string name="talk_presence_online">Standby</string>
@@ -183,7 +186,8 @@
 	<string name="talk_gps_state">Status:</string>
 	<string name="talk_gps_state_open">Enable</string>
 	<string name="talk_gps_state_close">Disable</string>
-	<string name="talk_gps_frequence">Frequency:</string>
+	<string name="talk_gps_frequence">Frequency</string>
+	<string name="talk_gps_frequence_high">High frequency</string>
 	<string name="talk_gps_data">Location data:</string>
 	<string name="talk_gps_data_long">Longitude:</string>
 	<string name="talk_gps_data_lat">Latitude:</string>
@@ -329,6 +333,7 @@
 	<string name="talk_msg_remove_all_confirm">Confirm to delete all messages in this conversation?</string>
 	<string name="talk_old_pwd">Current password</string>
 	<string name="talk_new_pwd">New password</string>
+	<string name="talk_new_pwd_confirm">Confirm new password</string>
 	<string name="talk_update1">Update</string>
 	<string name="talk_show_password">Show password</string>
 	<string name="talk_account">ID: </string>
@@ -343,6 +348,7 @@
 	<string name="pwd_outof_lenth">Password should not longer than 15 words!</string>
 	<string name="pwd_chage_success">Password changed successfully!</string>
 	<string name="pwd_change_failed">Password changed failed!</string>
+	<string name="pwd_change_format">Password should be between 6 and 15 words</string>
 	<string name="requesting">Processing, please wait...</string>
 	<string name="pull_refresh">Pull to refresh</string>
 	<string name="last_update">Last refresh</string>

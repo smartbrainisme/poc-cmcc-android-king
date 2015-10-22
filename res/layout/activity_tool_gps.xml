@@ -1,151 +1,269 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical" android:layout_width="fill_parent"
-	android:layout_height="fill_parent" >
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:orientation="vertical">
-		<include layout="@layout/include_main_header" />
-	</LinearLayout>
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="?theme_sider_bg"
+    android:orientation="vertical" >
 
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="fill_parent" android:orientation="vertical" >
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-		<!--GPS状态-->
-		<LinearLayout android:gravity="center_vertical"
-			android:id="@id/talk_gps_state_item" android:orientation="horizontal"
-			android:layout_width="fill_parent" android:layout_height="40dip">
-			<TextView android:id="@+id/gps_state_text"
-				android:textColor="?theme_button_text_color" android:gravity="right|center"
-				android:text="@string/talk_gps_state" android:textSize="14dip"
-				android:layout_width="100dip" android:layout_height="fill_parent" />
-			<RelativeLayout android:layout_toRightOf="@id/gps_state_text"
-				android:layout_marginLeft="10.0dip" android:layout_width="fill_parent"
-				android:layout_height="wrap_content">
-				<TextView android:gravity="left|center" android:id="@+id/gps_state"
-					android:textColor="?theme_button_text_color" android:text="@string/talk_gps_state_open"
-					android:layout_width="wrap_content" android:layout_height="fill_parent" />
-				<ImageView android:id="@+id/gps_state_selector" android:layout_width="wrap_content" android:layout_height="fill_parent" 
-					android:src="@drawable/point_item_white" android:layout_alignParentRight="true" android:layout_marginRight="10dip" />
-				<ImageView android:id="@+id/gps_state_selector_setting" android:layout_width="wrap_content" android:layout_height="fill_parent" 
-					android:src="?theme_menu_gps_set" android:layout_alignParentRight="true" android:layout_marginRight="30dip" />
-				<ImageView android:id="@+id/gps_state_selector_gps" android:layout_width="wrap_content" android:layout_height="fill_parent" 
-					android:src="@drawable/gps_state_enable" android:gravity="center"
-					android:layout_alignParentRight="true" android:layout_marginRight="65dip" android:layout_marginTop="10dip" android:layout_marginBottom="10dip" />
-			</RelativeLayout>
-		</LinearLayout>
+        <include layout="@layout/include_main_header" />
+    </LinearLayout>
 
-		<View android:layout_width="fill_parent" android:layout_height="1dip"
-			android:background="?theme_divider_h" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-		<!--回传频率-->
-		<LinearLayout android:gravity="center_vertical"
-			android:id="@id/talk_gps_frequence_item" android:orientation="horizontal"
-			android:layout_width="fill_parent" android:layout_height="40dip">
-			<TextView android:id="@+id/gps_frequence_text"
-				android:textColor="?theme_button_text_color" android:textSize="14dip"
-				android:gravity="right|center" android:text="@string/talk_gps_frequence"
-				android:layout_width="100dip" android:layout_height="fill_parent" />
-			<RelativeLayout android:layout_toRightOf="@id/gps_frequence_text"
-				android:layout_marginLeft="10.0dip" android:layout_width="fill_parent"
-				android:layout_height="wrap_content" >
-				<TextView android:gravity="left|center" android:id="@+id/gps_frequence"
-					android:textColor="?theme_button_text_color" android:text="" android:layout_width="wrap_content"
-					android:layout_height="fill_parent" />
-				<ImageView android:id="@+id/gps_frequence_selector" android:layout_width="wrap_content" android:layout_height="fill_parent" 
-					android:src="@drawable/point_item_white" android:layout_alignParentRight="true" android:layout_marginRight="10dip" />
-			</RelativeLayout>
-		</LinearLayout>
+        <!-- GPS状态 -->
 
-		<View android:layout_width="fill_parent" android:layout_height="1dip"
-			android:background="?theme_divider_h" />
+        <LinearLayout
+            android:id="@id/talk_gps_state_item"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="?theme_sider_title_bg"
+            android:gravity="left|center_vertical"
+            android:orientation="horizontal" >
 
-		<!--数据-->
-		<LinearLayout android:gravity="center_vertical"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="40dip">
-			<TextView android:textColor="?theme_button_text_color" android:textSize="14dip"
-				android:gravity="right|center" android:text="@string/talk_gps_data"
-				android:layout_width="100dip" android:layout_height="fill_parent" />
-			<ImageView android:id="@+id/gps_type" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="15dip"/>
-		</LinearLayout>
-		<LinearLayout android:gravity="center_vertical"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="35dip">
-			<TextView android:id="@+id/gps_x_text" android:textColor="?theme_button_text_color"
-				android:textSize="13dip" android:gravity="right|center"
-				android:text="@string/talk_gps_data_long" android:layout_width="120dip"
-				android:layout_height="fill_parent" />
-			<TextView android:id="@+id/gps_x" android:layout_toRightOf="@id/gps_x_text"
-				android:textColor="?theme_button_text_color" android:textSize="13dip"
-				android:gravity="left|center" android:layout_marginLeft="10.0dip"
-				android:text="" android:layout_width="150dip"
-				android:layout_height="fill_parent" />
-		</LinearLayout>
-		<LinearLayout android:gravity="center_vertical"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="35dip">
-			<TextView android:id="@+id/gps_y_text" android:textColor="?theme_button_text_color"
-				android:textSize="13dip" android:gravity="right|center"
-				android:text="@string/talk_gps_data_lat" android:layout_width="120dip"
-				android:layout_height="fill_parent" />
-			<TextView android:id="@+id/gps_y" android:layout_toRightOf="@id/gps_y_text"
-				android:textColor="?theme_button_text_color" android:textSize="13dip"
-				android:gravity="left|center" android:layout_marginLeft="10.0dip"
-				android:text="" android:layout_width="150dip"
-				android:layout_height="fill_parent" />
-		</LinearLayout>
-		<LinearLayout android:gravity="center_vertical"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="35dip">
-			<TextView android:id="@+id/gps_h_text" android:textColor="?theme_button_text_color"
-				android:textSize="13dip" android:gravity="right|center"
-				android:text="@string/talk_gps_data_h" android:layout_width="120dip"
-				android:layout_height="fill_parent" />
-			<TextView android:id="@+id/gps_h" android:layout_toRightOf="@id/gps_h_text"
-				android:textColor="?theme_button_text_color" android:textSize="13dip"
-				android:gravity="left|center" android:layout_marginLeft="10.0dip"
-				android:text="" android:layout_width="150dip"
-				android:layout_height="fill_parent" />
-		</LinearLayout>
-		<LinearLayout android:gravity="center_vertical"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="35dip">
-			<TextView android:id="@+id/gps_s_text" android:textColor="?theme_button_text_color"
-				android:textSize="13dip" android:gravity="right|center"
-				android:text="@string/talk_gps_data_s" android:layout_width="120dip"
-				android:layout_height="fill_parent" />
-			<TextView android:id="@+id/gps_s" android:layout_toRightOf="@id/gps_s_text"
-				android:textColor="?theme_button_text_color" android:textSize="13dip"
-				android:gravity="left|center" android:layout_marginLeft="10.0dip"
-				android:text="" android:layout_width="150dip"
-				android:layout_height="fill_parent" />
-		</LinearLayout>
-		<LinearLayout android:gravity="center_vertical"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="35dip">
-			<TextView android:id="@+id/gps_o_text" android:textColor="?theme_button_text_color"
-				android:textSize="13dip" android:gravity="right|center"
-				android:text="@string/talk_gps_data_o" android:layout_width="120dip"
-				android:layout_height="fill_parent" />
-			<TextView android:id="@+id/gps_o" android:layout_toRightOf="@id/gps_o_text"
-				android:textColor="?theme_button_text_color" android:textSize="13dip"
-				android:gravity="left|center" android:layout_marginLeft="10.0dip"
-				android:text="" android:layout_width="150dip"
-				android:layout_height="fill_parent" />
-		</LinearLayout>
-		<LinearLayout android:gravity="center_vertical"
-			android:orientation="horizontal" android:layout_width="fill_parent"
-			android:layout_height="35dip">
-			<TextView android:id="@+id/gps_t_text" android:textColor="?theme_button_text_color"
-				android:textSize="13dip" android:gravity="right|center"
-				android:text="@string/talk_gps_data_t" android:layout_width="120dip"
-				android:layout_height="fill_parent" />
-			<TextView android:id="@+id/gps_t" android:layout_toRightOf="@id/gps_t_text"
-				android:textColor="?theme_button_text_color" android:textSize="13dip"
-				android:gravity="left|center" android:layout_marginLeft="10.0dip"
-				android:text="" android:layout_width="180dip"
-				android:layout_height="fill_parent" />
-		</LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginTop="10dip"
+                android:layout_weight="3"
+                android:orientation="vertical" >
 
-	</LinearLayout>
+                <TextView
+                    android:id="@+id/gps_state_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dip"
+                    android:layout_marginLeft="10dip"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/talk_tools_location"
+                    android:textColor="?theme_button_text_color"
+                    android:textSize="18dip" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/talk_tools_setting_voice_amplifier_tip"
+                    android:textColor="#787878"
+                    android:textSize="12dip" />
+
+                <TextView
+                    android:id="@+id/gps_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:gravity="left|center"
+                    android:text="@string/talk_gps_state_open"
+                    android:textColor="?theme_button_text_color"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/gps_state_selector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/point_item_white"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/gps_state_selector_setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="30dip"
+                    android:src="?theme_menu_gps_set"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/talk_setting_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginRight="10dip"
+                android:button="?theme_btn_check_new" />
+
+            <ImageView
+                android:id="@+id/gps_state_selector_gps"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="10dip"
+                android:layout_marginRight="65dip"
+                android:layout_marginTop="10dip"
+                android:gravity="center"
+                android:src="@drawable/gps_state_enable"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="?theme_divider_h" />
+
+        <!-- 回传频率 -->
+
+        <LinearLayout
+            android:id="@id/talk_gps_frequence_item"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:background="?theme_sider_title_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/gps_frequence_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:gravity="left|center_vertical"
+                android:text="@string/talk_gps_frequence"
+                android:textColor="?theme_button_text_color"
+                android:textSize="18dip" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginTop="10dip"
+                android:layout_weight="3"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/gps_frequence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:gravity="left|center"
+                    android:text=""
+                    android:textColor="?theme_button_text_color"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/gps_frequence_selector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/point_item_white"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:gravity="left|center_vertical"
+                android:text="@string/talk_gps_frequence_high"
+                android:textColor="#787878"
+                android:textSize="12dip" />
+
+            <CheckBox
+                android:id="@+id/gps_frequence_high"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_marginRight="10dip"
+                android:button="?theme_btn_check_new" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="@drawable/dicider_line_dotted" />
+
+        <LinearLayout
+            android:id="@id/talk_gps_frequence_item"
+            android:layout_width="fill_parent"
+            android:layout_height="40dip"
+            android:background="?theme_sider_title_bg"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:gravity="left|center_vertical"
+                android:text="@string/talk_gps_frequence"
+                android:textColor="?theme_button_text_color"
+                android:textSize="18dip" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginTop="10dip"
+                android:layout_weight="3"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:gravity="left|center"
+                    android:text=""
+                    android:textColor="?theme_button_text_color"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="10dip"
+                    android:src="@drawable/point_item_white"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:background="?theme_divider_h" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="?theme_sider_title_bg"
+            android:gravity="left|center_vertical"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dip"
+                android:layout_marginTop="10dip"
+                android:layout_weight="3"
+                android:orientation="vertical" >
+
+                <TextView
+                    android:id="@+id/gps_t_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dip"
+                    android:layout_marginLeft="10dip"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/talk_tools_setting_hb"
+                    android:textColor="?theme_button_text_color"
+                    android:textSize="18dip" />
+
+                <TextView
+                    android:id="@+id/gps_t"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginRight="15dip"
+                    android:gravity="left|center_vertical"
+                    android:text="@string/talk_tools_setting_hb_tip"
+                    android:textColor="#787878"
+                    android:textSize="12dip" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
 </LinearLayout>

@@ -78,8 +78,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal" 
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:orientation="horizontal" >
 
                             <TextView
                                 android:layout_width="80dip"
@@ -126,8 +126,8 @@
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal" 
-                            android:layout_weight="1">
+                            android:layout_weight="1"
+                            android:orientation="horizontal" >
 
                             <TextView
                                 android:layout_width="80dip"
@@ -169,14 +169,14 @@
                 android:id="@+id/talk_lv_tool_exit"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
                 android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:layout_alignParentBottom="true">
+                android:gravity="center" >
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/btn_logout" />
+                    android:background="?theme_button_logout" />
             </LinearLayout>
         </RelativeLayout>
     </LinearLayout>

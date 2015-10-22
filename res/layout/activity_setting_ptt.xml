@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_marginRight="10dip"
-                    android:button="?theme_btn_check" />
+                    android:button="?theme_btn_check_new" />
             </LinearLayout>
 
             <View
@@ -114,7 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_marginRight="10dip"
-                    android:button="?theme_btn_check" />
+                    android:button="?theme_btn_check_new" />
             </LinearLayout>
 
             <View
@@ -164,7 +164,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_marginRight="10dip"
-                    android:button="?theme_btn_check" />
+                    android:button="?theme_btn_check_new" />
             </LinearLayout>
 
             <View
@@ -214,7 +214,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_marginRight="10dip"
-                    android:button="?theme_btn_check" />
+                    android:button="?theme_btn_check_new" />
             </LinearLayout>
 
             <View
@@ -263,7 +263,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="fill_parent"
                     android:layout_marginRight="10dip"
-                    android:button="?theme_btn_check" />
+                    android:button="?theme_btn_check_new" />
             </LinearLayout>
 
             <View

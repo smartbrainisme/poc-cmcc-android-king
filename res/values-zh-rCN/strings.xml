@@ -37,8 +37,10 @@
 	<string name="talk_user_title">全体成员</string>
 	<string name="talk_group_title">频道</string>
 	<string name="talk_session_title">会话</string>
+	<string name="talk_user_account_manage">账户管理</string>
 	<string name="talk_user_ipocid">用户ID</string>
 	<string name="talk_user_username">名称</string>
+	<string name="talk_user_username_edit">编辑名称</string>
 	<string name="talk_user_password">密码</string>
 	<string name="talk_user_info_update_name">更改名称</string>
 	<string name="talk_user_info_update_name_doing">正在更新...</string>
@@ -167,6 +169,7 @@
 	<string name="talk_name_digits"> 0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLIMNOPQRSTUVWXYZ</string>
 	<string name="talk_pwd_error">密码长度不能小于6位！</string>
 	<string name="talk_pwd_outof_lenth">密码长度不能大于15位！</string>
+	<string name="talk_pwd_confirm_not_equals">两次密码输入不一致 \n 请重新输入</string>
 	<string name="talk_account_isnotnull">账号或密码不能为空</string>
 	<string name="talk_special_forbid_invite">此会话不能邀请他人加入！</string>
 	<string name="talk_presence_online">后台在线</string>
@@ -183,7 +186,8 @@
 	<string name="talk_gps_state">回传状态：</string>
 	<string name="talk_gps_state_open">开启</string>
 	<string name="talk_gps_state_close">关闭</string>
-	<string name="talk_gps_frequence">回传频率：</string>
+	<string name="talk_gps_frequence">回传频率</string>
+	<string name="talk_gps_frequence_high">高精度模式</string>
 	<string name="talk_gps_data">定位数据：</string>
 	<string name="talk_gps_data_long">经度：</string>
 	<string name="talk_gps_data_lat">纬度：</string>
@@ -329,6 +333,7 @@
 	<string name="talk_msg_remove_all_confirm">是否删除此会话中所有消息？</string>
 	<string name="talk_old_pwd">原密码</string>
 	<string name="talk_new_pwd">新密码</string>
+	<string name="talk_new_pwd_confirm">确认新密码</string>
 	<string name="talk_update1">修改</string>
 	<string name="talk_show_password">显示密码</string>
 	<string name="talk_account">帐号：</string>
@@ -343,6 +348,7 @@
 	<string name="pwd_outof_lenth">密码长度不能大于15位！</string>
 	<string name="pwd_chage_success">密码修改成功！</string>
 	<string name="pwd_change_failed">密码修改失败！</string>
+	<string name="pwd_change_format">请输入6~15位数字或字母</string>
 	<string name="requesting">处理中,请耐心等待...</string>
 	<string name="pull_refresh">下拉刷新</string>
 	<string name="last_update">上次更新</string>

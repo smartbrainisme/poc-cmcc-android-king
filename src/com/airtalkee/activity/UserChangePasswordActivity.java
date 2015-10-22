@@ -1,7 +1,6 @@
 package com.airtalkee.activity;
 
 import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -16,7 +15,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.sdk.controller.AccountController;
@@ -29,7 +27,9 @@ import com.airtalkee.sdk.listener.UserAccountListener;
 import com.airtalkee.sdk.listener.UserInfoListener;
 import com.airtalkee.services.AirServices;
 
-public class UserChangePasswordActivity extends ActivityBase implements OnClickListener, OnCheckedChangeListener, UserInfoListener, UserAccountListener
+public class UserChangePasswordActivity extends ActivityBase implements
+		OnClickListener, OnCheckedChangeListener, UserInfoListener,
+		UserAccountListener
 {
 
 	private EditText old_password;
@@ -58,11 +58,11 @@ public class UserChangePasswordActivity extends ActivityBase implements OnClickL
 		// TODO Auto-generated method stub
 
 		mInstance = this;
-		//AccountController.setUserAccountListener(this);
+		// AccountController.setUserAccountListener(this);
 		AccountInfoController.setUserInfoListener(this);
 		// ���û�û�����ù�����IMIS�����û�������
-		//old_password.setText(AccountController.getUserPassword());
-		//old_password.setEnabled(false);
+		// old_password.setText(AccountController.getUserPassword());
+		// old_password.setEnabled(false);
 	}
 
 	public void doInitFindView()
@@ -150,9 +150,8 @@ public class UserChangePasswordActivity extends ActivityBase implements OnClickL
 						showDialog(R.id.talk_dialog_waiting);
 					}
 				}
-
-			}
 				break;
+			}
 		}
 
 	}
@@ -190,34 +189,34 @@ public class UserChangePasswordActivity extends ActivityBase implements OnClickL
 	@Override
 	public void UserAccountMatch(boolean isOk, AirContact user)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUserInfoGenerateTempCodeByPhoneNumber(boolean isOk)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUserInfoGetEvent(AirContact user)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUserInfoGetbackAccountByPhoneNumber(int result, String[] ipocids)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void onUserInfoRegisterByPhoneNumber(int result, String ipocid)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
@@ -246,77 +245,77 @@ public class UserChangePasswordActivity extends ActivityBase implements OnClickL
 	@Override
 	public void onUserInfoUpdateEvent(boolean isOk, AirContact user)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void UserLoginEvent(int result, AirContact user)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void UserLogoutEvent(boolean success)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void UserHeartbeatEvent(int result)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void UserRegisterEvent(boolean isOk, AirContact user)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void UserUnregisterEvent()
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUserInfoUpdatePhoneNum(boolean isOk)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUserIdGetByPhoneNum(int arg0, StructUserMark arg1)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUserOrganizationTree(boolean isOk, AirContactGroup org)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onUserOrganizationTreeSearch(boolean isOk, List<AirContact> contacts)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void UserFunctionSetting(AirFunctionSetting setting)
 	{
-	// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
 
 	}
 

@@ -3,34 +3,33 @@ package com.airtalkee.activity;
 import java.util.List;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
-import com.airtalkee.activity.home.HomeActivity;
-import com.airtalkee.bluetooth.BluetoothManager;
 import com.airtalkee.config.Config;
-import com.airtalkee.control.AirAccountManager;
 import com.airtalkee.sdk.AirtalkeeAccount;
+import com.airtalkee.sdk.AirtalkeeUserInfo;
 import com.airtalkee.sdk.OnUserInfoListener;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactGroup;
-import com.airtalkee.services.AirServices;
+import com.airtalkee.sdk.util.Utils;
 
-public class MenuAccountActivity extends ActivityBase implements
+public class MenuDisplayActivity extends ActivityBase implements
 		OnClickListener, OnUserInfoListener
 {
-	public TextView tvUserName;
-	public TextView tvUserIpocid;
+	public EditText tvUserName;
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -38,7 +37,7 @@ public class MenuAccountActivity extends ActivityBase implements
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
 		setRequestedOrientation(Config.screenOrientation);
-		setContentView(R.layout.activity_tool_account);
+		setContentView(R.layout.activity_tool_display);
 		doInitView();
 	}
 
@@ -52,7 +51,7 @@ public class MenuAccountActivity extends ActivityBase implements
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
-		ivTitle.setText(R.string.talk_user_account_manage);
+		ivTitle.setText(R.string.talk_user_username_edit);
 		View btnLeft = findViewById(R.id.menu_left_button);
 		ImageView ivLeft = (ImageView) findViewById(R.id.bottom_left_icon);
 		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this));
@@ -63,15 +62,10 @@ public class MenuAccountActivity extends ActivityBase implements
 		ivRight.setVisibility(View.GONE);
 		ivRightLay.setVisibility(View.INVISIBLE);
 
-		tvUserName = (TextView) findViewById(R.id.talk_tv_user_name);
+		tvUserName = (EditText) findViewById(R.id.talk_tv_user_name);
 		tvUserName.setText(AirtalkeeAccount.getInstance().getUserName());
-		
-		tvUserIpocid = (TextView) findViewById(R.id.talk_tv_user_ipocid);
-		tvUserIpocid.setText(AirtalkeeAccount.getInstance().getUserId());
 
-		findViewById(R.id.talk_lv_displayname).setOnClickListener(this);
-		findViewById(R.id.talk_lv_password).setOnClickListener(this);
-		findViewById(R.id.talk_lv_tool_exit).setOnClickListener(this);
+		findViewById(R.id.talk_lv_tool_save).setOnClickListener(this);
 	}
 
 	@Override
@@ -86,50 +80,31 @@ public class MenuAccountActivity extends ActivityBase implements
 				finish();
 				break;
 			}
-			case R.id.talk_lv_displayname:
+			case R.id.talk_lv_tool_save:
 			{
-				Intent it = new Intent(this, MenuDisplayActivity.class);
-				startActivity(it);
-				break;
-			}
-			case R.id.talk_lv_password:
-			{
-				Intent it = new Intent(this, MenuPasswordActivity.class);
-				startActivity(it);
-				break;
-			}
-			case R.id.talk_lv_tool_exit:
-			{
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle(getString(R.string.talk_exit_tip));
-				final CheckBox cb = new CheckBox(this);
-				cb.setText(getString(R.string.talk_auto_login));
-				cb.setChecked(true);
-				builder.setView(cb);
-				builder.setPositiveButton(getString(R.string.talk_exit), new DialogInterface.OnClickListener()
+				String value = tvUserName.getText().toString();
+				tvUserName.setSingleLine();
+				tvUserName.setHint(AirtalkeeUserInfo.getInstance().getUserInfo().getDisplayName());
+				if (!Utils.isEmpty(value))
 				{
-					public void onClick(DialogInterface dialog, int whichButton)
+					if (value.length() > MenuSettingActivity.SETTING_DISPLAYNAME_LEN)
 					{
-						if (!cb.isChecked())
+						Util.Toast(this, getString(R.string.talk_user_info_update_name_error));
+					}
+					else
+					{
+						try
 						{
-							AirServices.iOperator.putString(AirAccountManager.KEY_PWD, "");
+//							Util.Toast(this, getString(R.string.talk_user_info_update_name_doing));
+							AirtalkeeUserInfo.getInstance().UserInfoUpdate(value.trim());
+							Util.Toast(this, getString(R.string.talk_channel_editname_success), R.drawable.ic_success);
 						}
-						AirServices.iOperator.putBoolean(AirAccountManager.KEY_HB, false);
-						BluetoothManager.getInstance().btStop();
-						AirtalkeeAccount.getInstance().Logout();
-//						finish();
-						android.os.Process.killProcess(android.os.Process.myPid());
+						catch (Exception e)
+						{
+							Util.Toast(this, getString(R.string.talk_channel_editname_fail), R.drawable.ic_error);
+						}
 					}
-				});
-
-				builder.setNegativeButton(getString(R.string.talk_session_call_cancel), new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int whichButton)
-					{
-						dialog.cancel();
-					}
-				});
-				builder.show();
+				}
 				break;
 			}
 			default:

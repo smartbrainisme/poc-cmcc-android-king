@@ -9,7 +9,6 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.config.Config;
@@ -18,14 +17,12 @@ import com.airtalkee.location.AirLocation;
 import com.airtalkee.location.AirLocationImp;
 import com.airtalkee.sdk.entity.AirFunctionSetting;
 
-public class MenuGpsActivity extends ActivityBase implements OnClickListener, OnMmiLocationListener
+public class MenuGpsActivity extends ActivityBase implements OnClickListener,
+		OnMmiLocationListener
 {
-
-	private ImageView gps_type;
-	private TextView gps_x, gps_y, gps_h, gps_o, gps_s, gps_t;
+	private TextView gps_t;
 	private TextView gps_state, gps_frequence;
-	int[] mFrequenceValue = { AirLocation.AIR_LOCATION_FRE_NAVIGATE, AirLocation.AIR_LOCATION_FRE_MINUTE_1, AirLocation.AIR_LOCATION_FRE_MINUTE_5,
-		AirLocation.AIR_LOCATION_FRE_MINUTE_15, AirLocation.AIR_LOCATION_FRE_MINUTE_30, AirLocation.AIR_LOCATION_FRE_MINUTE_60 };
+	int[] mFrequenceValue = { AirLocation.AIR_LOCATION_FRE_NAVIGATE, AirLocation.AIR_LOCATION_FRE_MINUTE_1, AirLocation.AIR_LOCATION_FRE_MINUTE_5, AirLocation.AIR_LOCATION_FRE_MINUTE_15, AirLocation.AIR_LOCATION_FRE_MINUTE_30, AirLocation.AIR_LOCATION_FRE_MINUTE_60 };
 	String[] mFrequence = null;
 	String[] mState = null;
 	int mStateSelected = 0;
@@ -75,7 +72,7 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener, On
 		ivTitle.setText(R.string.talk_tools_location);
 		View btnLeft = findViewById(R.id.menu_left_button);
 		ImageView ivLeft = (ImageView) findViewById(R.id.bottom_left_icon);
-		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this) );
+		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this));
 		btnLeft.setOnClickListener(this);
 
 		RelativeLayout ivRightLay = (RelativeLayout) findViewById(R.id.talk_menu_right_button);
@@ -85,12 +82,6 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener, On
 
 		mState = getResources().getStringArray(R.array.gps_state);
 		mFrequence = getResources().getStringArray(R.array.gps_frequence);
-		gps_type = (ImageView) findViewById(R.id.gps_type);
-		gps_x = (TextView) findViewById(R.id.gps_x);
-		gps_y = (TextView) findViewById(R.id.gps_y);
-		gps_h = (TextView) findViewById(R.id.gps_h);
-		gps_s = (TextView) findViewById(R.id.gps_s);
-		gps_o = (TextView) findViewById(R.id.gps_o);
 		gps_t = (TextView) findViewById(R.id.gps_t);
 		gps_state = (TextView) findViewById(R.id.gps_state);
 		gps_state.setText(mState[mStateSelected]);
@@ -122,17 +113,16 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener, On
 
 	private void refreshGpsData(int type, double latitude, double longitude, double altitude, float speed, String time)
 	{
-		if (type == AirLocationImp.LOCATION_TYPE_GPS)
-			gps_type.setImageResource(R.drawable.loc_gps);
-		else if (type == AirLocationImp.LOCATION_TYPE_CELL_BAIDU)
-			gps_type.setImageResource(R.drawable.loc_cell);
-		else
-			gps_type.setImageResource(R.drawable.transparent);
-		gps_x.setText(longitude + "");
-		gps_y.setText(latitude + "");
-		gps_h.setText(altitude + "");
-		gps_s.setText(speed == 0 ? "" : speed + "");
-		gps_o.setText("");
+		/*
+		 * if (type == AirLocationImp.LOCATION_TYPE_GPS)
+		 * gps_type.setImageResource(R.drawable.loc_gps); else if (type ==
+		 * AirLocationImp.LOCATION_TYPE_CELL_BAIDU)
+		 * gps_type.setImageResource(R.drawable.loc_cell); else
+		 * gps_type.setImageResource(R.drawable.transparent);
+		 * gps_x.setText(longitude + ""); gps_y.setText(latitude + "");
+		 * gps_h.setText(altitude + ""); gps_s.setText(speed == 0 ? "" : speed +
+		 * ""); gps_o.setText("");
+		 */
 		gps_t.setText(time + "");
 		gps_state.setText(mState[mStateSelected]);
 		gps_frequence.setText(mFrequence[mFrequenceSelected]);

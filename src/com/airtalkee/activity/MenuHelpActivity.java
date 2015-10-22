@@ -33,7 +33,7 @@ public class MenuHelpActivity extends ActivityBase implements OnClickListener
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
-		ivTitle.setText(R.string.talk_tools);
+		ivTitle.setText(R.string.talk_tools_help);
 		View btnLeft = findViewById(R.id.menu_left_button);
 		ImageView ivLeft = (ImageView) findViewById(R.id.bottom_left_icon);
 		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this));
