@@ -6,7 +6,10 @@
     <color name="transparent">#00000000</color>
     <color name="yellow">#e2992a</color>
     <color name="black">#282828</color>
+    <color name="black_gray">#787878</color>
     <color name="color_tv1">#fffdbf01</color>
     <color name="color_tv1_pressed">#affdbf01</color>
+    <color name="text_gray">#DDDDDD</color>
+    <color name="radiobutton_text_gray">#9B9B9B</color>
     
 </resources>

@@ -120,6 +120,7 @@
         <item name="theme_btn_check">@drawable/selector_btn_check</item>
         <item name="theme_btn_check_new">@drawable/selector_btn_check_new</item>
         <item name="theme_btn_listen_mode">@drawable/selector_btn_listen_mode</item>
+        <item name="theme_radio_check">@drawable/selector_radio_check</item>
         <item name="theme_title_menu_pading">4dip</item>
         <item name="theme_title_divider_height">1dip</item>
         <item name="theme_report_drawable_right_padding">10dip</item>

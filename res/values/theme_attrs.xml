@@ -105,6 +105,7 @@
     <attr name="theme_btn_check" format="reference"/> 
     <attr name="theme_btn_check_new" format="reference"/> 
     <attr name="theme_btn_listen_mode" format="reference"/> 
+    <attr name="theme_radio_check" format="reference"/> 
     
     
     

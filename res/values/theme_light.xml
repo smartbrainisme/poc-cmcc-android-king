@@ -124,6 +124,7 @@
         <item name="theme_title_menu_pading">0dip</item>
         <item name="theme_title_divider_height">0dip</item>
         <item name="theme_report_drawable_right_padding">10dip</item>
+        <item name="theme_radio_check">@drawable/selector_radio_check</item>
     </style>
 
 </resources>
