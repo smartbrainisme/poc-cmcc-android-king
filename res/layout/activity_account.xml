@@ -16,7 +16,7 @@
 					android:gravity="center" android:layout_centerInParent="true">
 					<LinearLayout android:layout_width="fill_parent"  android:layout_height="wrap_content"  android:orientation="vertical" android:gravity="center_horizontal|bottom" android:layout_marginBottom="50dip">
 					    <ImageView  android:layout_width="wrap_content" android:layout_height="wrap_content"   android:src="@drawable/icon_cmcc" android:background="@drawable/ic_light" android:scaleType="center" android:paddingTop="25dp"/>
-						<TextView android:layout_width="wrap_content" android:id="@+id/logo" android:layout_height="wrap_content" android:gravity="center"  	android:textSize="28dip" android:textColor="?theme_color_logo_text"  android:text="" />
+						<TextView android:layout_width="wrap_content" android:id="@+id/logo" android:layout_height="wrap_content" android:gravity="center"  	android:textSize="28dip" android:textColor="#fff"  android:text="" />
 					</LinearLayout>
 					<LinearLayout android:id="@+id/talk_account_input"
 						android:layout_width="fill_parent" android:layout_height="fill_parent"
@@ -31,7 +31,7 @@
 								android:textSize="15dip" android:layout_width="fill_parent"
 								android:layout_marginLeft="20dp" android:drawablePadding="20dp"
 								android:inputType="phone" android:maxLength="64"
-								android:background="#00000000" android:textColor="?theme_color_text1" android:textColorHint="?theme_color_hint"
+								android:background="#00000000" android:textColor="#fff" android:textColorHint="?theme_color_hint"
 								android:focusableInTouchMode="false" />
 							<View android:layout_height="1px" android:layout_width="fill_parent" android:background="@drawable/ic_login_divider"  android:layout_marginLeft="20dp"  android:layout_marginRight="20dp"/>
 							<EditText android:drawableLeft="@drawable/ic_login_lock"
@@ -40,7 +40,7 @@
 								android:textSize="15dip" android:layout_width="fill_parent"
 								android:layout_marginLeft="20dp" android:drawablePadding="20dp"
 								android:layout_alignParentTop="true" android:background="#00000000"
-								android:inputType="number" android:textColor="?theme_color_text1" android:textColorHint="?theme_color_hint"
+								android:inputType="number" android:textColor="#fff" android:textColorHint="?theme_color_hint"
 								android:password="true" android:maxLength="20"
 								android:singleLine="true" android:digits="@string/talk_name_digits"
 								android:isScrollContainer="true" android:focusableInTouchMode="false" />
@@ -48,7 +48,7 @@
 						</LinearLayout>
 						<Button android:layout_height="50dip" android:id="@+id/talk_btn_login"
 							android:text="@string/talk_login" android:textSize="18dip"
-							android:textColor="?theme_button_text_color" android:layout_width="fill_parent"
+							android:textColor="#fff" android:layout_width="fill_parent"
 							android:layout_marginLeft="18dip" android:layout_marginRight="18dip"
 							android:layout_marginTop="30dip" android:layout_marginBottom="20dip"
 							android:background="?theme_button"
@@ -65,12 +65,12 @@
 								android:layout_width="wrap_content" android:layout_height="wrap_content" />
 							<TextView android:id="@+id/talk_account_info"
 								android:layout_width="wrap_content" android:layout_height="wrap_content"
-								android:text="@string/talk_logining" android:textColor="?theme_button_text_color"
+								android:text="@string/talk_logining" android:textColor="#fff"
 								android:gravity="center" android:layout_margin="20dip" />
 						</LinearLayout>
 						<Button android:visibility="gone" android:layout_height="50dip"
 							android:id="@+id/talk_btn_login_cancel" android:text="@string/talk_login_cancel"
-							android:textSize="18dip" android:textColor="?theme_button_text_color"
+							android:textSize="18dip" android:textColor="#fff"
 							android:layout_width="fill_parent" android:layout_marginLeft="18dip"
 							android:layout_marginRight="18dip" android:layout_marginTop="30dip"
 							android:background="?theme_button"

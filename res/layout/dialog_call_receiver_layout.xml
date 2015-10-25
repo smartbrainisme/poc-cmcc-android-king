@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="37dp"
+        android:layout_marginRight="37dp"
+        android:orientation="vertical"
+        android:paddingBottom="25dp"
+        android:paddingTop="25dp" >
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:textColor="@android:color/black"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:maxLines="3"
+            android:textColor="#757575"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+ 
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="80dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="20dp"
+         >
+
+        <Button
+            android:id="@+id/cancle"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/bg_holdup"
+            android:gravity="center"
+            android:drawableStart="@drawable/ic_hold_up"
+            android:paddingLeft="50dp"
+            android:textColor="#282828"
+            android:textSize="15.5sp" 
+            />
+
+     
+
+        <Button
+            android:layout_marginLeft="20dp"
+            android:id="@+id/sure"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_pick_up"
+            android:paddingLeft="50dp"
+            android:background="@drawable/bg_pickup"
+            android:gravity="center"
+            android:textColor="#282828"
+            android:textSize="0.5sp" />
+    </LinearLayout>
+
+</LinearLayout>

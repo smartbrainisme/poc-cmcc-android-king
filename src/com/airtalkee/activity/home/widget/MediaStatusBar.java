@@ -58,16 +58,16 @@ public class MediaStatusBar extends LinearLayout implements OnBarItemClickListen
 		this.sessionSp = context.getSharedPreferences(BaseFragment.SESSION_EVENT_KEY, 0);
 	}
 
-	public void init( StatusBarTitle title)
+	public void init( StatusBarTitle title,AirSession s)
 	{
 		this.barTitle = title;
-		setSession();
+		setSession(s);
 	}
 
-	public void setSession()
+	public void setSession(AirSession s)
 	{
 		listenerEnable();
-		this.session = AirSessionControl.getInstance().getCurrentChannelSession();
+		this.session = s;
 		if (null != this.session)
 		{
 			barTitle.setSession(this.session);
@@ -109,7 +109,6 @@ public class MediaStatusBar extends LinearLayout implements OnBarItemClickListen
 		currentPage = arg0;
 		bar = bars.get(currentPage);
 		bar.setVisibility(View.VISIBLE);
-		setSession();
 	}
 
 	private void barInit()

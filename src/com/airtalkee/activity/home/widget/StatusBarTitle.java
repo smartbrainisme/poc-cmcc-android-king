@@ -58,6 +58,11 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		this.session = s;
 		refreshMediaStatus();
 	}
+	
+	public void setLeftMenuInVisible()
+	{
+		btnLeft.setVisibility(View.INVISIBLE);
+	}
 
 	public void refreshMediaStatus()
 	{
