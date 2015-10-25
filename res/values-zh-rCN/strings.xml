@@ -255,9 +255,11 @@
 	<string name="talk_current_user">当前用户:%s</string>
 	<string name="talk_account_other">您的帐号已在另一台设备上登录！请重新登录！</string>
 	<string name="talk_video_addr_error">视频地址无效！</string>
+	<string name="talk_verion_check">检查更新</string>
 	<string name="talk_verion_upeate">现在更新</string>
 	<string name="talk_verion_cancel">下次再说 </string>
 	<string name="talk_verion_title">版本更新 </string>
+	<string name="talk_verion_latest">已经是最新版本</string>
 	<string name="talk_volume">媒体音量（%d） </string>
 	<string name="talk_volume_max">媒体音量已是最大 </string>
 	<string name="talk_volume_min">媒体音量已是最小 </string>

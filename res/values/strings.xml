@@ -257,6 +257,8 @@
     <string name="talk_verion_upeate">Update now</string>
     <string name="talk_verion_cancel">Next time</string>
     <string name="talk_verion_title">Version update</string>
+    <string name="talk_verion_check">Version check</string>
+    <string name="talk_verion_latest">The application is the latest version</string>
     <string name="talk_volume">Volume (%d) </string>
     <string name="talk_volume_max">Media volume maximum</string>
     <string name="talk_volume_min">Media volume minimum</string>

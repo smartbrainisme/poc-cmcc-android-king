@@ -22,6 +22,8 @@
     <attr name="theme_button_1px" format="reference"/>
     <attr name="theme_button_1" format="reference"/>
     <attr name="theme_button_text_color" format="color"/>
+    <attr name="theme_button_commit" format="color"/>
+    <attr name="theme_button_refresh" format="color"/>
     <attr name="theme_text_color" format="color"/>
     <attr name="theme_menu_left_icon" format="reference"/>
     <attr name="theme_menu_left_icon1" format="reference"/>

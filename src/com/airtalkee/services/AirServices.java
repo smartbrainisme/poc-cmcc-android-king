@@ -529,7 +529,6 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 	@Override
 	public void UserVersionUpdate(int versionFlag, String versionInfo, final String url)
 	{
-		// TODO Auto-generated method stub
 		if (versionFlag == 0)
 			return;
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);

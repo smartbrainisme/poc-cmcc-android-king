@@ -230,10 +230,10 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 				{
 					AirLocation.getInstance(MenuGpsActivity.this).GpsActive();
 				}
-
 				mStateSelected = 0;
 				mFrequenceSelected = 0;
 				AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_NAVIGATE, true);
+				setHighFreView(true);
 			}
 		});
 
@@ -242,6 +242,7 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 			public void onClick(DialogInterface dialog, int whichButton)
 			{
 				dialog.cancel();
+				setHighFreView(false);
 			}
 		});
 		builder.show();
@@ -278,9 +279,9 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 	{
+		final Context context = this;
 		if (buttonView != null)
 		{
-			final Context context = this;
 			switch (buttonView.getId())
 			{
 				case R.id.talk_setting_gps:
@@ -313,15 +314,21 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 				{
 					if (cbGPSHigh.isChecked())// 是否开启高精度模式
 					{
+						final boolean isGpsActived = AirLocation.getInstance(this).GpsIsActive();
+						confirmGpsHighPrecision();
 						// confirmGpsHighPrecision();
-						mFrequenceSelected = 0;
-						AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_NAVIGATE, true);
-						setHighFreView(true);
+//						if (!isGpsActived)
+//						{
+//							AirLocation.getInstance(MenuGpsActivity.this).GpsActive();
+//						}
+//						mStateSelected = 0;
+//						mFrequenceSelected = 0;
+//						AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_NAVIGATE, true);
+//						setHighFreView(true);
 					}
 					else
 					{
-						AirLocation.getInstance(context).loopRun(MenuGpsActivity.this, mFrequenceValue[mFrequenceSelected], true);
-
+//						AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, mFrequenceValue[mFrequenceSelected], true);
 						setHighFreView(false);
 						switch (mFrequenceValue[mFrequenceSelected])
 						{
@@ -432,6 +439,8 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 			set15MinView(false);
 			set30MinView(false);
 			set60MinView(false);
+			cbGPSHigh.setBackground(getResources().getDrawable(R.drawable.btn_setting_open));
+//			cbGPSHigh.setBackground(getResources().getDrawable(R.drawable.selector_btn_check_new));
 		}
 		else
 		{
@@ -449,6 +458,9 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 			rb15Min.setClickable(true);
 			rb30Min.setClickable(true);
 			rb60Min.setClickable(true);
+			cbGPSHigh.setChecked(false);
+			cbGPSHigh.setBackground(getResources().getDrawable(R.drawable.btn_setting_close));
+//			cbGPSHigh.setBackground(getResources().getDrawable(R.drawable.selector_btn_check_new));
 		}
 	}
 

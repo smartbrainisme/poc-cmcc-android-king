@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.airtalkee.R;
+import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.config.Config;
@@ -46,6 +47,22 @@ public class MenuDisplayActivity extends ActivityBase implements
 	{
 		// TODO Auto-generated method stub
 		super.onStart();
+	}
+
+	@Override
+	protected void onPause()
+	{
+		// TODO Auto-generated method stub
+		super.onPause();
+		AirtalkeeUserInfo.getInstance().setOnUserInfoListener(null);
+	}
+
+	@Override
+	protected void onResume()
+	{
+		// TODO Auto-generated method stub
+		super.onResume();
+		AirtalkeeUserInfo.getInstance().setOnUserInfoListener(this);
 	}
 
 	private void doInitView()
@@ -95,9 +112,11 @@ public class MenuDisplayActivity extends ActivityBase implements
 					{
 						try
 						{
-//							Util.Toast(this, getString(R.string.talk_user_info_update_name_doing));
+							// Util.Toast(this,
+							// getString(R.string.talk_user_info_update_name_doing));
 							AirtalkeeUserInfo.getInstance().UserInfoUpdate(value.trim());
 							Util.Toast(this, getString(R.string.talk_channel_editname_success), R.drawable.ic_success);
+							finish();
 						}
 						catch (Exception e)
 						{

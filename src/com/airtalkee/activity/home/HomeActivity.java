@@ -2,7 +2,6 @@ package com.airtalkee.activity.home;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -18,7 +17,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.DensityUtil;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
@@ -31,11 +29,12 @@ import com.airtalkee.widget.SlidingUpPanelLayout;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelSlideListener;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelState;
 
-public class HomeActivity extends FragmentActivity implements OnPageChangeListener,PanelSlideListener,ViewChangeListener
+public class HomeActivity extends FragmentActivity implements
+		OnPageChangeListener, PanelSlideListener, ViewChangeListener
 {
-	
-	private String TAG ="HOME_ACTIVITY";
-	
+
+	private String TAG = "HOME_ACTIVITY";
+
 	public static final int PAGE_MEMBER = 0;
 	public static final int PAGE_PTT = 1;
 	public static final int PAGE_IM = 2;
@@ -49,26 +48,26 @@ public class HomeActivity extends FragmentActivity implements OnPageChangeListen
 	private PageFragmentAdapter adapter;
 	private PageIndicator mPageIndicator;
 	private int pageIndex = PAGE_PTT;
-	
+
 	private MediaStatusBar mediaStatusBar;
 	private SlidingUpPanelLayout mLayout;
 	private ImageView slidingBack;
 	private SessionAndChannelView channelView;
 	private LinearLayout contaner;
-	
+
 	@Override
 	protected void onCreate(Bundle arg0)
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 		setContentView(R.layout.activity_home);
-		
+
 		setRequestedOrientation(Config.screenOrientation);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
-		
+
 		mediaStatusBar = (MediaStatusBar) findViewById(R.id.media_status_function_bar);
 		mediaStatusBar.init((StatusBarTitle) findViewById(R.id.media_status_title_bar));
-		
+
 		final FragmentManager fm = getSupportFragmentManager();
 		this.viewPager = (ViewPager) findViewById(R.id.home_activity_page_content);
 		this.adapter = new PageFragmentAdapter(this, fm);
@@ -77,49 +76,54 @@ public class HomeActivity extends FragmentActivity implements OnPageChangeListen
 		this.viewPager.setOffscreenPageLimit(TABS.length);
 		this.mPageIndicator = (PageIndicator) findViewById(R.id.indicator);
 		this.mPageIndicator.setViewPager(viewPager);
-		
+
 		DensityUtil.initScreen(this);
-		int height =DensityUtil.getHeight(this)- DensityUtil.getStatusHeight(this)-150;
+		int height = DensityUtil.getHeight(this) - DensityUtil.getStatusHeight(this) - 150;
 		mLayout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
 		mLayout.setParalaxOffset(height);
-        mLayout.setPanelSlideListener(this);
-		contaner =(LinearLayout) findViewById(R.id.sliding_layout_contaner);
-		
-		channelView = new SessionAndChannelView(this,this);
+		mLayout.setPanelSlideListener(this);
+		contaner = (LinearLayout) findViewById(R.id.sliding_layout_contaner);
+
+		channelView = new SessionAndChannelView(this, this);
 		contaner.addView(channelView);
-		slidingBack = (ImageView)channelView.findViewById(R.id.sliding_back);
+		slidingBack = (ImageView) channelView.findViewById(R.id.sliding_back);
 	}
-	
-	 @Override
-     public void onPanelSlide(View panel, float slideOffset) {
-         Log.i(TAG, "onPanelSlide, offset " + slideOffset);
-     }
 
-     @Override
-     public void onPanelExpanded(View panel) {
-         Log.i(TAG, "onPanelExpanded");
-         contaner.setBackgroundColor(0xff222222);
-         slidingBack.setVisibility(View.VISIBLE);
-         channelView.resume();
-     }
+	@Override
+	public void onPanelSlide(View panel, float slideOffset)
+	{
+		Log.i(TAG, "onPanelSlide, offset " + slideOffset);
+	}
 
-     @Override
-     public void onPanelCollapsed(View panel) {
-         Log.i(TAG, "onPanelCollapsed");
-         contaner.setBackgroundColor(0x00000000);
-         slidingBack.setVisibility(View.GONE);
-         this.onPageSelected(pageIndex);
-     }
+	@Override
+	public void onPanelExpanded(View panel)
+	{
+		Log.i(TAG, "onPanelExpanded");
+		contaner.setBackgroundColor(0xff222222);
+		slidingBack.setVisibility(View.VISIBLE);
+		channelView.resume();
+	}
 
-     @Override
-     public void onPanelAnchored(View panel) {
-         Log.i(TAG, "onPanelAnchored");
-     }
+	@Override
+	public void onPanelCollapsed(View panel)
+	{
+		Log.i(TAG, "onPanelCollapsed");
+		contaner.setBackgroundColor(0x00000000);
+		slidingBack.setVisibility(View.GONE);
+		this.onPageSelected(pageIndex);
+	}
 
-     @Override
-     public void onPanelHidden(View panel) {
-         Log.i(TAG, "onPanelHidden");
-     }
+	@Override
+	public void onPanelAnchored(View panel)
+	{
+		Log.i(TAG, "onPanelAnchored");
+	}
+
+	@Override
+	public void onPanelHidden(View panel)
+	{
+		Log.i(TAG, "onPanelHidden");
+	}
 
 	@Override
 	protected void onResumeFragments()
@@ -164,7 +168,7 @@ public class HomeActivity extends FragmentActivity implements OnPageChangeListen
 					adapter.getItem(i).onPause();
 				}
 		}
-		pageIndex = page; 
+		pageIndex = page;
 		viewPager.setCurrentItem(pageIndex);
 	}
 
@@ -207,7 +211,7 @@ public class HomeActivity extends FragmentActivity implements OnPageChangeListen
 		// TODO Auto-generated method stub
 		if (ev.getAction() == MotionEvent.ACTION_DOWN)
 		{
-//			View v = getCurrentFocus();
+			// View v = getCurrentFocus();
 			View v = mediaStatusBar.getBottomBarParent();
 			if (isShouldHideInput(v, ev))
 			{
@@ -254,7 +258,7 @@ public class HomeActivity extends FragmentActivity implements OnPageChangeListen
 	public void onViewChanged(String sessionCode)
 	{
 		// TODO Auto-generated method stub
-		if(mLayout != null)
+		if (mLayout != null)
 		{
 			mLayout.setPanelState(PanelState.COLLAPSED);
 		}

@@ -41,27 +41,15 @@ import com.airtalkee.sdk.util.IOoperate;
 import com.airtalkee.sdk.util.Utils;
 
 public class MoreActivity extends ActivityBase implements OnClickListener,
-		AirMmiTimerListener, OnUserInfoListener, OnSeekBarChangeListener
+		OnUserInfoListener, OnSeekBarChangeListener
 {
 
 	public TextView tvUserName;
 	public TextView tvUserIpocid;
 	private TextView tvVersion;
 
-	private LinearLayout statLayout;
-	private TextView statLayoutTime;
-	private TextView statLayoutBytes;
 	private SeekBar mVoiceVolumeSeekBar;
 	private CheckBox mVoiceMode;
-
-	private final String STAT_RECV = "STAT_RECV";
-	private final String STAT_SENT = "STAT_SENT";
-	private final String STAT_TIME = "STAT_TIME";
-
-	private int gStatRecv = 0;
-	private int gStatSent = 0;
-	private long gStatTime = 0;
-	private IOoperate iOperate = null;
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -70,10 +58,6 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		super.onCreate(bundle);
 		setRequestedOrientation(Config.screenOrientation);
 		setContentView(R.layout.activity_tool);
-		iOperate = new IOoperate();
-		gStatRecv = iOperate.getInt(STAT_RECV, 0);
-		gStatSent = iOperate.getInt(STAT_SENT, 0);
-		gStatTime = iOperate.getLong(STAT_TIME);
 		doInitView();
 	}
 
@@ -151,7 +135,8 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		findViewById(R.id.talk_setting_voice).setOnClickListener(this);
 		findViewById(R.id.talk_lv_tool_upload_record).setOnClickListener(this);// 上报记录
 		findViewById(R.id.talk_lv_tool_help).setOnClickListener(this);// 使用和帮助
-		findViewById(R.id.talk_tv_notice).setOnClickListener(this);//广播
+		findViewById(R.id.talk_tv_notice).setOnClickListener(this);// 广播
+		findViewById(R.id.talk_lv_tool_about).setOnClickListener(this);// 关于
 		// Report item
 		// if (Config.funcCenterReport)
 		// {
@@ -186,56 +171,35 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 
 		// Manual item
 		/*
-		if (Config.funcManual)
-		{
-			findViewById(R.id.talk_lv_tool_manual).setOnClickListener(this);
-			findViewById(R.id.talk_lv_tool_manual).setVisibility(View.VISIBLE);
-			findViewById(R.id.talk_lv_tool_manual_divider).setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			findViewById(R.id.talk_lv_tool_manual).setVisibility(View.GONE);
-			findViewById(R.id.talk_lv_tool_manual_divider).setVisibility(View.GONE);
-		}
-
-		// Defect report
-		if (Config.funcfeedback)
-		{
-			findViewById(R.id.talk_lv_tool_defect).setOnClickListener(this);
-			findViewById(R.id.talk_lv_tool_defect).setVisibility(View.VISIBLE);
-			findViewById(R.id.talk_lv_tool_defect_divider).setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			findViewById(R.id.talk_lv_tool_defect).setVisibility(View.GONE);
-			findViewById(R.id.talk_lv_tool_defect_divider).setVisibility(View.GONE);
-		}
-		// Sysinfo item
-		if (!Utils.isEmpty(Config.serverUrlInfosys))
-		{
-			findViewById(R.id.talk_lv_tool_infosys).setOnClickListener(this);
-			findViewById(R.id.talk_lv_tool_infosys).setVisibility(View.VISIBLE);
-			findViewById(R.id.talk_lv_tool_infosys_divider).setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			findViewById(R.id.talk_lv_tool_infosys).setVisibility(View.GONE);
-			findViewById(R.id.talk_lv_tool_infosys_divider).setVisibility(View.GONE);
-		}*/
-
-		// Statistic item
-		statLayout = (LinearLayout) findViewById(R.id.talk_tv_statistic);
-		statLayoutTime = (TextView) findViewById(R.id.talk_tv_statistic_time);
-		statLayoutBytes = (TextView) findViewById(R.id.talk_tv_statistic_bytes);
-
-		if (Config.funcStatisticNetwork)
-		{
-			statLayout.setOnClickListener(this);
-		}
-		else
-		{
-			statLayout.setVisibility(View.GONE);
-		}
+		 * if (Config.funcManual) {
+		 * findViewById(R.id.talk_lv_tool_manual).setOnClickListener(this);
+		 * findViewById(R.id.talk_lv_tool_manual).setVisibility(View.VISIBLE);
+		 * findViewById
+		 * (R.id.talk_lv_tool_manual_divider).setVisibility(View.VISIBLE); }
+		 * else {
+		 * findViewById(R.id.talk_lv_tool_manual).setVisibility(View.GONE);
+		 * findViewById
+		 * (R.id.talk_lv_tool_manual_divider).setVisibility(View.GONE); }
+		 * 
+		 * // Defect report if (Config.funcfeedback) {
+		 * findViewById(R.id.talk_lv_tool_defect).setOnClickListener(this);
+		 * findViewById(R.id.talk_lv_tool_defect).setVisibility(View.VISIBLE);
+		 * findViewById
+		 * (R.id.talk_lv_tool_defect_divider).setVisibility(View.VISIBLE); }
+		 * else {
+		 * findViewById(R.id.talk_lv_tool_defect).setVisibility(View.GONE);
+		 * findViewById
+		 * (R.id.talk_lv_tool_defect_divider).setVisibility(View.GONE); } //
+		 * Sysinfo item if (!Utils.isEmpty(Config.serverUrlInfosys)) {
+		 * findViewById(R.id.talk_lv_tool_infosys).setOnClickListener(this);
+		 * findViewById(R.id.talk_lv_tool_infosys).setVisibility(View.VISIBLE);
+		 * findViewById
+		 * (R.id.talk_lv_tool_infosys_divider).setVisibility(View.VISIBLE); }
+		 * else {
+		 * findViewById(R.id.talk_lv_tool_infosys).setVisibility(View.GONE);
+		 * findViewById
+		 * (R.id.talk_lv_tool_infosys_divider).setVisibility(View.GONE); }
+		 */
 
 		if (Config.funcThemeChange)
 		{
@@ -301,10 +265,6 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		// TODO Auto-generated method stub
 		super.onPause();
 		AirtalkeeUserInfo.getInstance().setOnUserInfoListener(null);
-		if (statLayout.getVisibility() == View.VISIBLE)
-		{
-			AirMmiTimer.getInstance().TimerUnregister(this, this);
-		}
 	}
 
 	@Override
@@ -313,10 +273,6 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		// TODO Auto-generated method stub
 		super.onResume();
 		AirtalkeeUserInfo.getInstance().setOnUserInfoListener(this);
-		if (statLayout.getVisibility() == View.VISIBLE)
-		{
-			AirMmiTimer.getInstance().TimerRegister(this, this, false, false, 1000, true, null);
-		}
 	}
 
 	@Override
@@ -368,108 +324,60 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 				startActivity(it);
 				break;
 			}
+			case R.id.talk_lv_tool_about:
+			{
+				Intent it = new Intent(this, MenuAboutActivity.class);
+				startActivity(it);
+				break;
+			}
 			/*
-			case R.id.talk_lv_tool_exit:
-			{
-				if (MainActivity.getInstance() != null)
-				{
-					Builder builder = MainActivity.getInstance().BuildExitDialog(this);
-					builder.show();
-				}
-				break;
-			}
-			case R.id.talk_change_theme:
-			{
-				ThemeUtil.changeTheme(this);
-				break;
-			}
-			case R.id.talk_lv_tool_update:
-			{
-				Intent it = new Intent(this, MenuSettingActivity.class);
-				startActivity(it);
-				break;
-			}
-			case R.id.talk_lv_tool_manual:
-			{
-				Intent it = new Intent(this, MenuManualActivity.class);
-				startActivity(it);
-				break;
-			}
-			case R.id.talk_lv_tool_defect:
-			{
-				Intent it = new Intent(this, MenuDefectReportActivity.class);
-				startActivity(it);
-				break;
-			}
-			case R.id.talk_lv_tool_infosys:
-			{
-				Intent LaunchIntent = getPackageManager().getLaunchIntentForPackage("com.wf.info");
-				if (LaunchIntent != null)
-				{
-					startActivity(LaunchIntent);
-				}
-				else
-				{
-					Util.Toast(this, getString(R.string.talk_tools_infosys_null));
-					Uri uri = Uri.parse(Config.serverUrlInfosys);
-					Intent web = new Intent(Intent.ACTION_VIEW, uri);
-					startActivity(web);
-				}
-				break;
-			}*/
+			 * case R.id.talk_lv_tool_exit: { if (MainActivity.getInstance() !=
+			 * null) { Builder builder =
+			 * MainActivity.getInstance().BuildExitDialog(this); builder.show();
+			 * } break; } case R.id.talk_change_theme: {
+			 * ThemeUtil.changeTheme(this); break; } case
+			 * R.id.talk_lv_tool_update: { Intent it = new Intent(this,
+			 * MenuSettingActivity.class); startActivity(it); break; } case
+			 * R.id.talk_lv_tool_manual: { Intent it = new Intent(this,
+			 * MenuManualActivity.class); startActivity(it); break; } case
+			 * R.id.talk_lv_tool_defect: { Intent it = new Intent(this,
+			 * MenuDefectReportActivity.class); startActivity(it); break; } case
+			 * R.id.talk_lv_tool_infosys: { Intent LaunchIntent =
+			 * getPackageManager().getLaunchIntentForPackage("com.wf.info"); if
+			 * (LaunchIntent != null) { startActivity(LaunchIntent); } else {
+			 * Util.Toast(this, getString(R.string.talk_tools_infosys_null));
+			 * Uri uri = Uri.parse(Config.serverUrlInfosys); Intent web = new
+			 * Intent(Intent.ACTION_VIEW, uri); startActivity(web); } break; }
+			 */
 			case R.id.talk_tv_user_name_panel:
 			{
 				/*
-				final Context context = this;
-				final EditText input = new EditText(this);
-				input.setSingleLine();
-				input.setHint(AirtalkeeUserInfo.getInstance().getUserInfo().getDisplayName());
-				new AlertDialog.Builder(this).setTitle(getString(R.string.talk_user_info_update_name)).setView(input).setPositiveButton(getString(R.string.talk_ok), new DialogInterface.OnClickListener()
-				{
-
-					public void onClick(DialogInterface dialog, int which)
-					{
-						String value = input.getText().toString();
-						if (!Utils.isEmpty(value))
-						{
-							if (value.length() > MenuSettingActivity.SETTING_DISPLAYNAME_LEN)
-							{
-								Util.Toast(context, getString(R.string.talk_user_info_update_name_error));
-							}
-							else
-							{
-								AirtalkeeUserInfo.getInstance().UserInfoUpdate(value.trim());
-								Util.Toast(context, getString(R.string.talk_user_info_update_name_doing));
-							}
-						}
-					}
-
-				}).setNegativeButton(getString(R.string.talk_no), null).show();*/
+				 * final Context context = this; final EditText input = new
+				 * EditText(this); input.setSingleLine();
+				 * input.setHint(AirtalkeeUserInfo
+				 * .getInstance().getUserInfo().getDisplayName()); new
+				 * AlertDialog.Builder(this).setTitle(getString(R.string.
+				 * talk_user_info_update_name
+				 * )).setView(input).setPositiveButton(
+				 * getString(R.string.talk_ok), new
+				 * DialogInterface.OnClickListener() {
+				 * 
+				 * public void onClick(DialogInterface dialog, int which) {
+				 * String value = input.getText().toString(); if
+				 * (!Utils.isEmpty(value)) { if (value.length() >
+				 * MenuSettingActivity.SETTING_DISPLAYNAME_LEN) {
+				 * Util.Toast(context,
+				 * getString(R.string.talk_user_info_update_name_error)); } else
+				 * {
+				 * AirtalkeeUserInfo.getInstance().UserInfoUpdate(value.trim());
+				 * Util.Toast(context,
+				 * getString(R.string.talk_user_info_update_name_doing)); } } }
+				 * 
+				 * }).setNegativeButton(getString(R.string.talk_no),
+				 * null).show();
+				 */
 				Intent it = new Intent(this, MenuAccountActivity.class);
 				startActivity(it);
-				break;
-			}
-			case R.id.talk_tv_statistic:
-			{
-				AirtalkeeAccount.getInstance().statisticsNetworkByteClean();
-
-				gStatRecv = 0;
-				gStatSent = 0;
-				gStatTime = 0;
-				try
-				{
-					iOperate.putInt(STAT_RECV, 0);
-					iOperate.putInt(STAT_SENT, 0);
-					iOperate.putLong(STAT_TIME, 0);
-				}
-				catch (Exception e)
-				{
-					// TODO: handle exception
-				}
-
-				statLayoutTime.setText(getString(R.string.talk_statistic_time) + "00:00:00");
-				statLayoutBytes.setText(getString(R.string.talk_statistic_bytes) + "0.0K");
-				Util.Toast(this, getString(R.string.talk_statistic_tip));
 				break;
 			}
 			case R.id.talk_lv_tools_task:
@@ -486,57 +394,6 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 			}
 			default:
 				break;
-		}
-	}
-
-	@Override
-	public void onMmiTimer(Context context, Object userData)
-	{
-		// TODO Auto-generated method stub
-		AirStatisticsNetworkByte net = AirtalkeeAccount.getInstance().statisticsNetworkByte();
-
-		int statRecvBytes = net.getRecvBytes() + gStatRecv;
-		int statSentBytes = net.getSentBytes() + gStatSent;
-		long statTime = net.getTimeTotal() + gStatTime;
-
-		String timeString = String.format("%02d:%02d:%02d", statTime / 1000 / 60 / 60, statTime / 1000 / 60 % 60, statTime / 1000 % 60);
-		statLayoutTime.setText(getString(R.string.talk_statistic_time) + timeString);
-
-		String total = "";
-		int bytesTotal = (statRecvBytes + statSentBytes) / 1024;
-		if (bytesTotal > 1024) // M
-		{
-			total = "" + (bytesTotal / 1024) + "." + ((bytesTotal % 1024) / 100) + "M";
-		}
-		else
-		// K
-		{
-			total = "" + bytesTotal + "." + (((statRecvBytes + statSentBytes) % 1024) / 100) + "K";
-		}
-
-		int bytesInterval = net.getRecvBytesInterval() + net.getSentBytesInterval();
-		String bytesString = getString(R.string.talk_statistic_bytes) + total;
-		bytesString += " (";
-		if (net.getTimeInterval() / 1000 > 1)
-		{
-			bytesString += bytesInterval / (net.getTimeInterval() / 1000);
-		}
-		else
-		{
-			bytesString += bytesInterval;
-		}
-		bytesString += "B/S)";
-		statLayoutBytes.setText(bytesString);
-
-		try
-		{
-			iOperate.putInt(STAT_RECV, statRecvBytes);
-			iOperate.putInt(STAT_SENT, statSentBytes);
-			iOperate.putLong(STAT_TIME, statTime);
-		}
-		catch (Exception e)
-		{
-			// TODO: handle exception
 		}
 	}
 
