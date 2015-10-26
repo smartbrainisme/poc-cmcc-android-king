@@ -120,7 +120,7 @@ public class MenuAccountActivity extends ActivityBase implements
 						AirServices.iOperator.putBoolean(AirAccountManager.KEY_HB, false);
 						BluetoothManager.getInstance().btStop();
 						AirtalkeeAccount.getInstance().Logout();
-						// finish();
+						finish();
 						android.os.Process.killProcess(android.os.Process.myPid());
 					}
 				});

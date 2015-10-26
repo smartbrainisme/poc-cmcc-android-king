@@ -51,6 +51,8 @@
     <string name="talk_tools_infosys_null"></string>
     <string name="talk_tools_help">Help</string>
     <string name="talk_tools_report">Submission</string>
+    <string name="talk_tools_report_description">Submission description</string>
+    <string name="talk_tools_report_date">Submission date</string>
     <string name="talk_tools_report_pic">Picture Submit</string>
     <string name="talk_tools_report_vid">Video Submit</string>
     <string name="talk_tools_call_center">Call center</string>

@@ -39,6 +39,7 @@
         <item name="theme_button">@drawable/selector_button_light</item>
         <item name="theme_button_commit">@drawable/selector_button_commit</item>
         <item name="theme_button_refresh">@drawable/selector_button_refresh</item>
+        <item name="theme_report_retry">@drawable/selector_report_retry</item>
         <item name="theme_button_new">@drawable/selector_button_new</item>
         <item name="theme_button_logout">@drawable/selector_button_logout</item>
         <item name="theme_button_1">@drawable/selector_button_light</item>

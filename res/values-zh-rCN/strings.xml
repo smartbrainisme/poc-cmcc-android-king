@@ -51,8 +51,13 @@
 	<string name="talk_tools_infosys">信息采集</string>
 	<string name="talk_tools_infosys_null">请下载信息采集系统客户端，下载安装后便可使用！</string>
 	<string name="talk_tools_report">现场上报</string>
+	<string name="talk_tools_report_description">描述</string>
+	<string name="talk_tools_report_date">上报时间</string>
 	<string name="talk_tools_report_pic">图像上报</string>
 	<string name="talk_tools_report_vid">视频上报</string>
+	<string name="talk_tools_report_uploading">正在上报..</string>
+	<string name="talk_tools_report_waiting">等待上报..</string>
+	<string name="talk_tools_report_click">点击上传</string>
 	<string name="talk_tools_call_center">呼叫中心</string>
 	<string name="talk_tools_session">会话管理</string>
 	<string name="talk_tools_channel">频道管理</string>
