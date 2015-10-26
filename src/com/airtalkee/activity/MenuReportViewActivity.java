@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
@@ -63,11 +64,13 @@ public class MenuReportViewActivity extends ActivityBase implements
 			report = AirReportManager.getInstance().getReport(code);
 			if (report != null)
 			{
-				findViewById(R.id.report_resend).setOnClickListener(this);
+				Button btResend = (Button) findViewById(R.id.report_resend);
+				btResend.setOnClickListener(this);
 				ImageView iconImage = (ImageView) findViewById(R.id.report_image);
 				VideoView iconVideo = (VideoView) findViewById(R.id.report_video);
 				TextView content = (TextView) findViewById(R.id.report_content);
 				TextView time = (TextView) findViewById(R.id.report_time);
+				TextView tvFail = (TextView)findViewById(R.id.talk_report_fail_message);
 				if (report.getType() == AirtalkeeReport.RESOURCE_TYPE_VIDEO)
 				{
 					mVideoController = new MediaController(this);
@@ -99,6 +102,17 @@ public class MenuReportViewActivity extends ActivityBase implements
 				{
 					content.setText(report.getResContent());
 				}
+				int state = report.getState();
+				if (state == AirReport.STATE_RESULT_FAIL)
+				{
+					tvFail.setVisibility(View.VISIBLE);
+					btResend.setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					tvFail.setVisibility(View.GONE);
+					btResend.setVisibility(View.GONE);
+				}
 				time.setText(getString(R.string.talk_tools_report_date) + "：" + report.getTime());
 			}
 			else
@@ -121,8 +135,9 @@ public class MenuReportViewActivity extends ActivityBase implements
 			case R.id.report_resend:
 				if (report != null)
 				{
-					AirReportManager.getInstance().ReportResend(report);
-					finish();
+					AirReportManager.getInstance().ReportRetry((String) v.getTag());
+//					AirReportManager.getInstance().ReportResend(report);
+//					finish();
 				}
 				break;
 		}

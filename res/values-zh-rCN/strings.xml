@@ -58,6 +58,7 @@
 	<string name="talk_tools_report_uploading">正在上报..</string>
 	<string name="talk_tools_report_waiting">等待上报..</string>
 	<string name="talk_tools_report_click">点击上传</string>
+	<string name="talk_tools_report_fail">上传失败</string>
 	<string name="talk_tools_call_center">呼叫中心</string>
 	<string name="talk_tools_session">会话管理</string>
 	<string name="talk_tools_channel">频道管理</string>

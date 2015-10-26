@@ -33,7 +33,7 @@
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:background="?theme_sider_title_bg" 
+                    android:background="?theme_sider_title_bg"
                     android:orientation="vertical" >
 
                     <ImageView
@@ -41,39 +41,46 @@
                         android:layout_width="fill_parent"
                         android:layout_height="240dp"
                         android:padding="10dp"
-                        android:src="@drawable/report_default_pic" 
+                        android:src="@drawable/report_default_pic"
                         android:visibility="gone" />
 
                     <VideoView
                         android:id="@+id/report_video"
                         android:layout_width="fill_parent"
                         android:layout_height="240dip"
+                        android:clickable="true"
                         android:padding="10dp"
-                        android:clickable="true" 
                         android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/report_time"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dip"
-                        android:text="time"
-                        android:textColor="#787878"
-                        android:textSize="14dip" />
-
-                    <Button
-                        android:id="@+id/report_resend"
+                    <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="40dip"
-                        android:layout_marginBottom="10dip"
-                        android:layout_marginLeft="30dip"
-                        android:layout_marginRight="30dip"
-                        android:layout_marginTop="5dip"
-                        android:background="?theme_button"
-                        android:text="@string/talk_report_upload_resend"
-                        android:textColor="?theme_button_text_color"
-                        android:textSize="14dip"
-                        android:visibility="gone" />
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="center|center_vertical"
+                        android:orientation="horizontal" >
+
+                        <TextView
+                            android:id="@+id/report_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dip"
+                            android:text="time"
+                            android:textColor="#787878"
+                            android:textSize="14dip" />
+
+                        <TextView
+                            android:id="@+id/talk_report_fail_message"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dip"
+                            android:layout_marginLeft="10dp"
+                            android:background="@drawable/bg_report_fail"
+                            android:paddingLeft="5dp"
+                            android:paddingRight="5dp"
+                            android:singleLine="true"
+                            android:text="@string/talk_tools_report_fail"
+                            android:textColor="#FFFFFF"
+                            android:textSize="14dip" />
+                    </LinearLayout>
                 </LinearLayout>
 
                 <View
@@ -95,6 +102,22 @@
                         android:layout_margin="10dip"
                         android:text="content"
                         android:textColor="#282828"
+                        android:textSize="14dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center" >
+
+                    <Button
+                        android:id="@+id/report_resend"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:background="@drawable/selector_button_bg_new"
+                        android:text="@string/talk_report_upload_resend"
+                        android:textColor="#FFFFFF"
                         android:textSize="14dip" />
                 </LinearLayout>
             </LinearLayout>
