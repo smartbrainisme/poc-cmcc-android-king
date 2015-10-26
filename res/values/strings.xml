@@ -51,6 +51,8 @@
     <string name="talk_tools_infosys_null"></string>
     <string name="talk_tools_help">Help</string>
     <string name="talk_tools_report">Submission</string>
+    <string name="talk_tools_report_description">Submission description</string>
+    <string name="talk_tools_report_date">Submission date</string>
     <string name="talk_tools_report_pic">Picture Submit</string>
     <string name="talk_tools_report_vid">Video Submit</string>
     <string name="talk_tools_call_center">Call center</string>
@@ -257,6 +259,9 @@
     <string name="talk_verion_upeate">Update now</string>
     <string name="talk_verion_cancel">Next time</string>
     <string name="talk_verion_title">Version update</string>
+    <string name="talk_verion_check">Version check</string>
+    <string name="talk_verion_latest">The application is the latest version</string>
+    <string name="talk_version_new">New version</string>
     <string name="talk_volume">Volume (%d) </string>
     <string name="talk_volume_max">Media volume maximum</string>
     <string name="talk_volume_min">Media volume minimum</string>

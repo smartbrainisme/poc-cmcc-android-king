@@ -23,7 +23,7 @@
         <item name="theme_color_hint">@color/color_hint_dark</item>
         <item name="theme_color_text">@color/color_text_white_dark</item>
         <item name="theme_color_text1">@color/color_hint_dark</item>
-<!--         <item name="theme_sider_title_bg">@color/white</item> -->
+        <!-- <item name="theme_sider_title_bg">@color/white</item> -->
         <item name="theme_sider_title_bg">@drawable/selector_sider_title_bg</item>
         <item name="theme_bg_input">@drawable/shape_cmcc_bg</item>
         <item name="theme_bg_title">@drawable/title_bg_dark</item>
@@ -33,6 +33,9 @@
         <item name="theme_talk_panel">@drawable/talk_panel_bg</item>
         <item name="theme_color_logo_text">@color/color_text_white_dark</item>
         <item name="theme_button_text_color">@color/black</item>
+        <item name="theme_button_commit">@drawable/selector_button_commit</item>
+        <item name="theme_button_refresh">@drawable/selector_button_refresh</item>
+        <item name="theme_report_retry">@drawable/selector_report_retry</item>
         <item name="theme_text_color">@color/color_hint_dark</item>
         <item name="theme_button">@drawable/selector_button</item>
         <item name="theme_button_new">@drawable/selector_button_new</item>

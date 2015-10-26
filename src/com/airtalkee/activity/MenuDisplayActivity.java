@@ -1,20 +1,14 @@
 package com.airtalkee.activity;
 
 import java.util.List;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
@@ -22,6 +16,7 @@ import com.airtalkee.config.Config;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeUserInfo;
 import com.airtalkee.sdk.OnUserInfoListener;
+import com.airtalkee.sdk.controller.AccountInfoController;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactGroup;
 import com.airtalkee.sdk.util.Utils;
@@ -46,6 +41,23 @@ public class MenuDisplayActivity extends ActivityBase implements
 	{
 		// TODO Auto-generated method stub
 		super.onStart();
+		tvUserName.setText(AirtalkeeAccount.getInstance().getUserName());
+	}
+
+	@Override
+	protected void onPause()
+	{
+		// TODO Auto-generated method stub
+		super.onPause();
+		AirtalkeeUserInfo.getInstance().setOnUserInfoListener(null);
+	}
+
+	@Override
+	protected void onResume()
+	{
+		// TODO Auto-generated method stub
+		super.onResume();
+		AirtalkeeUserInfo.getInstance().setOnUserInfoListener(this);
 	}
 
 	private void doInitView()
@@ -62,8 +74,9 @@ public class MenuDisplayActivity extends ActivityBase implements
 		ivRight.setVisibility(View.GONE);
 		ivRightLay.setVisibility(View.INVISIBLE);
 
+		Intent accountIntent = getIntent();  
 		tvUserName = (EditText) findViewById(R.id.talk_tv_user_name);
-		tvUserName.setText(AirtalkeeAccount.getInstance().getUserName());
+		tvUserName.setText(accountIntent.getStringExtra("oldUserName"));
 
 		findViewById(R.id.talk_lv_tool_save).setOnClickListener(this);
 	}
@@ -95,9 +108,14 @@ public class MenuDisplayActivity extends ActivityBase implements
 					{
 						try
 						{
-//							Util.Toast(this, getString(R.string.talk_user_info_update_name_doing));
+							// Util.Toast(this,
+							// getString(R.string.talk_user_info_update_name_doing));
 							AirtalkeeUserInfo.getInstance().UserInfoUpdate(value.trim());
 							Util.Toast(this, getString(R.string.talk_channel_editname_success), R.drawable.ic_success);
+							Intent it = new Intent(MenuDisplayActivity.this, MenuAccountActivity.class);
+							it.putExtra("newUserName", value.trim());
+							setResult(1, it);
+							finish();
 						}
 						catch (Exception e)
 						{
@@ -130,11 +148,6 @@ public class MenuDisplayActivity extends ActivityBase implements
 		{
 			tvUserName.setText(user.getDisplayName());
 			Util.Toast(this, getString(R.string.talk_user_info_update_name_ok));
-			if (MainActivity.getInstance() != null)
-			{
-				MainActivity.getInstance().viewMiddle.refreshSessionMember();
-				MainActivity.getInstance().viewMiddle.refreshName();
-			}
 		}
 		else
 		{

@@ -181,7 +181,6 @@ public class MListView extends ListView implements OnScrollListener, OnClickList
 								changeHeaderViewByState();
 							}
 						}
-
 						if (state == DONE)
 						{
 							if (tempY - startY > 0)
@@ -190,18 +189,14 @@ public class MListView extends ListView implements OnScrollListener, OnClickList
 								changeHeaderViewByState();
 							}
 						}
-
 						if (state == PULL_To_REFRESH)
 						{
 							headView.setPadding(0, -1 * headContentHeight + (tempY - startY) / RATIO, 0, 0);
-
 						}
-
 						if (state == RELEASE_To_REFRESH)
 						{
 							headView.setPadding(0, (tempY - startY) / RATIO - headContentHeight, 0, 0);
 						}
-
 					}
 
 					break;

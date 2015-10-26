@@ -1,8 +1,6 @@
 package com.airtalkee.activity;
 
 import java.util.List;
-import android.app.AlertDialog.Builder;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -21,9 +19,6 @@ import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
-import com.airtalkee.config.Config;
-import com.airtalkee.sdk.AirtalkeeAccount;
-import com.airtalkee.sdk.OnUserInfoListener;
 import com.airtalkee.sdk.controller.AccountController;
 import com.airtalkee.sdk.controller.AccountInfoController;
 import com.airtalkee.sdk.engine.StructUserMark;
@@ -76,7 +71,7 @@ public class MenuPasswordActivity extends ActivityBase implements
 		ImageView ivRight = (ImageView) findViewById(R.id.bottom_right_icon);
 		ivRight.setVisibility(View.GONE);
 		ivRightLay.setVisibility(View.INVISIBLE);
-
+		AccountInfoController.setUserInfoListener(this);
 		old_password = (EditText) findViewById(R.id.old_password);
 		new_password = (EditText) findViewById(R.id.new_password);
 		new_password_confirm = (EditText) findViewById(R.id.new_password_confirm);

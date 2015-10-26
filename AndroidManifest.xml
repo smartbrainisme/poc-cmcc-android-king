@@ -18,8 +18,9 @@
 		<activity android:name=".activity.ChannelActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.ChannelManageActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuAccountActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuDisplayActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuAboutActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuAccountActivity" android:configChanges="orientation|keyboardHidden" />
+		<activity android:name=".activity.MenuDisplayActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name=".activity.MenuPasswordActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuDefectReportActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuGpsActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />

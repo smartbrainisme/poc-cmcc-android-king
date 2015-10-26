@@ -1,6 +1,8 @@
 package com.airtalkee.activity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -9,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
+import com.airtalkee.R.string;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.config.Config;
@@ -18,7 +20,8 @@ import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.OnSystemDefectListener;
 import com.airtalkee.sdk.util.Utils;
 
-public class MenuDefectReportActivity extends ActivityBase implements OnClickListener, OnSystemDefectListener
+public class MenuDefectReportActivity extends ActivityBase implements
+		OnClickListener, OnSystemDefectListener
 {
 
 	private EditText mDefectContent;
@@ -49,7 +52,7 @@ public class MenuDefectReportActivity extends ActivityBase implements OnClickLis
 		ivTitle.setText(R.string.talk_tools_defect);
 		View btnLeft = findViewById(R.id.menu_left_button);
 		ImageView ivLeft = (ImageView) findViewById(R.id.bottom_left_icon);
-		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this) );
+		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this));
 		btnLeft.setOnClickListener(this);
 
 		RelativeLayout ivRightLay = (RelativeLayout) findViewById(R.id.talk_menu_right_button);
@@ -58,9 +61,47 @@ public class MenuDefectReportActivity extends ActivityBase implements OnClickLis
 		ivRightLay.setVisibility(View.INVISIBLE);
 
 		mDefectContent = (EditText) findViewById(R.id.defect_report_content);
+		mDefectContent.addTextChangedListener(textWatcher);
 		mDefectWait = (ProgressBar) findViewById(R.id.defect_report_progress);
 		mDefectButton = (Button) findViewById(R.id.defect_report_post);
 		mDefectButton.setOnClickListener(this);
+		checkEditTextNull();
+	}
+
+	private TextWatcher textWatcher = new TextWatcher()
+	{
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after)
+		{
+			checkEditTextNull();
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count)
+		{
+			checkEditTextNull();
+		}
+
+		@Override
+		public void afterTextChanged(Editable s)
+		{
+			checkEditTextNull();
+		}
+	};
+
+	private void checkEditTextNull()
+	{
+		String content = mDefectContent.getText().toString().trim();
+		if (!content.equals(""))
+		{
+			mDefectButton.setClickable(true);
+			mDefectButton.setBackgroundResource(R.drawable.selector_button_commit);
+		}
+		else
+		{
+			mDefectButton.setClickable(false);
+			mDefectButton.setBackgroundResource(R.drawable.btn_commit_gray);
+		}
 	}
 
 	@Override
@@ -104,12 +145,12 @@ public class MenuDefectReportActivity extends ActivityBase implements OnClickLis
 		mDefectButton.setClickable(true);
 		if (isOk)
 		{
-			Util.Toast(this, getString(R.string.talk_tools_defect_report_tip));
+			Util.Toast(this, getString(R.string.talk_tools_defect_report_tip), R.drawable.ic_success);
 			finish();
 		}
 		else
 		{
-			Util.Toast(this, getString(R.string.talk_tools_defect_report_error));
+			Util.Toast(this, getString(R.string.talk_tools_defect_report_error), R.drawable.ic_error);
 		}
 	}
 

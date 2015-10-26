@@ -4,12 +4,12 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.config.Config;
@@ -22,19 +22,17 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
-public class MenuReportViewActivity extends ActivityBase implements OnClickListener
+public class MenuReportViewActivity extends ActivityBase implements
+		OnClickListener
 {
 
 	private MediaController mVideoController;
 	private AirReport report = null;
-	
-	protected ImageLoader imageLoader = ImageLoader.getInstance();
-	
-	DisplayImageOptions 	options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.msg_image).showImageOnFail(R.drawable.msg_image).resetViewBeforeLoading(true)
-		.cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)
-		.displayer(new FadeInBitmapDisplayer(300)).build();
 
-	
+	protected ImageLoader imageLoader = ImageLoader.getInstance();
+
+	DisplayImageOptions options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.msg_image).showImageOnFail(R.drawable.msg_image).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
+
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
@@ -51,7 +49,7 @@ public class MenuReportViewActivity extends ActivityBase implements OnClickListe
 		ivTitle.setText(R.string.talk_tools_report);
 		View btnLeft = findViewById(R.id.menu_left_button);
 		ImageView ivLeft = (ImageView) findViewById(R.id.bottom_left_icon);
-		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this) );
+		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this));
 		btnLeft.setOnClickListener(this);
 
 		RelativeLayout ivRightLay = (RelativeLayout) findViewById(R.id.talk_menu_right_button);
@@ -66,11 +64,13 @@ public class MenuReportViewActivity extends ActivityBase implements OnClickListe
 			report = AirReportManager.getInstance().getReport(code);
 			if (report != null)
 			{
-				findViewById(R.id.report_resend).setOnClickListener(this);
+				Button btResend = (Button) findViewById(R.id.report_resend);
+				btResend.setOnClickListener(this);
 				ImageView iconImage = (ImageView) findViewById(R.id.report_image);
 				VideoView iconVideo = (VideoView) findViewById(R.id.report_video);
 				TextView content = (TextView) findViewById(R.id.report_content);
 				TextView time = (TextView) findViewById(R.id.report_time);
+				TextView tvFail = (TextView)findViewById(R.id.talk_report_fail_message);
 				if (report.getType() == AirtalkeeReport.RESOURCE_TYPE_VIDEO)
 				{
 					mVideoController = new MediaController(this);
@@ -91,7 +91,7 @@ public class MenuReportViewActivity extends ActivityBase implements OnClickListe
 				{
 					iconVideo.setVisibility(View.GONE);
 					iconImage.setVisibility(View.VISIBLE);
-//					iconImage.setImageURI(report.getResUri());
+					// iconImage.setImageURI(report.getResUri());
 					imageLoader.displayImage(report.getResUri().toString(), iconImage);
 				}
 				if (Utils.isEmpty(report.getResContent()))
@@ -102,7 +102,18 @@ public class MenuReportViewActivity extends ActivityBase implements OnClickListe
 				{
 					content.setText(report.getResContent());
 				}
-				time.setText(report.getTime());
+				int state = report.getState();
+				if (state == AirReport.STATE_RESULT_FAIL)
+				{
+					tvFail.setVisibility(View.VISIBLE);
+					btResend.setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					tvFail.setVisibility(View.GONE);
+					btResend.setVisibility(View.GONE);
+				}
+				time.setText(getString(R.string.talk_tools_report_date) + "：" + report.getTime());
 			}
 			else
 			{
@@ -124,8 +135,9 @@ public class MenuReportViewActivity extends ActivityBase implements OnClickListe
 			case R.id.report_resend:
 				if (report != null)
 				{
-					AirReportManager.getInstance().ReportResend(report);
-					finish();
+					AirReportManager.getInstance().ReportRetry((String) v.getTag());
+//					AirReportManager.getInstance().ReportResend(report);
+//					finish();
 				}
 				break;
 		}

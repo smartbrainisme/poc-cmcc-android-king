@@ -1,103 +1,222 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<LinearLayout android:orientation="vertical" android:id="@+id/main_report"
-	android:layout_width="fill_parent" android:layout_height="fill_parent"
-	xmlns:android="http://schemas.android.com/apk/res/android" >
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="wrap_content" android:orientation="vertical">
-		<include layout="@layout/include_main_header" />
-	</LinearLayout>
-	<LinearLayout android:layout_width="fill_parent"
-		android:layout_height="fill_parent"
-		android:orientation="vertical">
-		<TextView android:id="@+id/report_image_progress"
-			android:text="0%" android:textColor="#eeeeee" android:textSize="20dip"
-			android:background="#222222" android:layout_width="fill_parent"
-			android:layout_height="35.0dip" android:gravity="center" />
-		<ScrollView android:id="@+id/report_panel" android:scrollbars="none" android:layout_width="fill_parent"
-			android:layout_height="fill_parent">
-			<RelativeLayout android:id="@+id/report_item_panel" android:layout_width="fill_parent"
-				android:layout_height="fill_parent" >
-				<!--上传图片-->
-				<LinearLayout android:id="@+id/report_item_pic" android:gravity="center"
-					android:orientation="vertical" android:layout_width="fill_parent"
-					android:layout_height="wrap_content">
-					<TextView android:id="@+id/report_image_text"
-						android:text="@string/talk_report_upload_pic" android:textSize="14dip" android:textColor="?theme_button_text_color"
-						android:layout_width="fill_parent" android:layout_height="wrap_content"
-						android:gravity="left" android:layout_margin="10dip"/>
-					<RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-						android:layout_marginLeft="10dip" android:layout_marginRight="10dip" android:gravity="center">
-						<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content"
-							android:background="#666666" android:gravity="center">
-							<ImageView android:id="@+id/report_image" android:src="@drawable/report_default_pic" android:clickable="true"
-								android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="3dip"/>
-						</LinearLayout>
-						<Button android:id="@+id/report_image_clean" android:layout_alignParentRight="true"
-							android:clickable="true" android:background="@drawable/del" android:visibility="gone"
-							android:layout_width="30dip" android:layout_height="30dip"
-							android:textColor="#ffffff" android:gravity="center" />
-						<TextView android:id="@+id/report_image_size" android:layout_margin="6dip"
-							android:text="45K" android:textSize="20dip" android:textColor="#ffffff"
-							android:layout_width="wrap_content" android:layout_height="25dip"
-							android:layout_alignParentBottom="true" android:layout_alignParentRight="true"
-							android:shadowColor="#000000" android:shadowDx="3" android:shadowDy="3" android:shadowRadius="0.6"/>
-					</RelativeLayout>
-				</LinearLayout>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_report"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
 
-				<!--信息描述-->
-				<LinearLayout android:id="@+id/report_item_detail"
-					android:layout_below="@id/report_item_pic"
-					android:orientation="vertical" android:layout_width="fill_parent"
-					android:layout_height="wrap_content">
-					<TextView android:id="@+id/report_detail_text"
-						android:text="@string/talk_report_upload_pic_info" android:textSize="14dip" android:textColor="?theme_button_text_color"
-						android:layout_width="fill_parent" android:layout_height="wrap_content"
-						android:layout_margin="10dip"/>
-					<EditText android:id="@+id/report_detail"
-						android:background="#666666" android:singleLine="false"
-						android:gravity="center|left|top" android:padding="5.0dip"
-						android:layout_marginLeft="10dip" android:layout_marginRight="10dip" android:layout_marginBottom="10dip"
-						android:textSize="14.0dip" android:layout_toRightOf="@id/report_detail_text" android:textColor="#eeeeee"
-						android:layout_width="fill_parent" android:layout_height="wrap_content" android:minLines="3"
-						android:layout_centerVertical="true" android:scrollbars="vertical" />
-				</LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-				<View android:id="@+id/report_item_divide"
-					android:layout_below="@id/report_item_detail" android:layout_width="fill_parent"
-					android:layout_height="1dip" android:background="@drawable/left_divider_line"></View>
+        <include layout="@layout/include_main_header" />
+    </LinearLayout>
 
-				<!--按钮-->
-				<LinearLayout android:id="@+id/report_item_take"
-					android:layout_below="@id/report_item_divide" android:gravity="center"
-					android:orientation="horizontal" android:layout_width="fill_parent"
-					android:layout_height="wrap_content">
-					<Button android:id="@+id/report_btn_take"
-						android:layout_margin="5.0dip" android:clickable="true"
-						android:background="?theme_button"
-						android:layout_width="145dip" android:text="@string/talk_report_upload_pic_capture" android:textSize="14dip"
-						android:layout_height="40dip" android:textColor="?theme_button_text_color" android:drawableLeft="@drawable/ic_capture"
-						android:paddingLeft="20dip"
-						android:drawablePadding="20dip" 
-						android:gravity="center_vertical" />
-					<Button android:id="@+id/report_btn_native"
-						android:layout_margin="5.0dip" android:clickable="true"
-						android:background="?theme_button"
-						android:layout_width="145dip" android:text="@string/talk_report_upload_pic_browse" android:paddingLeft="20dip"
-						android:textSize="14dip" android:layout_height="40dip" android:drawableLeft="@drawable/ic_browser"
-						android:textColor="?theme_button_text_color" android:gravity="center_vertical" android:drawablePadding="20dip"  />
-				</LinearLayout>
-				<LinearLayout android:id="@+id/report_item_post" android:layout_alignParentBottom="true"
-					android:layout_below="@id/report_item_take" android:gravity="center"
-					android:orientation="horizontal" android:layout_width="fill_parent"
-					android:layout_height="wrap_content" android:paddingBottom="20dip">
-					<Button android:id="@+id/report_btn_post" android:clickable="true"
-						android:background="?theme_button"
-						android:layout_width="300dip" android:text="@string/talk_report_upload_pic_up"
-						android:textSize="14dip" android:layout_height="40dip"
-						android:textColor="?theme_button_text_color" android:gravity="center" />
-				</LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
 
-			</RelativeLayout>
-		</ScrollView>
-	</LinearLayout>
+        <TextView
+            android:id="@+id/report_image_progress"
+            android:layout_width="fill_parent"
+            android:layout_height="35.0dip"
+            android:background="#222222"
+            android:gravity="center"
+            android:text="0%"
+            android:textColor="#eeeeee"
+            android:textSize="20dip" />
+
+        <ScrollView
+            android:id="@+id/report_panel"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scrollbars="none" >
+
+            <RelativeLayout
+                android:id="@+id/report_item_panel"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <!-- 上传图片 -->
+
+                <LinearLayout
+                    android:id="@+id/report_item_pic"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/report_image_text"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dip"
+                        android:gravity="left"
+                        android:text="@string/talk_report_upload_pic"
+                        android:textColor="?theme_button_text_color"
+                        android:textSize="14dip" />
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:layout_marginRight="10dip"
+                        android:gravity="center" >
+
+                        <LinearLayout
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#666666"
+                            android:gravity="center" >
+
+                            <ImageView
+                                android:id="@+id/report_image"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="3dip"
+                                android:clickable="true"
+                                android:src="@drawable/report_default_pic" />
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/report_image_clean"
+                            android:layout_width="30dip"
+                            android:layout_height="30dip"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/del"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:textColor="#ffffff"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:id="@+id/report_image_size"
+                            android:layout_width="wrap_content"
+                            android:layout_height="25dip"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_margin="6dip"
+                            android:shadowColor="#000000"
+                            android:shadowDx="3"
+                            android:shadowDy="3"
+                            android:shadowRadius="0.6"
+                            android:text="45K"
+                            android:textColor="#ffffff"
+                            android:textSize="20dip" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <!-- 信息描述 -->
+
+                <LinearLayout
+                    android:id="@+id/report_item_detail"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/report_item_pic"
+                    android:orientation="vertical" >
+
+                    <TextView
+                        android:id="@+id/report_detail_text"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dip"
+                        android:text="@string/talk_report_upload_pic_info"
+                        android:textColor="?theme_button_text_color"
+                        android:textSize="14dip" />
+
+                    <EditText
+                        android:id="@+id/report_detail"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginBottom="10dip"
+                        android:layout_marginLeft="10dip"
+                        android:layout_marginRight="10dip"
+                        android:layout_toRightOf="@id/report_detail_text"
+                        android:background="#666666"
+                        android:gravity="center|left|top"
+                        android:minLines="3"
+                        android:padding="5.0dip"
+                        android:scrollbars="vertical"
+                        android:singleLine="false"
+                        android:textColor="#eeeeee"
+                        android:textSize="14.0dip" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/report_item_divide"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dip"
+                    android:layout_below="@id/report_item_detail"
+                    android:background="@drawable/left_divider_line" >
+                </View>
+
+                <!-- 按钮 -->
+
+                <LinearLayout
+                    android:id="@+id/report_item_take"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/report_item_divide"
+                    android:gravity="center"
+                    android:orientation="horizontal" >
+
+                    <Button
+                        android:id="@+id/report_btn_take"
+                        android:layout_width="145dip"
+                        android:layout_height="40dip"
+                        android:layout_margin="5.0dip"
+                        android:background="?theme_button"
+                        android:clickable="true"
+                        android:drawableLeft="@drawable/ic_capture"
+                        android:drawablePadding="20dip"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dip"
+                        android:text="@string/talk_report_upload_pic_capture"
+                        android:textColor="?theme_button_text_color"
+                        android:textSize="14dip" />
+
+                    <Button
+                        android:id="@+id/report_btn_native"
+                        android:layout_width="145dip"
+                        android:layout_height="40dip"
+                        android:layout_margin="5.0dip"
+                        android:background="?theme_button"
+                        android:clickable="true"
+                        android:drawableLeft="@drawable/ic_browser"
+                        android:drawablePadding="20dip"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="20dip"
+                        android:text="@string/talk_report_upload_pic_browse"
+                        android:textColor="?theme_button_text_color"
+                        android:textSize="14dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/report_item_post"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@id/report_item_take"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="20dip" >
+
+                    <Button
+                        android:id="@+id/report_btn_post"
+                        android:layout_width="300dip"
+                        android:layout_height="40dip"
+                        android:background="?theme_button"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="@string/talk_report_upload_pic_up"
+                        android:textColor="?theme_button_text_color"
+                        android:textSize="14dip" />
+                </LinearLayout>
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
+
 </LinearLayout>

@@ -11,5 +11,8 @@
     <color name="color_tv1_pressed">#affdbf01</color>
     <color name="text_gray">#DDDDDD</color>
     <color name="radiobutton_text_gray">#9B9B9B</color>
+    <color name="update_text_new">#555555</color>
+    <color name="update_text_ing">#FF9400</color>
+    <color name="update_text_none">#999999</color>
     
 </resources>

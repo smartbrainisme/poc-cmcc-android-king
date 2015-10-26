@@ -102,6 +102,7 @@ public class MenuReportActivity extends ActivityBase implements OnClickListener,
 		talk_report_empty =findViewById(R.id.talk_report_empty);
 		ivRight.setVisibility(View.GONE);
 		ivRightLay.setVisibility(View.INVISIBLE);
+		
 		lvReportList = (MListView) findViewById(R.id.talk_report_list);
 		adapterReport = new AdapterReport(this, lvReportList);
 
@@ -274,14 +275,14 @@ public class MenuReportActivity extends ActivityBase implements OnClickListener,
 					{
 						switch (whichButton)
 						{
-							case 0:// TODO:�鿴
+							case 0:
 							{
 								Intent it = new Intent(activity, MenuReportViewActivity.class);
 								it.putExtra("code", report.getCode());
 								startActivity(it);
 								break;
 							}
-							case 1:// TODO:ɾ��
+							case 1:
 							{
 								AirReportManager.getInstance().ReportDelete(report.getCode());
 								break;
