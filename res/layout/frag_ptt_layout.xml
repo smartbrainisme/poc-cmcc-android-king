@@ -1,25 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout  android:id="@id/talk_layout_session_member" android:orientation="horizontal" android:layout_width="fill_parent"  android:layout_height="fill_parent"   xmlns:android="http://schemas.android.com/apk/res/android" android:padding="20dp"  >
-    <LinearLayout android:layout_alignLeft="@+id/iv_spetrum_lay" android:id="@+id/talk_playback" android:layout_width="200dp" android:layout_height="45dp" android:clickable="true" android:background="@drawable/selector_msg_current_bg" android:layout_marginTop="40dp"  android:gravity="center">
-		<ImageView android:id="@+id/talk_playback_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/msg_audio_play" android:layout_gravity="center" android:layout_marginLeft="10dp"/>
-		<RelativeLayout android:layout_width="fill_parent"  android:layout_height="wrap_content">
- 		 	<LinearLayout android:id="@+id/talk_playback_panel" android:layout_width="fill_parent"  android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginLeft="10dip" android:layout_marginRight="5dip" android:gravity="center_vertical">
- 		 		<LinearLayout  android:layout_width="fill_parent"  android:layout_height="wrap_content" android:orientation="horizontal" android:layout_weight="1" >
- 		 			<TextView android:id="@+id/talk_playback_seconds"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="1dip" android:gravity="left" android:text="12'" android:maxLength="4" android:textColor="?theme_button_text_color" android:textSize="16sp"/>
- 		 		</LinearLayout>
- 		 		<LinearLayout  android:layout_width="fill_parent"  android:layout_weight="1"  android:layout_height="wrap_content" android:orientation="vertical" android:gravity="right">
- 		 			<TextView android:id="@+id/talk_playback_user" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dip"  android:text="ZUOLIN" android:textColor="?theme_button_text_color" android:textSize="12sp" />
- 		 		    <TextView android:id="@+id/talk_playback_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="1dip" android:text="18:38:41" android:textColor="#d2d2d2" android:textSize="12sp"/>
- 		 			<LinearLayout  android:layout_width="fill_parent"  android:layout_height="fill_parent" android:orientation="horizontal" android:gravity="center_vertical|right">
- 		 				<ImageView android:id="@+id/talk_playback_user_unread" android:src="@drawable/msg_unread" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone" />
- 		 			</LinearLayout>
- 		 		</LinearLayout>
- 		 	</LinearLayout>
- 		 	<TextView android:id="@+id/talk_playback_none" android:visibility="gone" android:layout_width="fill_parent"  android:layout_height="fill_parent" android:text="@string/talk_msg_playback_none" android:textColor="#999999" android:textSize="15dip" android:gravity="center" />
+<FrameLayout  android:layout_width="fill_parent"  android:layout_height="fill_parent"   xmlns:android="http://schemas.android.com/apk/res/android" >
+	 <RelativeLayout  android:id="@id/talk_layout_session_member" android:orientation="horizontal" android:layout_width="fill_parent"  android:layout_height="fill_parent"   android:padding="20dp"  >
+	    <LinearLayout android:layout_alignLeft="@+id/iv_spetrum_lay" android:id="@+id/talk_playback" android:layout_width="200dp" android:layout_height="45dp" android:clickable="true" android:background="@drawable/selector_msg_current_bg" android:layout_marginTop="40dp"  android:gravity="center">
+			<ImageView android:id="@+id/talk_playback_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/msg_audio_play" android:layout_gravity="center" android:layout_marginLeft="10dp"/>
+			<RelativeLayout android:layout_width="fill_parent"  android:layout_height="wrap_content">
+	 		 	<LinearLayout android:id="@+id/talk_playback_panel" android:layout_width="fill_parent"  android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginLeft="10dip" android:layout_marginRight="5dip" android:gravity="center_vertical">
+	 		 		<LinearLayout  android:layout_width="fill_parent"  android:layout_height="wrap_content" android:orientation="horizontal" android:layout_weight="1" >
+	 		 			<TextView android:id="@+id/talk_playback_seconds"  android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_margin="1dip" android:gravity="left" android:text="12'" android:maxLength="4" android:textColor="?theme_button_text_color" android:textSize="16sp"/>
+	 		 		</LinearLayout>
+	 		 		<LinearLayout  android:layout_width="fill_parent"  android:layout_weight="1"  android:layout_height="wrap_content" android:orientation="vertical" android:gravity="right">
+	 		 			<TextView android:id="@+id/talk_playback_user" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="2dip"  android:text="ZUOLIN" android:textColor="?theme_button_text_color" android:textSize="12sp" />
+	 		 		    <TextView android:id="@+id/talk_playback_time" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="1dip" android:text="18:38:41" android:textColor="#d2d2d2" android:textSize="12sp"/>
+	 		 			<LinearLayout  android:layout_width="fill_parent"  android:layout_height="fill_parent" android:orientation="horizontal" android:gravity="center_vertical|right">
+	 		 				<ImageView android:id="@+id/talk_playback_user_unread" android:src="@drawable/msg_unread" android:layout_width="wrap_content" android:layout_height="wrap_content" android:visibility="gone" />
+	 		 			</LinearLayout>
+	 		 		</LinearLayout>
+	 		 	</LinearLayout>
+	 		 	<TextView android:id="@+id/talk_playback_none" android:visibility="gone" android:layout_width="fill_parent"  android:layout_height="fill_parent" android:text="@string/talk_msg_playback_none" android:textColor="#999999" android:textSize="15dip" android:gravity="center" />
+			</RelativeLayout>
+		</LinearLayout>
+		<RelativeLayout android:id="@+id/iv_spetrum_lay" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/talk_playback" android:layout_marginTop="60dp" android:layout_centerHorizontal="true" >
+		    <ImageView android:id="@+id/iv_spetrum" android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/bg_spectrum" android:layout_centerHorizontal="true" android:scaleType="fitXY"/> 
+			<com.airtalkee.widget.AudioVisualizerView android:id="@+id/talk_audio_visualizer" android:layout_width="wrap_content"  android:layout_height="wrap_content" android:layout_alignLeft="@+id/iv_spetrum" android:layout_alignRight="@+id/iv_spetrum"  android:layout_alignBaseline="@+id/iv_spetrum"  android:layout_alignTop="@+id/iv_spetrum" />
 		</RelativeLayout>
-	</LinearLayout>
-	<RelativeLayout android:id="@+id/iv_spetrum_lay" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_below="@+id/talk_playback" android:layout_marginTop="60dp" android:layout_centerHorizontal="true" >
-	    <ImageView android:id="@+id/iv_spetrum" android:layout_width="fill_parent" android:layout_height="wrap_content" android:src="@drawable/bg_spectrum" android:layout_centerHorizontal="true" android:scaleType="fitXY"/> 
-		<com.airtalkee.widget.AudioVisualizerView android:id="@+id/talk_audio_visualizer" android:layout_width="wrap_content"  android:layout_height="wrap_content" android:layout_alignLeft="@+id/iv_spetrum" android:layout_alignRight="@+id/iv_spetrum"  android:layout_alignBaseline="@+id/iv_spetrum"  android:layout_alignTop="@+id/iv_spetrum" />
 	</RelativeLayout>
-</RelativeLayout>
+    <LinearLayout android:visibility="gone" android:id="@+id/video_pannel" android:layout_width="fill_parent"  android:layout_height="80dp" android:gravity="center_vertical" android:orientation="horizontal" android:layout_gravity="bottom" android:background="#4A4A4A" >
+       	<ImageView android:id="@+id/btn_close"  android:layout_width="fill_parent"  android:layout_weight="1" android:layout_height="45dp" android:src="@drawable/ic_close_cicle" android:scaleType="center"  android:contentDescription="@string/app_name" />
+       	<ImageView android:id="@+id/btn_image"  android:layout_width="fill_parent"     android:layout_weight="1" android:layout_height="45dp" android:src="@drawable/ic_image" android:scaleType="center"   android:contentDescription="@string/app_name" />
+       	<ImageView android:id="@+id/btn_camera"  android:layout_width="fill_parent"    android:layout_weight="1" android:layout_height="45dp" android:src="@drawable/ic_camera" android:scaleType="center"   android:contentDescription="@string/app_name" />
+       	<ImageView android:id="@+id/btn_video"  android:layout_width="fill_parent"    android:layout_weight="1"  android:layout_height="45dp" android:src="@drawable/ic_video" android:scaleType="center"   android:contentDescription="@string/app_name" />
+	</LinearLayout>
+</FrameLayout>

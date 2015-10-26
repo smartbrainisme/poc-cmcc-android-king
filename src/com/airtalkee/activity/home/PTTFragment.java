@@ -40,7 +40,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 	private TextView recPlaybackTime;
 	private TextView recPlaybackNone;
 	private ImageView recPlaybackNew;
-
+	private View videoPannel;
 	private AirSession session = null;
 	private AirMessage currentMessage;
 
@@ -59,6 +59,13 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 		super.onResume();
 		setSession(getSession());
 	}
+	
+	@Override
+	public void onPause() {
+		// TODO Auto-generated method stub
+		super.onPause();
+		setViedoReportPannelVisiblity(View.GONE);
+	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,6 +74,12 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 		v = inflater.inflate(getLayout(), container, false);
 
 		findViewById(R.id.talk_playback).setOnClickListener(this);
+		findViewById(R.id.btn_close).setOnClickListener(this);
+		findViewById(R.id.btn_image).setOnClickListener(this);
+		findViewById(R.id.btn_camera).setOnClickListener(this);
+		findViewById(R.id.btn_video).setOnClickListener(this);
+
+		videoPannel = findViewById(R.id.video_pannel);
 		recPlayback = (LinearLayout) findViewById(R.id.talk_playback_panel);
 		recPlaybackIcon = (ImageView) findViewById(R.id.talk_playback_icon);
 		recPlaybackUser = (TextView) findViewById(R.id.talk_playback_user);
@@ -92,9 +105,8 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 			// TODO Auto-generated method stub
 			switch (id) {
 			case R.id.bar_left:
-				Intent it = new Intent(getActivity(), MenuReportActivity.class);
-				it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(it);
+				
+				setViedoReportPannelVisiblity(View.VISIBLE);
 				break;
 			case R.id.bar_mid:
 
@@ -141,7 +153,8 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 	@Override
 	public void onClick(View v) {
 		// TODO Auto-generated method stub
-		if (v.getId() == R.id.talk_playback) {
+		switch (v.getId()) {
+		case R.id.talk_playback: {
 			if (session != null && session.getMessagePlayback() != null) {
 				currentMessage = session.getMessagePlayback();
 				if (currentMessage.isRecordPlaying()) {
@@ -156,6 +169,26 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 					}
 				}
 			}
+		}
+			break;
+		case R.id.btn_close:
+			setViedoReportPannelVisiblity(View.GONE);
+			break;
+		case R.id.btn_image:
+			//todo 
+			 Intent it = new Intent(getActivity(),
+			 MenuReportActivity.class);
+			 it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			 startActivity(it);
+			break;
+		case R.id.btn_camera:
+			//todo
+			break;
+		case R.id.btn_video:
+			//todo
+			break;
+		default:
+			break;
 		}
 	}
 
@@ -220,4 +253,17 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 
 	}
 
+	private void setViedoReportPannelVisiblity(int visiblility) {
+		if (visiblility == View.GONE) {
+			if (videoPannel != null)
+				videoPannel.setVisibility(View.GONE);
+			if (mediaStatusBar != null)
+				mediaStatusBar.setMediaStatusBarVisibility(View.VISIBLE);
+		} else {
+			if (videoPannel != null)
+				videoPannel.setVisibility(View.VISIBLE);
+			if (mediaStatusBar != null)
+				mediaStatusBar.setMediaStatusBarVisibility(View.GONE);
+		}
+	}
 }
