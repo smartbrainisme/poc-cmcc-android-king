@@ -9,15 +9,17 @@ import com.airtalkee.R;
 
 public class CallAlertDialog extends AlertDialog implements
 		android.view.View.OnClickListener {
+	boolean isCall = false;
 
 	public CallAlertDialog(Context context, String title, String content,
-			String textcancle, String textSure, DialogListener listener, int id) {
-		super(context, title, content, textcancle, textSure, listener, id);
+			boolean isCall, DialogListener listener, int id) {
+		super(context, title, content, "", "", listener, id);
+		this.isCall = isCall;
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.dialog_call_receiver_layout);
 		initView();
 		fillView();
@@ -33,19 +35,10 @@ public class CallAlertDialog extends AlertDialog implements
 			tvContent.setVisibility(View.GONE);
 		}
 
-		cancle.setText("");
-		sure.setText("");
-		if (TextUtils.isEmpty(textSure)) {
-			sure.setVisibility(View.GONE);
-		}
-		if (TextUtils.isEmpty(textcancle)) {
-			cancle.setVisibility(View.GONE);
-		}
+		s.setVisibility(isCall ? View.GONE : View.VISIBLE);
 
 		tvTitle.setText(title);
 		tvContent.setText(content);
-		tvContent.setTextSize(tvContentSize);
-
 	}
 
 }

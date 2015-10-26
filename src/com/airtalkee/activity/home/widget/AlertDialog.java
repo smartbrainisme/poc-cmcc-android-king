@@ -2,10 +2,12 @@ package com.airtalkee.activity.home.widget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.nfc.cardemulation.OffHostApduService;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.airtalkee.R;
@@ -16,6 +18,7 @@ public class AlertDialog extends Dialog implements
 	protected TextView tvTitle;
 	protected TextView tvContent;
 	protected Button cancle, sure;
+	protected ImageView ivCancle, ivSure;
 	//
 	protected String title, content;
 	protected String textcancle = "取消";
@@ -39,8 +42,6 @@ public class AlertDialog extends Dialog implements
 		this.listener = listener;
 		this.id = id;
 	}
-	
-	
 
 	public AlertDialog(Context context, String title, String content,
 			String textcancle, String textSure, DialogListener listener, int id) {
@@ -88,17 +89,25 @@ public class AlertDialog extends Dialog implements
 		initView();
 		fillView();
 	}
-
+	View c ;
+	View s ;
 	protected void initView() {
-
+		
 		tvTitle = (TextView) findViewById(R.id.tv_title);
 		tvContent = (TextView) findViewById(R.id.tv_content);
-
-		cancle = (Button) findViewById(R.id.cancle);
-		sure = (Button) findViewById(R.id.sure);
-
-		cancle.setOnClickListener(this);
-		sure.setOnClickListener(this);
+		
+//		cancle = (Button) findViewById(R.id.cancle);
+//		sure = (Button) findViewById(R.id.sure);
+		
+		 c = findViewById(R.id.cancle);
+		 s = findViewById(R.id.sure);
+		if(c instanceof Button)
+			cancle = (Button)c;
+		if(c instanceof Button)
+			sure = (Button) s;
+		c.setOnClickListener(this);
+		s.setOnClickListener(this);
+		
 	}
 
 	protected void fillView() {
@@ -112,12 +121,13 @@ public class AlertDialog extends Dialog implements
 		}
 
 		if (TextUtils.isEmpty(textSure)) {
-			sure.setVisibility(View.GONE);
+			s.setVisibility(View.GONE);
 		}
 		tvTitle.setText(title);
 		tvContent.setText(content);
-		tvContent.setTextSize(tvContentSize);
+		if(null != cancle)
 		cancle.setText(textcancle);
+		if(null != sure)
 		sure.setText(textSure);
 	}
 

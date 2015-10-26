@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -94,8 +95,8 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 			switch (id) {
 			case R.id.bar_left:
 
-				alertDialog = new CallAlertDialog(getActivity(), null,"","正在呼叫",
-						"请稍后...", this, DIALOG_CALL);
+				alertDialog = new CallAlertDialog(getActivity(), "正在呼叫",
+						"请稍后...",true, this, DIALOG_CALL);
 				alertDialog.show();
 				break;
 			case R.id.bar_mid:
@@ -249,17 +250,21 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	@Override
 	public void onClickOk(int id) {
 		// TODO Auto-generated method stub
-		if (id == DIALOG_CALL) {
-			AirtalkeeMessage.getInstance().MessageRecordPlayStop();
-			callSelectMember(true);
-			callSelectClean();
-		}
+		
 	}
 
 	@Override
 	public void onClickCancel(int id) {
 		// TODO Auto-generated method stub
-
+		if (id == DIALOG_CALL) {
+			
+			
+			Intent it = new Intent(getActivity(),SessionDialogActivity.class);
+			startActivity(it);
+//			AirtalkeeMessage.getInstance().MessageRecordPlayStop();
+//			callSelectMember(true);
+//			callSelectClean();
+		}
 	}
 
 }
