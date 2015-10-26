@@ -65,7 +65,7 @@ public class MenuAccountActivity extends ActivityBase implements
 
 		tvUserName = (TextView) findViewById(R.id.talk_tv_user_name);
 		tvUserName.setText(AirtalkeeAccount.getInstance().getUserName());
-		
+
 		tvUserIpocid = (TextView) findViewById(R.id.talk_tv_user_ipocid);
 		tvUserIpocid.setText(AirtalkeeAccount.getInstance().getUserId());
 
@@ -88,8 +88,11 @@ public class MenuAccountActivity extends ActivityBase implements
 			}
 			case R.id.talk_lv_displayname:
 			{
-				Intent it = new Intent(this, MenuDisplayActivity.class);
-				startActivity(it);
+				Intent it = new Intent(MenuAccountActivity.this, MenuDisplayActivity.class);
+				it.putExtra("oldUserName", tvUserName.getText().toString().trim());
+				startActivityForResult(it, 1);
+				// startActivity(it);
+				// finish();
 				break;
 			}
 			case R.id.talk_lv_password:
@@ -117,7 +120,7 @@ public class MenuAccountActivity extends ActivityBase implements
 						AirServices.iOperator.putBoolean(AirAccountManager.KEY_HB, false);
 						BluetoothManager.getInstance().btStop();
 						AirtalkeeAccount.getInstance().Logout();
-//						finish();
+						// finish();
 						android.os.Process.killProcess(android.os.Process.myPid());
 					}
 				});
@@ -184,5 +187,22 @@ public class MenuAccountActivity extends ActivityBase implements
 	public void onUserOrganizationTreeSearch(boolean isOk, List<AirContact> contacts)
 	{
 
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		if (data != null)
+		{
+			if (requestCode == 1)
+			{
+				super.onActivityResult(requestCode, resultCode, data);
+				/* 取得来自SecondActivity页面的数据，并显示到画面 */
+				Bundle bundle = data.getExtras();
+				/* 获取Bundle中的数据，注意类型和key */
+				String name = bundle.getString("newUserName");
+				tvUserName.setText(name);
+			}
+		}
 	}
 }

@@ -54,7 +54,6 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
-		// TODO Auto-generated method stub
 		super.onCreate(bundle);
 		setRequestedOrientation(Config.screenOrientation);
 		setContentView(R.layout.activity_tool);
@@ -64,8 +63,8 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 	@Override
 	protected void onStart()
 	{
-		// TODO Auto-generated method stub
 		super.onStart();
+		tvUserName.setText(AirtalkeeAccount.getInstance().getUserName());
 	}
 
 	private void doInitView()

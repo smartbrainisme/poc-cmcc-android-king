@@ -30,8 +30,7 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener,
 		AirMmiTimerListener, OnVersionUpdateListener
 {
 	private LinearLayout statLayout, checkVersionLayout;
-	private TextView statLayoutTime, statLayoutBytes, tvVersion, versionMsg,
-			versionCode;
+	private TextView statLayoutTime, statLayoutBytes, tvVersion, versionMsg, versionCode;
 	private ImageView ivUpdateIcon;
 	private int gStatRecv = 0;
 	private int gStatSent = 0;
@@ -130,6 +129,7 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener,
 			}
 			case R.id.talk_check_version:
 			{
+				
 				checkVersion();
 				break;
 			}
@@ -220,8 +220,10 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener,
 	@Override
 	public void UserVersionUpdate(int versionFlag, String versionInfo, final String url)
 	{
+//		versionFlag = 1;
 		if (versionFlag == 0)
 		{
+//			versionMsg.setVisibility(View.VISIBLE);
 			versionMsg.setText(R.string.talk_verion_latest);
 			versionMsg.setTextColor(getResources().getColor(R.color.update_text_none));
 			
@@ -230,6 +232,12 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener,
 		}
 		else
 		{
+			ivUpdateIcon.setVisibility(View.VISIBLE);
+//			versionCode.setText(versionInfo);
+			versionCode.setText("V2.3.1");
+			versionCode.setVisibility(View.VISIBLE);
+			versionMsg.setText(R.string.talk_version_new);
+			versionMsg.setTextColor(getResources().getColor(R.color.update_text_new));
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setTitle(R.string.talk_verion_title);
 			builder.setMessage(versionInfo);

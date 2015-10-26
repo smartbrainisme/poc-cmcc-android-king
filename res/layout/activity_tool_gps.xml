@@ -63,17 +63,6 @@
                 android:layout_marginRight="10dip"
                 android:button="?theme_btn_check_new" />
 
-            <ImageView
-                android:id="@+id/gps_state_selector_gps"
-                android:layout_width="wrap_content"
-                android:layout_height="fill_parent"
-                android:layout_alignParentRight="true"
-                android:layout_marginBottom="10dip"
-                android:layout_marginRight="65dip"
-                android:layout_marginTop="10dip"
-                android:gravity="center"
-                android:src="@drawable/gps_state_enable"
-                android:visibility="gone" />
         </LinearLayout>
 
         <View
@@ -173,6 +162,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
+                    android:background="?theme_radio_check"
                     android:button="@null" />
 
                 <View
@@ -185,6 +175,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
+                    android:background="?theme_radio_check"
                     android:button="@null" />
 
                 <View
@@ -197,6 +188,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
+                    android:background="?theme_radio_check"
                     android:button="@null" />
 
                 <View
@@ -209,6 +201,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
+                    android:background="?theme_radio_check"
                     android:button="@null" />
 
                 <View
@@ -221,6 +214,7 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
+                    android:background="?theme_radio_check"
                     android:button="@null" />
             </RadioGroup>
 

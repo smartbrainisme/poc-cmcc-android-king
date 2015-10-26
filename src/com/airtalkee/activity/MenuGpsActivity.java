@@ -41,15 +41,18 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 	private RadioButton rb1Min, rb5Min, rb15Min, rb30Min, rb60Min;
 	private TextView tv1Min, tv5Min, tv15Min, tv30Min, tv60Min;
 
+	private Context context;
+
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
 		super.onCreate(bundle);
 		setRequestedOrientation(Config.screenOrientation);
 		setContentView(R.layout.activity_tool_gps);
-		gpsState = AirLocation.getInstance(this).getSettingState();
+		context = this;
+		gpsState = AirLocation.getInstance(context).getSettingState();
 		mStateSelected = gpsState ? 0 : 1;
-		int fre = AirLocation.getInstance(this).getSettingFrequence();
+		int fre = AirLocation.getInstance(context).getSettingFrequence();
 		for (int i = 0; i < mFrequenceValue.length; i++)
 		{
 			if (fre == mFrequenceValue[i])
@@ -66,15 +69,14 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 	protected void onResume()
 	{
 		super.onResume();
-		ImageView icon = (ImageView) findViewById(R.id.gps_state_selector_gps);
-		if (AirLocation.getInstance(this).GpsIsActive())
-		{
-			icon.setImageResource(R.drawable.gps_state_enable);
-		}
-		else
-		{
-			icon.setImageResource(R.drawable.gps_state_disable);
-		}
+		// if (AirLocation.getInstance(this).GpsIsActive())
+		// {
+		// setGpsView(true);
+		// }
+		// else
+		// {
+		// setGpsView(false);
+		// }
 	}
 
 	private void doInitView()
@@ -111,11 +113,6 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		rb15Min = (RadioButton) findViewById(R.id.rb_15_min);
 		rb30Min = (RadioButton) findViewById(R.id.rb_30_min);
 		rb60Min = (RadioButton) findViewById(R.id.rb_60_min);
-		rb1Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-		rb5Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-		rb15Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-		rb30Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-		rb60Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
 		tv1Min = (TextView) findViewById(R.id.tv_1_min);
 		tv5Min = (TextView) findViewById(R.id.tv_5_min);
 		tv15Min = (TextView) findViewById(R.id.tv_15_min);
@@ -133,24 +130,39 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 			switch (rid)
 			{
 				case R.id.rb_1_min:
-					set1MinView(true);
+				{
+					if (rb1Min.isChecked())
+						set1MinView(true);
 					break;
+				}
 				case R.id.rb_5_min:
-					set5MinView(true);
+				{
+					if (rb5Min.isChecked())
+						set5MinView(true);
 					break;
+				}
 				case R.id.rb_15_min:
-					set15MinView(true);
+				{
+					if (rb15Min.isChecked())
+						set15MinView(true);
 					break;
+				}
 				case R.id.rb_30_min:
-					set30MinView(true);
+				{
+					if (rb30Min.isChecked())
+						set30MinView(true);
 					break;
+				}
 				case R.id.rb_60_min:
-					set60MinView(true);
+				{
+					if (rb60Min.isChecked())
+						set60MinView(true);
 					break;
+				}
 				default:
+					// setHighFreView(true);
 					break;
 			}
-			// initRadioGroup(1);
 		}
 	};
 
@@ -163,37 +175,37 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 				case AirLocation.AIR_LOCATION_FRE_NAVIGATE:
 				{
 					cbGPSHigh.setChecked(true);
-					setHighFreView(true);
 					break;
 				}
 				case AirLocation.AIR_LOCATION_FRE_MINUTE_1:
 				{
-					set1MinView(true);
+					rb1Min.setChecked(true);
 					break;
 				}
 				case AirLocation.AIR_LOCATION_FRE_MINUTE_5:
 				{
-					set5MinView(true);
+					rb5Min.setChecked(true);
 					break;
 				}
 				case AirLocation.AIR_LOCATION_FRE_MINUTE_15:
 				{
-					set15MinView(true);
+					rb15Min.setChecked(true);
 					break;
 				}
 				case AirLocation.AIR_LOCATION_FRE_MINUTE_30:
 				{
-					set30MinView(true);
+					rb30Min.setChecked(true);
 					break;
 				}
 				case AirLocation.AIR_LOCATION_FRE_MINUTE_60:
 				{
-					set60MinView(true);
+					rb60Min.setChecked(true);
 					break;
 				}
 				default:
 					break;
 			}
+			AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, value, true);
 		}
 		else
 		{
@@ -230,9 +242,9 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 				{
 					AirLocation.getInstance(MenuGpsActivity.this).GpsActive();
 				}
-				mStateSelected = 0;
-				mFrequenceSelected = 0;
+
 				AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_NAVIGATE, true);
+				setGpsView(true);
 				setHighFreView(true);
 			}
 		});
@@ -259,11 +271,6 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 			case R.id.bottom_left_icon:
 				finish();
 				break;
-		// case R.id.gps_state_selector_setting:
-		// {
-		// AirLocation.getInstance(this).GpsActive();
-		// break;
-		// }
 		}
 	}
 
@@ -279,7 +286,7 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
 	{
-		final Context context = this;
+		final Context context = MenuGpsActivity.this;
 		if (buttonView != null)
 		{
 			switch (buttonView.getId())
@@ -288,23 +295,10 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 				{
 					if (cbGPS.isChecked())// 是否开启位置回传
 					{
-						// if (cbGPSHigh.isChecked())// 是否开启高精度模式
-						// {
-						// confirmGpsHighPrecision();
-						// }
-						AirLocation.getInstance(context).loopRun(MenuGpsActivity.this, mFrequenceValue[mFrequenceSelected], true);
 						setGpsView(true);
 					}
 					else
 					{
-						if (cbGPSHigh.isChecked())
-						{
-							cbGPSHigh.setBackground(getResources().getDrawable(R.drawable.btn_setting_open_gray));
-						}
-						else
-						{
-							cbGPSHigh.setBackground(getResources().getDrawable(R.drawable.btn_setting_close));
-						}
 						setGpsView(false);
 						AirLocation.getInstance(context).loopTerminate();
 					}
@@ -314,40 +308,40 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 				{
 					if (cbGPSHigh.isChecked())// 是否开启高精度模式
 					{
-						final boolean isGpsActived = AirLocation.getInstance(this).GpsIsActive();
-						confirmGpsHighPrecision();
-						// confirmGpsHighPrecision();
-//						if (!isGpsActived)
-//						{
-//							AirLocation.getInstance(MenuGpsActivity.this).GpsActive();
-//						}
-//						mStateSelected = 0;
-//						mFrequenceSelected = 0;
-//						AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_NAVIGATE, true);
-//						setHighFreView(true);
+						if (cbGPS.isChecked())
+						{
+							setHighFreView(true);
+							AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_NAVIGATE, true);
+						}
 					}
 					else
 					{
-//						AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, mFrequenceValue[mFrequenceSelected], true);
 						setHighFreView(false);
 						switch (mFrequenceValue[mFrequenceSelected])
 						{
 							case AirLocation.AIR_LOCATION_FRE_MINUTE_1:
-								set1MinView(true);
+								rb1Min.setChecked(true);
+								AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_1, true);
 								break;
 							case AirLocation.AIR_LOCATION_FRE_MINUTE_5:
-								set5MinView(true);
+								rb5Min.setChecked(true);
+								AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_5, true);
 								break;
 							case AirLocation.AIR_LOCATION_FRE_MINUTE_15:
-								set15MinView(true);
+								rb15Min.setChecked(true);
+								AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_15, true);
 								break;
 							case AirLocation.AIR_LOCATION_FRE_MINUTE_30:
-								set30MinView(true);
+								rb30Min.setChecked(true);
+								AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_30, true);
 								break;
 							case AirLocation.AIR_LOCATION_FRE_MINUTE_60:
-								set60MinView(true);
+								rb60Min.setChecked(true);
+								AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_60, true);
 								break;
 							default:
+								rb5Min.setChecked(true);
+								AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_5, true);
 								break;
 						}
 					}
@@ -365,48 +359,90 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		{
 			gpsFrequenceText.setTextColor(getResources().getColor(R.color.black));
 			gpsFrequenceHigh.setTextColor(getResources().getColor(R.color.black_gray));
-			cbGPSHigh.setClickable(true);
-			// tv1Min.setTextColor(getResources().getColor(R.color.black_gray));
-			// tv5Min.setTextColor(getResources().getColor(R.color.black_gray));
-			// tv15Min.setTextColor(getResources().getColor(R.color.black_gray));
-			// tv30Min.setTextColor(getResources().getColor(R.color.black_gray));
-			// tv60Min.setTextColor(getResources().getColor(R.color.black_gray));
-			rb1Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-			rb5Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-			rb15Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-			rb30Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-			rb60Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-			rb1Min.setClickable(true);
-			rb5Min.setClickable(true);
-			rb15Min.setClickable(true);
-			rb30Min.setClickable(true);
-			rb60Min.setClickable(true);
+			cbGPSHigh.setEnabled(true);
+
+			switch (mFrequenceSelected)
+			{
+				case 0:
+					setHighFreView(true);
+					cbGPSHigh.setChecked(true);
+					AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_NAVIGATE, true);
+					break;
+				case 1:
+					rb1Min.setEnabled(true);
+					rb5Min.setEnabled(true);
+					rb15Min.setEnabled(true);
+					rb30Min.setEnabled(true);
+					rb60Min.setEnabled(true);
+					rb1Min.setChecked(true);
+					AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_1, true);
+					set1MinView(true);
+					break;
+				case 2:
+					rb1Min.setEnabled(true);
+					rb5Min.setEnabled(true);
+					rb15Min.setEnabled(true);
+					rb30Min.setEnabled(true);
+					rb60Min.setEnabled(true);
+					rb5Min.setChecked(true);
+					AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_5, true);
+					set5MinView(true);
+					break;
+				case 3:
+					rb1Min.setEnabled(true);
+					rb5Min.setEnabled(true);
+					rb15Min.setEnabled(true);
+					rb30Min.setEnabled(true);
+					rb60Min.setEnabled(true);
+					rb15Min.setChecked(true);
+					AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_15, true);
+					set15MinView(true);
+					break;
+				case 4:
+					rb1Min.setEnabled(true);
+					rb5Min.setEnabled(true);
+					rb15Min.setEnabled(true);
+					rb30Min.setEnabled(true);
+					rb60Min.setEnabled(true);
+					rb30Min.setChecked(true);
+					AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_30, true);
+					set30MinView(true);
+					break;
+				case 5:
+					rb1Min.setEnabled(true);
+					rb5Min.setEnabled(true);
+					rb15Min.setEnabled(true);
+					rb30Min.setEnabled(true);
+					rb60Min.setEnabled(true);
+					rb60Min.setChecked(true);
+					AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_60, true);
+					set60MinView(true);
+					break;
+				default:
+					break;
+			}
 		}
 		else
 		{
+			if (mFrequenceSelected == 0)
+			{
+				cbGPSHigh.setChecked(true);
+			}
 			gpsFrequenceText.setTextColor(getResources().getColor(R.color.text_gray));
 			gpsFrequenceHigh.setTextColor(getResources().getColor(R.color.text_gray));
-			cbGPSHigh.setClickable(false);
+
 			tv1Min.setTextColor(getResources().getColor(R.color.text_gray));
 			tv5Min.setTextColor(getResources().getColor(R.color.text_gray));
 			tv15Min.setTextColor(getResources().getColor(R.color.text_gray));
 			tv30Min.setTextColor(getResources().getColor(R.color.text_gray));
 			tv60Min.setTextColor(getResources().getColor(R.color.text_gray));
-			rb1Min.setBackground(getResources().getDrawable(R.drawable.radio_normal));
-			rb5Min.setBackground(getResources().getDrawable(R.drawable.radio_normal));
-			rb15Min.setBackground(getResources().getDrawable(R.drawable.radio_normal));
-			rb30Min.setBackground(getResources().getDrawable(R.drawable.radio_normal));
-			rb60Min.setBackground(getResources().getDrawable(R.drawable.radio_normal));
-			rb1Min.setChecked(false);
-			rb5Min.setChecked(false);
-			rb15Min.setChecked(false);
-			rb30Min.setChecked(false);
-			rb60Min.setChecked(false);
-			rb1Min.setClickable(false);
-			rb5Min.setClickable(false);
-			rb15Min.setClickable(false);
-			rb30Min.setClickable(false);
-			rb60Min.setClickable(false);
+
+			cbGPSHigh.setEnabled(false);
+			rb1Min.setEnabled(false);
+			rb5Min.setEnabled(false);
+			rb15Min.setEnabled(false);
+			rb30Min.setEnabled(false);
+			rb60Min.setEnabled(false);
 		}
 	}
 
@@ -414,53 +450,37 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 	{
 		if (b) // 高精度
 		{
+			mStateSelected = 0;
+			mFrequenceSelected = 0;
 			tv1Min.setTextColor(getResources().getColor(R.color.black_gray));
 			tv5Min.setTextColor(getResources().getColor(R.color.black_gray));
 			tv15Min.setTextColor(getResources().getColor(R.color.black_gray));
 			tv30Min.setTextColor(getResources().getColor(R.color.black_gray));
 			tv60Min.setTextColor(getResources().getColor(R.color.black_gray));
-			rb1Min.setBackground(getResources().getDrawable(R.drawable.radio_normal));
-			rb5Min.setBackground(getResources().getDrawable(R.drawable.radio_normal));
-			rb15Min.setBackground(getResources().getDrawable(R.drawable.radio_normal));
-			rb30Min.setBackground(getResources().getDrawable(R.drawable.radio_normal));
-			rb60Min.setBackground(getResources().getDrawable(R.drawable.radio_normal));
-			rb1Min.setClickable(false);
-			rb5Min.setClickable(false);
-			rb15Min.setClickable(false);
-			rb30Min.setClickable(false);
-			rb60Min.setClickable(false);
-			rb1Min.setChecked(false);
-			rb5Min.setChecked(false);
-			rb15Min.setChecked(false);
-			rb30Min.setChecked(false);
-			rb60Min.setChecked(false);
+			rb1Min.setEnabled(false);
+			rb5Min.setEnabled(false);
+			rb15Min.setEnabled(false);
+			rb30Min.setEnabled(false);
+			rb60Min.setEnabled(false);
 			set1MinView(false);
 			set5MinView(false);
 			set15MinView(false);
 			set30MinView(false);
 			set60MinView(false);
-			cbGPSHigh.setBackground(getResources().getDrawable(R.drawable.btn_setting_open));
-//			cbGPSHigh.setBackground(getResources().getDrawable(R.drawable.selector_btn_check_new));
+			AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_NAVIGATE, true);
 		}
 		else
 		{
+			tv1Min.setTextColor(getResources().getColor(R.color.black_gray));
 			tv5Min.setTextColor(getResources().getColor(R.color.black_gray));
 			tv15Min.setTextColor(getResources().getColor(R.color.black_gray));
 			tv30Min.setTextColor(getResources().getColor(R.color.black_gray));
 			tv60Min.setTextColor(getResources().getColor(R.color.black_gray));
-			rb1Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-			rb5Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-			rb15Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-			rb30Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-			rb60Min.setBackground(getResources().getDrawable(R.drawable.selector_radio_check));
-			rb1Min.setClickable(true);
-			rb5Min.setClickable(true);
-			rb15Min.setClickable(true);
-			rb30Min.setClickable(true);
-			rb60Min.setClickable(true);
-			cbGPSHigh.setChecked(false);
-			cbGPSHigh.setBackground(getResources().getDrawable(R.drawable.btn_setting_close));
-//			cbGPSHigh.setBackground(getResources().getDrawable(R.drawable.selector_btn_check_new));
+			rb1Min.setEnabled(true);
+			rb5Min.setEnabled(true);
+			rb15Min.setEnabled(true);
+			rb30Min.setEnabled(true);
+			rb60Min.setEnabled(true);
 		}
 	}
 
@@ -469,13 +489,12 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		if (b)
 		{
 			mFrequenceSelected = 1;
-			AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_1, true);
-			rb1Min.setChecked(true);
 			tv1Min.setTextColor(getResources().getColor(R.color.black));
 			set5MinView(false);
 			set15MinView(false);
 			set30MinView(false);
 			set60MinView(false);
+			AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_1, true);
 		}
 		else
 		{
@@ -488,13 +507,12 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		if (b)
 		{
 			mFrequenceSelected = 2;
-			AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_5, true);
-			rb5Min.setChecked(true);
 			tv5Min.setTextColor(getResources().getColor(R.color.black));
 			set1MinView(false);
 			set15MinView(false);
 			set30MinView(false);
 			set60MinView(false);
+			AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_5, true);
 		}
 		else
 		{
@@ -507,13 +525,12 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		if (b)
 		{
 			mFrequenceSelected = 3;
-			AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_15, true);
-			rb15Min.setChecked(true);
 			tv15Min.setTextColor(getResources().getColor(R.color.black));
 			set5MinView(false);
 			set1MinView(false);
 			set30MinView(false);
 			set60MinView(false);
+			AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_15, true);
 		}
 		else
 		{
@@ -526,13 +543,12 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		if (b)
 		{
 			mFrequenceSelected = 4;
-			AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_30, true);
-			rb30Min.setChecked(true);
 			tv30Min.setTextColor(getResources().getColor(R.color.black));
 			set5MinView(false);
 			set15MinView(false);
 			set1MinView(false);
 			set60MinView(false);
+			AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_30, true);
 		}
 		else
 		{
@@ -545,13 +561,12 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		if (b)
 		{
 			mFrequenceSelected = 5;
-			AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_60, true);
-			rb60Min.setChecked(true);
 			tv60Min.setTextColor(getResources().getColor(R.color.black));
 			set5MinView(false);
 			set15MinView(false);
 			set30MinView(false);
 			set1MinView(false);
+			AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_MINUTE_60, true);
 		}
 		else
 		{

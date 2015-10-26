@@ -379,6 +379,7 @@
 	<string name="version_update_pro">下载进度（%d/100）</string>
 	<string name="version_update_install">安装</string>
 	<string name="talk_version">版本：</string>
+	<string name="talk_version_new">有新版本</string>
 	<string name="talk_unscathed">无损回传</string>
 	<string name="talk_scathed">压缩回传</string>
 	<string name="talk_quality_select">回传图片质量选择</string>

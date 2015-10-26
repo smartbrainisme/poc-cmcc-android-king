@@ -146,12 +146,6 @@ public class MenuDefectReportActivity extends ActivityBase implements
 		if (isOk)
 		{
 			Util.Toast(this, getString(R.string.talk_tools_defect_report_tip), R.drawable.ic_success);
-			try
-			{
-				Thread.sleep(2000);
-			}
-			catch (InterruptedException e)
-			{}
 			finish();
 		}
 		else
