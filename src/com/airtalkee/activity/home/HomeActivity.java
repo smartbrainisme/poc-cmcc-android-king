@@ -86,6 +86,8 @@ public class HomeActivity extends SessionDialogActivity implements PanelSlideLis
          contaner.setBackgroundColor(0x00000000);
          slidingBack.setVisibility(View.GONE);
          this.onPageSelected(pageIndex);
+         
+         mediaStatusBar.setSession(AirSessionControl.getInstance().getCurrentChannelSession());
      }
 
      @Override

@@ -347,8 +347,11 @@ public class IMFragment extends BaseFragment implements OnClickListener, OnMessa
 
 	public void setSession(AirSession s)
 	{
+		
 		if ((s != null && session != null && !s.getSessionCode().equals(session.getSessionCode())) || (session == null && s != null))
 		{
+			if(lvMessage ==null)
+				return;
 			lvMessage.setHaveMore(s.isMessageMore());
 			mHandler.sendEmptyMessageDelayed(1, 100);
 		}

@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.AdapterMember.CheckedCallBack;
-import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
@@ -34,7 +33,7 @@ import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.MListView;
 
 public class MemberFragment extends BaseFragment implements OnClickListener,
-		OnItemClickListener, CheckedCallBack, DialogListener {
+		OnItemClickListener, CheckedCallBack {
 	private static final int DIALOG_CALL = 99;
 	private TextView tabMemberSession, tabMemberAll;
 	private List<AirContact> tempCallMembers = null;
@@ -94,10 +93,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		if (page == HomeActivity.PAGE_MEMBER) {
 			switch (id) {
 			case R.id.bar_left:
-
-				alertDialog = new CallAlertDialog(getActivity(), "正在呼叫",
-						"请稍后...",true, this, DIALOG_CALL);
-				alertDialog.show();
+				callSelectMember(true);
 				break;
 			case R.id.bar_mid:
 				AirtalkeeMessage.getInstance().MessageRecordPlayStop();
@@ -214,13 +210,25 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 
 			if (tempCallMembers.size() > 0) {
 				if (AirtalkeeAccount.getInstance().isEngineRunning()) {
+					
+					
 					AirSession s = SessionController
 							.SessionMatch(tempCallMembers);
-					AirServices.getInstance().switchToSessionTemp(
-							s.getSessionCode(),
-							isCall ? AirServices.TEMP_SESSION_TYPE_OUTGOING
-									: AirServices.TEMP_SESSION_TYPE_MESSAGE,
-							getActivity());
+					if(isCall)
+					{
+						alertDialog = new CallAlertDialog(getActivity(), "正在呼叫"
+								+ s.getDisplayName(), "请稍后...", s.getSessionCode(),
+								DIALOG_CALL);
+						alertDialog.show();
+					}
+					else
+					{
+						Intent it = new Intent(getActivity(), SessionDialogActivity.class);
+						it.putExtra("sessionCode", s.getSessionCode());
+						it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+						getActivity().startActivity(it);
+					}
+					
 				} else {
 					Util.Toast(getActivity(),
 							getString(R.string.talk_network_warning));
@@ -247,24 +255,6 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, isChecked);
 	}
 
-	@Override
-	public void onClickOk(int id) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onClickCancel(int id) {
-		// TODO Auto-generated method stub
-		if (id == DIALOG_CALL) {
-			
-			
-			Intent it = new Intent(getActivity(),SessionDialogActivity.class);
-			startActivity(it);
-//			AirtalkeeMessage.getInstance().MessageRecordPlayStop();
-//			callSelectMember(true);
-//			callSelectClean();
-		}
-	}
+	
 
 }

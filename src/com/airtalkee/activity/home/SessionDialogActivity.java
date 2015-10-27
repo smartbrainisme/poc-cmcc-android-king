@@ -20,8 +20,10 @@ import com.airtalkee.R;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
 import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.config.Config;
+import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.PageIndicator;
 
 public class SessionDialogActivity extends FragmentActivity implements
@@ -42,9 +44,7 @@ public class SessionDialogActivity extends FragmentActivity implements
 	protected int pageIndex = PAGE_PTT;
 
 	protected MediaStatusBar mediaStatusBar;
-
-	private int actionType;
-	private boolean actionVideo;
+	protected int actionType;
 
 	@Override
 	protected void onCreate(Bundle bundle) {
@@ -55,9 +55,13 @@ public class SessionDialogActivity extends FragmentActivity implements
 //			finish();
 			return;
 		}
-		actionType = bundle.getInt("type");
-		actionVideo = bundle.getBoolean("video");
+		
 		String sessionCode = bundle.getString("sessionCode");
+		actionType = bundle.getInt("type");
+		if (actionType == AirServices.TEMP_SESSION_TYPE_MESSAGE)
+		{
+			pageIndex = PAGE_IM;
+		}
 		AirSession session = AirtalkeeSessionManager.getInstance()
 				.getSessionByCode(sessionCode);
 		if (null == session) {
@@ -189,6 +193,17 @@ public class SessionDialogActivity extends FragmentActivity implements
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public void finish() {
+		// TODO Auto-generated method stub
+		super.finish();
+		AirSession session = mediaStatusBar.getSession();
+		if (session != null && session.getSessionState() != AirSession.SESSION_STATE_IDLE && session.getType() == AirSession.TYPE_DIALOG)
+		{
+			AirSessionControl.getInstance().SessionEndCall(session);
+		}
 	}
 
 }
