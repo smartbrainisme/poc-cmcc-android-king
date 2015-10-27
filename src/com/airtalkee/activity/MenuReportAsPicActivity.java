@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,7 +22,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.BitmapUtil;
 import com.airtalkee.Util.Const;
@@ -42,7 +40,8 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
-public class MenuReportAsPicActivity extends ActivityBase implements OnClickListener, OnMmiLocationListener
+public class MenuReportAsPicActivity extends ActivityBase implements
+		OnClickListener, OnMmiLocationListener
 {
 
 	private EditText report_detail;
@@ -57,16 +56,14 @@ public class MenuReportAsPicActivity extends ActivityBase implements OnClickList
 	private Uri picUriTemp = null;
 	private String picPathTemp = "";
 	private boolean isHighQuality = false;
-	
+
 	private String taskId = null;
 	private String taskName = null;
 
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
-	
-	DisplayImageOptions 	options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.msg_image).showImageOnFail(R.drawable.msg_image).resetViewBeforeLoading(true)
-		.cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true)
-		.displayer(new FadeInBitmapDisplayer(300)).build();
-	
+
+	DisplayImageOptions options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.msg_image).showImageOnFail(R.drawable.msg_image).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
+
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
@@ -76,7 +73,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements OnClickList
 		setContentView(R.layout.activity_tool_report_as_pic);
 		doInitView();
 		refreshUI();
-		
+
 		bundle = getIntent().getExtras();
 		if (bundle != null)
 		{
@@ -91,7 +88,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements OnClickList
 		ivTitle.setText(R.string.talk_tools_report_pic);
 		View btnLeft = findViewById(R.id.menu_left_button);
 		ImageView ivLeft = (ImageView) findViewById(R.id.bottom_left_icon);
-		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this) );
+		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this));
 		btnLeft.setOnClickListener(this);
 
 		RelativeLayout ivRightLay = (RelativeLayout) findViewById(R.id.talk_menu_right_button);
@@ -123,7 +120,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements OnClickList
 			report_image_progress.setVisibility(View.VISIBLE);
 			btn_take.setEnabled(false);
 			btn_native.setEnabled(false);
-//			report_image.setImageURI(picUri);
+			// report_image.setImageURI(picUri);
 			imageLoader.displayImage(picUri.toString(), report_image);
 			report_image_size.setText(MenuReportActivity.sizeMKB(picSize));
 			btn_image_clean.setVisibility(View.GONE);
@@ -137,7 +134,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements OnClickList
 			if (picUri != null)
 			{
 				btn_image_clean.setVisibility(View.VISIBLE);
-//				report_image.setImageURI(picUri);
+				// report_image.setImageURI(picUri);
 				imageLoader.displayImage(picUri.toString(), report_image);
 				report_image_size.setText(MenuReportActivity.sizeMKB(picSize));
 				report_image_size.setVisibility(View.VISIBLE);
@@ -236,7 +233,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements OnClickList
 				if (resultCode == RESULT_OK)
 				{
 					String filePath = UriUtil.getPath(this, data.getData());
-					
+
 					if (filePath != null)
 					{
 						picUri = data.getData();
@@ -256,7 +253,6 @@ public class MenuReportAsPicActivity extends ActivityBase implements OnClickList
 		}
 	}
 
-	
 	public void pictureQualitySelect(final int id)
 	{
 		new AlertDialog.Builder(this).setTitle(R.string.talk_quality_select).setItems(R.array.picture_quality, new DialogInterface.OnClickListener()
@@ -265,7 +261,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements OnClickList
 			public void onClick(DialogInterface dialog, int which)
 			{
 				isHighQuality = which == 0;
-				switch(id)
+				switch (id)
 				{
 					case R.id.report_image:
 					case R.id.report_btn_take:
@@ -294,12 +290,12 @@ public class MenuReportAsPicActivity extends ActivityBase implements OnClickList
 			}
 		}).show();
 	}
-	
+
 	private void resizePicture(boolean toCreateFile)
 	{
-		if(!isHighQuality)
+		if (!isHighQuality)
 		{
-			Bitmap picBitmap =  BitmapUtil.getimage(picPath);
+			Bitmap picBitmap = BitmapUtil.getimage(picPath);
 			if (picBitmap != null)
 			{
 				byte[] bitmapData = null;
@@ -350,7 +346,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements OnClickList
 				{
 					if (!TextUtils.isEmpty(detail))
 						detail += "\r\n\r\n";
-					
+
 					SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 					String date_string = sfd.format(date);
 					detail += getString(R.string.talk_report_upload_capture_time) + " [" + date_string + "]";
@@ -360,7 +356,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements OnClickList
 			{
 				detail = report_detail.getText().toString();
 			}
-			
+
 			Log.i(MenuReportAsPicActivity.class, "ReportPicture: TASK[" + taskId + "][" + taskName + "] text=[" + report_detail.getText().toString() + "] x=[" + latitude + "] y=[" + longitude + "]");
 			AirReportManager.getInstance().Report(taskId, taskName, AirtalkeeReport.RESOURCE_TYPE_PICTURE, "jpg", uri, picPath, detail, picSize, latitude, longitude);
 

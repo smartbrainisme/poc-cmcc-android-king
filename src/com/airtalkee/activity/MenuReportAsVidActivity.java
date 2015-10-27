@@ -3,7 +3,6 @@ package com.airtalkee.activity;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,7 +18,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.ThemeUtil;
@@ -35,7 +33,8 @@ import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.VideoCamera;
 
-public class MenuReportAsVidActivity extends ActivityBase implements OnClickListener, OnMmiLocationListener
+public class MenuReportAsVidActivity extends ActivityBase implements
+		OnClickListener, OnMmiLocationListener
 {
 
 	private final int VIDEO_MAX_SIZE = 100 * 1024 * 1024;
@@ -51,7 +50,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 	private Uri videoUri = null;
 	private String videoPath = "";
 	private PopupWindow pwImage = null;
-	
+
 	private String taskId = null;
 	private String taskName = null;
 
@@ -62,15 +61,16 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 		super.onCreate(bundle);
 		setRequestedOrientation(Config.screenOrientation);
 		setContentView(R.layout.activity_tool_report_as_vid);
-		doInitView();
-		refreshUI();
-		
 		bundle = getIntent().getExtras();
 		if (bundle != null)
 		{
 			taskId = bundle.getString("taskId");
 			taskName = bundle.getString("taskName");
+			videoPath = bundle.getString("extra_video_path");
 		}
+		doInitView();
+		refreshUI();
+
 	}
 
 	private void doInitView()
@@ -79,7 +79,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 		ivTitle.setText(R.string.talk_tools_report_vid);
 		View btnLeft = findViewById(R.id.menu_left_button);
 		ImageView ivLeft = (ImageView) findViewById(R.id.bottom_left_icon);
-		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this) );
+		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this));
 		btnLeft.setOnClickListener(this);
 
 		RelativeLayout ivRightLay = (RelativeLayout) findViewById(R.id.talk_menu_right_button);
@@ -90,7 +90,8 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 
 		findViewById(R.id.report_image).setOnClickListener(this);
 		mVideoView = (VideoView) findViewById(R.id.report_video);
-		mVideoView.setOnClickListener(this);
+		
+		// mVideoView.setOnClickListener(this);
 		report_detail = (EditText) findViewById(R.id.report_detail);
 		report_image_progress = (TextView) findViewById(R.id.report_image_progress);
 		btn_image_clean = (Button) findViewById(R.id.report_image_clean);
@@ -105,6 +106,14 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 
 		mVideoController = new MediaController(this);
 		mVideoView.setMediaController(mVideoController);
+		
+		if (!TextUtils.isEmpty(videoPath))
+		{
+			mVideoView.setVideoPath(videoPath);
+			videoSize = AirServices.iOperator.getFileSize("", videoPath, true);
+			report_image_size.setText(MenuReportActivity.sizeMKB(videoSize) + " (" + AirServices.iOperator.getFileExtension(videoPath) + ")");
+			report_image_size.setVisibility(View.VISIBLE);
+		}
 	}
 
 	private void refreshUI()
@@ -112,7 +121,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 		if (isUploading)
 		{
 			report_detail.setEnabled(false);
-			report_image_progress.setVisibility(View.VISIBLE);
+//			report_image_progress.setVisibility(View.VISIBLE);
 			btn_take.setEnabled(false);
 			btn_native.setEnabled(false);
 			btn_image_clean.setVisibility(View.GONE);
@@ -164,26 +173,30 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 				}
 				isUploading = true;
 				Util.hideSoftInput(this);
-				refreshUI();
-
-				report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
+//				refreshUI();
+				Util.Toast(this, getString(R.string.talk_report_upload_getting_gps));
+//				report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
 				AirLocation.getInstance(this).onceGet(this, 30);
 				break;
 			}
 			case R.id.report_image:
 			case R.id.report_btn_take:
 			{
-//				Intent i = new Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
-//				gUri = getOutputMediaFile();
-//				if(gUri != null)
-//					i.putExtra(MediaStore.EXTRA_OUTPUT, gUri);
-//				i.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
-//				i.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 60);
-//				startActivityForResult(i, Const.image_select.REQUEST_CODE_CREATE_VIDEO);
-				
+				// Intent i = new
+				// Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
+				// gUri = getOutputMediaFile();
+				// if(gUri != null)
+				// i.putExtra(MediaStore.EXTRA_OUTPUT, gUri);
+				// i.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
+				// i.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 60);
+				// startActivityForResult(i,
+				// Const.image_select.REQUEST_CODE_CREATE_VIDEO);
+
 				// TODO Auto-generated method stub
-				Intent serverIntent = new Intent(MenuReportAsVidActivity.this, VideoCamera.class);
-				startActivityForResult(serverIntent, Const.image_select.REQUEST_CODE_CREATE_VIDEO);
+				// Intent serverIntent = new
+				// Intent(MenuReportAsVidActivity.this, VideoCamera.class);
+				// startActivityForResult(serverIntent,
+				// Const.image_select.REQUEST_CODE_CREATE_VIDEO);
 				break;
 			}
 			case R.id.report_btn_native:
@@ -224,8 +237,8 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 				}
 				mVideoView.setVisibility(View.GONE);
 				mVideoView.stopPlayback();
-//				mVideoView.setVideoPath("");
-				videoPath ="";
+				// mVideoView.setVideoPath("");
+				videoPath = "";
 				btn_image_clean.setVisibility(View.GONE);
 				videoUri = null;
 				refreshUI();
@@ -233,54 +246,57 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 			}
 		}
 	}
-	
+
 	Uri gUri;
+
 	public Uri getOutputMediaFile()
-    {
-        // To be safe, you should check that the SDCard is mounted
+	{
+		// To be safe, you should check that the SDCard is mounted
 
-        if(Environment.getExternalStorageState() != null) {
-            // this works for Android 2.2 and above
-            File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "SMW_VIDEO");
+		if (Environment.getExternalStorageState() != null)
+		{
+			// this works for Android 2.2 and above
+			File mediaStorageDir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES), "SMW_VIDEO");
 
-            // This location works best if you want the created images to be shared
-            // between applications and persist after your app has been uninstalled.
+			// This location works best if you want the created images to be
+			// shared
+			// between applications and persist after your app has been
+			// uninstalled.
 
-            // Create the storage directory if it does not exist
-            if (! mediaStorageDir.exists()) {
-                if (! mediaStorageDir.mkdirs()) {
-                    Log.d(MenuReportAsVidActivity.class, "failed to create directory");
-                    return null;
-                }
-            }
+			// Create the storage directory if it does not exist
+			if (!mediaStorageDir.exists())
+			{
+				if (!mediaStorageDir.mkdirs())
+				{
+					Log.d(MenuReportAsVidActivity.class, "failed to create directory");
+					return null;
+				}
+			}
 
-            // Create a media file name
-            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            File mediaFile;
-           
-            mediaFile = new File(mediaStorageDir.getPath() + File.separator +
-                "VID_"+ timeStamp + ".mp4");
-         
+			// Create a media file name
+			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+			File mediaFile;
 
-            return Uri.fromFile(mediaFile);
-        }
+			mediaFile = new File(mediaStorageDir.getPath() + File.separator + "VID_" + timeStamp + ".mp4");
 
-        return null;
-    }
+			return Uri.fromFile(mediaFile);
+		}
 
-	
+		return null;
+	}
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode != RESULT_OK)
 			return;
-		Uri uri =null;
+		Uri uri = null;
 		switch (requestCode)
 		{
 			case Const.image_select.REQUEST_CODE_CREATE_VIDEO:
 			{
-//				uri = this.gUri;
-//				String filePath = uri.getPath();
+				// uri = this.gUri;
+				// String filePath = uri.getPath();
 				String filePath = data.getExtras().getString(VideoCamera.EXTRA_VIDEO_PATH);
 				if (filePath != null)
 				{
@@ -290,7 +306,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 						videoUri = uri;
 						videoPath = filePath;
 						videoSize = size;
-//						mVideoView.setVideoURI(uri);
+						// mVideoView.setVideoURI(uri);
 						mVideoView.setVideoPath(videoPath);
 						mVideoView.start();
 						refreshUI();
@@ -300,7 +316,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 						Util.Toast(this, getString(R.string.talk_report_upload_vid_err_size));
 					}
 				}
-				
+
 				break;
 			}
 			case Const.image_select.REQUEST_CODE_BROWSE_VIDEO:
@@ -309,8 +325,8 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 				String filePath = UriUtil.getPath(this, data.getData());
 				if (filePath != null)
 				{
-					int size  = AirServices.iOperator.getFileSize("", filePath, true);
-					if(size <= VIDEO_MAX_SIZE)
+					int size = AirServices.iOperator.getFileSize("", filePath, true);
+					if (size <= VIDEO_MAX_SIZE)
 					{
 						videoUri = data.getData();
 						videoPath = filePath;
@@ -337,7 +353,6 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 	@Override
 	public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time)
 	{
-		// TODO Auto-generated method stub
 		if (isUploading && id == AirLocation.AIR_LOCATION_ID_ONCE)
 		{
 			String detail = report_detail.getText().toString();
@@ -349,7 +364,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 				{
 					if (!TextUtils.isEmpty(detail))
 						detail += "\r\n\r\n";
-					
+
 					SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 					String date_string = sfd.format(date);
 					detail += getString(R.string.talk_report_upload_capture_time) + " [" + date_string + "]";
@@ -366,11 +381,12 @@ public class MenuReportAsVidActivity extends ActivityBase implements OnClickList
 				resTypeExtension = "3gp";
 			}
 			Log.i(MenuReportAsVidActivity.class, "VideoPicture: TASK[" + taskId + "][" + taskName + "] text=[" + report_detail.getText().toString() + "] x=[" + latitude + "] y=[" + longitude + "]");
-			AirReportManager.getInstance().Report(taskId, taskName, AirtalkeeReport.RESOURCE_TYPE_VIDEO, resTypeExtension, videoUri, videoPath, detail, videoSize,
-				latitude, longitude);
+			AirReportManager.getInstance().Report(taskId, taskName, AirtalkeeReport.RESOURCE_TYPE_VIDEO, resTypeExtension, videoUri, videoPath, detail, videoSize, latitude, longitude);
 
 			isUploading = false;
+			Util.Toast(this, getString(R.string.talk_tools_report_success),R.drawable.ic_success);
 			finish();
+			
 		}
 	}
 

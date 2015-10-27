@@ -1,9 +1,13 @@
 package com.airtalkee.activity.home;
 
+import java.io.File;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,10 +16,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
+import com.airtalkee.Util.Const;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MenuReportActivity;
+import com.airtalkee.activity.MenuReportAsPicActivity;
+import com.airtalkee.activity.MenuReportAsVidActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.config.Config;
@@ -28,9 +34,10 @@ import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.services.AirServices;
+import com.airtalkee.widget.VideoCamera;
 
-public class PTTFragment extends BaseFragment implements OnClickListener,
-		DialogListener {
+public class PTTFragment extends BaseFragment implements OnClickListener,DialogListener
+{
 
 	private static final int DIALOG_CALL_CENTER = 100;
 	private LinearLayout recPlayback;
@@ -43,33 +50,39 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 	private View videoPannel;
 	private AirSession session = null;
 	private AirMessage currentMessage;
+	
+	private String picPathTemp = "";
+	private Uri picUriTemp = null;
 
 	AlertDialog dialog;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
 	}
 
 	@Override
-	public void onResume() {
+	public void onResume()
+	{
 		// TODO Auto-generated method stub
 		super.onResume();
 		setSession(getSession());
 	}
-	
+
 	@Override
-	public void onPause() {
+	public void onPause()
+	{
 		// TODO Auto-generated method stub
 		super.onPause();
 		setViedoReportPannelVisiblity(View.GONE);
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
 		// TODO Auto-generated method stub
 		v = inflater.inflate(getLayout(), container, false);
 
@@ -93,115 +106,139 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 	}
 
 	@Override
-	public int getLayout() {
+	public int getLayout()
+	{
 		// TODO Auto-generated method stub
 		return R.layout.frag_ptt_layout;
 	}
 
 	@Override
-	public void dispatchBarClickEvent(int page, int id) {
+	public void dispatchBarClickEvent(int page, int id)
+	{
 		// TODO Auto-generated method stub
-		if (page == HomeActivity.PAGE_PTT) {
+		if (page == HomeActivity.PAGE_PTT)
+		{
 			// TODO Auto-generated method stub
-			switch (id) {
-			case R.id.bar_left:
-				
-				setViedoReportPannelVisiblity(View.VISIBLE);
-				break;
-			case R.id.bar_mid:
+			switch (id)
+			{
+				case R.id.bar_left:
 
-				break;
-			case R.id.bar_right:
-				dialog = new AlertDialog(getActivity(), "确定呼叫中心", null, this,
-						DIALOG_CALL_CENTER);
-				dialog.show();
-				break;
+					setViedoReportPannelVisiblity(View.VISIBLE);
+					break;
+				case R.id.bar_mid:
+
+					break;
+				case R.id.bar_right:
+					dialog = new AlertDialog(getActivity(), "确定呼叫中心", null, this, DIALOG_CALL_CENTER);
+					dialog.show();
+					break;
 			}
 
 		}
 	}
 
-	public void setSession(AirSession s) {
+	public void setSession(AirSession s)
+	{
 		this.session = s;
 
 	}
 
-	private void callStationCenter() {
-		if (Config.funcCenterCall == AirFunctionSetting.SETTING_ENABLE) {
-			if (AirtalkeeAccount.getInstance().isAccountRunning()) {
-				if (AirtalkeeAccount.getInstance().isEngineRunning()) {
-					AirSession session = SessionController.SessionMatchSpecial(
-							AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER,
-							getString(R.string.talk_tools_call_center));
-					AirServices.getInstance().switchToSessionTemp(
-							session.getSessionCode(),
-							AirServices.TEMP_SESSION_TYPE_OUTGOING,
-							getActivity());
-				} else {
-					Util.Toast(getActivity(),
-							getString(R.string.talk_network_warning));
+	private void callStationCenter()
+	{
+		if (Config.funcCenterCall == AirFunctionSetting.SETTING_ENABLE)
+		{
+			if (AirtalkeeAccount.getInstance().isAccountRunning())
+			{
+				if (AirtalkeeAccount.getInstance().isEngineRunning())
+				{
+					AirSession session = SessionController.SessionMatchSpecial(AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER, getString(R.string.talk_tools_call_center));
+					AirServices.getInstance().switchToSessionTemp(session.getSessionCode(), AirServices.TEMP_SESSION_TYPE_OUTGOING, getActivity());
+				}
+				else
+				{
+					Util.Toast(getActivity(), getString(R.string.talk_network_warning));
 				}
 			}
-		} else if (Config.funcCenterCall == AirFunctionSetting.SETTING_CALL_NUMBER
-				&& !Utils.isEmpty(Config.funcCenterCallNumber)) {
-			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"
-					+ Config.funcCenterCallNumber));
+		}
+		else if (Config.funcCenterCall == AirFunctionSetting.SETTING_CALL_NUMBER && !Utils.isEmpty(Config.funcCenterCallNumber))
+		{
+			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Config.funcCenterCallNumber));
 			getActivity().startActivity(intent);
 		}
 	}
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(View v)
+	{
 		// TODO Auto-generated method stub
-		switch (v.getId()) {
-		case R.id.talk_playback: {
-			if (session != null && session.getMessagePlayback() != null) {
-				currentMessage = session.getMessagePlayback();
-				if (currentMessage.isRecordPlaying()) {
-					AirtalkeeMessage.getInstance().MessageRecordPlayStop();
-				} else {
-					AirtalkeeMessage.getInstance().MessageRecordPlayStart(
-							currentMessage);
-					if (currentMessage.getState() == AirMessage.STATE_NEW) {
-						session.setMessageUnreadCount(session
-								.getMessageUnreadCount() - 1);
-						// refreshMessageNewCount(false);
+		switch (v.getId())
+		{
+			case R.id.talk_playback:
+			{
+				if (session != null && session.getMessagePlayback() != null)
+				{
+					currentMessage = session.getMessagePlayback();
+					if (currentMessage.isRecordPlaying())
+					{
+						AirtalkeeMessage.getInstance().MessageRecordPlayStop();
+					}
+					else
+					{
+						AirtalkeeMessage.getInstance().MessageRecordPlayStart(currentMessage);
+						if (currentMessage.getState() == AirMessage.STATE_NEW)
+						{
+							session.setMessageUnreadCount(session.getMessageUnreadCount() - 1);
+							// refreshMessageNewCount(false);
+						}
 					}
 				}
 			}
-		}
-			break;
-		case R.id.btn_close:
-			setViedoReportPannelVisiblity(View.GONE);
-			break;
-		case R.id.btn_image:
-			//todo 
-			 Intent it = new Intent(getActivity(),
-			 MenuReportActivity.class);
-			 it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			 startActivity(it);
-			break;
-		case R.id.btn_camera:
-			//todo
-			break;
-		case R.id.btn_video:
-			//todo
-			break;
-		default:
-			break;
+				break;
+			case R.id.btn_close:
+				setViedoReportPannelVisiblity(View.GONE);
+				break;
+			case R.id.btn_image:
+				// todo
+				String status = Environment.getExternalStorageState();
+				if (!status.equals(Environment.MEDIA_MOUNTED))
+				{
+					Util.Toast(getActivity(), getString(R.string.talk_insert_sd_card));
+					return;
+				}
+				Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
+				localIntent.setType("image/*");
+				startActivityForResult(localIntent, Const.image_select.REQUEST_CODE_BROWSE_IMAGE);
+				break;
+			case R.id.btn_camera:
+				picPathTemp = Util.getImageTempFileName();
+				picUriTemp = Uri.fromFile(new File(picPathTemp));
+				Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
+				startActivityForResult(i, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
+				break;
+			case R.id.btn_video:
+				Intent serverIntent = new Intent(getActivity(), VideoCamera.class);
+				startActivityForResult(serverIntent, Const.image_select.REQUEST_CODE_CREATE_VIDEO);
+				break;
+			default:
+				break;
 		}
 	}
 
-	public void refreshPlayback() {
-		if (session != null && session.getMessagePlayback() != null) {
+	public void refreshPlayback()
+	{
+		if (session != null && session.getMessagePlayback() != null)
+		{
 			AirMessage msg = session.getMessagePlayback();
-			if (msg.isRecordPlaying()) {
+			if (msg.isRecordPlaying())
+			{
 				recPlaybackIcon.setImageResource(R.drawable.msg_audio_stop);
-			} else {
+			}
+			else
+			{
 				recPlaybackIcon.setImageResource(R.drawable.msg_audio_play);
 			}
-			if (TextUtils.equals(msg.getIpocidFrom(), AirtalkeeAccount
-					.getInstance().getUserId()))
+			if (TextUtils.equals(msg.getIpocidFrom(), AirtalkeeAccount.getInstance().getUserId()))
 				recPlaybackUser.setText(getString(R.string.talk_me));
 			else
 				recPlaybackUser.setText(msg.getInameFrom());
@@ -209,12 +246,17 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 			recPlaybackTime.setText(msg.getTime());
 			recPlayback.setVisibility(View.VISIBLE);
 			recPlaybackNone.setVisibility(View.GONE);
-			if (msg.getState() == AirMessage.STATE_NEW) {
+			if (msg.getState() == AirMessage.STATE_NEW)
+			{
 				recPlaybackNew.setVisibility(View.VISIBLE);
-			} else {
+			}
+			else
+			{
 				recPlaybackNew.setVisibility(View.GONE);
 			}
-		} else {
+		}
+		else
+		{
 			recPlaybackIcon.setImageResource(R.drawable.msg_audio_play);
 			recPlaybackUser.setText("");
 			recPlaybackSeconds.setText("");
@@ -226,11 +268,13 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 	}
 
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+	{
 		// TODO Auto-generated method stub
-		if (key.equals(SESSION_EVENT_KEY)) {
-			if (null != session && session.getMessagePlayback() != null) {
+		if (key.equals(SESSION_EVENT_KEY))
+		{
+			if (null != session && session.getMessagePlayback() != null)
+			{
 				refreshPlayback();
 			}
 		}
@@ -238,32 +282,78 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 	}
 
 	@Override
-	public void onClickOk(int id) {
+	public void onClickOk(int id)
+	{
 		// TODO Auto-generated method stub
-		switch (id) {
-		case DIALOG_CALL_CENTER:
-			callStationCenter();
-			break;
+		switch (id)
+		{
+			case DIALOG_CALL_CENTER:
+				callStationCenter();
+				break;
 		}
 	}
 
 	@Override
-	public void onClickCancel(int id) {
+	public void onClickCancel(int id)
+	{
 		// TODO Auto-generated method stub
 
 	}
 
-	private void setViedoReportPannelVisiblity(int visiblility) {
-		if (visiblility == View.GONE) {
+	private void setViedoReportPannelVisiblity(int visiblility)
+	{
+		if (visiblility == View.GONE)
+		{
 			if (videoPannel != null)
 				videoPannel.setVisibility(View.GONE);
 			if (mediaStatusBar != null)
 				mediaStatusBar.setMediaStatusBarVisibility(View.VISIBLE);
-		} else {
+		}
+		else
+		{
 			if (videoPannel != null)
 				videoPannel.setVisibility(View.VISIBLE);
 			if (mediaStatusBar != null)
 				mediaStatusBar.setMediaStatusBarVisibility(View.GONE);
 		}
+	}
+
+	public void pictureQualitySelect(final int id)
+	{
+		/*
+		new android.app.AlertDialog.Builder(this).setTitle(R.string.talk_quality_select).setItems(R.array.picture_quality, new DialogInterface.OnClickListener()
+		{
+			@Override
+			public void onClick(DialogInterface dialog, int which)
+			{
+				isHighQuality = which == 0;
+				switch (id)
+				{
+					case R.id.report_image:
+					case R.id.report_btn_take:
+					{
+						picPathTemp = Util.getImageTempFileName();
+						picUriTemp = Uri.fromFile(new File(picPathTemp));
+						Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+						i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
+						startActivityForResult(i, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
+						break;
+					}
+					case R.id.report_btn_native:
+					{
+						String status = Environment.getExternalStorageState();
+						if (!status.equals(Environment.MEDIA_MOUNTED))
+						{
+							Util.Toast(MenuReportAsPicActivity.this, getString(R.string.talk_insert_sd_card));
+							return;
+						}
+						Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
+						localIntent.setType("image/*");
+						startActivityForResult(localIntent, Const.image_select.REQUEST_CODE_BROWSE_IMAGE);
+						break;
+					}
+				}
+			}
+		}).show();*/
 	}
 }
