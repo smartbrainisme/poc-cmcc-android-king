@@ -83,7 +83,9 @@
         <item name="theme_group_others">@drawable/group_others</item>
         <item name="theme_group_all">@drawable/group_all</item>
         <item name="theme_user_dialog">@drawable/user_dialog</item>
-        <item name="theme_ic_topbar_back">@drawable/ic_topbar_back</item>
+        <item name="theme_ic_topbar_back">@drawable/btn_back</item>
+        <item name="theme_ic_topbar_clean">@drawable/ic_close_cicle</item>
+        <!-- <item name="theme_ic_topbar_back">@drawable/ic_topbar_back</item> -->
         <item name="theme_ic_refresh">@drawable/ic_refresh</item>
         <item name="theme_system_msg_bg">@color/color_system_msg_bg</item>
         <item name="theme_nav_contact_selected">@drawable/nav_contact_selected</item>

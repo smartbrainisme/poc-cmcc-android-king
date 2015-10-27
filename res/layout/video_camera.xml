@@ -1,11 +1,87 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"  android:layout_width="match_parent" android:layout_height="match_parent" tools:context=".VideoRecordActivity" >
-    <FrameLayout android:id="@+id/surface_layout" android:layout_width="match_parent" android:layout_height="match_parent"  android:layout_alignParentLeft="true"  android:layout_alignParentTop="true"  android:background="@android:color/black" >
-        <SurfaceView android:id="@+id/surface"  android:layout_width="wrap_content"  android:layout_height="wrap_content" android:layout_gravity="center" />
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".VideoRecordActivity" >
+
+    <FrameLayout
+        android:id="@+id/surface_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/black" >
+
+        <SurfaceView
+            android:id="@+id/surface"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
     </FrameLayout>
-    <ImageView  android:id="@+id/flash" android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:contentDescription="@string/app_name"   android:src="@drawable/ic_flash_off_holo_light"  android:layout_marginTop="10dp"  android:layout_marginLeft="10dp" />
-    <ImageView  android:id="@+id/camera" android:layout_width="wrap_content"  android:layout_height="wrap_content"  android:contentDescription="@string/app_name" android:src="@drawable/ic_switch_photo_facing_holo_light"  android:layout_alignParentRight="true" android:layout_marginTop="10dp"  android:layout_marginRight="10dp" />
-    <Chronometer  android:id="@+id/chronometer1"  android:layout_width="50dip" android:layout_height="wrap_content" android:gravity="center" android:textColor="#fd0202" android:visibility="gone" android:layout_centerHorizontal="true" android:layout_marginTop="10dp" />
-    <ImageView android:id="@+id/start"  android:layout_width="wrap_content" android:layout_height="wrap_content" android:contentDescription="@string/app_name" android:src="@drawable/ic_switch_video_normal" android:text="@string/app_name" android:layout_alignParentBottom="true"  android:layout_marginBottom="10dp"  android:layout_centerHorizontal="true" />
-    <TextView android:id="@+id/close"  android:layout_width="100dp" android:layout_height="40dp"  android:text="@string/talk_close" android:layout_alignParentBottom="true"  android:layout_marginBottom="30dp" android:layout_marginRight="40dip"  android:textColor="#fff"  android:layout_toLeftOf="@+id/start" android:gravity="center"  />
-    <TextView android:id="@+id/sure"  android:layout_width="100dp" android:layout_height="40dp" android:text="@string/talk_complete" android:layout_alignParentBottom="true"  android:layout_marginBottom="30dp" android:layout_marginLeft="40dip" android:textColor="#fff" android:layout_toRightOf="@+id/start" android:gravity="center" android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_flash_off_holo_light" />
+
+    <ImageView
+        android:id="@+id/camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_switch_photo_facing_holo_light" />
+
+    <Chronometer
+        android:id="@+id/chronometer1"
+        android:layout_width="50dip"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:textColor="#fd0202"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_switch_video_normal"
+        android:text="@string/app_name" />
+
+    <TextView
+        android:id="@+id/close"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="40dip"
+        android:layout_toLeftOf="@+id/start"
+        android:gravity="center"
+        android:text="@string/talk_close"
+        android:textColor="#fff" />
+
+    <TextView
+        android:id="@+id/sure"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="40dip"
+        android:layout_toRightOf="@+id/start"
+        android:gravity="center"
+        android:text="@string/talk_complete"
+        android:textColor="#fff"
+        android:visibility="gone" />
+
 </RelativeLayout>

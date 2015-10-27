@@ -12,16 +12,16 @@ import android.view.WindowManager;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.airtalkee.R;
+import com.airtalkee.activity.MenuReportAsVidActivity;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.sdk.video.record.VideoQuality;
 import com.airtalkee.sdk.video.record.VideoSession;
 import com.airtalkee.sdk.video.record.VideoSession.Callback;
 
-public class VideoCamera extends Activity implements 
-OnClickListener,Callback {
-	public static String EXTRA_VIDEO_PATH ="extra_video_path";
+public class VideoCamera extends Activity implements OnClickListener, Callback
+{
+	public static String EXTRA_VIDEO_PATH = "extra_video_path";
 	private ImageView mButtonStart;
 	private ImageView mButtonCamera;
 	private ImageView mButtonFlash;
@@ -30,23 +30,24 @@ OnClickListener,Callback {
 	private TextView tvSure;
 	private SurfaceView mSurfaceView;
 	private VideoSession session;
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState); 
-		
-		
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.video_camera);
 		session = VideoSession.newInstance(VideoQuality.QUALITY_480P);
 		mButtonStart = (ImageView) findViewById(R.id.start);
 		mButtonCamera = (ImageView) findViewById(R.id.camera);
-		mButtonFlash =(ImageView)findViewById(R.id.flash);
+		mButtonFlash = (ImageView) findViewById(R.id.flash);
 		mSurfaceView = (SurfaceView) findViewById(R.id.surface);
-		chronometer = (Chronometer)findViewById(R.id.chronometer1);
-		tvClose = (TextView)findViewById(R.id.close);
-		tvSure = (TextView)findViewById(R.id.sure);
-		
+		chronometer = (Chronometer) findViewById(R.id.chronometer1);
+		tvClose = (TextView) findViewById(R.id.close);
+		tvSure = (TextView) findViewById(R.id.sure);
+
 		mButtonStart.setOnClickListener(this);
 		mButtonCamera.setOnClickListener(this);
 		mButtonFlash.setOnClickListener(this);
@@ -57,36 +58,38 @@ OnClickListener,Callback {
 		session.startPreview();
 	}
 
-
 	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.flash:
-			toggleFlash();
-			break;
-		case R.id.start:
-			toggleStream();
-			break;
-		case R.id.camera:
-			session.switchCamera();
-			break;
-		case R.id.close:
-			setResult(RESULT_CANCELED);
-			finish();
-			break;
-		case R.id.sure:
-			String path = session.getVideoFilePath();
-			Intent data = new Intent();
-			data.putExtra(EXTRA_VIDEO_PATH, path);
-			setResult(RESULT_OK, data);
-			finish();
-			break;
+	public void onClick(View v)
+	{
+		switch (v.getId())
+		{
+			case R.id.flash:
+				toggleFlash();
+				break;
+			case R.id.start:
+				toggleStream();
+				break;
+			case R.id.camera:
+				session.switchCamera();
+				break;
+			case R.id.close:
+				setResult(RESULT_CANCELED);
+				finish();
+				break;
+			case R.id.sure:
+				String path = session.getVideoFilePath();
+				Intent data = new Intent(this, MenuReportAsVidActivity.class);
+				data.putExtra(EXTRA_VIDEO_PATH, path);
+				setResult(RESULT_OK, data);
+				startActivity(data);
+				finish();
+				break;
 		}
 	}
-	
+
 	public void refreshStartButton()
 	{
-		switch(session.getState())
+		switch (session.getState())
 		{
 			case VideoSession.STATE_STARTED:
 				mButtonStart.setImageResource(R.drawable.ic_switch_video_active1);
@@ -112,80 +115,84 @@ OnClickListener,Callback {
 	}
 
 	@Override
-	public void onDestroy(){
+	public void onDestroy()
+	{
 		super.onDestroy();
 		session.release();
 		session = null;
-//		mSurfaceView.getHolder().removeCallback(this);
+		// mSurfaceView.getHolder().removeCallback(this);
 	}
-	
-	long currentMillis =0;
 
-	public void toggleStream() {
-		
-		if(Utils.getCurrentTimeInMillis() - currentMillis >2000)
+	long currentMillis = 0;
+
+	public void toggleStream()
+	{
+
+		if (Utils.getCurrentTimeInMillis() - currentMillis > 2000)
 		{
-			if(session.getState() == VideoSession.STATE_STOPPED)
+			if (session.getState() == VideoSession.STATE_STOPPED)
 				session.startRecord();
 			else
 				session.stopRecord();
-			
+
 			currentMillis = Utils.getCurrentTimeInMillis();
 		}
-		//else
-			//Toast.makeText(this, "Frequent operation!", Toast.LENGTH_SHORT).show();
+		// else
+		// Toast.makeText(this, "Frequent operation!",
+		// Toast.LENGTH_SHORT).show();
 	}
-	
+
 	private void refreshFlashState()
 	{
-		if(session.getFlashState())
+		if (session.getFlashState())
 			mButtonFlash.setImageResource(R.drawable.ic_flash_on_holo_light);
 		else
 			mButtonFlash.setImageResource(R.drawable.ic_flash_off_holo_light);
 	}
-	
+
 	public void toggleFlash()
 	{
 		session.toggleFlash();
 	}
 
-
 	@Override
-	public void onSessionError(int reason, int streamType, Exception e) {
+	public void onSessionError(int reason, int streamType, Exception e)
+	{
 		// TODO Auto-generated method stub
-		
-	}
 
-
-	@Override
-	public void onPreviewStarted() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void onCameraSwitched(int cameraId) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
-	public void onSessionStarted() {
+	public void onPreviewStarted()
+	{
 		// TODO Auto-generated method stub
-		refreshStartButton();
+
 	}
 
+	@Override
+	public void onCameraSwitched(int cameraId)
+	{
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
-	public void onSessionStopped() {
+	public void onSessionStarted()
+	{
 		// TODO Auto-generated method stub
 		refreshStartButton();
 	}
 
+	@Override
+	public void onSessionStopped()
+	{
+		// TODO Auto-generated method stub
+		refreshStartButton();
+	}
 
 	@Override
-	public void onFlashToggle() {
+	public void onFlashToggle()
+	{
 		// TODO Auto-generated method stub
 		refreshFlashState();
 	}

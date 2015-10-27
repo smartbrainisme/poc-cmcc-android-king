@@ -67,6 +67,7 @@
     <attr name="theme_group_all" format="reference" />
     <attr name="theme_user_dialog" format="reference" />
     <attr name="theme_ic_topbar_back" format="reference" />
+    <attr name="theme_ic_topbar_clean" format="reference" />
     <attr name="theme_ic_refresh" format="reference" />
     <attr name="theme_system_msg_bg" format="reference" />
     <attr name="theme_nav_contact_selected" format="reference" />

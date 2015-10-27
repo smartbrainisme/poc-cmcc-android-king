@@ -16,77 +16,6 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:baselineAligned="false"
-        android:gravity="center"
-        android:orientation="horizontal" >
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-
-            <Button
-                android:id="@+id/report_report_btn_pic"
-                android:layout_width="fill_parent"
-                android:layout_height="50dip"
-                android:layout_margin="5.0dip"
-                android:background="?theme_button"
-                android:clickable="true"
-                android:drawableLeft="@drawable/report_icon_pic"
-                android:gravity="center"
-                android:paddingLeft="?theme_report_drawable_right_padding"
-                android:text="@string/talk_tools_report_pic"
-                android:textColor="?theme_button_text_color"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-
-            <Button
-                android:id="@+id/report_report_btn_vid"
-                android:layout_width="fill_parent"
-                android:layout_height="50dip"
-                android:layout_margin="5.0dip"
-                android:background="?theme_button"
-                android:clickable="true"
-                android:drawableLeft="@drawable/report_icon_vid"
-                android:gravity="center"
-                android:paddingLeft="?theme_report_drawable_right_padding"
-                android:text="@string/talk_tools_report_vid"
-                android:textColor="?theme_button_text_color"
-                android:textSize="14sp" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/report_real_video"
-        android:layout_width="fill_parent"
-        android:layout_height="50dip"
-        android:layout_margin="5.0dip"
-        android:background="?theme_button"
-        android:clickable="true"
-        android:drawableLeft="@drawable/report_icon_real_vid"
-        android:gravity="center"
-        android:paddingLeft="?theme_report_drawable_right_padding"
-        android:text="实时视频回传"
-        android:textColor="?theme_button_text_color"
-        android:textSize="14sp"
-        android:visibility="gone" />
-
-    <View
-        android:id="@+id/line_divider"
-        android:layout_width="fill_parent"
-        android:layout_height="1dip"
-        android:layout_alignParentBottom="true"
-        android:background="?theme_divider_h"
-        android:visibility="gone" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
@@ -94,39 +23,30 @@
             android:id="@+id/talk_report_list_panel"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:gravity="center" >
+            android:gravity="top" >
 
             <com.airtalkee.widget.MListView
                 android:id="@+id/talk_report_list"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="60dip"
                 android:cacheColorHint="#00000000"
                 android:groupIndicator="@null" />
 
-            <Button
-                android:id="@+id/report_report_btn_clean"
-                android:layout_width="fill_parent"
-                android:layout_height="50dip"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="5.0dip"
-                android:layout_marginLeft="20dip"
-                android:layout_marginRight="20dip"
-                android:layout_marginTop="5.0dip"
-                android:background="?theme_button"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="@string/talk_report_upload_cleanall"
-                android:textColor="?theme_button_text_color"
-                android:textSize="14dip" />
-
-            <View
-                android:id="@id/line_divider"
-                android:layout_width="fill_parent"
-                android:layout_height="1dip"
-                android:layout_alignTop="@id/report_report_btn_clean"
-                android:layout_marginTop="-6dip"
-                android:background="?theme_divider_h" />
+            <!-- <Button -->
+            <!-- android:id="@+id/report_report_btn_clean" -->
+            <!-- android:layout_width="fill_parent" -->
+            <!-- android:layout_height="50dip" -->
+            <!-- android:layout_alignParentBottom="true" -->
+            <!-- android:layout_marginBottom="5.0dip" -->
+            <!-- android:layout_marginLeft="20dip" -->
+            <!-- android:layout_marginRight="20dip" -->
+            <!-- android:layout_marginTop="5.0dip" -->
+            <!-- android:background="?theme_button" -->
+            <!-- android:clickable="false" -->
+            <!-- android:gravity="center" -->
+            <!-- android:text="@string/talk_report_upload_cleanall" -->
+            <!-- android:textColor="?theme_button_text_color" -->
+            <!-- android:textSize="14dip"/> -->
         </RelativeLayout>
 
         <TextView
@@ -140,5 +60,89 @@
             android:textSize="16dip"
             android:visibility="gone" />
     </LinearLayout>
+
+    <View
+        android:id="@id/line_divider"
+        android:layout_width="fill_parent"
+        android:layout_height="1dip"
+        android:background="@drawable/dicider_line2" />
+
+    <!-- <LinearLayout -->
+    <!-- android:layout_width="wrap_content" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:baselineAligned="false" -->
+    <!-- android:gravity="center" -->
+    <!-- android:orientation="horizontal" -->
+    <!-- android:visibility="gone" > -->
+
+
+    <!-- <LinearLayout -->
+    <!-- android:layout_width="fill_parent" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_weight="1" > -->
+
+
+    <!-- <Button -->
+    <!-- android:id="@+id/report_report_btn_pic" -->
+    <!-- android:layout_width="fill_parent" -->
+    <!-- android:layout_height="50dip" -->
+    <!-- android:layout_margin="5.0dip" -->
+    <!-- android:background="?theme_button" -->
+    <!-- android:clickable="false" -->
+    <!-- android:drawableLeft="@drawable/report_icon_pic" -->
+    <!-- android:gravity="center" -->
+    <!-- android:paddingLeft="?theme_report_drawable_right_padding" -->
+    <!-- android:text="@string/talk_tools_report_pic" -->
+    <!-- android:textColor="?theme_button_text_color" -->
+    <!-- android:textSize="14sp" /> -->
+    <!-- </LinearLayout> -->
+
+
+    <!-- <LinearLayout -->
+    <!-- android:layout_width="fill_parent" -->
+    <!-- android:layout_height="wrap_content" -->
+    <!-- android:layout_weight="1" > -->
+
+
+    <!-- <Button -->
+    <!-- android:id="@+id/report_report_btn_vid" -->
+    <!-- android:layout_width="fill_parent" -->
+    <!-- android:layout_height="50dip" -->
+    <!-- android:layout_margin="5.0dip" -->
+    <!-- android:background="?theme_button" -->
+    <!-- android:clickable="false" -->
+    <!-- android:drawableLeft="@drawable/report_icon_vid" -->
+    <!-- android:gravity="center" -->
+    <!-- android:paddingLeft="?theme_report_drawable_right_padding" -->
+    <!-- android:text="@string/talk_tools_report_vid" -->
+    <!-- android:textColor="?theme_button_text_color" -->
+    <!-- android:textSize="14sp" /> -->
+    <!-- </LinearLayout> -->
+    <!-- </LinearLayout> -->
+
+
+    <!-- <Button -->
+    <!-- android:id="@+id/report_real_video" -->
+    <!-- android:layout_width="fill_parent" -->
+    <!-- android:layout_height="50dip" -->
+    <!-- android:layout_margin="5.0dip" -->
+    <!-- android:background="?theme_button" -->
+    <!-- android:clickable="false" -->
+    <!-- android:drawableLeft="@drawable/report_icon_real_vid" -->
+    <!-- android:gravity="center" -->
+    <!-- android:paddingLeft="?theme_report_drawable_right_padding" -->
+    <!-- android:text="实时视频回传" -->
+    <!-- android:textColor="?theme_button_text_color" -->
+    <!-- android:textSize="14sp" -->
+    <!-- android:visibility="gone" /> -->
+
+
+    <!-- <View -->
+    <!-- android:id="@+id/line_divider" -->
+    <!-- android:layout_width="fill_parent" -->
+    <!-- android:layout_height="1dip" -->
+    <!-- android:layout_alignParentBottom="true" -->
+    <!-- android:background="?theme_divider_h" -->
+    <!-- android:visibility="gone" /> -->
 
 </LinearLayout>

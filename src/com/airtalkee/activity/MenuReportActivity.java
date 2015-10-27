@@ -91,6 +91,7 @@ public class MenuReportActivity extends ActivityBase implements OnClickListener,
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
 		ivTitle.setText(R.string.talk_tools_report);
+		
 		View btnLeft = findViewById(R.id.menu_left_button);
 		ImageView ivLeft = (ImageView) findViewById(R.id.bottom_left_icon);
 		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this));
@@ -98,25 +99,28 @@ public class MenuReportActivity extends ActivityBase implements OnClickListener,
 
 		RelativeLayout ivRightLay = (RelativeLayout) findViewById(R.id.talk_menu_right_button);
 		ImageView ivRight = (ImageView) findViewById(R.id.bottom_right_icon);
+		ivRight.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_clean, this));
+		ivRightLay.setOnClickListener(this);
+		
+//		ivRight.setVisibility(View.VISIBLE);
+//		ivRightLay.setVisibility(View.VISIBLE);
+		
 		talk_report_list_panel = findViewById(R.id.talk_report_list_panel);
 		talk_report_empty =findViewById(R.id.talk_report_empty);
-		ivRight.setVisibility(View.GONE);
-		ivRightLay.setVisibility(View.INVISIBLE);
-		
 		lvReportList = (MListView) findViewById(R.id.talk_report_list);
 		adapterReport = new AdapterReport(this, lvReportList);
 
 		lvReportList.setAdapter(adapterReport);
 		lvReportList.setOnItemClickListener(this);
 		lvReportList.setOnItemLongClickListener(this);
-
+		/*
 		findViewById(R.id.report_report_btn_pic).setOnClickListener(this);
 		findViewById(R.id.report_report_btn_vid).setOnClickListener(this);
 		if (Config.funcVideo)
 			findViewById(R.id.report_real_video).setOnClickListener(this);
 		else
-			findViewById(R.id.report_real_video).setVisibility(View.GONE);
-		findViewById(R.id.report_report_btn_clean).setOnClickListener(this);
+			findViewById(R.id.report_real_video).setVisibility(View.GONE);*/
+//		findViewById(R.id.report_report_btn_clean).setOnClickListener(this);
 	}
 
 	private void refreshListOrEmpty()
@@ -178,6 +182,7 @@ public class MenuReportActivity extends ActivityBase implements OnClickListener,
 			case R.id.bottom_left_icon:
 				finish();
 				break;
+			/*
 			case R.id.report_report_btn_pic:
 			{
 				Intent it = new Intent(this, MenuReportAsPicActivity.class);
@@ -215,7 +220,25 @@ public class MenuReportActivity extends ActivityBase implements OnClickListener,
 				builder.setNegativeButton(this.getString(R.string.talk_no), null);
 				builder.show();
 				break;
+			}*/
+			case R.id.talk_menu_right_button:
+			{
+				AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				builder.setTitle(getString(R.string.talk_report_upload_cleanall));
+				builder.setMessage(getString(R.string.talk_report_upload_cleanall_tip));
+				builder.setPositiveButton(getString(R.string.talk_ok), new DialogInterface.OnClickListener()
+				{
+					public void onClick(DialogInterface dialog, int which)
+					{
+						AirReportManager.getInstance().ReportClean();
+					}
+				});
+				builder.setNegativeButton(this.getString(R.string.talk_no), null);
+				builder.show();
+				break;
 			}
+			
+			/*
 			case R.id.report_real_video:
 			{
 				if (AirtalkeeAccount.getInstance().isAccountRunning())
@@ -239,7 +262,7 @@ public class MenuReportActivity extends ActivityBase implements OnClickListener,
 					}
 				}
 				break;
-			}
+			}*/
 		}
 	}
 

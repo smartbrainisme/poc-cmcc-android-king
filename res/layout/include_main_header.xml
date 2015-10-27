@@ -59,7 +59,7 @@
                 android:gravity="center"
                 android:singleLine="true"
                 android:text=""
-                android:textColor="?theme_color_title"
+                android:textColor="#FFFFFF"
                 android:textSize="20dip" />
 
             <LinearLayout
