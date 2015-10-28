@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import android.R.integer;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
+import com.airtalkee.R.string;
 import com.airtalkee.Util.BitmapUtil;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.ThemeUtil;
@@ -59,6 +61,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 
 	private String taskId = null;
 	private String taskName = null;
+	private String type = null;
 
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
 
@@ -79,6 +82,35 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		{
 			taskId = bundle.getString("taskId");
 			taskName = bundle.getString("taskName");
+			type = bundle.getString("type");
+		}
+		loadCamera(type);
+	}
+
+	private void loadCamera(String type)
+	{
+		if (type != null)
+		{
+			if (type.equals("camera"))
+			{
+				picPathTemp = Util.getImageTempFileName();
+				picUriTemp = Uri.fromFile(new File(picPathTemp));
+				Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
+				startActivityForResult(i, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
+			}
+			else if (type.equals("image"))
+			{
+				String status = Environment.getExternalStorageState();
+				if (!status.equals(Environment.MEDIA_MOUNTED))
+				{
+					Util.Toast(this, getString(R.string.talk_insert_sd_card));
+					return;
+				}
+				Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
+				localIntent.setType("image/*");
+				startActivityForResult(localIntent, Const.image_select.REQUEST_CODE_BROWSE_IMAGE);
+			}
 		}
 	}
 
@@ -220,14 +252,14 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 					picPath = picPathTemp;
 					resizePicture(false);
 					picSize = AirServices.iOperator.getFileSize("", picPath, true);
+					refreshUI();
 				}
 				else
 				{
 					picUriTemp = null;
 					picPathTemp = "";
+					finish();
 				}
-				refreshUI();
-
 				break;
 			case Const.image_select.REQUEST_CODE_BROWSE_IMAGE:
 				if (resultCode == RESULT_OK)
@@ -246,6 +278,10 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 					{
 						Util.Toast(this, getString(R.string.talk_report_upload_vid_err_select_pic));
 					}
+				}
+				else
+				{
+					finish();
 				}
 				break;
 			default:

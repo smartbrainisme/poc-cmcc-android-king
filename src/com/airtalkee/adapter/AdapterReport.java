@@ -102,7 +102,8 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 			holder.progressBar = (ProgressBar) convertView.findViewById(R.id.talk_report_progress);
 			holder.progressText = (TextView) convertView.findViewById(R.id.talk_report_progress_text);
 			holder.state = (ImageView) convertView.findViewById(R.id.talk_report_state);
-			// holder.stateRetry = (Button) convertView.findViewById(R.id.talk_report_btn_retry);
+			// holder.stateRetry = (Button)
+			// convertView.findViewById(R.id.talk_report_btn_retry);
 			holder.stateRetry = (ImageView) convertView.findViewById(R.id.talk_report_retry);
 			holder.stateRetry.setImageResource(R.drawable.selector_report_retry);
 			holder.failText = (TextView) convertView.findViewById(R.id.talk_report_fail_message);
@@ -122,6 +123,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 			else
 				imageLoader.displayImage(report.getResUri().toString(), holder.icon);
 
+			String time = report.getTime();
 			holder.time.setText(context.getString(R.string.talk_tools_report_date) + "：" + report.getTime().substring(0, 16));
 			holder.size.setText(MenuReportActivity.sizeMKB(report.getResSize()));
 
@@ -135,7 +137,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 
 			if (!Utils.isEmpty(report.getResContent()))
 			{
-				String content = report.getResContent().substring(0, report.getResContent().lastIndexOf('\r'));
+				String content = report.getResContent().contains("\r") ? report.getResContent().substring(0, report.getResContent().lastIndexOf('\r')) : context.getString(R.string.talk_report_upload_no_content);
 				holder.detail.setText(context.getString(R.string.talk_tools_report_description) + "：" + content);
 			}
 			else
@@ -150,7 +152,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 					holder.state.setImageResource(R.drawable.report_state_waiting);
 					// holder.stateRetry.setVisibility(View.GONE);
 					holder.detail.setVisibility(View.VISIBLE);
-//					holder.progressLayout.setVisibility(View.GONE);
+					// holder.progressLayout.setVisibility(View.GONE);
 					holder.progressBar.setVisibility(View.VISIBLE);
 					holder.uploadStep.setText(context.getString(R.string.talk_tools_report_uploading));
 					break;
@@ -235,7 +237,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 			case R.id.talk_report_retry:
 			{
 				AirReportManager.getInstance().ReportRetry((String) v.getTag());
-//				AirLocation.getInstance(context).onceGet(this, 30);
+				// AirLocation.getInstance(context).onceGet(this, 30);
 				break;
 			}
 

@@ -1,9 +1,14 @@
 package com.airtalkee.widget;
 
+import java.io.File;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.SystemClock;
+import android.provider.MediaStore;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -11,13 +16,18 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Chronometer;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
+import com.airtalkee.Util.Const;
+import com.airtalkee.Util.Util;
+import com.airtalkee.activity.MenuReportAsPicActivity;
 import com.airtalkee.activity.MenuReportAsVidActivity;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.sdk.video.record.VideoQuality;
 import com.airtalkee.sdk.video.record.VideoSession;
 import com.airtalkee.sdk.video.record.VideoSession.Callback;
+import com.umeng.common.net.t;
 
 public class VideoCamera extends Activity implements OnClickListener, Callback
 {
@@ -26,10 +36,17 @@ public class VideoCamera extends Activity implements OnClickListener, Callback
 	private ImageView mButtonCamera;
 	private ImageView mButtonFlash;
 	private Chronometer chronometer;
-	private TextView tvClose;
-	private TextView tvSure;
+	private ImageView tvClose;
 	private SurfaceView mSurfaceView;
 	private VideoSession session;
+	private ImageView mButtonToAlbum;
+	private ImageView mButtonToPhoto;
+	private RelativeLayout rlTopbars;
+	private RelativeLayout rlBottombars;
+	private ImageView ivSure, ivClose;
+	
+	private String picPathTemp = "";
+	private Uri picUriTemp = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -45,14 +62,24 @@ public class VideoCamera extends Activity implements OnClickListener, Callback
 		mButtonFlash = (ImageView) findViewById(R.id.flash);
 		mSurfaceView = (SurfaceView) findViewById(R.id.surface);
 		chronometer = (Chronometer) findViewById(R.id.chronometer1);
-		tvClose = (TextView) findViewById(R.id.close);
-		tvSure = (TextView) findViewById(R.id.sure);
+		tvClose = (ImageView) findViewById(R.id.close);
+		ivClose = (ImageView) findViewById(R.id.bottom_close);
+		ivSure = (ImageView) findViewById(R.id.sure);
+		mButtonToAlbum = (ImageView) findViewById(R.id.to_album);
+		mButtonToPhoto = (ImageView) findViewById(R.id.to_camera);
+		rlTopbars = (RelativeLayout) findViewById(R.id.topbars);
+		rlTopbars.getBackground().setAlpha(80);
+		rlBottombars = (RelativeLayout) findViewById(R.id.bottombars);
+		rlBottombars.getBackground().setAlpha(80);
 
+		mButtonToAlbum.setOnClickListener(this);
+		mButtonToPhoto.setOnClickListener(this);
 		mButtonStart.setOnClickListener(this);
 		mButtonCamera.setOnClickListener(this);
 		mButtonFlash.setOnClickListener(this);
 		tvClose.setOnClickListener(this);
-		tvSure.setOnClickListener(this);
+		ivClose.setOnClickListener(this);
+		ivSure.setOnClickListener(this);
 		session.setCallback(this);
 		session.setSurfaceView(mSurfaceView);
 		session.startPreview();
@@ -73,6 +100,7 @@ public class VideoCamera extends Activity implements OnClickListener, Callback
 				session.switchCamera();
 				break;
 			case R.id.close:
+			case R.id.bottom_close:
 				setResult(RESULT_CANCELED);
 				finish();
 				break;
@@ -84,6 +112,22 @@ public class VideoCamera extends Activity implements OnClickListener, Callback
 				startActivity(data);
 				finish();
 				break;
+			case R.id.to_album:
+			{
+				finish();
+				Intent itImage = new Intent(this, MenuReportAsVidActivity.class);
+				itImage.putExtra("type", "video");
+				startActivity(itImage);
+				break;
+			}
+			case R.id.to_camera:
+			{
+				finish();
+				Intent it = new Intent(this, MenuReportAsPicActivity.class);
+				it.putExtra("type", "camera");
+				startActivity(it);
+				break;
+			}
 		}
 	}
 
@@ -92,22 +136,28 @@ public class VideoCamera extends Activity implements OnClickListener, Callback
 		switch (session.getState())
 		{
 			case VideoSession.STATE_STARTED:
-				mButtonStart.setImageResource(R.drawable.ic_switch_video_active1);
+				mButtonStart.setImageResource(R.drawable.btn_report_video_stop);
 				chronometer.start();
 				chronometer.setBase(SystemClock.elapsedRealtime());
 				mButtonCamera.setVisibility(View.GONE);
 				mButtonFlash.setVisibility(View.GONE);
-				tvClose.setVisibility(View.GONE);
-				tvSure.setVisibility(View.GONE);
+				// tvClose.setVisibility(View.GONE);
+				ivSure.setVisibility(View.GONE);
+				mButtonToAlbum.setVisibility(View.GONE);
+				mButtonToPhoto.setVisibility(View.GONE);
 				chronometer.setVisibility(View.VISIBLE);
 				break;
 			case VideoSession.STATE_STOPPED:
-				mButtonStart.setImageResource(R.drawable.ic_switch_video_normal);
+				mButtonStart.setImageResource(R.drawable.btn_report_video_stop);
+				mButtonStart.setVisibility(View.INVISIBLE);
 				chronometer.setVisibility(View.GONE);
-				mButtonFlash.setVisibility(View.VISIBLE);
-				mButtonCamera.setVisibility(View.VISIBLE);
-				tvSure.setVisibility(View.VISIBLE);
-				tvClose.setVisibility(View.VISIBLE);
+				mButtonFlash.setVisibility(View.GONE);
+				mButtonCamera.setVisibility(View.GONE);
+				ivSure.setVisibility(View.VISIBLE);
+				ivClose.setVisibility(View.VISIBLE);
+				mButtonToAlbum.setVisibility(View.GONE);
+				mButtonToPhoto.setVisibility(View.GONE);
+				rlTopbars.setVisibility(View.GONE);
 				chronometer.stop();
 				chronometer.setBase(SystemClock.elapsedRealtime());
 				break;

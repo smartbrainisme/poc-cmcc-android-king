@@ -29,12 +29,19 @@ public class HomeActivity extends SessionDialogActivity implements
 	private ImageView slidingBack;
 	private SessionAndChannelView channelView;
 	private LinearLayout contaner;
+	private static HomeActivity mInstance;
+	
+	public static HomeActivity getInstance()
+	{
+		return mInstance;
+	}
 
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
+		mInstance = this;
 		setContentView(R.layout.activity_home);
 
 		setRequestedOrientation(Config.screenOrientation);

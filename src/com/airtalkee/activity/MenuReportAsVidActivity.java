@@ -19,8 +19,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 import com.airtalkee.R;
+import com.airtalkee.R.string;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.ThemeUtil;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.UriUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.config.Config;
@@ -53,6 +55,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 
 	private String taskId = null;
 	private String taskName = null;
+	private String type = null;
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -67,10 +70,27 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 			taskId = bundle.getString("taskId");
 			taskName = bundle.getString("taskName");
 			videoPath = bundle.getString("extra_video_path");
+			type = bundle.getString("type");
 		}
 		doInitView();
 		refreshUI();
+		loadAlbum(type);
+	}
 
+	private void loadAlbum(String type)
+	{
+		if (type != null && type.equals("video"))
+		{
+			String status = Environment.getExternalStorageState();
+			if (!status.equals(Environment.MEDIA_MOUNTED))
+			{
+				Util.Toast(this, getString(R.string.talk_insert_sd_card));
+				return;
+			}
+			Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
+			localIntent.setType("video/*");
+			startActivityForResult(localIntent, Const.image_select.REQUEST_CODE_BROWSE_VIDEO);
+		}
 	}
 
 	private void doInitView()
@@ -90,7 +110,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 
 		findViewById(R.id.report_image).setOnClickListener(this);
 		mVideoView = (VideoView) findViewById(R.id.report_video);
-		
+
 		// mVideoView.setOnClickListener(this);
 		report_detail = (EditText) findViewById(R.id.report_detail);
 		report_image_progress = (TextView) findViewById(R.id.report_image_progress);
@@ -106,7 +126,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 
 		mVideoController = new MediaController(this);
 		mVideoView.setMediaController(mVideoController);
-		
+
 		if (!TextUtils.isEmpty(videoPath))
 		{
 			mVideoView.setVideoPath(videoPath);
@@ -121,7 +141,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		if (isUploading)
 		{
 			report_detail.setEnabled(false);
-//			report_image_progress.setVisibility(View.VISIBLE);
+			// report_image_progress.setVisibility(View.VISIBLE);
 			btn_take.setEnabled(false);
 			btn_native.setEnabled(false);
 			btn_image_clean.setVisibility(View.GONE);
@@ -173,9 +193,9 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 				}
 				isUploading = true;
 				Util.hideSoftInput(this);
-//				refreshUI();
-				Util.Toast(this, getString(R.string.talk_report_upload_getting_gps));
-//				report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
+				// refreshUI();
+				Util.Toast(this, getString(R.string.talk_report_upload_getting_gps), 60, -1);
+				// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
 				AirLocation.getInstance(this).onceGet(this, 30);
 				break;
 			}
@@ -289,7 +309,10 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 	{
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode != RESULT_OK)
+		{
+			finish();
 			return;
+		}
 		Uri uri = null;
 		switch (requestCode)
 		{
@@ -384,9 +407,9 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 			AirReportManager.getInstance().Report(taskId, taskName, AirtalkeeReport.RESOURCE_TYPE_VIDEO, resTypeExtension, videoUri, videoPath, detail, videoSize, latitude, longitude);
 
 			isUploading = false;
-			Util.Toast(this, getString(R.string.talk_tools_report_success),R.drawable.ic_success);
+			Util.Toast(this, getString(R.string.talk_tools_report_success), R.drawable.ic_success);
 			finish();
-			
+
 		}
 	}
 
