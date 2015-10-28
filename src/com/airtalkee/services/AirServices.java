@@ -29,6 +29,7 @@ import com.airtalkee.activity.DialogVersionUpdate;
 import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.SessionBoxTalk;
 import com.airtalkee.activity.TempSessionActivity;
+import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.application.MainApplication;
 import com.airtalkee.bluetooth.BluetoothManager;
 import com.airtalkee.config.Config;
@@ -330,7 +331,14 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 					{
 						TempSessionActivity.getInstance().setSession(temAirSession);
 					}
-					switchToSessionTemp(temAirSession.getSessionCode(), TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());
+					
+					Intent it = new Intent(AirServices.getInstance(), SessionDialogActivity.class);
+					it.putExtra("sessionCode", session.getSessionCode());
+					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
+					it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					AirServices.getInstance().startActivity(it);
+					
+//					switchToSessionTemp(temAirSession.getSessionCode(), TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());
 				}
 				catch (Exception e)
 				{
@@ -370,7 +378,14 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 									{
 										TempSessionActivity.getInstance().setSession(temAirSession);
 									}
-									switchToSessionTemp(temAirSession.getSessionCode(), TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());
+									
+									Intent it = new Intent(AirServices.getInstance(), SessionDialogActivity.class);
+									it.putExtra("sessionCode", temAirSession.getSessionCode());
+									it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
+									it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
+									AirServices.getInstance().startActivity(it);
+									
+//									switchToSessionTemp(temAirSession.getSessionCode(), TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());
 								}
 								catch (Exception e)
 								{
@@ -430,7 +445,13 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 							{
 								TempSessionActivity.getInstance().setSession(temAirSession);
 							}
-							switchToSessionTemp(temAirSession.getSessionCode(), TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());
+							
+							Intent it = new Intent(AirServices.getInstance(), SessionDialogActivity.class);
+							it.putExtra("sessionCode", temAirSession.getSessionCode());
+							it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
+							it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							AirServices.getInstance().startActivity(it);
+//							switchToSessionTemp(temAirSession.getSessionCode(), TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());
 						}
 						catch (Exception e)
 						{

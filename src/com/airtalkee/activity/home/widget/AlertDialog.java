@@ -20,6 +20,8 @@ public class AlertDialog extends Dialog implements
 	protected Button cancle, sure;
 	protected ImageView ivCancle, ivSure;
 	//
+	protected View c ;
+	protected View s ;
 	protected String title, content;
 	protected String textcancle = "取消";
 	protected String textSure = "确定";
@@ -32,6 +34,11 @@ public class AlertDialog extends Dialog implements
 		void onClickOk(int id);
 
 		void onClickCancel(int id);
+	}
+	
+	protected void setListener(DialogListener listener)
+	{
+		this.listener = listener;
 	}
 
 	public AlertDialog(Context context, String title, String content,
@@ -89,15 +96,11 @@ public class AlertDialog extends Dialog implements
 		initView();
 		fillView();
 	}
-	View c ;
-	View s ;
+	
 	protected void initView() {
 		
 		tvTitle = (TextView) findViewById(R.id.tv_title);
 		tvContent = (TextView) findViewById(R.id.tv_content);
-		
-//		cancle = (Button) findViewById(R.id.cancle);
-//		sure = (Button) findViewById(R.id.sure);
 		
 		 c = findViewById(R.id.cancle);
 		 s = findViewById(R.id.sure);
@@ -141,7 +144,7 @@ public class AlertDialog extends Dialog implements
 			break;
 		}
 		case R.id.cancle: {
-			this.dismiss();
+			this.cancel();
 			if (null != listener)
 				listener.onClickCancel(id);
 			break;

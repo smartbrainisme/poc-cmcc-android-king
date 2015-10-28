@@ -30,7 +30,7 @@
         android:orientation="vertical"
         android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"
-        android:layout_marginBottom="10dp" />
+        android:layout_marginBottom="60dp" />
      <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="10dp" android:background="@drawable/selector_title_channel" android:layout_marginBottom="10dp" >
 		<TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="12sp" android:textColor="#fff" android:layout_weight="1" android:text="会话"/>
 		<ImageView android:layout_width="wrap_content" android:layout_height="fill_parent" android:scaleType="fitCenter" android:src="@drawable/ic_setting" />

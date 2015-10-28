@@ -70,6 +70,11 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		{
 			try
 			{
+				if(session.getType() == AirSession.TYPE_DIALOG)
+				{
+					btnLeft.setVisibility(View.INVISIBLE);
+					
+				}
 				tvTitle.setText(session.getDisplayName());
 				switch (session.getSessionState())
 				{
