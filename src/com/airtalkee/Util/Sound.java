@@ -41,7 +41,8 @@ public class Sound
 		R.raw.sound_pti,
 		R.raw.sound_media_me_on_low,
 		R.raw.sound_media_me_off_low,
-		R.raw.sound_media_other_on_low
+		R.raw.sound_media_other_on_low,
+		R.raw.sound_take_photo// take photo
 		};
 
 	public static final int PLAYER_MEDIA_ME_ON = 0;
@@ -63,7 +64,8 @@ public class Sound
 	public static final int PLAYER_MEDIA_ME_ON_LOW = 16;
 	public static final int PLAYER_MEDIA_ME_OFF_LOW = 17;
 	public static final int PLAYER_MEDIA_OTHER_ON_LOW = 18;
-	public static final int PLAYER_NEWINFO = 19;
+	public static final int PLAYER_TAKE_PHOTO = 19;
+	public static final int PLAYER_NEWINFO = 20;
 	public static MediaPlayer[] mediaPlayer = null;
 	private static boolean alert = true;
 	private static Vibrator vibrator = null;

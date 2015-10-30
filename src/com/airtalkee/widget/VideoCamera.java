@@ -1,14 +1,10 @@
 package com.airtalkee.widget;
 
-import java.io.File;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.SystemClock;
-import android.provider.MediaStore;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,17 +13,13 @@ import android.view.WindowManager;
 import android.widget.Chronometer;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import com.airtalkee.R;
-import com.airtalkee.Util.Const;
-import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MenuReportAsPicActivity;
 import com.airtalkee.activity.MenuReportAsVidActivity;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.sdk.video.record.VideoQuality;
 import com.airtalkee.sdk.video.record.VideoSession;
 import com.airtalkee.sdk.video.record.VideoSession.Callback;
-import com.umeng.common.net.t;
 
 public class VideoCamera extends Activity implements OnClickListener, Callback
 {

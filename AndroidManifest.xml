@@ -45,6 +45,7 @@
 		<activity android:name=".activity.VideoRecordActivity"   android:configChanges="orientation|keyboardHidden"     android:theme="@style/talk_theme"   android:screenOrientation="portrait"/>
 		<activity android:name=".bluetooth.BluetoothDeviceListActivity"  android:label="@string/bluetooth_select_device"   android:theme="@style/MyDialog"   android:configChanges="orientation|keyboardHidden" android:launchMode="singleTop" />
 		<activity android:name=".widget.VideoCamera" android:windowSoftInputMode="stateHidden"   android:label="@string/app_name"     android:screenOrientation="portrait" />
+		<activity android:name=".widget.PhotoCamera" android:windowSoftInputMode="stateHidden"   android:label="@string/app_name"     android:screenOrientation="portrait" />
 		<service android:exported="false" android:enabled="true" android:name=".services.AirServices" android:targetPackage="com.airtalkee">
 			<intent-filter android:priority="1000">
 				<action android:name="com.airtalkee.services.AirServices" />

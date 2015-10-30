@@ -51,6 +51,8 @@
 	<string name="talk_tools_infosys">信息采集</string>
 	<string name="talk_tools_infosys_null">请下载信息采集系统客户端，下载安装后便可使用！</string>
 	<string name="talk_tools_report">现场上报</string>
+	<string name="talk_tools_report_high">高清</string>
+	<string name="talk_tools_report_compress">压缩</string>
 	<string name="talk_tools_report_description">描述</string>
 	<string name="talk_tools_report_date">上报时间</string>
 	<string name="talk_tools_report_pic">图像上报</string>

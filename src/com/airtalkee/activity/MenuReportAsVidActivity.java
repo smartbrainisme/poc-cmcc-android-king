@@ -19,10 +19,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 import com.airtalkee.R;
-import com.airtalkee.R.string;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.ThemeUtil;
-import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.UriUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.config.Config;
@@ -42,11 +40,10 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 	private final int VIDEO_MAX_SIZE = 100 * 1024 * 1024;
 
 	private EditText report_detail;
-	private TextView report_image_progress;
 	private VideoView mVideoView;
 	private MediaController mVideoController;
 	private TextView report_image_size;
-	private Button btn_take, btn_native, btn_post, btn_image_clean;
+	private Button btn_take, btn_native, btn_post;
 	private boolean isUploading = false;
 	private int videoSize = 0;
 	private Uri videoUri = null;
@@ -113,13 +110,10 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 
 		// mVideoView.setOnClickListener(this);
 		report_detail = (EditText) findViewById(R.id.report_detail);
-		report_image_progress = (TextView) findViewById(R.id.report_image_progress);
-		btn_image_clean = (Button) findViewById(R.id.report_image_clean);
 		report_image_size = (TextView) findViewById(R.id.report_image_size);
 		btn_take = (Button) findViewById(R.id.report_btn_take);
 		btn_native = (Button) findViewById(R.id.report_btn_native);
 		btn_post = (Button) findViewById(R.id.report_btn_post);
-		btn_image_clean.setOnClickListener(this);
 		btn_take.setOnClickListener(this);
 		btn_native.setOnClickListener(this);
 		btn_post.setOnClickListener(this);
@@ -141,29 +135,24 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		if (isUploading)
 		{
 			report_detail.setEnabled(false);
-			// report_image_progress.setVisibility(View.VISIBLE);
 			btn_take.setEnabled(false);
 			btn_native.setEnabled(false);
-			btn_image_clean.setVisibility(View.GONE);
 			report_image_size.setText(MenuReportActivity.sizeMKB(videoSize) + " (" + AirServices.iOperator.getFileExtension(videoPath) + ")");
 		}
 		else
 		{
 			report_detail.setEnabled(true);
-			report_image_progress.setVisibility(View.GONE);
 			btn_take.setEnabled(true);
 			btn_native.setEnabled(true);
 			if (!TextUtils.isEmpty(videoPath))
 			{
 				mVideoView.setVisibility(View.VISIBLE);
-				btn_image_clean.setVisibility(View.VISIBLE);
 				report_image_size.setText(MenuReportActivity.sizeMKB(videoSize) + " (" + AirServices.iOperator.getFileExtension(videoPath) + ")");
 				report_image_size.setVisibility(View.VISIBLE);
 			}
 			else
 			{
 				mVideoView.setVisibility(View.GONE);
-				btn_image_clean.setVisibility(View.GONE);
 				report_image_size.setVisibility(View.INVISIBLE);
 			}
 		}
@@ -193,7 +182,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 				}
 				isUploading = true;
 				Util.hideSoftInput(this);
-				// refreshUI();
+				refreshUI();
 				Util.Toast(this, getString(R.string.talk_report_upload_getting_gps), 60, -1);
 				// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
 				AirLocation.getInstance(this).onceGet(this, 30);
@@ -248,6 +237,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 				Util.hideSoftInput(this);
 				break;
 			}
+			/*
 			case R.id.report_image_clean:
 			{
 				if (isUploading)
@@ -259,11 +249,10 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 				mVideoView.stopPlayback();
 				// mVideoView.setVideoPath("");
 				videoPath = "";
-				btn_image_clean.setVisibility(View.GONE);
 				videoUri = null;
 				refreshUI();
 				break;
-			}
+			}*/
 		}
 	}
 
@@ -405,7 +394,6 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 			}
 			Log.i(MenuReportAsVidActivity.class, "VideoPicture: TASK[" + taskId + "][" + taskName + "] text=[" + report_detail.getText().toString() + "] x=[" + latitude + "] y=[" + longitude + "]");
 			AirReportManager.getInstance().Report(taskId, taskName, AirtalkeeReport.RESOURCE_TYPE_VIDEO, resTypeExtension, videoUri, videoPath, detail, videoSize, latitude, longitude);
-
 			isUploading = false;
 			Util.Toast(this, getString(R.string.talk_tools_report_success), R.drawable.ic_success);
 			finish();
