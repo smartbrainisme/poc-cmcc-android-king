@@ -276,6 +276,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:background="?theme_sider_title_bg"
+                android:clickable="false"
                 android:gravity="left|center_vertical"
                 android:orientation="horizontal" >
 
@@ -307,6 +308,132 @@
                         android:text="@string/talk_tools_setting_hb_tip"
                         android:textColor="#787878"
                         android:textSize="12dip" />
+
+                    <RelativeLayout
+                        android:id="@+id/talk_hb_frequence_item"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?theme_sider_title_bg"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        android:paddingBottom="20dp"
+                        android:paddingTop="20dp" >
+
+                        <RadioGroup
+                            android:id="@+id/rg_hb_frequence"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal" >
+
+                            <RadioButton
+                                android:id="@+id/rb_slow"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:background="?theme_radio_check"
+                                android:button="@null" />
+
+                            <View
+                                android:layout_width="60dp"
+                                android:layout_height="5dp"
+                                android:background="@drawable/selector_radio_bg" />
+
+                            <RadioButton
+                                android:id="@+id/rb_normal"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:background="?theme_radio_check"
+                                android:button="@null" />
+
+                            <View
+                                android:layout_width="60dp"
+                                android:layout_height="5dp"
+                                android:background="@drawable/selector_radio_bg" />
+
+                            <RadioButton
+                                android:id="@+id/rb_fast"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:background="?theme_radio_check"
+                                android:button="@null" />
+
+                            <View
+                                android:layout_width="60dp"
+                                android:layout_height="5dp"
+                                android:background="@drawable/selector_radio_bg" />
+
+                            <RadioButton
+                                android:id="@+id/rb_high"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_gravity="center"
+                                android:background="?theme_radio_check"
+                                android:button="@null" />
+                        </RadioGroup>
+
+                        <TextView
+                            android:id="@+id/tv_slow"
+                            android:layout_width="wrap_content"
+                            android:layout_height="19dp"
+                            android:layout_below="@id/rg_hb_frequence"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginRight="50dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toLeftOf="@+id/tv_normal"
+                            android:text="低速"
+                            android:textColor="@color/radiobutton_text_gray"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:id="@id/tv_normal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="19dp"
+                            android:layout_below="@id/rg_hb_frequence"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_toLeftOf="@+id/v_hb_center"
+                            android:text="正常"
+                            android:textColor="@color/radiobutton_text_gray"
+                            android:textSize="15dp" />
+
+                        <View
+                            android:id="@id/v_hb_center"
+                            android:layout_width="50dp"
+                            android:layout_height="5dp"
+                            android:layout_below="@id/rg_hb_frequence"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/selector_radio_bg"
+                            android:visibility="invisible" />
+
+                        <TextView
+                            android:id="@+id/tv_fast"
+                            android:layout_width="wrap_content"
+                            android:layout_height="19dp"
+                            android:layout_below="@id/rg_hb_frequence"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@id/v_hb_center"
+                            android:text="较快"
+                            android:textColor="@color/radiobutton_text_gray"
+                            android:textSize="15dp" />
+
+                        <TextView
+                            android:id="@+id/tv_high"
+                            android:layout_width="wrap_content"
+                            android:layout_height="19dp"
+                            android:layout_below="@id/rg_hb_frequence"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_toRightOf="@id/tv_fast"
+                            android:text="高速"
+                            android:textColor="@color/radiobutton_text_gray"
+                            android:textSize="15dp" />
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
 
