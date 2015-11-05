@@ -21,6 +21,7 @@ import android.widget.VideoView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.ThemeUtil;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.UriUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.config.Config;
@@ -53,6 +54,8 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 	private String taskId = null;
 	private String taskName = null;
 	private String type = null;
+
+	private android.widget.Toast myToast;
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -183,7 +186,9 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 				isUploading = true;
 				Util.hideSoftInput(this);
 				refreshUI();
-				Util.Toast(this, getString(R.string.talk_report_upload_getting_gps), 60, -1);
+				myToast = Toast.makeText1(this, R.drawable.toast_loading, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
+				myToast.setDuration(3600);
+				myToast.show();
 				// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
 				AirLocation.getInstance(this).onceGet(this, 30);
 				break;
@@ -238,21 +243,12 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 				break;
 			}
 			/*
-			case R.id.report_image_clean:
-			{
-				if (isUploading)
-				{
-					Util.Toast(this, getString(R.string.talk_report_uploading));
-					break;
-				}
-				mVideoView.setVisibility(View.GONE);
-				mVideoView.stopPlayback();
-				// mVideoView.setVideoPath("");
-				videoPath = "";
-				videoUri = null;
-				refreshUI();
-				break;
-			}*/
+			 * case R.id.report_image_clean: { if (isUploading) {
+			 * Util.Toast(this, getString(R.string.talk_report_uploading));
+			 * break; } mVideoView.setVisibility(View.GONE);
+			 * mVideoView.stopPlayback(); // mVideoView.setVideoPath("");
+			 * videoPath = ""; videoUri = null; refreshUI(); break; }
+			 */
 		}
 	}
 
@@ -395,10 +391,12 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 			Log.i(MenuReportAsVidActivity.class, "VideoPicture: TASK[" + taskId + "][" + taskName + "] text=[" + report_detail.getText().toString() + "] x=[" + latitude + "] y=[" + longitude + "]");
 			AirReportManager.getInstance().Report(taskId, taskName, AirtalkeeReport.RESOURCE_TYPE_VIDEO, resTypeExtension, videoUri, videoPath, detail, videoSize, latitude, longitude);
 			isUploading = false;
-			Util.Toast(this, getString(R.string.talk_tools_report_success), R.drawable.ic_success);
+			myToast = Toast.makeText1(this, R.drawable.ic_success, getString(R.string.talk_tools_report_success), Toast.LENGTH_LONG);
+			// Util.Toast(this, getString(R.string.talk_tools_report_success),
+			// R.drawable.ic_success);
+			myToast.show();
 			finish();
 
 		}
 	}
-
 }

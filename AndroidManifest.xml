@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.airtalkee" android:versionCode="46" android:versionName="V2.3.5 R20150731" >
 	<uses-sdk android:minSdkVersion="9" />
 	<application android:persistent="true" android:icon="@drawable/icon_cmcc" android:label="@string/app_name_cmcc" android:theme="@style/AppTheme_Dark"
-		android:debuggable="false" android:name=".application.MainApplication">
+		android:debuggable="true" android:name=".application.MainApplication">
 		<activity android:name=".activity.AccountActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
@@ -27,8 +27,8 @@
 		<activity android:name=".activity.MenuGpsActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuReportActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuReportViewActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuReportAsPicActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuReportAsVidActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.MenuReportAsPicActivity" android:configChanges="orientation|keyboardHidden"  />
+		<activity android:name=".activity.MenuReportAsVidActivity" android:configChanges="orientation|keyboardHidden"  />
 		<activity android:name=".activity.MenuTaskDetailsActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuTaskActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MenuAttendanceActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />

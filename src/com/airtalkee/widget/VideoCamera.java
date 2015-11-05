@@ -107,6 +107,7 @@ public class VideoCamera extends Activity implements OnClickListener, Callback
 			case R.id.to_album:
 			{
 				finish();
+				session.release();
 				Intent itImage = new Intent(this, MenuReportAsVidActivity.class);
 				itImage.putExtra("type", "video");
 				startActivity(itImage);
@@ -115,6 +116,7 @@ public class VideoCamera extends Activity implements OnClickListener, Callback
 			case R.id.to_camera:
 			{
 				finish();
+				session.release();
 				Intent it = new Intent(this, MenuReportAsPicActivity.class);
 				it.putExtra("type", "camera");
 				startActivity(it);

@@ -31,6 +31,7 @@ import android.widget.RelativeLayout;
 import com.airtalkee.R;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.activity.MenuReportAsPicActivity;
+import com.airtalkee.activity.MenuReportAsVidActivity;
 
 public class PhotoCamera extends Activity implements OnClickListener, Callback
 {
@@ -136,15 +137,17 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 			case R.id.to_album:
 			{
 				finish();
+				camera.release();
 				Intent itImage = new Intent(this, MenuReportAsPicActivity.class);
-				itImage.putExtra("type", "video");
+				itImage.putExtra("type", "image");
 				startActivity(itImage);
 				break;
 			}
 			case R.id.to_camera:
 			{
 				finish();
-				Intent it = new Intent(this, MenuReportAsPicActivity.class);
+				camera.release();
+				Intent it = new Intent(this, VideoCamera.class);
 				it.putExtra("type", "camera");
 				startActivity(it);
 				break;
