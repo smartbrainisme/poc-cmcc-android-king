@@ -121,7 +121,14 @@ public class MenuAccountActivity extends ActivityBase implements
 						BluetoothManager.getInstance().btStop();
 						AirtalkeeAccount.getInstance().Logout();
 						finish();
-						android.os.Process.killProcess(android.os.Process.myPid());
+						if (MoreActivity.getInstance() != null)
+						{
+							MoreActivity.getInstance().finish();
+						}
+						if(HomeActivity.getInstance()!=null)
+						{
+							HomeActivity.getInstance().finish();
+						}
 					}
 				});
 

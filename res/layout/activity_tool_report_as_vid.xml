@@ -19,17 +19,6 @@
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
-        <TextView
-            android:id="@+id/report_image_progress"
-            android:layout_width="fill_parent"
-            android:layout_height="35.0dip"
-            android:background="#222222"
-            android:gravity="center"
-            android:text="0%"
-            android:textColor="#eeeeee"
-            android:textSize="20dip"
-            android:visibility="gone" />
-
         <ScrollView
             android:id="@+id/report_panel"
             android:layout_width="fill_parent"
@@ -68,7 +57,7 @@
                             <ImageView
                                 android:id="@+id/report_image"
                                 android:layout_width="fill_parent"
-                                android:layout_height="180dp"
+                                android:layout_height="wrap_content"
                                 android:layout_margin="3dip"
                                 android:src="@drawable/report_default_vid" />
                         </LinearLayout>
@@ -87,17 +76,6 @@
                                 android:clickable="true"
                                 android:visibility="gone" />
                         </LinearLayout>
-
-                        <Button
-                            android:id="@+id/report_image_clean"
-                            android:layout_width="30dip"
-                            android:layout_height="30dip"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/del"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:textColor="#ffffff"
-                            android:visibility="gone" />
 
                         <TextView
                             android:id="@+id/report_image_size"

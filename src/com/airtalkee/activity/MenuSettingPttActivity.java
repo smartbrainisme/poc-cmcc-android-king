@@ -1,7 +1,5 @@
 package com.airtalkee.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -10,6 +8,8 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
@@ -20,15 +20,19 @@ import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Utils;
 
-public class MenuSettingPttActivity extends ActivityBase implements OnClickListener, OnCheckedChangeListener
+public class MenuSettingPttActivity extends ActivityBase implements
+		OnClickListener, OnCheckedChangeListener
 {
 
-	private CheckBox mVoiceAmplifier, mPttClick, mPttVolume, mPttAnswer, mPttIsb;
+	private CheckBox mVoiceAmplifier, mPttClick, mPttVolume, mPttAnswer,
+			mPttIsb;
 	View pttAnswerLayout;
 	private TextView mFrequenceText;
 	private int[] mFrequenceValue = { Config.ENGINE_MEDIA_HB_SECOND_HIGH, Config.ENGINE_MEDIA_HB_SECOND_FAST, Config.ENGINE_MEDIA_HB_SECOND_MEDIUM, Config.ENGINE_MEDIA_HB_SECOND_SLOW };
-	private String[] mFrequence = null;
 	private int mFrequenceSelected = 0;
+
+	private RadioGroup rgHeartBeat;
+	private RadioButton rbSlow, rbNormal, rbFast, rbHigh;
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -103,11 +107,14 @@ public class MenuSettingPttActivity extends ActivityBase implements OnClickListe
 			findViewById(R.id.talk_setting_ptt_volume_line).setVisibility(View.GONE);
 		}
 
+		rgHeartBeat = (RadioGroup) findViewById(R.id.rg_hb_frequence);
+		rbSlow = (RadioButton) findViewById(R.id.rb_slow);
+		rbNormal = (RadioButton) findViewById(R.id.rb_normal);
+		rbFast = (RadioButton) findViewById(R.id.rb_fast);
+		rbHigh = (RadioButton) findViewById(R.id.rb_high);
 		if (Config.engineMediaSettingHbPackSize == Config.ENGINE_MEDIA_HB_SIZE_NONE)
 		{
-			findViewById(R.id.talk_setting_hb).setOnClickListener(this);
 			mFrequenceText = (TextView) findViewById(R.id.talk_setting_hb_text);
-			mFrequence = getResources().getStringArray(R.array.hb_setting);
 			int hb = Setting.getPttHeartbeat();
 			for (int i = 0; i < mFrequenceValue.length; i++)
 			{
@@ -117,7 +124,23 @@ public class MenuSettingPttActivity extends ActivityBase implements OnClickListe
 					break;
 				}
 			}
-			mFrequenceText.setText(getString(R.string.talk_tools_setting_hb) + " (" + mFrequence[mFrequenceSelected] + ")");
+			switch (mFrequenceSelected)
+			{
+				case 0:
+					rbHigh.setChecked(true);
+					break;
+				case 1:
+					rbFast.setChecked(true);
+					break;
+				case 2:
+					rbNormal.setChecked(true);
+					break;
+				case 3:
+					rbSlow.setChecked(true);
+					break;
+
+			}
+			rgHeartBeat.setOnCheckedChangeListener(listener);
 		}
 		else
 		{
@@ -134,6 +157,58 @@ public class MenuSettingPttActivity extends ActivityBase implements OnClickListe
 		// TODO Auto-generated method stub
 		super.finish();
 	}
+
+	private RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener()
+	{
+
+		@Override
+		public void onCheckedChanged(RadioGroup group, int checkedId)
+		{
+			int rid = group.getCheckedRadioButtonId();
+			switch (rid)
+			{
+				case R.id.rb_slow:
+				{
+					if (rbSlow.isChecked())
+					{
+						Setting.setPttHeartbeat(mFrequenceValue[3]);
+						AirtalkeeSessionManager.getInstance().setMediaEngineSetting(Config.engineMediaSettingHbSeconds, Config.engineMediaSettingHbPackSize);
+					}
+					break;
+				}
+				case R.id.rb_normal:
+				{
+					if (rbNormal.isChecked())
+					{
+						Setting.setPttHeartbeat(mFrequenceValue[2]);
+						AirtalkeeSessionManager.getInstance().setMediaEngineSetting(Config.engineMediaSettingHbSeconds, Config.engineMediaSettingHbPackSize);
+					}
+					break;
+				}
+				case R.id.rb_fast:
+				{
+					if (rbFast.isChecked())
+					{
+						Setting.setPttHeartbeat(mFrequenceValue[1]);
+						AirtalkeeSessionManager.getInstance().setMediaEngineSetting(Config.engineMediaSettingHbSeconds, Config.engineMediaSettingHbPackSize);
+					}
+					break;
+				}
+				case R.id.rb_high:
+				{
+					if (rbHigh.isChecked())
+					{
+						Setting.setPttHeartbeat(mFrequenceValue[0]);
+						AirtalkeeSessionManager.getInstance().setMediaEngineSetting(Config.engineMediaSettingHbSeconds, Config.engineMediaSettingHbPackSize);
+					}
+					break;
+				}
+				default:
+					break;
+			}
+
+		}
+	};
 
 	@Override
 	public void onClick(View v)
@@ -159,22 +234,6 @@ public class MenuSettingPttActivity extends ActivityBase implements OnClickListe
 				break;
 			case R.id.talk_setting_ptt_volume:
 				mPttVolume.setChecked(!mPttVolume.isChecked());
-				break;
-			case R.id.talk_setting_hb:
-				new AlertDialog.Builder(this).setTitle(R.string.talk_tools_setting_hb).setItems(R.array.hb_setting, new DialogInterface.OnClickListener()
-				{
-					@Override
-					public void onClick(DialogInterface dialog, int which)
-					{
-						if (mFrequenceSelected != which)
-						{
-							mFrequenceSelected = which;
-							mFrequenceText.setText(getString(R.string.talk_tools_setting_hb) + " (" + mFrequence[mFrequenceSelected] + ")");
-							Setting.setPttHeartbeat(mFrequenceValue[mFrequenceSelected]);
-							AirtalkeeSessionManager.getInstance().setMediaEngineSetting(Config.engineMediaSettingHbSeconds, Config.engineMediaSettingHbPackSize);
-						}
-					}
-				}).show();
 				break;
 		}
 	}

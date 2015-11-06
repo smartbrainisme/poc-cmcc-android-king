@@ -36,7 +36,8 @@ import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.VideoCamera;
 
-public class PTTFragment extends BaseFragment implements OnClickListener,DialogListener
+public class PTTFragment extends BaseFragment implements OnClickListener,
+		DialogListener
 {
 
 	private static final int DIALOG_CALL_CENTER = 100;
@@ -50,7 +51,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener,DialogL
 	private View videoPannel;
 	private AirSession session = null;
 	private AirMessage currentMessage;
-	
+
 	private String picPathTemp = "";
 	private Uri picUriTemp = null;
 
@@ -198,23 +199,14 @@ public class PTTFragment extends BaseFragment implements OnClickListener,DialogL
 				setViedoReportPannelVisiblity(View.GONE);
 				break;
 			case R.id.btn_image:
-				// todo
-				String status = Environment.getExternalStorageState();
-				if (!status.equals(Environment.MEDIA_MOUNTED))
-				{
-					Util.Toast(getActivity(), getString(R.string.talk_insert_sd_card));
-					return;
-				}
-				Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
-				localIntent.setType("image/*");
-				startActivityForResult(localIntent, Const.image_select.REQUEST_CODE_BROWSE_IMAGE);
+				Intent itImage = new Intent(getActivity(), MenuReportAsPicActivity.class);
+				itImage.putExtra("type", "image");
+				startActivity(itImage);
 				break;
 			case R.id.btn_camera:
-				picPathTemp = Util.getImageTempFileName();
-				picUriTemp = Uri.fromFile(new File(picPathTemp));
-				Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-				i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
-				startActivityForResult(i, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
+				Intent itCamera = new Intent(getActivity(), MenuReportAsPicActivity.class);
+				itCamera.putExtra("type", "camera");
+				startActivity(itCamera);
 				break;
 			case R.id.btn_video:
 				Intent serverIntent = new Intent(getActivity(), VideoCamera.class);
@@ -321,39 +313,28 @@ public class PTTFragment extends BaseFragment implements OnClickListener,DialogL
 	public void pictureQualitySelect(final int id)
 	{
 		/*
-		new android.app.AlertDialog.Builder(this).setTitle(R.string.talk_quality_select).setItems(R.array.picture_quality, new DialogInterface.OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
-				isHighQuality = which == 0;
-				switch (id)
-				{
-					case R.id.report_image:
-					case R.id.report_btn_take:
-					{
-						picPathTemp = Util.getImageTempFileName();
-						picUriTemp = Uri.fromFile(new File(picPathTemp));
-						Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-						i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
-						startActivityForResult(i, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
-						break;
-					}
-					case R.id.report_btn_native:
-					{
-						String status = Environment.getExternalStorageState();
-						if (!status.equals(Environment.MEDIA_MOUNTED))
-						{
-							Util.Toast(MenuReportAsPicActivity.this, getString(R.string.talk_insert_sd_card));
-							return;
-						}
-						Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
-						localIntent.setType("image/*");
-						startActivityForResult(localIntent, Const.image_select.REQUEST_CODE_BROWSE_IMAGE);
-						break;
-					}
-				}
-			}
-		}).show();*/
+		 * new android.app.AlertDialog.Builder(this).setTitle(R.string.
+		 * talk_quality_select).setItems(R.array.picture_quality, new
+		 * DialogInterface.OnClickListener() {
+		 * 
+		 * @Override public void onClick(DialogInterface dialog, int which) {
+		 * isHighQuality = which == 0; switch (id) { case R.id.report_image:
+		 * case R.id.report_btn_take: { picPathTemp =
+		 * Util.getImageTempFileName(); picUriTemp = Uri.fromFile(new
+		 * File(picPathTemp)); Intent i = new
+		 * Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+		 * i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
+		 * startActivityForResult(i,
+		 * Const.image_select.REQUEST_CODE_CREATE_IMAGE); break; } case
+		 * R.id.report_btn_native: { String status =
+		 * Environment.getExternalStorageState(); if
+		 * (!status.equals(Environment.MEDIA_MOUNTED)) {
+		 * Util.Toast(MenuReportAsPicActivity.this,
+		 * getString(R.string.talk_insert_sd_card)); return; } Intent
+		 * localIntent = new Intent("android.intent.action.GET_CONTENT", null);
+		 * localIntent.setType("image/*"); startActivityForResult(localIntent,
+		 * Const.image_select.REQUEST_CODE_BROWSE_IMAGE); break; } } }
+		 * }).show();
+		 */
 	}
 }

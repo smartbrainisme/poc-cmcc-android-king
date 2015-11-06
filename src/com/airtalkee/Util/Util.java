@@ -9,7 +9,6 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.KeyguardManager;
@@ -32,7 +31,6 @@ import android.text.TextUtils;
 import android.text.format.Time;
 import android.view.inputmethod.InputMethodManager;
 import com.airtalkee.Util.Toast;
-
 import com.airtalkee.R;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.entity.AirContact;
@@ -52,7 +50,9 @@ public class Util
 	public static final int NOTIFI_ID_TASK_DISPATCH = 4;
 
 	static NotificationManager nm = null;
-	@SuppressLint("NewApi") @SuppressWarnings("deprecation")
+
+	@SuppressLint("NewApi")
+	@SuppressWarnings("deprecation")
 	public static void showNotification(int id, Context context, Intent intent, String from, String ticker, String message, Object object)
 	{
 		nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -75,15 +75,14 @@ public class Util
 		try
 		{
 			Notification notification;
-			if(Build.VERSION.SDK_INT >=Build.VERSION_CODES.HONEYCOMB)
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 			{
-				 notification = new Notification.Builder(context).setSmallIcon(drawableId, 3).setContentText(from).setContentTitle(from).setContentIntent(contentIntent)
-						.setTicker(ticker).build();
+				notification = new Notification.Builder(context).setSmallIcon(drawableId, 3).setContentText(from).setContentTitle(from).setContentIntent(contentIntent).setTicker(ticker).build();
 			}
 			else
 			{
-				 notification = new Notification(drawableId, ticker, System.currentTimeMillis());
-					notification.setLatestEventInfo(context, from, message, contentIntent);
+				notification = new Notification(drawableId, ticker, System.currentTimeMillis());
+				notification.setLatestEventInfo(context, from, message, contentIntent);
 			}
 			if (flag != -1)
 			{
@@ -112,10 +111,9 @@ public class Util
 			}
 		}
 		catch (Exception e)
-		{
-		}
+		{}
 	}
-	
+
 	public static String appVersion(Context context)
 	{
 		String version = "";
@@ -124,15 +122,14 @@ public class Util
 			PackageManager manager = context.getPackageManager();
 			PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
 			version = info.versionName;
-		} 
+		}
 		catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 		return version;
 	}
-	
-	
+
 	public static void setStreamVolumeUp(Context context)
 	{
 		AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
@@ -155,7 +152,7 @@ public class Util
 
 	public static void setStreamVolumeDown(Context context)
 	{
-		
+
 		int currentVolume = getStreamVolume(context);
 		if (currentVolume > 0)
 		{
@@ -288,24 +285,14 @@ public class Util
 	{
 		long gap = 0;
 		/*
-		try
-		{
-			SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			Date date = dFormat.parse(time);
-			long c = date.getTime() / 1000;
-			long now = AirtalkeeAccount.getInstance().AirBaseSeconds();
-			Log.i(Util.class, "getTimeGap = " + now);
-			if (now > 0)
-				gap = c - now;
-			else
-				gap = 0;
-		}
-		catch (ParseException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
+		 * try { SimpleDateFormat dFormat = new
+		 * SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); Date date =
+		 * dFormat.parse(time); long c = date.getTime() / 1000; long now =
+		 * AirtalkeeAccount.getInstance().AirBaseSeconds(); Log.i(Util.class,
+		 * "getTimeGap = " + now); if (now > 0) gap = c - now; else gap = 0; }
+		 * catch (ParseException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
 		return gap;
 	}
 
@@ -502,8 +489,7 @@ public class Util
 	{
 		try
 		{
-			((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(((Activity) context).getCurrentFocus().getWindowToken(),
-				InputMethodManager.HIDE_NOT_ALWAYS);
+			((InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(((Activity) context).getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 		}
 		catch (Exception e)
 		{
@@ -563,8 +549,7 @@ public class Util
 					msg = new String(content, "UTF-8");
 				}
 				catch (UnsupportedEncodingException e)
-				{
-				}
+				{}
 			}
 			// create spannable string
 			SpannableString spannable = new SpannableString(msg);
@@ -585,7 +570,8 @@ public class Util
 		}
 	}
 
-	@SuppressLint("NewApi") @SuppressWarnings("deprecation")
+	@SuppressLint("NewApi")
+	@SuppressWarnings("deprecation")
 	public static void textClip(Context context, String clipStr)
 	{
 		try
@@ -594,8 +580,7 @@ public class Util
 			clip.setText(clipStr);
 		}
 		catch (Exception e)
-		{
-		}
+		{}
 	}
 
 	public static String getImageTempFileName()
@@ -604,7 +589,7 @@ public class Util
 		File dir = new File(saveDir);
 		if (!dir.exists())
 		{
-			dir.mkdir(); 
+			dir.mkdir();
 		}
 		String fileName = saveDir + "/AIR" + Utils.getCurrentTimeInMillis() + ".jpg";
 		return fileName;
@@ -663,12 +648,25 @@ public class Util
 			// TODO: handle exception
 		}
 	}
-	
-	public static void Toast(Context context, String content,int icon)
+
+	public static void Toast(Context context, String content, int icon)
 	{
 		try
 		{
-			Toast.makeText1(context, icon,content, Toast.LENGTH_LONG).show();
+			Toast.makeText1(context, icon, content, Toast.LENGTH_LONG).show();
+			TTSManager.getInstance().synth(content);
+		}
+		catch (Exception e)
+		{
+			// TODO: handle exception
+		}
+	}
+
+	public static void Toast(Context context, String content, int seconds, int icon)
+	{
+		try
+		{
+			Toast.makeText1(context, content, seconds).show();
 			TTSManager.getInstance().synth(content);
 		}
 		catch (Exception e)

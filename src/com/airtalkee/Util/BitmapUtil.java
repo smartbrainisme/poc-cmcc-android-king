@@ -2,12 +2,13 @@ package com.airtalkee.Util;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-public class BitmapUtil {
-	public static Bitmap getimage(String srcPath) {
+public class BitmapUtil
+{
+	public static Bitmap getimage(String srcPath)
+	{
 		BitmapFactory.Options newOpts = new BitmapFactory.Options();
 		// 开始读入图片，此时把options.inJustDecodeBounds 设回true了
 		newOpts.inJustDecodeBounds = true;
@@ -21,9 +22,12 @@ public class BitmapUtil {
 		float ww = 480f;// 这里设置宽度为480f
 		// 缩放比。由于是固定比例缩放，只用高或者宽其中一个数据进行计算即可
 		int be = 1;// be=1表示不缩放
-		if (w > h && w > ww) {// 如果宽度大的话根据宽度固定大小缩放
+		if (w > h && w > ww)
+		{// 如果宽度大的话根据宽度固定大小缩放
 			be = (int) (newOpts.outWidth / ww);
-		} else if (w < h && h > hh) {// 如果高度高的话根据宽度固定大小缩放
+		}
+		else if (w < h && h > hh)
+		{// 如果高度高的话根据宽度固定大小缩放
 			be = (int) (newOpts.outHeight / hh);
 		}
 		if (be <= 0)
@@ -34,25 +38,30 @@ public class BitmapUtil {
 		return compressImage(bitmap);// 压缩好比例大小后再进行质量压缩
 	}
 
-	private static Bitmap compressImage(Bitmap image) {
-		try {
+	private static Bitmap compressImage(Bitmap image)
+	{
+		try
+		{
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			image.compress(Bitmap.CompressFormat.JPEG, 100, baos);// 质量压缩方法，这里100表示不压缩，把压缩后的数据存放到baos中
 			int options = 100;
-			while (baos.toByteArray().length / 1024 > 200) { // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
+			while (baos.toByteArray().length / 1024 > 200)
+			{ // 循环判断如果压缩后图片是否大于100kb,大于继续压缩
 				baos.reset();// 重置baos即清空baos
 				image.compress(Bitmap.CompressFormat.JPEG, options, baos);// 这里压缩options%，把压缩后的数据存放到baos中
 				options -= 5;// 每次都减少5
 			}
-			if(!image.isRecycled())
+			if (!image.isRecycled())
 			{
 				image.recycle();
 			}
-			ByteArrayInputStream isBm = new ByteArrayInputStream( baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
-			
+			ByteArrayInputStream isBm = new ByteArrayInputStream(baos.toByteArray());// 把压缩后的数据baos存放到ByteArrayInputStream中
+
 			Bitmap bitmap = BitmapFactory.decodeStream(isBm, null, null);// 把ByteArrayInputStream数据生成图片
 			return bitmap;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 			return null;
 		}

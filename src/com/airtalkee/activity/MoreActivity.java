@@ -51,6 +51,13 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 	private SeekBar mVoiceVolumeSeekBar;
 	private CheckBox mVoiceMode;
 
+	private static MoreActivity mInstance = null;
+
+	public static MoreActivity getInstance()
+	{
+		return mInstance;
+	}
+
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
@@ -69,6 +76,7 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 
 	private void doInitView()
 	{
+		mInstance = this;
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
 		ivTitle.setText(R.string.talk_tools);
 		View btnLeft = findViewById(R.id.menu_left_button);

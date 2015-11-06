@@ -18,14 +18,19 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.BitmapUtil;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.ThemeUtil;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.UriUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.config.Config;
@@ -35,30 +40,38 @@ import com.airtalkee.location.AirLocation;
 import com.airtalkee.sdk.AirtalkeeReport;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.services.AirServices;
+import com.airtalkee.widget.PhotoCamera;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 public class MenuReportAsPicActivity extends ActivityBase implements
-		OnClickListener, OnMmiLocationListener
+		OnClickListener, OnMmiLocationListener, OnCheckedChangeListener
 {
 
 	private EditText report_detail;
-	private TextView report_image_progress;
 	private ImageView report_image;
-	private TextView report_image_size;
-	private Button btn_take, btn_native, btn_post, btn_image_clean;
+	private Button btn_post;
+	private RadioGroup rgSelect;
+	private RadioButton rbHigh, rbCompress;
 	private boolean isUploading = false;
-	private int picSize = 0;
-	private Uri picUri = null;
-	private String picPath = "";
-	private Uri picUriTemp = null;
-	private String picPathTemp = "";
+
+	private int picSize = 0;// 压缩图大小
+	private Uri picUri = null; // 压缩图uri
+	private String picPath = ""; // 压缩图path
+
+	private int picSizeTemp = 0; // 原图大小
+	private Uri picUriTemp = null; // 原图uri
+	private String picPathTemp = ""; // 原图path
+
 	private boolean isHighQuality = false;
 
 	private String taskId = null;
 	private String taskName = null;
+	private String type = null;
+
+	private android.widget.Toast myToast;
 
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
 
@@ -79,6 +92,42 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		{
 			taskId = bundle.getString("taskId");
 			taskName = bundle.getString("taskName");
+			type = bundle.getString("type");
+		}
+		loadCamera(type);
+	}
+
+	private void loadCamera(String type)
+	{
+		if (type != null)
+		{
+			if (type.equals("camera"))
+			{
+				picPathTemp = Util.getImageTempFileName();
+				picUriTemp = Uri.fromFile(new File(picPathTemp));
+				// user-defined photograph
+				Intent it = new Intent(this, PhotoCamera.class);
+				it.putExtra(MediaStore.EXTRA_OUTPUT, picPathTemp);
+				startActivityForResult(it, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
+				// system photograph
+				// Intent i = new
+				// Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				// i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
+				// startActivityForResult(i,
+				// Const.image_select.REQUEST_CODE_CREATE_IMAGE);
+			}
+			else if (type.equals("image"))
+			{
+				String status = Environment.getExternalStorageState();
+				if (!status.equals(Environment.MEDIA_MOUNTED))
+				{
+					Util.Toast(this, getString(R.string.talk_insert_sd_card));
+					return;
+				}
+				Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
+				localIntent.setType("image/*");
+				startActivityForResult(localIntent, Const.image_select.REQUEST_CODE_BROWSE_IMAGE);
+			}
 		}
 	}
 
@@ -98,17 +147,14 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		findViewById(R.id.report_item_panel).setOnClickListener(this);
 
 		report_detail = (EditText) findViewById(R.id.report_detail);
-		report_image_progress = (TextView) findViewById(R.id.report_image_progress);
 		report_image = (ImageView) findViewById(R.id.report_image);
-		report_image_size = (TextView) findViewById(R.id.report_image_size);
-		btn_image_clean = (Button) findViewById(R.id.report_image_clean);
-		btn_take = (Button) findViewById(R.id.report_btn_take);
-		btn_native = (Button) findViewById(R.id.report_btn_native);
 		btn_post = (Button) findViewById(R.id.report_btn_post);
+		rgSelect = (RadioGroup) findViewById(R.id.report_file_rg);
+		rgSelect.setOnCheckedChangeListener(this);
+		rbHigh = (RadioButton) findViewById(R.id.report_file_big);
+		rbCompress = (RadioButton) findViewById(R.id.report_file_small);
+
 		report_image.setOnClickListener(this);
-		btn_image_clean.setOnClickListener(this);
-		btn_take.setOnClickListener(this);
-		btn_native.setOnClickListener(this);
 		btn_post.setOnClickListener(this);
 	}
 
@@ -117,34 +163,28 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		if (isUploading)
 		{
 			report_detail.setEnabled(false);
-			report_image_progress.setVisibility(View.VISIBLE);
-			btn_take.setEnabled(false);
-			btn_native.setEnabled(false);
 			// report_image.setImageURI(picUri);
 			imageLoader.displayImage(picUri.toString(), report_image);
-			report_image_size.setText(MenuReportActivity.sizeMKB(picSize));
-			btn_image_clean.setVisibility(View.GONE);
 		}
 		else
 		{
 			report_detail.setEnabled(true);
-			report_image_progress.setVisibility(View.GONE);
-			btn_take.setEnabled(true);
-			btn_native.setEnabled(true);
-			if (picUri != null)
+			if (picUriTemp != null) // 高清
 			{
-				btn_image_clean.setVisibility(View.VISIBLE);
+				imageLoader.displayImage(picUriTemp.toString(), report_image);
+				rbHigh.setText(getString(R.string.talk_tools_report_high) + "   " + MenuReportActivity.sizeMKB(picSizeTemp));
+			}
+			if (picUri != null) // 压缩
+			{
 				// report_image.setImageURI(picUri);
 				imageLoader.displayImage(picUri.toString(), report_image);
-				report_image_size.setText(MenuReportActivity.sizeMKB(picSize));
-				report_image_size.setVisibility(View.VISIBLE);
+				rbCompress.setText(getString(R.string.talk_tools_report_compress) + "   " + MenuReportActivity.sizeMKB(picSize));
 			}
-			else
-			{
-				btn_image_clean.setVisibility(View.GONE);
-				report_image.setImageResource(R.drawable.report_default_pic);
-				report_image_size.setVisibility(View.INVISIBLE);
-			}
+			// else
+			// {
+			// imageLoader.displayImage(picUriTemp.toString(), report_image);
+			// report_image.setImageResource(R.drawable.report_default_pic);
+			// }
 		}
 	}
 
@@ -165,7 +205,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 					Util.Toast(this, getString(R.string.talk_report_uploading));
 					break;
 				}
-				if (picUri == null)
+				if (picUriTemp == null && picUri == null)
 				{
 					Util.Toast(this, getString(R.string.talk_report_upload_pic_err_select_pic));
 					break;
@@ -173,8 +213,12 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 				isUploading = true;
 				Util.hideSoftInput(this);
 				refreshUI();
-
-				report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
+				// Util.Toast(this,
+				// getString(R.string.talk_report_upload_getting_gps), 60, -1);
+				myToast = Toast.makeText1(this, R.drawable.toast_loading, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
+				myToast.setDuration(3600);
+				myToast.show();
+				// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
 				AirLocation.getInstance(this).onceGet(this, 30);
 				break;
 			}
@@ -182,7 +226,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 			case R.id.report_btn_native:
 			case R.id.report_image:
 			{
-				pictureQualitySelect(v.getId());
+				// pictureQualitySelect(v.getId());
 				break;
 			}
 			case R.id.image_pic:
@@ -216,28 +260,33 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 			case Const.image_select.REQUEST_CODE_CREATE_IMAGE:
 				if (resultCode == RESULT_OK)
 				{
-					picUri = picUriTemp;
-					picPath = picPathTemp;
-					resizePicture(false);
+					picSizeTemp = AirServices.iOperator.getFileSize("", picPathTemp, true);
+					picUriTemp = Uri.fromFile(new File(picPathTemp));
+					resizePicture(true);
 					picSize = AirServices.iOperator.getFileSize("", picPath, true);
+					refreshUI();
+					/*
+					 * picUriTemp = Uri.fromFile(new File(picPathTemp)); picUri
+					 * = picUriTemp; picPath = picPathTemp; resizePicture(true);
+					 * picSize = AirServices.iOperator.getFileSize("",
+					 * picPathTemp, true); refreshUI();
+					 */
 				}
 				else
 				{
 					picUriTemp = null;
 					picPathTemp = "";
+					finish();
 				}
-				refreshUI();
-
 				break;
 			case Const.image_select.REQUEST_CODE_BROWSE_IMAGE:
 				if (resultCode == RESULT_OK)
 				{
-					String filePath = UriUtil.getPath(this, data.getData());
-
-					if (filePath != null)
+					picPathTemp = UriUtil.getPath(this, data.getData());
+					if (picPathTemp != null && picPathTemp.length() > 0)
 					{
-						picUri = data.getData();
-						picPath = filePath;
+						picSizeTemp = AirServices.iOperator.getFileSize("", picPathTemp, true);
+						picUriTemp = data.getData();
 						resizePicture(true);
 						picSize = AirServices.iOperator.getFileSize("", picPath, true);
 						refreshUI();
@@ -247,55 +296,44 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 						Util.Toast(this, getString(R.string.talk_report_upload_vid_err_select_pic));
 					}
 				}
+				else
+				{
+					finish();
+				}
 				break;
 			default:
 				break;
 		}
 	}
 
-	public void pictureQualitySelect(final int id)
-	{
-		new AlertDialog.Builder(this).setTitle(R.string.talk_quality_select).setItems(R.array.picture_quality, new DialogInterface.OnClickListener()
-		{
-			@Override
-			public void onClick(DialogInterface dialog, int which)
-			{
-				isHighQuality = which == 0;
-				switch (id)
-				{
-					case R.id.report_image:
-					case R.id.report_btn_take:
-					{
-						picPathTemp = Util.getImageTempFileName();
-						picUriTemp = Uri.fromFile(new File(picPathTemp));
-						Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-						i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
-						startActivityForResult(i, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
-						break;
-					}
-					case R.id.report_btn_native:
-					{
-						String status = Environment.getExternalStorageState();
-						if (!status.equals(Environment.MEDIA_MOUNTED))
-						{
-							Util.Toast(MenuReportAsPicActivity.this, getString(R.string.talk_insert_sd_card));
-							return;
-						}
-						Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
-						localIntent.setType("image/*");
-						startActivityForResult(localIntent, Const.image_select.REQUEST_CODE_BROWSE_IMAGE);
-						break;
-					}
-				}
-			}
-		}).show();
-	}
+	/*
+	 * public void pictureQualitySelect(final int id) { new
+	 * AlertDialog.Builder(this
+	 * ).setTitle(R.string.talk_quality_select).setItems(
+	 * R.array.picture_quality, new DialogInterface.OnClickListener() {
+	 * 
+	 * @Override public void onClick(DialogInterface dialog, int which) {
+	 * isHighQuality = which == 0; switch (id) { case R.id.report_image: case
+	 * R.id.report_btn_take: { picPathTemp = Util.getImageTempFileName();
+	 * picUriTemp = Uri.fromFile(new File(picPathTemp)); Intent i = new
+	 * Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+	 * i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
+	 * startActivityForResult(i, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
+	 * break; } case R.id.report_btn_native: { String status =
+	 * Environment.getExternalStorageState(); if
+	 * (!status.equals(Environment.MEDIA_MOUNTED)) {
+	 * Util.Toast(MenuReportAsPicActivity.this,
+	 * getString(R.string.talk_insert_sd_card)); return; } Intent localIntent =
+	 * new Intent("android.intent.action.GET_CONTENT", null);
+	 * localIntent.setType("image/*"); startActivityForResult(localIntent,
+	 * Const.image_select.REQUEST_CODE_BROWSE_IMAGE); break; } } } }).show(); }
+	 */
 
 	private void resizePicture(boolean toCreateFile)
 	{
 		if (!isHighQuality)
 		{
-			Bitmap picBitmap = BitmapUtil.getimage(picPath);
+			Bitmap picBitmap = BitmapUtil.getimage(picPathTemp);
 			if (picBitmap != null)
 			{
 				byte[] bitmapData = null;
@@ -337,7 +375,8 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		if (isUploading && id == AirLocation.AIR_LOCATION_ID_ONCE)
 		{
 			String detail = report_detail.getText().toString();
-			File file = new File(picPath);
+			String path = isHighQuality ? picPathTemp : picPath;
+			File file = new File(path);
 			Uri uri = Uri.fromFile(file);
 			try
 			{
@@ -359,9 +398,38 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 
 			Log.i(MenuReportAsPicActivity.class, "ReportPicture: TASK[" + taskId + "][" + taskName + "] text=[" + report_detail.getText().toString() + "] x=[" + latitude + "] y=[" + longitude + "]");
 			AirReportManager.getInstance().Report(taskId, taskName, AirtalkeeReport.RESOURCE_TYPE_PICTURE, "jpg", uri, picPath, detail, picSize, latitude, longitude);
-
 			isUploading = false;
+			myToast = Toast.makeText1(this, R.drawable.ic_success, getString(R.string.talk_tools_report_success), Toast.LENGTH_LONG);
+			myToast.setDuration(3600);
+			myToast.show();
 			finish();
+		}
+	}
+
+	@Override
+	public void onCheckedChanged(RadioGroup group, int checkedId)
+	{
+		int rid = group.getCheckedRadioButtonId();
+		switch (rid)
+		{
+			case R.id.report_file_big:
+			{
+				if (rbHigh.isChecked())
+				{
+					isHighQuality = true;
+				}
+				break;
+			}
+			case R.id.report_file_small:
+			{
+				if (rbHigh.isChecked())
+				{
+					isHighQuality = false;
+				}
+				break;
+			}
+			default:
+				break;
 		}
 	}
 

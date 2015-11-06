@@ -38,7 +38,7 @@
 	<string name="talk_group_title">频道</string>
 	<string name="talk_session_title">会话</string>
 	<string name="talk_user_account_manage">账户管理</string>
-	<string name="talk_user_ipocid">用户ID</string>
+	<string name="talk_user_ipocid">账户ID</string>
 	<string name="talk_user_username">名称</string>
 	<string name="talk_user_username_edit">编辑名称</string>
 	<string name="talk_user_password">密码</string>
@@ -51,6 +51,8 @@
 	<string name="talk_tools_infosys">信息采集</string>
 	<string name="talk_tools_infosys_null">请下载信息采集系统客户端，下载安装后便可使用！</string>
 	<string name="talk_tools_report">现场上报</string>
+	<string name="talk_tools_report_high">高清</string>
+	<string name="talk_tools_report_compress">压缩</string>
 	<string name="talk_tools_report_description">描述</string>
 	<string name="talk_tools_report_date">上报时间</string>
 	<string name="talk_tools_report_pic">图像上报</string>
@@ -83,7 +85,7 @@
 	<string name="talk_tools_setting_ptt_volume">音量按键</string>
 	<string name="talk_tools_setting_ptt_volume_tip">是否将上下音量键作为PTT物理按键</string>
 	<string name="talk_tools_pwd_update">修改密码</string>
-	<string name="talk_tools_help">使用和帮助</string>
+	<string name="talk_tools_help">帮助和反馈</string>
 	<string name="talk_tools_manual">使用手册</string>
 	<string name="talk_tools_defect">意见反馈</string>
 	<string name="talk_tools_defect_title">告诉我们您在使用中遇到的问题或宝贵建议：</string>
