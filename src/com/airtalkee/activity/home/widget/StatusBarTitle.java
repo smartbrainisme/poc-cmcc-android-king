@@ -25,7 +25,6 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 	private View btnLeft, btnRight;
 	private ImageView ivBtnLeft;
 	private AirSession session = null;
-
 	public StatusBarTitle(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
