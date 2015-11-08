@@ -2,7 +2,6 @@ package com.airtalkee.activity.home.widget;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.nfc.cardemulation.OffHostApduService;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -22,7 +21,7 @@ public class AlertDialog extends Dialog implements
 	//
 	protected View c ;
 	protected View s ;
-	protected String title, content;
+	protected   String title= null, content = null;
 	protected String textcancle = "取消";
 	protected String textSure = "确定";
 	protected int id;
@@ -41,6 +40,12 @@ public class AlertDialog extends Dialog implements
 		this.listener = listener;
 	}
 
+	public AlertDialog(Context context
+			) {
+		super(context, R.style.alert_dialog);
+		
+	}
+	
 	public AlertDialog(Context context, String title, String content,
 			DialogListener listener, int id) {
 		super(context, R.style.alert_dialog);

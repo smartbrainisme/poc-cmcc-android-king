@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginBottom="-1dip">
+		<include layout="@layout/include_main_header" />
+	</LinearLayout>
+	<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" android:id="@+id/containner" android:layout_weight="1">
+	
+	</LinearLayout>
+	<LinearLayout android:id="@+id/layout_bottom" android:layout_width="fill_parent" android:layout_height="50dp" android:orientation="horizontal" android:gravity="center" >
+		<ImageView  android:id="@+id/bar_left" android:layout_width="fill_parent" android:layout_height="fill_parent"  android:layout_weight="1" android:scaleType="center"    android:contentDescription="@string/app_name" android:src="@drawable/ic_fun_call_dis" />
+		<ImageView  android:id="@+id/bar_mid" android:layout_width="fill_parent" android:layout_height="fill_parent"  android:layout_weight="1" android:scaleType="center"   android:contentDescription="@string/app_name"  android:src="@drawable/ic_fun_msg_dis" />
+		<ImageView  android:id="@+id/bar_right" android:layout_width="fill_parent" android:layout_height="fill_parent"  android:layout_weight="1" android:scaleType="center"   android:contentDescription="@string/app_name"  android:src="@drawable/ic_fun_cancel_dis" />
+ </LinearLayout>
+</LinearLayout>

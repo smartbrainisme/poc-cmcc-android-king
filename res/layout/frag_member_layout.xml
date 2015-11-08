@@ -5,4 +5,5 @@
     	<TextView android:id="@+id/tab_member_all" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" android:background="@drawable/selector_tab_member_all" android:text="全部成员" android:gravity="center" />    
     </LinearLayout>
     <com.airtalkee.widget.MListView android:id="@+id/talk_lv_member"  android:layout_width="fill_parent"  android:layout_height="fill_parent"  android:cacheColorHint="#00000000"  android:dividerHeight="0.5dp"  android:divider="@drawable/divider_line"    android:descendantFocusability="afterDescendants" android:layout_marginTop="10dp" android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>    
+    <LinearLayout android:id="@+id/mem_container" android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical"/>
 </LinearLayout>

@@ -147,7 +147,7 @@
 	<string name="talk_line_reject">对方拒绝了您的对讲！</string>
 	<string name="talk_had_idel">对讲已断开！</string>
 	<string name="talk_channel_idle">频道未连接</string>
-	<string name="talk_incoming"> 对讲来电\r\n\r\n提示：按BACK或MENU键可关闭振铃声音</string>
+	<string name="talk_incoming"> 按BACK或MENU键可关闭振铃声音</string>
 	<string name="talk_login_account">请输入用户名和密码</string>
 	<string name="talk_account_match">网络连接错误！</string>
 	<string name="talk_exit">退出</string>

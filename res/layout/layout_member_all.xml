@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" android:layout_marginLeft="20dp" android:layout_marginRight="20dp">
+    <LinearLayout android:layout_width="fill_parent" android:layout_height="40dp" android:orientation="horizontal">
+        <EditText android:id="@+id/et_search" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" android:background="@drawable/selector_member_search_form"/>
+        <Button android:id="@+id/btn_search" android:layout_width="60dp" android:layout_height="fill_parent" android:background="@drawable/selector_btn_send" android:layout_marginLeft="10dp" android:text="搜索" android:textColor="#dfffffff" android:enabled="false" />
+    </LinearLayout>
+ 	<com.airtalkee.widget.MListView android:id="@+id/talk_lv_member_all"  android:layout_width="fill_parent"  android:layout_height="fill_parent"  android:cacheColorHint="#00000000"  android:dividerHeight="0.5dp"  android:divider="@drawable/divider_line"    android:descendantFocusability="afterDescendants" android:layout_marginTop="10dp" />
+</LinearLayout>

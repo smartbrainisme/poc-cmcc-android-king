@@ -9,8 +9,9 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter> 
 		</activity>
+		<activity android:name=".activity.home.SessionSettingActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.home.SessionDialogActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.home.HomeActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name=".activity.home.HomeActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="stateVisible" />
 		<activity android:name=".activity.MainActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.UserAllActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MoreActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />

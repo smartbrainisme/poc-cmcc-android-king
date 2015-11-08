@@ -16,12 +16,15 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.AdapterMember.CheckedCallBack;
 import com.airtalkee.activity.home.widget.CallAlertDialog;
+import com.airtalkee.activity.home.widget.MemberAllView;
+import com.airtalkee.activity.home.widget.MemberAllView.MemberCheckListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeMessage;
@@ -33,7 +36,7 @@ import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.MListView;
 
 public class MemberFragment extends BaseFragment implements OnClickListener,
-		OnItemClickListener, CheckedCallBack {
+		OnItemClickListener, CheckedCallBack ,MemberCheckListener{
 	private static final int DIALOG_CALL = 99;
 	private TextView tabMemberSession, tabMemberAll;
 	private List<AirContact> tempCallMembers = null;
@@ -54,7 +57,11 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		v = inflater.inflate(getLayout(), container, false);
-
+		
+		LinearLayout memContainer= (LinearLayout)findViewById(R.id.mem_container);
+		
+		memContainer.addView(new MemberAllView(getActivity(), this));
+		
 		lvMember = (MListView) findViewById(R.id.talk_lv_member);
 		lvMember.setAdapter(adapterMember = new AdapterMember(getActivity(),
 				null, null, true, true, this));
@@ -78,7 +85,10 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	public void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
+		if (mediaStatusBar != null)
+			mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, false);
 
+		setSession(getSession());
 	}
 
 	@Override
@@ -253,6 +263,12 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	public void onChecked(boolean isChecked) {
 		// TODO Auto-generated method stub
 		mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, isChecked);
+	}
+
+	@Override
+	public void onMemberChecked(boolean isChecked) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
