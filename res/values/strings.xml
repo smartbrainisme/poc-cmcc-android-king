@@ -28,6 +28,9 @@
     <string name="copyright_datang2">Copyright 2009-2015 大唐电信</string>
     <string name="copyright_lishi_technology1">Copyright 2009-2015 力石科技</string>
     <string name="copyright_lishi_technology2">Copyright 2009-2015 力石科技</string>
+    <string name="talk_video_me">Me</string>
+    <string name="talk_video_idle">Idle</string>
+    <string name="talk_video_listen">Listen</string>
     <string name="talk_me">Me</string>
     <string name="talk_authorization_title">Authorization information</string>
     <string name="talk_authorization_info1">PhoneModel: </string>

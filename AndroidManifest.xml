@@ -44,6 +44,7 @@
 		<activity android:name=".activity.UserChangePasswordActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.ActivityImagePager"   android:configChanges="orientation|keyboardHidden" />
 		<activity android:name=".activity.VideoRecordActivity"   android:configChanges="orientation|keyboardHidden"     android:theme="@style/talk_theme"   android:screenOrientation="portrait"/>
+		<activity android:name=".activity.VideoSessionActivity" android:configChanges="orientation|keyboardHidden"  android:launchMode="singleTask" android:screenOrientation="portrait"/>
 		<activity android:name=".bluetooth.BluetoothDeviceListActivity"  android:label="@string/bluetooth_select_device"   android:theme="@style/MyDialog"   android:configChanges="orientation|keyboardHidden" android:launchMode="singleTop" />
 		<activity android:name=".widget.VideoCamera" android:windowSoftInputMode="stateHidden"   android:label="@string/app_name"     android:screenOrientation="portrait" />
 		<activity android:name=".widget.PhotoCamera" android:windowSoftInputMode="stateHidden"   android:label="@string/app_name"     android:screenOrientation="portrait" />

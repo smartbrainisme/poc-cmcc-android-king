@@ -3,7 +3,6 @@ package com.airtalkee.widget;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import android.app.Activity;
 import android.content.Context;
 import android.hardware.Camera;
@@ -28,7 +27,6 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.sdk.AirtalkeeAccount;
@@ -107,6 +105,11 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 
 	public void onCreate()
 	{
+		if (isInEditMode())
+		{
+			return;
+		}
+		activity = (Activity) this.getContext();
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 		{
 			LayoutInflater.from(this.getContext()).inflate(R.layout.video_main, this);
@@ -125,6 +128,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		mButtonSettings = (ImageButton) findViewById(R.id.settings);
 		mButtonMic = (ImageButton) findViewById(R.id.mic);
 		mSurfaceView = (SurfaceView) findViewById(R.id.surface);
+		// mUSBSurfaceView = (PreviewSurfaceView) findViewById(R.id.svPreview3);
 		mTextBitrate = (TextView) findViewById(R.id.bitrate);
 		mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 		mButtonStart.setOnClickListener(this);
@@ -135,8 +139,14 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		mButtonMic.setTag(false);
 		mButtonMic.setEnabled(false);
 		mButtonFlash.setTag("off");
+
+		mUSBMonitor = new USBMonitor(this.getContext(), this);
+		mUSBMonitor.register();
+		cameraUsbBinder = CameraUsbManager.getInstance();
+		cameraUsbBinder.startManager();
+
 	}
-	
+
 	public boolean isCameraUsbReady()
 	{
 		return isCameraUsbReady;
@@ -159,8 +169,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		}
 		// Configures the SessionBuilder
 		this.cameraType = cameraType;
-		mSession = SessionBuilder.getInstance().setContext(this.getContext().getApplicationContext()).setVideoEncoder(SessionBuilder.VIDEO_H264).setSurfaceView(mSurfaceView)
-			.setPreviewOrientation(0).setCallback(this).setExternalCameraType(cameraType).build();
+		mSession = SessionBuilder.getInstance().setContext(this.getContext().getApplicationContext()).setVideoEncoder(SessionBuilder.VIDEO_H264).setSurfaceView(mSurfaceView).setPreviewOrientation(0).setCallback(this).setExternalCameraType(cameraType).build();
 
 		// Configures the RTSP client
 		mClient = new RtspClient();
@@ -169,11 +178,11 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		mClient.setCallback(this);
 		selectQuality(rg);
 		toggleStream();
-		
+
 		switch (cameraType)
 		{
 			case Session.CAMERA_EXTERNAL_TYPE_NONE:
-				mUSBSurfaceView.setVisibility(View.GONE);
+//				mUSBSurfaceView.setVisibility(View.GONE);
 				mSurfaceView.getHolder().addCallback(this);
 				mSurfaceView.setVisibility(View.VISIBLE);
 				break;
@@ -197,8 +206,28 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 			this.setVisibility(View.GONE);
 			mClient.stopStream();
 			mSession.release();
-			mSurfaceView.getHolder().removeCallback(this);
+			switch (cameraType)
+			{
+				case Session.CAMERA_EXTERNAL_TYPE_NONE:
+					mSurfaceView.getHolder().removeCallback(this);
+					break;
+				case Session.CAMERA_EXTERNAL_TYPE_USB:
+					stopUsbPreview();
+					break;
+				case Session.CAMERA_EXTERNAL_TYPE_WIFI:
+					break;
+			}
 		}
+	}
+
+	public int getVideoWidth()
+	{
+		return mVideoWidth;
+	}
+
+	public int getVideoHeight()
+	{
+		return mVideoHeight;
 	}
 
 	@Override
@@ -459,6 +488,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	@Override
 	public void onSensorChanged(SensorEvent event)
 	{
+		// TODO Auto-generated method stub
 		float x = event.values[0];
 		float y = event.values[1];
 		float z = event.values[2];
@@ -474,7 +504,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		float deltaZ = Math.abs(mLastZ - z);
 		com.airtalkee.sdk.util.Log.d(VideoSufaceView.class, "diffX=" + deltaX + ",diffY=" + deltaY + ",deltaZ=" + deltaZ);
 		if (deltaX > 0.5 && mAutoFocus)
-		{ 
+		{
 			mAutoFocus = false;
 			autoFoucs();
 		}
@@ -484,7 +514,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 			autoFoucs();
 		}
 		if (deltaZ > 0.5 && mAutoFocus)
-		{ 
+		{
 			mAutoFocus = false;
 			autoFoucs();
 		}
@@ -627,12 +657,37 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	public void onAttach(UsbDevice arg0)
 	{
 		// TODO Auto-generated method stub
+		// Toast.makeText(this.getContext(), "USB_DEVICE_ATTACHED",
+		// Toast.LENGTH_SHORT).show();
 		isCameraUsbReady = true;
+	}
+
+	@Override
+	public void onDettach(UsbDevice device)
+	{
+		// TODO Auto-generated method stub
+		// Toast.makeText(this.getContext(), "USB_DEVICE_DETACHED",
+		// Toast.LENGTH_SHORT).show();
+		isCameraUsbReady = false;
+		if (device != null)
+		{
+			activity.runOnUiThread(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+
+					disconnectUSBCamera();
+
+				}
+			});
+		}
 	}
 
 	@Override
 	public void onCancel(UsbDevice arg0)
 	{
+		// TODO Auto-generated method stub
 		isCameraUsbReady = false;
 		activity.runOnUiThread(new Runnable()
 		{
@@ -652,6 +707,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	@Override
 	public void onConnect(final UsbDevice device, final UsbControlBlock ctrlBlock, boolean arg2)
 	{
+		// TODO Auto-generated method stub
 		isCameraUsbReady = true;
 		if (pendingUSBConnect0)
 		{
@@ -667,25 +723,9 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	}
 
 	@Override
-	public void onDettach(UsbDevice device)
-	{
-		isCameraUsbReady = false;
-		if (device != null)
-		{
-			activity.runOnUiThread(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					disconnectUSBCamera();
-				}
-			});
-		}
-	}
-
-	@Override
 	public void onDisconnect(UsbDevice device, UsbControlBlock arg1)
 	{
+		// TODO Auto-generated method stub
 		isCameraUsbReady = false;
 		if (device != null)
 		{
@@ -694,6 +734,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 				@Override
 				public void run()
 				{
+
 					disconnectUSBCamera();
 				}
 			});

@@ -8,20 +8,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 
 public class AlertDialog extends Dialog implements
-		android.view.View.OnClickListener {
+		android.view.View.OnClickListener
+{
 
 	protected TextView tvTitle;
 	protected TextView tvContent;
 	protected Button cancle, sure;
 	protected ImageView ivCancle, ivSure;
 	//
-	protected View c ;
-	protected View s ;
-	protected   String title= null, content = null;
+	protected View c;
+	protected View s;
+	protected String title = null, content = null;
 	protected String textcancle = "取消";
 	protected String textSure = "确定";
 	protected int id;
@@ -29,25 +29,26 @@ public class AlertDialog extends Dialog implements
 	//
 	protected DialogListener listener;
 
-	public interface DialogListener {
+	public interface DialogListener
+	{
 		void onClickOk(int id);
 
 		void onClickCancel(int id);
 	}
-	
+
 	protected void setListener(DialogListener listener)
 	{
 		this.listener = listener;
 	}
 
-	public AlertDialog(Context context
-			) {
+	public AlertDialog(Context context)
+	{
 		super(context, R.style.alert_dialog);
-		
+
 	}
-	
-	public AlertDialog(Context context, String title, String content,
-			DialogListener listener, int id) {
+
+	public AlertDialog(Context context, String title, String content, DialogListener listener, int id)
+	{
 		super(context, R.style.alert_dialog);
 		this.title = title;
 		this.content = content;
@@ -55,21 +56,8 @@ public class AlertDialog extends Dialog implements
 		this.id = id;
 	}
 
-	public AlertDialog(Context context, String title, String content,
-			String textcancle, String textSure, DialogListener listener, int id) {
-		super(context, R.style.alert_dialog);
-		this.title = title;
-		this.content = content;
-		this.textcancle = textcancle;
-
-		this.textSure = textSure;
-		this.listener = listener;
-		this.id = id;
-	}
-
-	public AlertDialog(Context context, String title, String url,
-			String content, String textcancle, String textSure,
-			DialogListener listener, int id) {
+	public AlertDialog(Context context, String title, String content, String textcancle, String textSure, DialogListener listener, int id)
+	{
 		super(context, R.style.alert_dialog);
 		this.title = title;
 		this.content = content;
@@ -80,9 +68,20 @@ public class AlertDialog extends Dialog implements
 		this.id = id;
 	}
 
-	public AlertDialog(Context context, String title, String url,
-			String content, String textcancle, String textSure,
-			DialogListener listener, boolean cancelable, int id) {
+	public AlertDialog(Context context, String title, String url, String content, String textcancle, String textSure, DialogListener listener, int id)
+	{
+		super(context, R.style.alert_dialog);
+		this.title = title;
+		this.content = content;
+		this.textcancle = textcancle;
+
+		this.textSure = textSure;
+		this.listener = listener;
+		this.id = id;
+	}
+
+	public AlertDialog(Context context, String title, String url, String content, String textcancle, String textSure, DialogListener listener, boolean cancelable, int id)
+	{
 		super(context, R.style.alert_dialog);
 		this.title = title;
 		this.content = content;
@@ -95,65 +94,75 @@ public class AlertDialog extends Dialog implements
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dialog_alert_layout);
 		initView();
 		fillView();
 	}
-	
-	protected void initView() {
-		
+
+	protected void initView()
+	{
+
 		tvTitle = (TextView) findViewById(R.id.tv_title);
 		tvContent = (TextView) findViewById(R.id.tv_content);
-		
-		 c = findViewById(R.id.cancle);
-		 s = findViewById(R.id.sure);
-		if(c instanceof Button)
-			cancle = (Button)c;
-		if(c instanceof Button)
+
+		c = findViewById(R.id.cancle);
+		s = findViewById(R.id.sure);
+		if (c instanceof Button)
+			cancle = (Button) c;
+		if (c instanceof Button)
 			sure = (Button) s;
 		c.setOnClickListener(this);
 		s.setOnClickListener(this);
-		
+
 	}
 
-	protected void fillView() {
+	protected void fillView()
+	{
 
-		if (TextUtils.isEmpty(title)) {
+		if (TextUtils.isEmpty(title))
+		{
 			tvTitle.setVisibility(View.GONE);
 		}
 
-		if (TextUtils.isEmpty(content)) {
+		if (TextUtils.isEmpty(content))
+		{
 			tvContent.setVisibility(View.GONE);
 		}
 
-		if (TextUtils.isEmpty(textSure)) {
+		if (TextUtils.isEmpty(textSure))
+		{
 			s.setVisibility(View.GONE);
 		}
 		tvTitle.setText(title);
 		tvContent.setText(content);
-		if(null != cancle)
-		cancle.setText(textcancle);
-		if(null != sure)
-		sure.setText(textSure);
+		if (null != cancle)
+			cancle.setText(textcancle);
+		if (null != sure)
+			sure.setText(textSure);
 	}
 
 	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.sure: {
-			this.dismiss();
-			if (null != listener)
-				listener.onClickOk(this.id);
-			break;
-		}
-		case R.id.cancle: {
-			this.cancel();
-			if (null != listener)
-				listener.onClickCancel(id);
-			break;
-		}
+	public void onClick(View v)
+	{
+		switch (v.getId())
+		{
+			case R.id.sure:
+			{
+				this.dismiss();
+				if (null != listener)
+					listener.onClickOk(this.id);
+				break;
+			}
+			case R.id.cancle:
+			{
+				this.cancel();
+				if (null != listener)
+					listener.onClickCancel(id);
+				break;
+			}
 		}
 
 	}

@@ -16,6 +16,7 @@ import com.airtalkee.R;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MenuReportAsPicActivity;
+import com.airtalkee.activity.VideoSessionActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.config.Config;
@@ -120,7 +121,14 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 					setViedoReportPannelVisiblity(View.VISIBLE);
 					break;
 				case R.id.bar_mid:// 实时视频回传
-					
+					if (session != null)
+					{
+						Intent intent = new Intent();
+						intent.setClass(getActivity(), VideoSessionActivity.class);
+						intent.putExtra("sessionCode", session.getSessionCode());
+						intent.putExtra("video", true);
+						startActivity(intent);
+					}
 					break;
 				case R.id.bar_right:
 					dialog = new AlertDialog(getActivity(), "确定呼叫中心", null, this, DIALOG_CALL_CENTER);

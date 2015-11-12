@@ -29,6 +29,9 @@
 	<string name="copyright_datang2">Copyright 2009-2015 大唐电信</string>
 	<string name="copyright_lishi_technology1">Copyright 2009-2015 力石科技</string>
 	<string name="copyright_lishi_technology2">Copyright 2009-2015 力石科技</string>
+	<string name="talk_video_me">我在讲话</string>
+    <string name="talk_video_idle">长按开始和管理员对讲</string>
+    <string name="talk_video_listen">管理员在讲话</string>
 	<string name="talk_me">我</string>
 	<string name="talk_authorization_title">授权验证</string>
 	<string name="talk_authorization_info1">机型：</string>
@@ -265,7 +268,7 @@
 	<string name="talk_current_user">当前用户:%s</string>
 	<string name="talk_account_other">您的帐号已在另一台设备上登录！请重新登录！</string>
 	<string name="talk_video_addr_error">视频地址无效！</string>
-	<string name="talk_video_tio_to_open">是否要开启视频？如果在移动网络下将会产生大量流量！</string>
+	<string name="talk_video_tio_to_open">确认开始实时视频回传？</string>
 	<string name="talk_video_tio_to_close">是否要关闭视频？</string>
 	<string name="talk_verion_check">检查更新</string>
 	<string name="talk_verion_upeate">现在更新</string>
