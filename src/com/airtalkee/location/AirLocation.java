@@ -243,18 +243,18 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 	// =================================
 
 	@Override
-	public void OnMapLocation(boolean isOk, int id, int type, boolean isFinal, double latitude, double longitude, double altitude, float speed, String time)
+	public void OnMapLocation(boolean isOk, int id, int type, boolean isFinal, double latitude, double longitude, double altitude, float direction, float speed, String time)
 	{
 		// TODO Auto-generated method stub
 		if (isOk && isFinal && id == AIR_LOCATION_ID_LOOP)
 		{
 			if (type == AirLocationImp.LOCATION_TYPE_GPS)
 			{
-				AirtalkeeReport.getInstance().ReportLocation(AirtalkeeReport.LOCATION_TYPE_GPS, latitude, longitude);
+				AirtalkeeReport.getInstance().ReportLocation(AirtalkeeReport.LOCATION_TYPE_GPS, latitude, longitude, altitude, direction, speed);
 			}
 			else
 			{
-				AirtalkeeReport.getInstance().ReportLocation(AirtalkeeReport.LOCATION_TYPE_CELL, latitude, longitude);
+				AirtalkeeReport.getInstance().ReportLocation(AirtalkeeReport.LOCATION_TYPE_CELL, latitude, longitude, altitude, direction, speed);
 			}
 		}
 

@@ -262,6 +262,8 @@
     <string name="talk_verion_check">Version check</string>
     <string name="talk_verion_latest">The application is the latest version</string>
     <string name="talk_version_new">New version</string>
+    <string name="talk_video_tio_to_open">Whether to open the video?</string>
+    <string name="talk_video_tio_to_close">Whether to close the video?</string>
     <string name="talk_volume">Volume (%d) </string>
     <string name="talk_volume_max">Media volume maximum</string>
     <string name="talk_volume_min">Media volume minimum</string>
@@ -425,6 +427,13 @@
     <string name="talk_account_get_error">Exception for account access</string>
     <string name="talk_account_bind_error">Your device has not been bound to account, please contact customer service</string>
     <string name="talk_protocol">To access the mobile network or wireless network and read the location information, in the use of intercom applications agree?</string>
-    <string name="talk_account_checking">正在检查帐号</string>
+    <string name="talk_account_checking">Account checking...</string>
+    <string name="talk_network_scaning">network scaning...</string>
+    <string name="talk_network_connected">network connected</string>
+    <string name="talk_current_channel">Current channel is</string>
+    <string name="talk_current_battery">Residual current</string>
+    <string name="talk_secret_nocard">No valid encrytion card!</string>
+    <string name="talk_tools_setting_vox">VOX</string>
+    <string name="talk_tools_setting_vox_tip">Automatically recognize sound and start to talk</string>
 
 </resources>

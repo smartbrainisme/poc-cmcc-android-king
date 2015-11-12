@@ -3,6 +3,7 @@ package com.airtalkee.Util;
 import android.media.AudioManager;
 
 import com.airtalkee.config.Config;
+import com.airtalkee.sdk.engine.AirEngine;
 import com.airtalkee.services.AirServices;
 
 public class Setting
@@ -14,7 +15,9 @@ public class Setting
 	private static final String SETTING_PTT_VOLUME = "SETTING_PTT_VOLUME";
 	private static final String SETTING_PTT_CLICK = "SETTING_PTT_CLICK";
 	private static final String SETTING_PTT_HB = "SETTING_PTT_HB";
-
+	private static final String SETTING_PTT_ENCRYPT = "SETTING_PTT_ENCRYPT";
+	private static final String SETTING_PTT_VOX = "SETTING_PTT_VOX";
+	
 	public static int getVoiceMode()
 	{
 		return AirServices.iOperator.getInt(SETTING_VOICE_MODE, AudioManager.MODE_NORMAL);
@@ -101,6 +104,26 @@ public class Setting
 			seconds = Config.ENGINE_MEDIA_HB_SECOND_SLOW;
 		AirServices.iOperator.putInt(SETTING_PTT_HB, seconds);
 		Config.engineMediaSettingHbSeconds = seconds;
+	}
+
+	public static boolean getPttEncrypt()
+	{
+		return AirServices.iOperator.getBoolean(SETTING_PTT_ENCRYPT, true);
+	}
+
+	public static void setPttEncrypt(boolean valid)
+	{
+		AirServices.iOperator.putBoolean(SETTING_PTT_ENCRYPT, valid);
+		AirEngine.serviceSecretSettingValidEncrypt(valid);
+	}
+	public static boolean getPttVox()
+	{
+		return AirServices.iOperator.getBoolean(SETTING_PTT_VOX, false);
+	}
+	
+	public static void setPttVox(boolean enable)
+	{
+		AirServices.iOperator.putBoolean(SETTING_PTT_VOX, enable);
 	}
 
 }

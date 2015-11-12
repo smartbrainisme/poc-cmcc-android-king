@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -16,12 +15,12 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.AirMmiTimerListener;
@@ -39,7 +38,8 @@ import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.services.AirServices;
 
-public class TempSessionActivity extends ActivityBase implements OnClickListener, AirMmiTimerListener, OnMmiSessionBoxRefreshListener
+public class TempSessionActivity extends ActivityBase implements
+		OnClickListener, OnMmiSessionBoxRefreshListener
 {
 
 	private static TempSessionActivity mInstance;
@@ -76,7 +76,6 @@ public class TempSessionActivity extends ActivityBase implements OnClickListener
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
-		// TODO Auto-generated method stub
 		super.onCreate(bundle);
 		setRequestedOrientation(Config.screenOrientation);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -116,9 +115,9 @@ public class TempSessionActivity extends ActivityBase implements OnClickListener
 					}
 					AirtalkeeMessage.getInstance().MessageSystemGenerate(session, getString(R.string.talk_call_state_outgoing_call), false);
 				}
-				else if (actionType == AirServices.TEMP_SESSION_TYPE_MESSAGE)
+				else if (actionType == AirServices.TEMP_SESSION_TYPE_MESSAGE || session.getMessageUnreadCount() > 0)
 				{
-					AirMmiTimer.getInstance().TimerRegister(this, this, false, true, 100, false, null);
+					sessionBox.tabJumpToPage(SessionBox.PAGE_MSG);
 				}
 			}
 			else
@@ -135,7 +134,6 @@ public class TempSessionActivity extends ActivityBase implements OnClickListener
 	@Override
 	protected void onResume()
 	{
-		// TODO Auto-generated method stub
 		super.onResume();
 		if (session != null)
 		{
@@ -155,25 +153,20 @@ public class TempSessionActivity extends ActivityBase implements OnClickListener
 		if (session != null)
 			AirtalkeeSessionManager.getInstance().SessionLock(session, false);
 		sessionBox.listenerDisable();
-		if (sessionBox.sessionBoxTalk != null)
-			sessionBox.sessionBoxTalk.videoFinish();
 		isShowing = false;
 	}
 
 	@Override
 	public void finish()
 	{
-		// TODO Auto-generated method stub
 		super.finish();
 		finishCall();
 		AirtalkeeMessage.getInstance().MessageListMoreClean(session);
-
 		if (AirtalkeeAccount.getInstance().isAccountRunning())
 		{
-			Intent it = new Intent(this, HomeActivity.class);
+			Intent it = new Intent(this, MainActivity.class);
 			startActivity(it);
 		}
-
 		mInstance = null;
 		isShowing = false;
 	}
@@ -184,11 +177,9 @@ public class TempSessionActivity extends ActivityBase implements OnClickListener
 		if (session != null && session.getSessionState() != AirSession.SESSION_STATE_IDLE)
 		{
 			AirSessionControl.getInstance().SessionEndCall(session);
-			if (sessionBox.sessionBoxTalk != null)
-				sessionBox.sessionBoxTalk.videoFinish();
 		}
 	}
-	
+
 	public SimpleAdapter mSimpleAdapter(Context contexts, String[] array, int layout, int id)
 	{
 		if (array == null)
@@ -207,7 +198,7 @@ public class TempSessionActivity extends ActivityBase implements OnClickListener
 	@Override
 	public void onAttachedToWindow()
 	{
-//		this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
+		this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);
 		super.onAttachedToWindow();
 	}
 
@@ -276,8 +267,7 @@ public class TempSessionActivity extends ActivityBase implements OnClickListener
 				break;
 		}
 	}
-	
-	
+
 	@Override
 	@Deprecated
 	protected Dialog onCreateDialog(final int id)
@@ -312,19 +302,6 @@ public class TempSessionActivity extends ActivityBase implements OnClickListener
 		}
 
 		return super.onCreateDialog(id);
-	}
-
-	@Override
-	public void onMmiTimer(Context context, Object userData)
-	{
-		// TODO Auto-generated method stub
-		if (session != null)
-		{
-			if (session.getMessageUnreadCount() > 0 || actionType == AirServices.TEMP_SESSION_TYPE_MESSAGE)
-			{
-				sessionBox.tabSnapeToPage(SessionBox.PAGE_MSG);
-			}
-		}
 	}
 
 	@Override
@@ -402,38 +379,17 @@ public class TempSessionActivity extends ActivityBase implements OnClickListener
 			}
 		}
 		/*
-		else if (event.getKeyCode() == KeyEvent.KEYCODE_HOME)
-		{
-		    if (event.getAction() == KeyEvent.ACTION_UP)
-		    {
-			if (session.getSessionState() != AirSession.SESSION_STATE_IDLE)
-			{
-			    if (android.os.Build.VERSION.RELEASE.startsWith("2."))
-			    {
-				Log.e(TempSessionActivity.class, Utils.getCurrentTimeInMillis() + "");
-				if (Utils.getCurrentTimeInMillis() - currentTimeInMillis > 5000)
-				{
-				    currentTimeInMillis = Utils.getCurrentTimeInMillis();
-				    Toast.makeText(this, R.string.talk_session_back, 1).show();
-				    return true;
-				}
-				else
-				{
-				    finish();
-				}
-			    }
-			    else
-			    {
-				finish();
-			    }
-			}
-			else
-			{
-			    finish();
-			}
-		    }
-		}
-		*/
+		 * else if (event.getKeyCode() == KeyEvent.KEYCODE_HOME) { if
+		 * (event.getAction() == KeyEvent.ACTION_UP) { if
+		 * (session.getSessionState() != AirSession.SESSION_STATE_IDLE) { if
+		 * (android.os.Build.VERSION.RELEASE.startsWith("2.")) {
+		 * Log.e(TempSessionActivity.class, Utils.getCurrentTimeInMillis() +
+		 * ""); if (Utils.getCurrentTimeInMillis() - currentTimeInMillis > 5000)
+		 * { currentTimeInMillis = Utils.getCurrentTimeInMillis();
+		 * Toast.makeText(this, R.string.talk_session_back, 1).show(); return
+		 * true; } else { finish(); } } else { finish(); } } else { finish(); }
+		 * } }
+		 */
 		return super.dispatchKeyEvent(event);
 	}
 
@@ -470,7 +426,13 @@ public class TempSessionActivity extends ActivityBase implements OnClickListener
 	{
 		// TODO Auto-generated method stub
 		if (isShowing && actionVideo && sessionBox.sessionBoxTalk != null)
-			sessionBox.sessionBoxTalk.videoStart();
+		{
+			Intent intent = new Intent();
+			intent.setClass(this, VideoSessionActivity.class);
+			intent.putExtra("sessionCode", session.getSessionCode());
+			intent.putExtra("video", true);
+			startActivity(intent);
+		}
 	}
 
 	@Override
