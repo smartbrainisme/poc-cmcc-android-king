@@ -447,4 +447,8 @@
 	<string name="talk_secret_nocard">未插入有效的加密卡！</string>
 	<string name="talk_tools_setting_vox">VOX侦测</string>
 	<string name="talk_tools_setting_vox_tip">开启此项后，自动识别声音并开启对讲</string>
+	<string name="talk_video_connecting">正在连接</string>
+	<string name="talk_video_connect_fail">连接失败</string>
+    <string name="talk_video_uploading">正在实时回传</string>
+    <string name="talk_video_stop">已停止</string>
 </resources>

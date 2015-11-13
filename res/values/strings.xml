@@ -438,5 +438,9 @@
     <string name="talk_secret_nocard">No valid encrytion card!</string>
     <string name="talk_tools_setting_vox">VOX</string>
     <string name="talk_tools_setting_vox_tip">Automatically recognize sound and start to talk</string>
+    <string name="talk_video_connecting">Connecting!</string>
+    <string name="talk_video_connect_fail">Connection fail!</string>
+    <string name="talk_video_uploading">Uploading!</string>
+    <string name="talk_video_stop">Stop!</string>
 
 </resources>

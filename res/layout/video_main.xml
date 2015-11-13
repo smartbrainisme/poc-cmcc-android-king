@@ -18,6 +18,42 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center" />
 
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:layout_marginBottom="-1dip"
+        android:background="#80000000" >
+
+        <ImageView
+            android:id="@+id/iv_video_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/btn_back" />
+
+        <TextView
+            android:id="@+id/tv_video_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="正在连接"
+            android:textColor="#FFFFFF"
+            android:textSize="18dp" />
+
+        <Chronometer
+            android:id="@+id/ch_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:textSize="18dp"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
     <TextView
         android:id="@+id/bitrate"
         android:layout_width="wrap_content"
@@ -28,7 +64,8 @@
         android:background="#5f000000"
         android:padding="3dip"
         android:text="0 kbps"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:visibility="gone"/>
 
     <ImageButton
         android:id="@+id/start"
@@ -40,7 +77,8 @@
         android:background="#00000000"
         android:contentDescription="Start/Stop Streaming"
         android:src="@drawable/ic_switch_video"
-        android:text="Start/Stop Streaming" />
+        android:text="Start/Stop Streaming"
+        android:visibility="gone"/>
 
     <FrameLayout
         android:layout_width="wrap_content"

@@ -12,7 +12,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/video" />
+            android:src="@drawable/video"
+            android:visibility="gone" />
     </RelativeLayout>
 
     <SurfaceView
@@ -32,29 +33,56 @@
         android:layout_height="fill_parent"
         android:orientation="vertical" >
 
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/topbar_status"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginBottom="-1dip"
-            android:background="#80000000"
-            android:orientation="vertical" >
-        </LinearLayout>
+            android:background="#80000000" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/btn_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:text="正在连接"
+                android:textColor="#FFFFFF"
+                android:textSize="18dp" />
+
+            <Chronometer
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="20dp"
+                android:textColor="@color/white"
+                android:textSize="18dp" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
 
             <RelativeLayout
-                android:layout_width="fill_parent"
+                android:layout_width="150dp"
                 android:layout_height="fill_parent"
                 android:layout_above="@id/talk_video_ptt_panel" >
 
                 <RelativeLayout
                     android:id="@id/talk_video_panel"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent" >
+                    android:layout_width="150dp"
+                    android:layout_height="fill_parent"
+                    android:visibility="gone" >
 
-                    <include layout="@layout/video_settings" />
+                    <include layout="@layout/layout_popup_window_video_settings" />
                 </RelativeLayout>
             </RelativeLayout>
 
@@ -77,8 +105,8 @@
                         android:layout_width="10dp"
                         android:layout_height="10dp"
                         android:layout_gravity="center_vertical"
-                        android:background="@drawable/media_talk" 
-                        android:layout_marginRight="2dp"/>
+                        android:layout_marginRight="2dp"
+                        android:background="@drawable/media_talk" />
 
                     <TextView
                         android:id="@id/talk_video_status_panel"
@@ -98,29 +126,60 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_marginBottom="13dp"
-                    android:layout_marginTop="10dp"
-                    android:src="@drawable/video_talk_normal" />
+                    android:layout_marginTop="10dp" />
 
-                <ImageView
-                    android:id="@+id/video_stop"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                <RelativeLayout
+                    android:id="@+id/video_stop_pannel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="39dp"
+                    android:layout_marginBottom="30dp"
                     android:layout_marginRight="40dip"
-                    android:layout_toLeftOf="@id/talk_btn_session_on_video"
-                    android:src="@drawable/video_stop" />
+                    android:layout_toLeftOf="@id/talk_btn_session_on_video" >
 
-                <ImageView
-                    android:id="@+id/video_settings"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    <ImageView
+                        android:id="@+id/video_stop"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/video_stop" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/video_stop"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:text="结束录制"
+                        android:textColor="#FFFFFF" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="39dp"
+                    android:layout_marginBottom="30dp"
                     android:layout_marginLeft="40dip"
-                    android:layout_toRightOf="@+id/talk_btn_session_on_video"
-                    android:src="@drawable/video_settings" />
+                    android:layout_toRightOf="@+id/talk_btn_session_on_video" >
+
+                    <ImageView
+                        android:id="@+id/video_settings"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/video_settings" />
+
+                    <TextView
+                        android:id="@+id/video_rate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/video_settings"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="5dp"
+                        android:text="480 * 640"
+                        android:textColor="#FFFFFF" />
+                </RelativeLayout>
             </RelativeLayout>
         </RelativeLayout>
     </LinearLayout>
