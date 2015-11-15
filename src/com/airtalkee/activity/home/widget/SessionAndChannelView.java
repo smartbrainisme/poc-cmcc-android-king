@@ -55,6 +55,7 @@ public class SessionAndChannelView extends LinearLayout implements
 		gvChannels.setOnItemClickListener(this);
 		gvSession.setOnItemClickListener(this);
 		findViewById(R.id.channel_button_more).setOnClickListener(this);
+		findViewById(R.id.iv_setting).setOnClickListener(this);
 	}
 
 	@Override
@@ -85,6 +86,11 @@ public class SessionAndChannelView extends LinearLayout implements
 			Intent it = new Intent(this.getContext(), MoreActivity.class);
 			this.getContext().startActivity(it);
 			break;
+		case R.id.iv_setting: {
+			Intent it1 = new Intent(getContext(), SessionNewActivity.class);
+			getContext().startActivity(it1);
+			break;
+		}
 		}
 	}
 

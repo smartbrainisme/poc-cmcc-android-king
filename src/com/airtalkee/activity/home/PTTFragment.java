@@ -153,7 +153,12 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 				if (AirtalkeeAccount.getInstance().isEngineRunning())
 				{
 					AirSession session = SessionController.SessionMatchSpecial(AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER, getString(R.string.talk_tools_call_center));
-					AirServices.getInstance().switchToSessionTemp(session.getSessionCode(), AirServices.TEMP_SESSION_TYPE_OUTGOING, getActivity());
+					Intent it = new Intent(getActivity(),
+							SessionDialogActivity.class);
+					it.putExtra("sessionCode", session.getSessionCode());
+					it.putExtra("type",
+							AirServices.TEMP_SESSION_TYPE_MESSAGE);
+					getActivity().startActivity(it);
 				}
 				else
 				{
