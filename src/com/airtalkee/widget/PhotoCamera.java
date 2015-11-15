@@ -31,7 +31,6 @@ import android.widget.RelativeLayout;
 import com.airtalkee.R;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.activity.MenuReportAsPicActivity;
-import com.airtalkee.activity.MenuReportAsVidActivity;
 
 public class PhotoCamera extends Activity implements OnClickListener, Callback
 {

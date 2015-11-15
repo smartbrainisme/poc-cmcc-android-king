@@ -8,7 +8,6 @@
     sothree:umanoDragView="@+id/dragView"
     sothree:umanoOverlay="true"
     sothree:umanoPanelHeight="40dp"
-    
     sothree:umanoScrollableView="@+id/list"
     sothree:umanoShadowHeight="0dp" >
 
@@ -44,9 +43,7 @@
                 <com.airtalkee.activity.home.widget.MediaStatusBar
                     android:id="@+id/media_status_function_bar"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    
-                     />
+                    android:layout_height="wrap_content" />
             </FrameLayout>
         </RelativeLayout>
     </FrameLayout>
@@ -54,13 +51,11 @@
     <!-- SLIDING LAYOUT -->
 
     <LinearLayout
-       	android:id="@+id/sliding_layout_contaner"
-         android:layout_width="match_parent"
+        android:id="@+id/sliding_layout_contaner"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical" >
-        
-             
     </LinearLayout>
 
 </com.airtalkee.widget.SlidingUpPanelLayout>

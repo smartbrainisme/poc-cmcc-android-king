@@ -2,10 +2,11 @@ package com.airtalkee.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -29,10 +30,10 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.AirMmiTimerListener;
+import com.airtalkee.Util.Setting;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.adapter.AdapterQueue;
@@ -47,21 +48,21 @@ import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
-import com.airtalkee.sdk.AirtalkeeVideo;
 import com.airtalkee.sdk.OnMediaAudioVisualizerListener;
 import com.airtalkee.sdk.OnMediaListener;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
+import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.AudioVisualizerView;
 import com.airtalkee.widget.VideoSufaceView;
 import com.airtalkee.widget.VideoSufaceView.OnVideoStateChangeListener;
 
-public class SessionBoxTalk extends View implements OnClickListener, OnItemClickListener, OnCheckedChangeListener, OnTouchListener, OnMediaAudioVisualizerListener,
-	OnMediaListener, OnMmiSessionListener, AirMmiTimerListener
+public class SessionBoxTalk extends View implements OnClickListener,
+		OnItemClickListener, OnTouchListener, OnMediaAudioVisualizerListener,
+		OnMediaListener, OnMmiSessionListener, AirMmiTimerListener
 {
-
 	private final int TIMEOUT_LONG_CLICK = 200;
 	private Activity contextMain = null;
 	private SessionBox sessionBox = null;
@@ -71,7 +72,7 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 	private ListView lvQueue;
 	public static final int mVisualizerSpectrumNum = 18;
 	private AudioVisualizerView mVisualizerView;
-	private ImageView btnTalk, btnTalkVideo, btnTalkCall;
+	private ImageView btnTalk, btnTalkCall;
 	private TextView tvSpeaker;
 	private ImageView tvSpeakerIcon;
 	private TextView tvSpeakerTime;
@@ -88,15 +89,9 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 	private AdapterTools adapterTools;
 	private View parentView;
 	private ImageView btnLock;
-	private VideoSufaceView videoSuface;
-	private ImageView videoActionOpen, videoActionClose;
-	private ImageButton videoSettings;
-	private RadioGroup videoSettingRadio;
-	private FrameLayout videoSettingsLayout;
-	private RelativeLayout videoLayoutNormal, videoLayoutRun;
 	private LinearLayout mSessionSpeakPanel;
 	private TextView mSessionSpeakGroup, mSessionSpeakUser;
-	private int screenWidth, screenHeight;
+	private ImageView videoAction;
 
 	private long mSpeakingTimeStamp = 0;
 	private AirMmiTimerListener mSpeakingTimer = new AirMmiTimerListener()
@@ -133,10 +128,9 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 		sessionBox = box;
 		sessionBoxRefreshListener = listener;
 
-		screenWidth = contextMain.getWindowManager().getDefaultDisplay().getWidth();
-		screenHeight = contextMain.getWindowManager().getDefaultDisplay().getHeight();
-
 		loadView(parentView);
+		if (Config.model.equals("POC"))
+			contextMain.registerReceiver(new RecverFacer(), new IntentFilter("android.intent.action.FACER.up"));
 	}
 
 	private void loadView(View parentView)
@@ -145,13 +139,10 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 		btnTalk = (ImageView) parentView.findViewById(R.id.talk_btn_session);
 		btnTalk.setImageResource(R.drawable.btn_talk_none);
 		btnTalk.setOnTouchListener(this);
-		btnTalkVideo = (ImageView) parentView.findViewById(R.id.talk_btn_session_on_video);
-		btnTalkVideo.setImageResource(R.drawable.btn_talk_video_none);
-		btnTalkVideo.setOnTouchListener(this);
 		btnTalkCall = (ImageView) parentView.findViewById(R.id.talk_btn_session_call_icon);
 		btnTalkCall.setVisibility(View.GONE);
 		btnLock = (ImageView) parentView.findViewById(R.id.bottom_right_icon);
-		
+
 		layoutHidePanelLayout = (LinearLayout) parentView.findViewById(R.id.talk_layout_hide_panel);
 		mVisualizerView = (AudioVisualizerView) parentView.findViewById(R.id.talk_audio_visualizer);
 		mVisualizerView.setSpectrumNum(mVisualizerSpectrumNum);
@@ -204,26 +195,14 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 		toolPlayMode = (ImageView) parentView.findViewById(R.id.talk_tool_play_mode);
 		toolPlayMode.setOnClickListener(this);
 
-		videoSuface = (VideoSufaceView) parentView.findViewById(R.id.video_suface);
-		videoSuface.setVisibility(View.GONE);
-		videoSettings = (ImageButton) parentView.findViewById(R.id.talk_btn_settings);
-		videoSettings.setOnClickListener(this);
-		videoSettings.setVisibility(View.GONE);
-		videoActionOpen = (ImageView) parentView.findViewById(R.id.talk_btn_video_open);
-		videoActionOpen.setOnClickListener(this);
-		videoActionOpen.setVisibility(View.GONE);
-		videoActionClose = (ImageView) parentView.findViewById(R.id.talk_btn_video_close);
-		videoActionClose.setOnClickListener(this);
-		videoSettingRadio = (RadioGroup) parentView.findViewById(R.id.radio);
-		videoSettingRadio.setOnCheckedChangeListener(this);
-		videoSettingsLayout = (FrameLayout) parentView.findViewById(R.id.video_layout);
-		videoLayoutNormal = (RelativeLayout) parentView.findViewById(R.id.talk_layout_normal);
-		videoLayoutRun = (RelativeLayout) parentView.findViewById(R.id.talk_layout_video);
-		
 		mSessionSpeakPanel = (LinearLayout) parentView.findViewById(R.id.main_speak_panel);
 		mSessionSpeakGroup = (TextView) parentView.findViewById(R.id.main_speak_group);
 		mSessionSpeakUser = (TextView) parentView.findViewById(R.id.main_speak_user);
 		mSessionSpeakPanel.setVisibility(View.GONE);
+
+		videoAction = (ImageView) parentView.findViewById(R.id.talk_btn_video_open);
+		videoAction.setOnClickListener(this);
+		videoAction.setVisibility(View.GONE);
 	}
 
 	public void setSession(AirSession s)
@@ -249,7 +228,8 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 		refreshRole(false);
 		otherSpeakerClean();
 	}
-	
+
+	/*
 	public void videoStart()
 	{
 		if (AirAccountManager.VIDEO_PORT == 0)
@@ -282,7 +262,7 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 			}, videoSettingRadio, parentView, session, AirAccountManager.VIDEO_IP, AirAccountManager.VIDEO_PORT, screenWidth, screenHeight);
 		}
 	}
-	
+
 	public void videoFinish()
 	{
 		videoLayoutNormal.setVisibility(View.VISIBLE);
@@ -290,6 +270,7 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 		videoSuface.setVisibility(View.GONE);
 		videoSuface.finish();
 	}
+	*/
 
 	public boolean refreshRole(boolean toChange)
 	{
@@ -328,7 +309,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 				{
 					int resid = ThemeUtil.getResourceId(R.attr.theme_talk_idle, contextMain);
 					btnTalk.setImageResource(resid);
-					btnTalkVideo.setImageResource(R.drawable.btn_talk_video_idle);
 					if (Config.pttButtonVisibility == View.VISIBLE)
 						btnTalkCall.setVisibility(View.GONE);
 				}
@@ -336,7 +316,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 				{
 					int resid = ThemeUtil.getResourceId(R.attr.theme_talk_none, contextMain);
 					btnTalk.setImageResource(resid);
-					btnTalkVideo.setImageResource(R.drawable.btn_talk_video_none);
 					if (session.getType() == AirSession.TYPE_DIALOG && Config.pttButtonVisibility == View.VISIBLE)
 					{
 						btnTalkCall.setVisibility(View.VISIBLE);
@@ -348,7 +327,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 			case AirSession.MEDIA_BUTTON_STATE_CONNECTING:
 				int resid = ThemeUtil.getResourceId(R.attr.theme_talk_idle, contextMain);
 				btnTalk.setImageResource(resid);
-				btnTalkVideo.setImageResource(R.drawable.btn_talk_video_idle);
 				tvSpeaker.setText(R.string.talk_session_building);
 				tvSpeakerIcon.setVisibility(View.GONE);
 				tvSpeakerTime.setVisibility(View.GONE);
@@ -363,15 +341,12 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 					btnTalk.setImageResource(R.drawable.btn_talk_speak_red);
 				else
 					btnTalk.setImageResource(ThemeUtil.getResourceId(R.attr.theme_talk_speak, contextMain));
-				btnTalkVideo.setImageResource(R.drawable.btn_talk_video_speak);
 				break;
 			case AirSession.MEDIA_BUTTON_STATE_QUEUE:
 				btnTalk.setImageResource(ThemeUtil.getResourceId(R.attr.theme_talk_press, contextMain));
-				btnTalkVideo.setImageResource(R.drawable.btn_talk_video_press);
 				break;
 			case AirSession.MEDIA_BUTTON_STATE_REQUESTING:
 				btnTalk.setImageResource(ThemeUtil.getResourceId(R.attr.theme_talk_press, contextMain));
-				btnTalkVideo.setImageResource(R.drawable.btn_talk_video_press);
 				tvSpeaker.setText(R.string.talk_click_applying);
 				tvSpeakerIcon.setVisibility(View.GONE);
 				tvSpeakerTime.setVisibility(View.GONE);
@@ -379,7 +354,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 				break;
 			case AirSession.MEDIA_BUTTON_STATE_RELEASING:
 				btnTalk.setImageResource(ThemeUtil.getResourceId(R.attr.theme_talk_idle, contextMain));
-				btnTalkVideo.setImageResource(R.drawable.btn_talk_video_idle);
 				refreshMediaState();
 				break;
 		}
@@ -416,6 +390,10 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 							ivSpeaker.setImageResource(ThemeUtil.getResourceId(R.attr.theme_media_talk, contextMain));
 							// tvSpeaker.setText(contextMain.getString(R.string.talk_speak_me));
 							tvSpeaker.setText("");
+							if (AirServices.getInstance().secretValid() && Setting.getPttEncrypt())
+								tvSpeakerIcon.setImageResource(R.drawable.talk_mic_secret);
+							else
+								tvSpeakerIcon.setImageResource(R.drawable.talk_mic_none);
 							tvSpeakerIcon.setVisibility(View.VISIBLE);
 							tvSpeakerTime.setVisibility(View.VISIBLE);
 							break;
@@ -532,9 +510,9 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 			refreshPttButton();
 
 			if (Config.funcVideo && (session.getSpecialNumber() == AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER || session.getType() == AirSession.TYPE_CHANNEL) && session.getSessionState() == AirSession.SESSION_STATE_DIALOG)
-				videoActionOpen.setVisibility(View.VISIBLE);
+				videoAction.setVisibility(View.VISIBLE);
 			else
-				videoActionOpen.setVisibility(View.GONE);
+				videoAction.setVisibility(View.GONE);
 
 			if (sessionBoxRefreshListener != null)
 			{
@@ -544,19 +522,18 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 		else
 			btnLock.setVisibility(View.GONE);
 	}
-	
+
 	private AirSession mOtherSession = null;
-	
+
 	private void otherSpeakerOn(AirSession session)
 	{
 		if (session != null && session.getSpeaker() != null)
 		{
 			/*
-			if (session.isVoicePlaying())
-				mSessionSpeakIcon.setVisibility(View.VISIBLE);
-			else
-				mSessionSpeakIcon.setVisibility(View.GONE);
-			*/
+			 * if (session.isVoicePlaying())
+			 * mSessionSpeakIcon.setVisibility(View.VISIBLE); else
+			 * mSessionSpeakIcon.setVisibility(View.GONE);
+			 */
 			mSessionSpeakGroup.setText(session.getDisplayName());
 			mSessionSpeakUser.setText(session.getSpeaker().getDisplayName());
 			mSessionSpeakPanel.setVisibility(View.VISIBLE);
@@ -565,7 +542,7 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 		else
 			mSessionSpeakPanel.setVisibility(View.GONE);
 	}
-	
+
 	private void otherSpeakerOff(AirSession session)
 	{
 		if (session == mOtherSession)
@@ -574,7 +551,7 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 			mOtherSession = null;
 		}
 	}
-	
+
 	private void otherSpeakerClean()
 	{
 		mSessionSpeakPanel.setVisibility(View.GONE);
@@ -630,21 +607,13 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 			case R.id.talk_layout_session_null_retry:
 			{
 				/*
-				 * ZUOLIN
-				 * if (session != null)
-				 * {
+				 * ZUOLIN if (session != null) {
 				 * contextMain.leftView.adapter.resetSelectedItem(session.
 				 * getSessionCode());
-				 * contextMain.leftView.adapter.notifyDataSetChanged();
-				 * }
-				 * if (AirAccountManager.channelCurrentIndex == -1)
-				 * {
-				 * contextMain.viewControllerSlideView.transLeftShow();
-				 * }
-				 * else
-				 * {
-				 * contextMain.leftView.doConnect();
-				 * }
+				 * contextMain.leftView.adapter.notifyDataSetChanged(); } if
+				 * (AirAccountManager.channelCurrentIndex == -1) {
+				 * contextMain.viewControllerSlideView.transLeftShow(); } else {
+				 * contextMain.leftView.doConnect(); }
 				 */
 				break;
 			}
@@ -680,37 +649,19 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 			}
 			case R.id.talk_btn_video_open:
 			{
-				videoStart();
-				break;
-			}
-			case R.id.talk_btn_video_close:
-			{
-				videoFinish();
-				break;
-			}
-			case R.id.talk_btn_settings:
-			{
-				if (videoSettingsLayout.getVisibility() == View.VISIBLE)
+				if (session != null)
 				{
-					videoSettingsLayout.setVisibility(View.GONE);
-				}
-				else
-				{
-					videoSettingsLayout.setVisibility(View.VISIBLE);
+					Intent intent = new Intent();
+					intent.setClass(contextMain, VideoSessionActivity.class);
+					intent.putExtra("sessionCode", session.getSessionCode());
+					intent.putExtra("video", false);
+					contextMain.startActivity(intent);
 				}
 				break;
 			}
 			default:
 				break;
 		}
-	}
-
-	@Override
-	public void onCheckedChanged(RadioGroup group, int checkedId)
-	{
-		// TODO Auto-generated method stub
-		videoSettingsLayout.setVisibility(View.GONE);
-		videoSuface.selectQuality(videoSettingRadio);
 	}
 
 	@Override
@@ -787,15 +738,14 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 		{
 			try
 			{
-				if (v.getId() == R.id.talk_btn_session || v.getId() == R.id.talk_btn_session_on_video)
+				if (v.getId() == R.id.talk_btn_session)
 				{
 					boolean isAction = false;
 					if (v.getId() == R.id.talk_btn_session)
 					{
 						if (event.getAction() == MotionEvent.ACTION_DOWN)
 						{
-							double d = Math.sqrt((btnTalk.getWidth() / 2 - event.getX()) * (btnTalk.getWidth() / 2 - event.getX()) + (btnTalk.getHeight() / 2 - event.getY())
-								* (btnTalk.getHeight() / 2 - event.getY()));
+							double d = Math.sqrt((btnTalk.getWidth() / 2 - event.getX()) * (btnTalk.getWidth() / 2 - event.getX()) + (btnTalk.getHeight() / 2 - event.getY()) * (btnTalk.getHeight() / 2 - event.getY()));
 							if (btnTalk.getWidth() / 2 >= d)
 							{
 								isAction = true;
@@ -987,15 +937,16 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 			}
 		}
 	}
-	
+
 	@Override
 	public void onMediaStateListenVoice(AirSession session)
 	{
 		// TODO Auto-generated method stub
 		/*
-		if (session != null && !TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
-			otherSpeakerOn(session);
-		*/
+		 * if (session != null &&
+		 * !TextUtils.equals(this.session.getSessionCode(),
+		 * session.getSessionCode())) otherSpeakerOn(session);
+		 */
 	}
 
 	@Override
@@ -1012,7 +963,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 	@Override
 	public void onMediaStateTalk(AirSession session)
 	{
-		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
 			Log.i(SessionBoxTalk.class, "onMediaStateTalk");
@@ -1032,7 +982,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 	@Override
 	public void onMediaStateTalkEnd(AirSession session, int reason)
 	{
-		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
 			Log.i(SessionBoxTalk.class, "onMediaStateTalkEnd");
@@ -1073,7 +1022,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 	@Override
 	public void onSessionOutgoingRinging(AirSession session)
 	{
-		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
 			//
@@ -1083,7 +1031,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 	@Override
 	public void onSessionPresence(AirSession session, final List<AirContact> membersAll, final List<AirContact> membersPresence)
 	{
-		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
 			Log.i(MainActivity.class, "UI--onSessionPresence");
@@ -1095,7 +1042,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 	@Override
 	public void onSessionReleased(AirSession session, int reason)
 	{
-		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
 			Log.i(MainActivity.class, "UI--onSessionReleased");
@@ -1143,8 +1089,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 					Util.Toast(contextMain, prompt);
 				}
 			}
-
-			videoFinish();
 		}
 		if (sessionBoxRefreshListener != null)
 		{
@@ -1155,7 +1099,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 	@Override
 	public void onSessionEstablishing(AirSession session)
 	{
-		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
 			refreshSession();
@@ -1167,7 +1110,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 	@Override
 	public void onSessionEstablished(AirSession session, boolean isOk)
 	{
-		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
 			Log.i(MainActivity.class, "UI--onSessionEstablished");
@@ -1185,7 +1127,6 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 	@Override
 	public void onSessionMemberUpdate(AirSession session, List<AirContact> members, boolean isOk)
 	{
-		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
 			sessionBox.sessionBoxMember.refreshMembers();
@@ -1196,9 +1137,19 @@ public class SessionBoxTalk extends View implements OnClickListener, OnItemClick
 	@Override
 	public void onMediaAudioVisualizerChanged(byte[] values, int spectrumNum)
 	{
-		// TODO Auto-generated method stub
 		mVisualizerView.updateVisualizer(values);
 	}
 
+	class RecverFacer extends BroadcastReceiver
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			if (intent.getAction().equals("android.intent.action.FACER.up"))
+			{
+				contextMain.startActivity(new Intent(contextMain, VideoSessionActivity.class));
+			}
+		}
+	}
 
 }

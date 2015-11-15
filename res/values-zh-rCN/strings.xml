@@ -29,6 +29,9 @@
 	<string name="copyright_datang2">Copyright 2009-2015 大唐电信</string>
 	<string name="copyright_lishi_technology1">Copyright 2009-2015 力石科技</string>
 	<string name="copyright_lishi_technology2">Copyright 2009-2015 力石科技</string>
+	<string name="talk_video_me">我在讲话</string>
+    <string name="talk_video_idle">长按开始和管理员对讲</string>
+    <string name="talk_video_listen">管理员在讲话</string>
 	<string name="talk_me">我</string>
 	<string name="talk_authorization_title">授权验证</string>
 	<string name="talk_authorization_info1">机型：</string>
@@ -265,6 +268,8 @@
 	<string name="talk_current_user">当前用户:%s</string>
 	<string name="talk_account_other">您的帐号已在另一台设备上登录！请重新登录！</string>
 	<string name="talk_video_addr_error">视频地址无效！</string>
+	<string name="talk_video_tio_to_open">确认开始实时视频回传？</string>
+	<string name="talk_video_tio_to_close">是否要关闭视频？</string>
 	<string name="talk_verion_check">检查更新</string>
 	<string name="talk_verion_upeate">现在更新</string>
 	<string name="talk_verion_cancel">下次再说 </string>
@@ -435,4 +440,11 @@
 	<string name="talk_account_bind_error">你的设备尚未绑定帐号，请联系客服</string>
 	<string name="talk_protocol">在使用对讲应用时需要访问移动网络或无线网络并读取位置信息，是否同意？</string>
 	<string name="talk_account_checking">正在检查帐号</string>
+	<string name="talk_network_scaning">搜索网络</string>
+	<string name="talk_network_connected">网络已连接</string>
+	<string name="talk_current_channel">当前所在频道,</string>
+	<string name="talk_current_battery">当前剩余电量</string>
+	<string name="talk_secret_nocard">未插入有效的加密卡！</string>
+	<string name="talk_tools_setting_vox">VOX侦测</string>
+	<string name="talk_tools_setting_vox_tip">开启此项后，自动识别声音并开启对讲</string>
 </resources>

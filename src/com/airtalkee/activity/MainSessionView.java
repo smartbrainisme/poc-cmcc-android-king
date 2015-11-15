@@ -48,8 +48,6 @@ public class MainSessionView extends ViewController implements OnClickListener, 
 	public void onPause()
 	{
 		sessionBox.listenerDisable();
-		if (sessionBox.sessionBoxTalk != null)
-			sessionBox.sessionBoxTalk.videoFinish();
 		AirMessageTransaction.getInstance().setOnNoticeListener(null);
 	}
 

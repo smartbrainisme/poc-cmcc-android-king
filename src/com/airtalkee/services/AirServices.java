@@ -1,5 +1,6 @@
 package com.airtalkee.services;
 
+import java.io.File;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.KeyguardManager;
@@ -9,6 +10,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.AudioManager;
 import android.os.Binder;
 import android.os.Environment;
 import android.os.IBinder;
@@ -16,7 +18,6 @@ import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.text.TextUtils;
 import android.view.WindowManager;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.Language;
@@ -56,6 +57,7 @@ import com.airtalkee.sdk.OnChannelAlertListener;
 import com.airtalkee.sdk.OnSessionIncomingListener;
 import com.airtalkee.sdk.OnVersionUpdateListener;
 import com.airtalkee.sdk.controller.AccountController;
+import com.airtalkee.sdk.engine.AirEngine;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
@@ -729,5 +731,55 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
 	}
+	private boolean isSecretValid = false;
 
+	private void secretConfig()
+	{
+		if (Config.funcEncryption)
+		{
+			if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
+			{
+				String path = Environment.getExternalStorageDirectory() + "/SANSECIO.CARD";
+				File file = new File(path); 
+				if (file.exists())
+				{
+					isSecretValid = true;
+				}
+			}
+			if (!isSecretValid)
+				Util.Toast(this, getString(R.string.talk_secret_nocard));
+			
+			//set Encryption flag
+			AirEngine.serviceSecretSettingType(AirEngine.SECRET_TYPE_SOFT);
+			AirEngine.serviceSecretSettingValid(isSecretValid);
+			AirEngine.serviceSecretSettingValidEncrypt(Setting.getPttEncrypt());
+		}
+	}
+	
+	public boolean secretValid()
+	{
+		return isSecretValid;
+	}
+	
+	
+	public static void sendBroadcast(String action)
+	{
+		if(action != null && action.length() > 0)
+		{
+			Intent intent = new Intent();
+			intent.setAction(action);
+			if(AirServices.getInstance() != null)
+			AirServices.getInstance().sendBroadcast(intent);
+			Log.i(AirServices.class,"broadcast  " + action +"  send!!!" );
+		}
+	}
+	
+	public static void setVoxStatus(boolean status)
+	{
+		if(Config.funcVoxSetting)
+		{
+			AudioManager vox = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+			vox.setParameters(status ? "dmo_state=vox_switch_on" : "dmo_state=vox_switch_off"); // 设置VOX开关。
+		}
+	}
 }

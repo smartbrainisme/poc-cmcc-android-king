@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-
 import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.AirMmiTimerListener;
 import com.airtalkee.Util.Util;
@@ -80,6 +79,7 @@ public class AirLocationImpNavigate
 	private float mNaviLocationSpeed = 0;
 	private long mNaviTimestamp = 0;
 	private int mNaviType = 0;
+	private float mNaviLocationDirection = 0;
 
 	public double getLocLatitude()
 	{
@@ -94,6 +94,11 @@ public class AirLocationImpNavigate
 	public float getLocSpeed()
 	{
 		return mNaviLocationSpeed;
+	}
+
+	public float getLocDirection()
+	{
+		return mNaviLocationDirection;
 	}
 
 	public double getLocAltitude()
@@ -118,12 +123,12 @@ public class AirLocationImpNavigate
 				if (msg.obj instanceof Location)
 				{
 					Location location = (Location) msg.obj;
-					naviListenerCallback(msg.arg1, location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed());
+					naviListenerCallback(msg.arg1, location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getBearing(), location.getSpeed());
 				}
 				else if (msg.obj instanceof BDLocation)
 				{
 					BDLocation location = (BDLocation) msg.obj;
-					naviListenerCallback(msg.arg1, location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed());
+					naviListenerCallback(msg.arg1, location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getDirection(), location.getSpeed());
 				}
 			}
 		}
@@ -177,22 +182,23 @@ public class AirLocationImpNavigate
 	{
 		if (listener != null)
 		{
-			listener.OnMapLocation((mNaviLocationLatitude != 0 && mNaviLocationLongitude != 0), AirLocation.AIR_LOCATION_ID_ONCE, mNaviType, true, mNaviLocationLatitude,
-				mNaviLocationLongitude, mNaviLocationAltitude, mNaviLocationSpeed, Util.getCurrentDate());
+			listener.OnMapLocation((mNaviLocationLatitude != 0 && mNaviLocationLongitude != 0), AirLocation.AIR_LOCATION_ID_ONCE, mNaviType, true, mNaviLocationLatitude, mNaviLocationLongitude, mNaviLocationAltitude, mNaviLocationDirection, mNaviLocationSpeed, Util.getCurrentDate());
 		}
 	}
 
-	private void naviListenerCallback(int type, double latitude, double longitude, double altitude, float speed)
+	private void naviListenerCallback(int type, double latitude, double longitude, double altitude, float direction, float speed)
 	{
 		mNaviLocationLatitude = (latitude != AirLocationImp.CELL_ERROR && latitude != 0 ? latitude : mNaviLocationLatitude);
 		mNaviLocationLongitude = (longitude != AirLocationImp.CELL_ERROR && longitude != 0 ? longitude : mNaviLocationLongitude);
 		mNaviLocationAltitude = (altitude != AirLocationImp.CELL_ERROR && altitude != 0 ? altitude : mNaviLocationAltitude);
+		mNaviLocationDirection = (direction != AirLocationImp.CELL_ERROR && direction != 0 ? direction : mNaviLocationDirection);
 		mNaviLocationSpeed = (speed != AirLocationImp.CELL_ERROR && speed != 0 ? speed : mNaviLocationSpeed);
 		mNaviType = type;
 
 		if (listener != null)
 		{
-			listener.OnMapLocation((mNaviLocationLatitude != 0 && mNaviLocationLongitude != 0), AirLocation.AIR_LOCATION_ID_LOOP, type, true, latitude, longitude, altitude, speed,
+			listener.OnMapLocation((mNaviLocationLatitude != 0 && mNaviLocationLongitude != 0), AirLocation.AIR_LOCATION_ID_LOOP, type, true,
+				mNaviLocationLatitude, mNaviLocationLongitude, mNaviLocationAltitude, mNaviLocationDirection, mNaviLocationSpeed,
 				Util.getCurrentDate());
 		}
 	}
@@ -225,15 +231,11 @@ public class AirLocationImpNavigate
 			boolean toReport = false;
 			Log.i(AirLocationImp.class, "[LOCATION][NAVI] latitude: " + location.getLatitude() + ", longitude: " + location.getLongitude() + " Time:" + location.getTime());
 
-			if (mNaviLocationCache == null
-				|| ((mNaviLocationCache.distanceTo(location) >= NAVIGATE_DISTANCE_MIN && location.getTime() - mNaviLocationCache.getTime() >= NAVIGATE_TIME_MIN / 2) || location
-					.getTime()
-					- mNaviLocationCache.getTime() >= NAVIGATE_TIME_MIN))
+			if (mNaviLocationCache == null || ((mNaviLocationCache.distanceTo(location) >= NAVIGATE_DISTANCE_MIN && location.getTime() - mNaviLocationCache.getTime() >= NAVIGATE_TIME_MIN / 2) || location.getTime() - mNaviLocationCache.getTime() >= NAVIGATE_TIME_MIN))
 			{
 				mNaviLocationCache = location;
 				toReport = true;
-				Log.i(AirLocationImp.class, "[LOCATION][NAVI] (DO Report) latitude: " + location.getLatitude() + ", longitude: " + location.getLongitude() + " Time:"
-					+ location.getTime());
+				Log.i(AirLocationImp.class, "[LOCATION][NAVI] (DO Report) latitude: " + location.getLatitude() + ", longitude: " + location.getLongitude() + " Time:" + location.getTime());
 			}
 
 			if (toReport)
@@ -283,7 +285,7 @@ public class AirLocationImpNavigate
 				if (mNaviLocationLatitude != 0 && mNaviLocationLongitude != 0 && System.currentTimeMillis() - mNaviTimestamp <= NAVIGATE_TIME_VALID / 2)
 				{
 					Log.i(AirLocationImp.class, "[LOCATION][NAVI] Timeout! Do UI refresh!");
-					naviListenerCallback(AirLocationImp.LOCATION_TYPE_GPS, mNaviLocationLatitude, mNaviLocationLongitude, mNaviLocationAltitude, mNaviLocationSpeed);
+					naviListenerCallback(AirLocationImp.LOCATION_TYPE_GPS, mNaviLocationLatitude, mNaviLocationLongitude, mNaviLocationAltitude, mNaviLocationDirection, mNaviLocationSpeed);
 				}
 				else if (System.currentTimeMillis() - mNaviTimestamp >= NAVIGATE_TIME_VALID)
 				{
@@ -298,15 +300,14 @@ public class AirLocationImpNavigate
 			isNavigateDone = false;
 		}
 	};
-	
+
 	BDLocationListener locationCellListener = new BDLocationListener()
 	{
 		@Override
 		public void onReceiveLocation(BDLocation location)
 		{
 			long ts = Util.getTimeGap(location.getTime());
-			Log.i(AirLocationImp.class, "[LOCATION][NAVI][CELL] Latitude:" + location.getLatitude() + " Longitude:" + location.getLongitude() + " Time:" + location.getTime()
-				+ " TimeGap:" + ts + "s");
+			Log.i(AirLocationImp.class, "[LOCATION][NAVI][CELL] Latitude:" + location.getLatitude() + " Longitude:" + location.getLongitude() + " Time:" + location.getTime() + " TimeGap:" + ts + "s");
 			if (ts > -AirLocation.AIR_LOCATION_CELL_TIME_GAP)
 			{
 				Message msg = mNaviMainHandler.obtainMessage();
@@ -327,30 +328,29 @@ public class AirLocationImpNavigate
 
 	};
 
-
 	private void naviEngineCell()
 	{
 		Log.i(AirLocationImp.class, "[LOCATION][NAVI][CELL] Start...");
 
 		mClientCell = new LocationClient(context);
-		if(mClientCell == null)
+		if (mClientCell == null)
 		{
 			mClientCell = new LocationClient(context);
 			LocationClientOption mClientCellOption = new LocationClientOption();
 			mClientCellOption.setOpenGps(false);
 			mClientCellOption.setAddrType("all");
 			mClientCellOption.setCoorType("gcj02");
-			//mClientCellOption.disableCache(true);
+			// mClientCellOption.disableCache(true);
 			mClientCellOption.setScanSpan(LocationClientOption.MIN_SCAN_SPAN);
-			//mClientCellOption.setPriority(LocationClientOption.NetWorkFirst);
-			//mClientCellOption.setPoiNumber(0);
-			//mClientCellOption.setPoiDistance(1000);
-			//mClientCellOption.setPoiExtraInfo(false);
+			// mClientCellOption.setPriority(LocationClientOption.NetWorkFirst);
+			// mClientCellOption.setPoiNumber(0);
+			// mClientCellOption.setPoiDistance(1000);
+			// mClientCellOption.setPoiExtraInfo(false);
 			mClientCellOption.setTimeOut(NAVIGATE_TIME_MAX);
 			mClientCell.setLocOption(mClientCellOption);
 		}
 		mClientCell.registerLocationListener(locationCellListener);
-		//mClientCell.requestLocation();
+		// mClientCell.requestLocation();
 		if (mClientCell.isStarted())
 			mClientCell.stop();
 		mClientCell.start();

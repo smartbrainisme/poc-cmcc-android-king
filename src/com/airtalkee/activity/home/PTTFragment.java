@@ -1,13 +1,9 @@
 package com.airtalkee.activity.home;
 
-import java.io.File;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +15,8 @@ import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.Util;
-import com.airtalkee.activity.MenuReportActivity;
 import com.airtalkee.activity.MenuReportAsPicActivity;
-import com.airtalkee.activity.MenuReportAsVidActivity;
+import com.airtalkee.activity.VideoSessionActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.config.Config;
@@ -123,18 +118,23 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 			switch (id)
 			{
 				case R.id.bar_left:
-
 					setViedoReportPannelVisiblity(View.VISIBLE);
 					break;
-				case R.id.bar_mid:
-
+				case R.id.bar_mid:// 实时视频回传
+					if (session != null)
+					{
+						Intent intent = new Intent();
+						intent.setClass(getActivity(), VideoSessionActivity.class);
+						intent.putExtra("sessionCode", session.getSessionCode());
+						intent.putExtra("video", true);
+						startActivity(intent);
+					}
 					break;
 				case R.id.bar_right:
 					dialog = new AlertDialog(getActivity(), "确定呼叫中心", null, this, DIALOG_CALL_CENTER);
 					dialog.show();
 					break;
 			}
-
 		}
 	}
 
@@ -336,5 +336,11 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 		 * Const.image_select.REQUEST_CODE_BROWSE_IMAGE); break; } } }
 		 * }).show();
 		 */
+	}
+
+	@Override
+	public void onListItemLongClick(int id, int selectedItem) {
+		// TODO Auto-generated method stub
+		
 	}
 }

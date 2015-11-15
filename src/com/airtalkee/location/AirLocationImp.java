@@ -5,7 +5,6 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-
 import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.AirMmiTimerListener;
 import com.airtalkee.Util.Util;
@@ -41,6 +40,7 @@ public class AirLocationImp
 	public static double mLatitude = 0;
 	public static double mLongitude = 0;
 	public static double mAltitude = 0;
+	public static float mDirection = 0;
 	public static float mSpeed = 0;
 	public static String mTime = "";
 
@@ -66,7 +66,7 @@ public class AirLocationImp
 			doRelease(context, param);
 		}
 	}
-	
+
 	public int getLocType()
 	{
 		return mType;
@@ -87,17 +87,22 @@ public class AirLocationImp
 		return mAltitude;
 	}
 
+	public float getLocDirection()
+	{
+		return mDirection;
+	}
+
 	public float getLocSpeed()
 	{
 		return mSpeed;
 	}
-	
+
 	public String getLocTime()
 	{
 		return mTime;
 	}
 
-	private void listenerCallback(OnMapListener listener, int id, int type, boolean isFinal, double latitude, double longitude, double altitude, float speed, String time)
+	private void listenerCallback(OnMapListener listener, int id, int type, boolean isFinal, double latitude, double longitude, double altitude, float direction, float speed, String time)
 	{
 		boolean isOk = false;
 		if (latitude != CELL_ERROR && latitude != 0)
@@ -108,6 +113,8 @@ public class AirLocationImp
 			mAltitude = altitude;
 		if (speed != CELL_ERROR && speed != 0)
 			mSpeed = speed;
+		if (direction != CELL_ERROR && direction != 0)
+			mDirection = direction;
 
 		if (mLatitude != 0 && mLongitude != 0)
 		{
@@ -118,7 +125,7 @@ public class AirLocationImp
 
 		if (listener != null)
 		{
-			listener.OnMapLocation(isOk, id, type, isFinal, mLatitude, mLongitude, mAltitude, mSpeed, mTime);
+			listener.OnMapLocation(isOk, id, type, isFinal, mLatitude, mLongitude, mAltitude, mDirection, mSpeed, mTime);
 		}
 	}
 
@@ -130,7 +137,7 @@ public class AirLocationImp
 	{
 		TimerParam param = new TimerParam();
 		final TimerParam fparam = param;
-		
+
 		LocationListener locationListener = new LocationListener()
 		{
 			@Override
@@ -155,9 +162,8 @@ public class AirLocationImp
 			public void onLocationChanged(Location location)
 			{
 				AirMmiTimer.getInstance().TimerUnregister(context, doGpsLocationTimeout);
-				Log.i(AirLocationImp.class, "[LOCATION][ID:" + id + "][GPS] latitude: " + location.getLatitude() + ", longitude: " + location.getLongitude() + " Time:"
-					+ location.getTime());
-				listenerCallback(listener, id, LOCATION_TYPE_GPS, true, location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed(), Util.getCurrentDate());
+				Log.i(AirLocationImp.class, "[LOCATION][ID:" + id + "][GPS] latitude: " + location.getLatitude() + ", longitude: " + location.getLongitude() + " Time:" + location.getTime());
+				listenerCallback(listener, id, LOCATION_TYPE_GPS, true, location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getBearing(), location.getSpeed(), Util.getCurrentDate());
 				Log.i(AirLocationImp.class, "[LOCATION][ID:" + id + "][GPS] Closed!");
 				doRelease(context, fparam);
 			}
@@ -173,10 +179,11 @@ public class AirLocationImp
 		Log.i(AirLocationImp.class, "[LOCATION][ID:" + id + "][GPS] Getting...");
 		AirMmiTimer.getInstance().TimerRegister(context, doGpsLocationTimeout, true, false, timeoutSeconds * 1000, false, param);
 		LocationManager mLocMan = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-		//mLocMan.requestSingleUpdate(LocationManager.GPS_PROVIDER, locationListener, null);
+		// mLocMan.requestSingleUpdate(LocationManager.GPS_PROVIDER,
+		// locationListener, null);
 		mLocMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
 	}
-	
+
 	private AirMmiTimerListener doGpsLocationTimeout = new AirMmiTimerListener()
 	{
 		@Override
@@ -193,7 +200,6 @@ public class AirLocationImp
 			}
 		}
 	};
-
 
 	// =========================================
 	// Cell Mode
@@ -213,27 +219,26 @@ public class AirLocationImp
 			mClientCellOption.setOpenGps(false);
 			mClientCellOption.setAddrType("all");
 			mClientCellOption.setCoorType("gcj02");
-			//mClientCellOption.disableCache(true);
+			// mClientCellOption.disableCache(true);
 			mClientCellOption.setScanSpan(LocationClientOption.MIN_SCAN_SPAN);
-			//mClientCellOption.setPriority(LocationClientOption.NetWorkFirst);
-			//mClientCellOption.setPoiNumber(0);
-			//mClientCellOption.setPoiDistance(1000);
-			//mClientCellOption.setPoiExtraInfo(false);
+			// mClientCellOption.setPriority(LocationClientOption.NetWorkFirst);
+			// mClientCellOption.setPoiNumber(0);
+			// mClientCellOption.setPoiDistance(1000);
+			// mClientCellOption.setPoiExtraInfo(false);
 			mClientCellOption.setTimeOut(timeoutSeconds * 1000);
 			mClientCell.setLocOption(mClientCellOption);
 		}
-		
+
 		BDLocationListener locationCellListener = new BDLocationListener()
 		{
 			@Override
 			public void onReceiveLocation(BDLocation location)
 			{
 				long ts = Util.getTimeGap(location.getTime());
-				Log.i(AirLocationImp.class, "[LOCATION][ID:" + id + "][BAIDU-CELL][FINAL: " + isFinal + "] X:" + location.getLatitude() + " Y:" + location.getLongitude()
-					+ " Time:" + location.getTime() + " TimeGap:" + ts + "s");
+				Log.i(AirLocationImp.class, "[LOCATION][ID:" + id + "][BAIDU-CELL][FINAL: " + isFinal + "] X:" + location.getLatitude() + " Y:" + location.getLongitude() + " Time:" + location.getTime() + " TimeGap:" + ts + "s");
 				if (ts > -AirLocation.AIR_LOCATION_CELL_TIME_GAP)
 				{
-					listenerCallback(listener, id, LOCATION_TYPE_CELL_BAIDU, isFinal, location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getSpeed(), Util.getCurrentDate());
+					listenerCallback(listener, id, LOCATION_TYPE_CELL_BAIDU, isFinal, location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getDirection(), location.getSpeed(), Util.getCurrentDate());
 				}
 				else
 				{
@@ -252,7 +257,7 @@ public class AirLocationImp
 
 		Log.i(AirLocationImp.class, "[LOCATION][ID:" + id + "][BAIDU-CELL] Getting...");
 		mClientCell.registerLocationListener(locationCellListener);
-		//mClientCell.requestLocation();
+		// mClientCell.requestLocation();
 		if (mClientCell.isStarted())
 			mClientCell.stop();
 		mClientCell.start();

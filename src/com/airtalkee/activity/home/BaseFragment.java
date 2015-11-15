@@ -104,5 +104,7 @@ public abstract class BaseFragment extends Fragment implements OnSharedPreferenc
 			}
 		}, filter);
 	}
+	
+	public abstract void onListItemLongClick(int id, int selectedItem) ;
 
 }

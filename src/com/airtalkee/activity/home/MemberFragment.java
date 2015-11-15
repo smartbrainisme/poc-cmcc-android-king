@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -36,14 +39,20 @@ import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.MListView;
 
 public class MemberFragment extends BaseFragment implements OnClickListener,
-		OnItemClickListener, CheckedCallBack ,MemberCheckListener{
+		OnItemClickListener, CheckedCallBack, MemberCheckListener {
 	private static final int DIALOG_CALL = 99;
 	private TextView tabMemberSession, tabMemberAll;
 	private List<AirContact> tempCallMembers = null;
+	Map<String, AirContact> tempCallMembersCache = new TreeMap<String, AirContact>();
 	private LinkedHashMap<Integer, TextView> ids = new LinkedHashMap<Integer, TextView>();
 	private MListView lvMember;
 	private AdapterMember adapterMember;
-	CallAlertDialog alertDialog;
+	private CallAlertDialog alertDialog;
+	private LinearLayout memAllContainer;
+	private int currentSelectPage = R.id.tab_member_all;
+	private MemberAllView memberAllView;
+	private boolean memberSessionChecked = false;
+	private boolean memberAllChecked = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -57,11 +66,11 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		v = inflater.inflate(getLayout(), container, false);
-		
-		LinearLayout memContainer= (LinearLayout)findViewById(R.id.mem_container);
-		
-		memContainer.addView(new MemberAllView(getActivity(), this));
-		
+
+		memAllContainer = (LinearLayout) findViewById(R.id.mem_container);
+		memAllContainer.addView(memberAllView = new MemberAllView(
+				getActivity(), this));
+
 		lvMember = (MListView) findViewById(R.id.talk_lv_member);
 		lvMember.setAdapter(adapterMember = new AdapterMember(getActivity(),
 				null, null, true, true, this));
@@ -126,6 +135,14 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 			v.setSelected(i == id);
 		}
 
+		if (id == R.id.tab_member_session) {
+			lvMember.setVisibility(View.VISIBLE);
+			memAllContainer.setVisibility(View.GONE);
+		} else {
+			lvMember.setVisibility(View.GONE);
+			memAllContainer.setVisibility(View.VISIBLE);
+		}
+
 	}
 
 	@Override
@@ -134,6 +151,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		switch (v.getId()) {
 		case R.id.tab_member_session:
 		case R.id.tab_member_all:
+			currentSelectPage = v.getId();
 			refreshTab(v.getId());
 			break;
 		}
@@ -206,39 +224,52 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	}
 
 	public void callSelectMember(boolean isCall) {
-		if (adapterMember.getSelectedMemberList() != null
-				&& adapterMember.getSelectedMemberList().size() > 0) {
+		if ((adapterMember.getSelectedMemberList() != null && adapterMember
+				.getSelectedMemberList().size() > 0)
+				|| memberAllView.getSelectedMemberSize() > 0) {
 			if (tempCallMembers == null)
 				tempCallMembers = new ArrayList<AirContact>();
 			tempCallMembers.clear();
+			tempCallMembersCache.clear();
 			for (AirContact c : adapterMember.getSelectedMemberList()) {
 				if (!TextUtils.equals(c.getIpocId(), AirtalkeeAccount
 						.getInstance().getUserId())) {
-					tempCallMembers.add(c);
+					if (!tempCallMembersCache.containsKey(c.getIpocId())) {
+						tempCallMembersCache.put(c.getIpocId(), c);
+						tempCallMembers.add(c);
+					}
+				}
+			}
+
+			for (AirContact c : memberAllView.getSelectedMember()) {
+				if (!TextUtils.equals(c.getIpocId(), AirtalkeeAccount
+						.getInstance().getUserId())) {
+					if (!tempCallMembersCache.containsKey(c.getIpocId())) {
+						tempCallMembersCache.put(c.getIpocId(), c);
+						tempCallMembers.add(c);
+					}
 				}
 			}
 
 			if (tempCallMembers.size() > 0) {
 				if (AirtalkeeAccount.getInstance().isEngineRunning()) {
-					
-					
+
 					AirSession s = SessionController
 							.SessionMatch(tempCallMembers);
-					if(isCall)
-					{
+					if (isCall) {
 						alertDialog = new CallAlertDialog(getActivity(), "正在呼叫"
-								+ s.getDisplayName(), "请稍后...", s.getSessionCode(),
-								DIALOG_CALL);
+								+ s.getDisplayName(), "请稍后...",
+								s.getSessionCode(), DIALOG_CALL);
 						alertDialog.show();
-					}
-					else
-					{
-						Intent it = new Intent(getActivity(), SessionDialogActivity.class);
+					} else {
+						Intent it = new Intent(getActivity(),
+								SessionDialogActivity.class);
 						it.putExtra("sessionCode", s.getSessionCode());
-						it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+						it.putExtra("type",
+								AirServices.TEMP_SESSION_TYPE_MESSAGE);
 						getActivity().startActivity(it);
 					}
-					
+
 				} else {
 					Util.Toast(getActivity(),
 							getString(R.string.talk_network_warning));
@@ -253,24 +284,33 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	}
 
 	public void callSelectClean() {
+		memberAllChecked = false;
+		memberSessionChecked = false;
 		adapterMember.resetCheckBox();
+		memberAllView.resetCheckBox();
 		mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, false);
-		// layoutBottom.setVisibility(View.GONE);
-		// layoutBtns.setVisibility(View.VISIBLE);
 	}
 
 	@Override
 	public void onChecked(boolean isChecked) {
 		// TODO Auto-generated method stub
-		mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, isChecked);
+		memberSessionChecked = isChecked;
+		mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER,
+				memberSessionChecked || memberAllChecked);
 	}
 
 	@Override
 	public void onMemberChecked(boolean isChecked) {
 		// TODO Auto-generated method stub
-		
+		memberAllChecked = isChecked;
+		mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER,
+				memberSessionChecked || memberAllChecked);
 	}
 
-	
+	@Override
+	public void onListItemLongClick(int id, int selectedItem) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

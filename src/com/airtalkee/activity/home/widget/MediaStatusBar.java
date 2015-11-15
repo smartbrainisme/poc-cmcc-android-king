@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -14,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MainActivity;
@@ -33,7 +31,8 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
 
-public class MediaStatusBar extends LinearLayout implements OnBarItemClickListener, OnMmiSessionListener, OnMediaListener
+public class MediaStatusBar extends LinearLayout implements
+		OnBarItemClickListener, OnMmiSessionListener, OnMediaListener
 {
 	private AirSession session;
 	private int currentPage = 0;
@@ -48,8 +47,8 @@ public class MediaStatusBar extends LinearLayout implements OnBarItemClickListen
 
 	@SuppressLint("UseSparseArrays")
 	private Map<Integer, StatusBarBottom> bars = new HashMap<Integer, StatusBarBottom>();
-	
-	protected    SharedPreferences sessionSp;
+
+	protected SharedPreferences sessionSp;
 
 	public MediaStatusBar(Context context, AttributeSet attrs)
 	{
@@ -58,7 +57,7 @@ public class MediaStatusBar extends LinearLayout implements OnBarItemClickListen
 		this.sessionSp = context.getSharedPreferences(BaseFragment.SESSION_EVENT_KEY, 0);
 	}
 
-	public void init( StatusBarTitle title,AirSession s)
+	public void init(StatusBarTitle title, AirSession s)
 	{
 		this.barTitle = title;
 		setSession(s);
@@ -120,16 +119,16 @@ public class MediaStatusBar extends LinearLayout implements OnBarItemClickListen
 			bars.put(i, bar);
 		}
 	}
-	
-	public void setBarEnable(int pageIndex,boolean enabled)
+
+	public void setBarEnable(int pageIndex, boolean enabled)
 	{
-		if(bars != null && bars.size()>0)
+		if (bars != null && bars.size() > 0)
 		{
 			StatusBarBottom bar = bars.get(pageIndex);
-			if(null != bar)
+			if (null != bar)
 			{
-				ViewGroup grop = (ViewGroup)bar.getChildAt(0);
-				for(int i=0;i<grop.getChildCount();i++)
+				ViewGroup grop = (ViewGroup) bar.getChildAt(0);
+				for (int i = 0; i < grop.getChildCount(); i++)
 				{
 					View child = grop.getChildAt(i);
 					child.setEnabled(enabled);
@@ -147,7 +146,7 @@ public class MediaStatusBar extends LinearLayout implements OnBarItemClickListen
 	public void onBarItemClick(int itemId, int page)
 	{
 		// TODO Auto-generated method stub
-//		Toast.makeText(getContext(), itemId + "--" + page, 0).show();
+		// Toast.makeText(getContext(), itemId + "--" + page, 0).show();
 	}
 
 	public void listenerEnable()
@@ -232,20 +231,24 @@ public class MediaStatusBar extends LinearLayout implements OnBarItemClickListen
 	public void onMediaStateTalk(AirSession session)
 	{
 		// TODO Auto-generated method stub
-//		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
-//		{
+		// if (this.session != null &&
+		// TextUtils.equals(this.session.getSessionCode(),
+		// session.getSessionCode()))
+		// {
 		Log.i(SessionBoxTalk.class, "onMediaStateTalk");
 		barTitle.refreshMediaStatus();
 		talkBtn.refreshPttButton();
 
-//			tvSpeakerTime.setText("00:00");
-//			mSpeakingTimeStamp = System.currentTimeMillis();
-//			AirMmiTimer.getInstance().TimerRegister(contextMain, mSpeakingTimer, false, false, 1000, true, null);
-//			if (MainActivity.getInstance() != null && MainActivity.getInstance().viewControllerSlideView.isShowMenuLeft())
-//			{
-//				MainActivity.getInstance().viewLeft.refreshList();
-//			}
-//		}
+		// tvSpeakerTime.setText("00:00");
+		// mSpeakingTimeStamp = System.currentTimeMillis();
+		// AirMmiTimer.getInstance().TimerRegister(contextMain, mSpeakingTimer,
+		// false, false, 1000, true, null);
+		// if (MainActivity.getInstance() != null &&
+		// MainActivity.getInstance().viewControllerSlideView.isShowMenuLeft())
+		// {
+		// MainActivity.getInstance().viewLeft.refreshList();
+		// }
+		// }
 	}
 
 	@Override
@@ -279,14 +282,15 @@ public class MediaStatusBar extends LinearLayout implements OnBarItemClickListen
 		barTitle.refreshMediaStatus();
 		talkBtn.refreshPttButton();
 
-//		AirMmiTimer.getInstance().TimerUnregister(getContext(), mSpeakingTimer);
+		// AirMmiTimer.getInstance().TimerUnregister(getContext(),
+		// mSpeakingTimer);
 		if (MainActivity.getInstance() != null && MainActivity.getInstance().viewControllerSlideView.isShowMenuLeft())
 		{
 			MainActivity.getInstance().viewLeft.refreshList();
 		}
-		
+
 		int val = sessionSp.getInt(BaseFragment.SESSION_EVENT_KEY, 1);
-		sessionSp.edit().putInt(BaseFragment.SESSION_EVENT_KEY, val+1).commit();
+		sessionSp.edit().putInt(BaseFragment.SESSION_EVENT_KEY, val + 1).commit();
 	}
 
 	@Override
@@ -302,7 +306,7 @@ public class MediaStatusBar extends LinearLayout implements OnBarItemClickListen
 			}
 			else
 			{
-//				otherSpeakerOn(session);
+				// otherSpeakerOn(session);
 			}
 		}
 	}

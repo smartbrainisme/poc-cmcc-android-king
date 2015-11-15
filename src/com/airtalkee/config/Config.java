@@ -19,52 +19,60 @@ public class Config
 	public final static int MARKET_WEPTT_V2 = 88;
 	public final static int MARKET_WEPTT = 100; //@string/app_name
 	public final static int MARKET_CMCC = 130;	//@string/app_name_cmcc
+	public final static int MARKET_CMCC_ADV = 135;
 	public final static int MARKET_CMCC_TEST = 131;	//@string/app_name_cmcc
-	public final static int MARKET_CMCC_DATANG = 132;	//@string/app_name_cmcc
 	public final static int MARKET_CMCCLIMIT = 134;	//@string/app_name_cmcc
-	public final static int MARKET_CMCC_PICC = 258;//������������
-	public final static int MARKET_CMCC_CPIC = 262;//������������
-	public final static int MARKET_CMCC_SUBPLATFORM_GX = 137;	// ������������������
-	public final static int MARKET_CMCC_35 = 113; // 35������
+	public final static int MARKET_CMCC_DATANG = 132;	//@string/app_name_cmcc
+	public final static int MARKET_CMCC_DATANG_ADV = 133;
+	public final static int MARKET_CMCC_PICC = 258;//中国人保
+	public final static int MARKET_CMCC_BXGS = 270;//保险公司
+	public final static int MARKET_CMCC_CPIC = 262;//中国太保
+	public final static int MARKET_CMCC_SUBPLATFORM_GX = 137;	// 广西二级平台
+	public final static int MARKET_CMCC_35PHONE = 113; // 35互联
 	public final static int MARKET_NAVIDOG_TEST = 120;
 	public final static int MARKET_BPER = 101; //@string/app_name_bper
 	public final static int MARKET_BPER_SINGAPORE = 106; //@string/app_name_bper
 	public final static int MARKET_BPER_GERMANY = 105; //@string/app_name_bper
 	public final static int MARKET_BPER_RUSSIA_TAXI = 107; //@string/app_name_bper
 	public final static int MARKET_BPER_MTT = 102; //@string/app_name_bper_mtt
-	public final static int MARKET_CHINA_TELECOM = 110; // ������������
-	public final static int MARKET_CHINA_35 = 111; // 35������
-	public final static int MARKET_CHINA_35_P = 112; // 35������
-	public final static int MARKET_UNICOM_GUIZHOU = 501; // ������������			//@string/app_name_unicom
-	public final static int MARKET_UNICOM = 500; // ������������			//@string/app_name
-	public final static int MARKET_JINYUANXINTONG = 502; // ������������
-	public final static int MARKET_TAITONGYUAN = 504; // ���������
-	public final static int MARKET_TRACKSYSTEM_GUANGZHOU = 505; // ������������������
-	public final static int MARKET_TRACKSYSTEM_SHANGHAI = 506; // ������������������
-	public final static int MARKET_JIZHEN_SHENYANG = 210; // ������������
-	public final static int MARKET_JIZHEN_LIAONING = 211; // ������������
-	public final static int MARKET_GONGAN_JINGWEIJU = 503; // ������������������
-	public final static int MARKET_GONGAN_WEIFANG = 201; //���������������������
-	public final static int MARKET_GONGAN_NANJING = 202; //���������������������
-	public final static int MARKET_GONGAN_MTG = 204; // ���������������
-	public final static int MARKET_WUJING_SHANDONG = 207; // ������������
-	public final static int MARKET_GUGONG = 203; // ������
-	public final static int MARKET_DATANG = 205; // ������������
-	public final static int MARKET_DATANG_51POC = 206; // ������������
-	public final static int MARKET_REALWAY_TAIYUAN = 250; //������������������
+	public final static int MARKET_BPER_TELERATSIA = 104; //@string/app_name_bper_teleratsia
+	public final static int MARKET_CHINA_TELECOM = 110; // 中华电信
+	public final static int MARKET_CHINA_35 = 111; // 35互联
+	public final static int MARKET_CHINA_35_P = 112; // 35互联
+	public final static int MARKET_UNICOM_GUIZHOU = 501; // 贵州联通			//@string/app_name_unicom
+	public final static int MARKET_UNICOM = 500; // 中国联通			//@string/app_name
+	public final static int MARKET_JINYUANXINTONG = 502; // 金源信通
+	public final static int MARKET_TAITONGYUAN = 504; // 泰通元
+	public final static int MARKET_TRACKSYSTEM_GUANGZHOU = 505; // 寻根系统对接
+	public final static int MARKET_TRACKSYSTEM_SHANGHAI = 506; // 寻根系统对接
+	public final static int MARKET_JIZHEN_SHENYANG = 210; // 沈阳技侦
+	public final static int MARKET_JIZHEN_LIAONING = 211; // 辽宁技侦
+	public final static int MARKET_GONGAN_JINGWEIJU = 503; // 公安部警卫局
+	public final static int MARKET_GONGAN_WEIFANG = 201; //云指挥（潍坊）
+	public final static int MARKET_GONGAN_NANJING = 202; //云指挥（南京）
+	public final static int MARKET_GONGAN_MTG = 204; // 门头沟公安
+	public final static int MARKET_WUJING_SHANDONG = 207; // 山东武警
+	public final static int MARKET_GUGONG = 203; // 故宫
+	public final static int MARKET_DATANG = 205; // 大唐电信
+	public final static int MARKET_DATANG_51POC = 206; // 大唐电信
+	public final static int MARKET_REALWAY_TAIYUAN = 250; //太原市铁路局
 	public final static int MARKET_XUZHOU = 251;
-	public final static int MARKET_FIRE_BJ = 601; // ���������������������
+	public final static int MARKET_FIRE_BJ = 601; // 消防局（北京）
 	public final static int MARKET_SANXIA = 252;
-	public final static int MARKET_UNI_STRONG = 253;//������������
-	public final static int MARKET_LI_SHI_TECHNOLOGY = 254;//������������
-	public final static int MARKET_WO_XIN_DA = 255;//���������
-	public final static int MARKET_HUBEI_MOBILE = 256;//������������
-	public final static int MARKET_SONIM_TELECOM = 257;//sonim������������
-	public final static int MARKET_GX_GUIGANG_HAISHI = 259;//���������������������
-	public final static int MARKET_FENGHUO_WUHAN = 260;	//������������
-	public final static int MARKET_FENGHUO_BEIJING = 261;//������������
-	public final static int MARKET_ACEVISION =263;//������������  ACE
-	public final static int MARKET_KCELL =265;//���������  kcell
+	public final static int MARKET_UNI_STRONG = 253;//和众思壮
+	public final static int MARKET_LI_SHI_TECHNOLOGY = 254;//力石科技
+	public final static int MARKET_WO_XIN_DA = 255;//沃鑫达
+	public final static int MARKET_HUBEI_MOBILE = 256;//湖北移动
+	public final static int MARKET_SONIM_TELECOM = 257;//sonim电信版本
+	public final static int MARKET_GX_GUIGANG_HAISHI = 259;//广西贵港海事局
+	public final static int MARKET_FENGHUO_WUHAN = 260;	//武汉烽火
+	public final static int MARKET_FENGHUO_BEIJING = 261;//北京烽火
+	public final static int MARKET_FENGHUO = 264;//烽火--阿里云
+	public final static int MARKET_ACEVISION =263;//马来西亚  ACE
+	public final static int MARKET_KCELL =265;//俄罗斯  kcell
+	public final static int MARKET_HONG_FAN =266;//深圳宏范
+	public final static int MARKET_QING_HAI_LIAN_TONG =267;//青海联通
+	public final static int MARKET_CHONFQIU_HANGKONG =268;//春秋航空
 	// =======================================================
 
 	// =======================================================
@@ -73,7 +81,7 @@ public class Config
 	public static final String VERSION_TYPE = "ANDROID STD 2.0~";
 	public static String VERSION_CODE = "";
 	
-	public static int marketCode = MARKET_CMCC;   
+	public static int marketCode = MARKET_CMCC;
 	// =======================================================
 
 	public static final int TRACE_MODE = TRACE_MODE_OFF;
@@ -92,113 +100,131 @@ public class Config
 	// =======================================================
 	// FUNCTIONS
 	// =======================================================
-	/** ������������ */
+	/** 手机型号 */
 	public static String model = "";
 	/**
-	 * PTT������ ������ ���action ���������pttKeycode ������pttKeycode ������ KeyEvent.KEYCODE_UNKNOWN
-	 * action ������ ""
+	 * PTT按键 广播 的action 对应的pttKeycode 如果pttKeycode 等于 KeyEvent.KEYCODE_UNKNOWN
+	 * action 等于 ""
 	 */
 	public static String pttButtonAction = "";
-	/** ������������������PTT������������������Action���Up���Down������������������ **/
+	/** 是否直接使用PTT按钮广播事件Action的Up和Down来控制话语权 **/
 	public static String pttButtonActionUpDownCode = "";
-	/** ������������PTT��������������������� */
+	/** 要监控的PTT单独的广播事件 */
 	public static String pttButtonActionUp = "";
 	public static String pttButtonActionDown = "";
-	/** ������������PTT������ ������ */
+	public static String pttButtonActionUpExternal = "";
+	public static String pttButtonActionDownExternal = "";
+	/** 要监控的PTT按键 键值 */
 	public static int pttButtonKeycode = KeyEvent.KEYCODE_UNKNOWN;
-	/** ������������������������������PTT������������������������ */
+	/** 未登录状态，是否允许PTT物理按键唤醒应用 */
 	public static boolean pttButtonPressWakeupWhenStandby = true;
-	/** PTT������������������ ������pttVolumeEnable ���true Visibility=VISIBLE ������ Visibility=GONE */
+	/** PTT按钮是否显示 如果pttVolumeEnable 是true Visibility=VISIBLE 否则 Visibility=GONE */
 	public static int pttButtonVisibility = View.VISIBLE;
-	/** ������������������������������������/��������������� */
+	/** 是否支持点击屏幕按键获得/释放话语权 */
 	public static boolean pttClickSupport = false;
-	/** ������������������������������������ */
+	/** 是否使用音量键控制话语权 */
 	public static boolean pttVolumeKeySupport = false;
-	/** ������������ ������������UP������ */
+	/** 耳机按键 是否允许UP事件 */
 	public static boolean pttEarphoneLongPress = false;
-	/** ���������������KeyCode */
+	/** 耳机按键的KeyCode */
 	public static int pttEarphoneKeycode = KeyEvent.KEYCODE_HEADSETHOOK;
 	public static int pttBtKeycode = KeyEvent.KEYCODE_MEDIA_NEXT;
-	/** ������������������������������ */
+	/** 是否需要检测耳机插拔 */
 	public static boolean pttEarphonePlug = false;
-	/** ������������ */
+	/** 屏幕方向 */
 	public static int screenOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
-	/** ���������������������������������������������������back/home ������������������ ������������ */
+	/** 是否支持一直保持在对讲界面，即便按back/home （这个是针对 车载台） */
 	public static boolean screenAlwaysPtt = false;
-	/** ������������������������������������������������ */
+	/** 媒体服务设置：心跳时间间隔（秒） */
 	public static int engineMediaSettingHbSeconds = ENGINE_MEDIA_HB_SECOND_SLOW;
-	/** ������������������������������������ */
+	/** 媒体服务设置：心跳包大小 */
 	public static int engineMediaSettingHbPackSize = ENGINE_MEDIA_HB_SIZE_NONE;
-	/** ��������������������������������� */
+	/** 是否启用音频播放放大器 */
 	public static boolean audioAmplifierEnabled = false;
 
 	// =======================================================
 	public static boolean funcFORCE = false;
 
-	/** ������������������������������������������ */
+	/** 呼叫中心选项是否显示在主菜单 */
 	public static boolean funcCenterCallMenuShow = true;
-	/** ������������������������ */
+	/** 是否支持呼叫中心 */
 	public static int funcCenterCall = AirFunctionSetting.SETTING_ENABLE;
-	/** ��������������������������������� */
+	/** 是否呼叫中心的电话号码 */
 	public static String funcCenterCallNumber = "";
-	/** ������������������������������ */
+	/** 是否支持上报资料版本 */
 	public static boolean funcCenterReport = true;
-	/** ������������������������������������������ */
+	/** 上报位置选项是否显示在主菜单 */
 	public static boolean funcCenterLocationMenuShow = false;
-	/** ������������������������������ */
+	/** 是否支持上报位置版本 */
 	public static int funcCenterLocation = AirFunctionSetting.SETTING_ENABLE;
-	/** ��������������������� */
+	/** 是否有用户手册 */
 	public static boolean funcManual = true;
-	/** ��������������������� */
+	/** 是否有意见反馈 */
 	public static boolean funcfeedback = true;
-	/** ������������������������ */
+	/** 是否显示流量监控 */
 	public static boolean funcStatisticNetwork = true;
-	/** ������������UMENG������ */
+	/** 是否支持UMENG统计 */
 	public static boolean funcStatisticUmeng = true;
-	/** ������������������������������������ */
+	/** 是否支持手机号码作为账户 */
 	public static boolean funcUserPhone = false;
-	/** ������������������������ */
+	/** 是否允许用户注册 */
 	public static boolean funcUserRegistration = false;
-	/** ������������������������������ */
+	/** 是否允许查看全部用户 */
 	public static boolean funcUserAll = true;
-	/** ������������������������������������������ */
+	/** 是否只允许密码或用户名为数字 */
 	public static boolean funcUserIdAndPwdIsNumber = true;
-	/** ������������������������������ */
+	/** 是否允许用户维护群组 */
 	public static boolean funcChannelManage = false;
-	/** ��������������������������������������� */
+	/** 是否允许用户群组中呼入成员 */
 	public static boolean funcChannelCallIn = false;
-	/** ��������������� */
+	/** 是否有广播 */
 	public static boolean funcBroadcast = true;
-	/** ��������� ������������*/
+	/** 是否有 任务派发*/
 	public static boolean funcTaskDispatch = false;
-	/** ��������� ������*/
+	/** 是否有 考勤*/
 	public static boolean funcAttendance = false;
-	/** ��������������� */
+	/** 是否有视频 */
 	public static boolean funcVideo = false;
-	/** ������������������������*/
+	/** 是佛支持视频摄像头 **/
+	public static boolean funcVideoDevice = false;
+	/** 短视频支持的最长时间 **/
+	public static int funcVideoSectionTimeMax = 60*1000;
+	public static int funcVideoSectionSizeMax = 100 * 1024 * 1024;
+	/** 是否支持主题切换*/
 	public static boolean funcThemeChange = false;
-	/** ������������������LOGO */
+	/** 是否显示客户LOGO */
 	public static boolean funcShowCustomLogo = false;
 	public static int funcShowCustomLogoIconId = 0;
 	public static int funcShowCustomLogoStringId1 = 0;
 	public static int funcShowCustomLogoStringId2 = 0;
-	
+	public static boolean  funcServerIPSetting = false;
+
 	public static boolean  funcPlayMediaTalkPrepare = false;
 	public static boolean  funcPlayMediaTalkOff = true;
-	/** ������������������������*/
+	/** 是否支持语音播报*/
 	public static boolean funcTTS = false;
-	/** ������������������������������*/
+	/** 是否开机启动欢迎界面*/
 	public static boolean funcBootLaunch= false;
-	/** ���ptt������������������ */
+	/** 按ptt按键启动对讲 */
 	public static boolean funcPTTLaunch = true;
-	/** ������������������������������������*/
+	/** 是否允许安装后首次自启动*/
 	public static boolean funcAllowFirstLaunch = true;
+	/** 是否支持加解密 **/
+	public static boolean funcEncryption = false;
+	
+	/** 公网专网切换(sim)**/
+	public static boolean funcNetWorkTypeChange = false;
+	
+	/** vox设置(sim)**/
+	public static boolean funcVoxSetting = false;
+	
+	
 	public static int defaultTheme = R.style.AppTheme_Dark;
 	// ========================================================================
 	
 	
 	// ========================================================================
-	// ������������������
+	// 二级平台配置
 	// ========================================================================
 	public static boolean SUB_PLATFORM_VALID = false;
 	public static String SUB_PLATFORM_ADDRESS_DM = "";
@@ -208,10 +234,12 @@ public class Config
 	
 	
 
-	/** MARKET ������������ **/
+	/** MARKET 不同配置 **/
 	public static String app_name = "";
 	public static String serverAddress = "";
 	public static String serverUrlInfosys = "";
+	
+	public static String serverUrlNotice = "http://ptt.weptt.com:2880/airtalkeenotice/jsp/";
 
 	public static void marketConfig(Context context)
 	{
@@ -399,7 +427,7 @@ public class Config
 				funcStatisticNetwork = true;
 				defaultTheme = R.style.AppTheme_Dark;
 				break;
-			case MARKET_CMCC_35:
+			case MARKET_CMCC_35PHONE:
 				serverAddress = "112.33.0.187";
 				funcStatisticNetwork = true;
 				funcUserPhone = true;
