@@ -337,4 +337,10 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 		 * }).show();
 		 */
 	}
+
+	@Override
+	public void onListItemLongClick(int id, int selectedItem) {
+		// TODO Auto-generated method stub
+		
+	}
 }

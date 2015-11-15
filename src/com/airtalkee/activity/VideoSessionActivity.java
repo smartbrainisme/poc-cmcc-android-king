@@ -107,6 +107,22 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 
 	private void loadView()
 	{
+		/*
+		 * tvTitle = (TextView) findViewById(R.id.tv_main_title);
+		 * 
+		 * View btnLeft = findViewById(R.id.menu_left_button); ivLeft =
+		 * (ImageView) findViewById(R.id.bottom_left_icon);
+		 * ivLeft.setImageResource
+		 * (ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this));
+		 * btnLeft.setOnClickListener(this);
+		 * 
+		 * RelativeLayout ivRightLay = (RelativeLayout)
+		 * findViewById(R.id.talk_menu_right_button); ivRight = (ImageView)
+		 * findViewById(R.id.bottom_right_icon);
+		 * ivRight.setImageResource(R.drawable.ic_topbar_video_open);
+		 * ivRightLay.setOnClickListener(this);
+		 */
+
 		mSurfacePlayer = (SurfaceView) findViewById(R.id.talk_video_surface_player);
 		mSurfacePlayer.getHolder().addCallback(null);
 
@@ -116,6 +132,11 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		videoStop = (ImageView) findViewById(R.id.video_stop);
 		videoStop.setOnClickListener(this);
 
+		videoSettingRadio = (RadioGroup) findViewById(R.id.radio);
+		videoSettingRadio.setOnCheckedChangeListener(this);
+		videoSettingsLayout = (FrameLayout) findViewById(R.id.video_layout);
+		videoPanel = (RelativeLayout) findViewById(R.id.talk_video_panel);
+		videoPanel.setVisibility(View.GONE);
 		videoSettingsLayout = (FrameLayout) findViewById(R.id.video_layout);
 		videoPanel = (RelativeLayout) findViewById(R.id.talk_video_panel);
 		videoPanel.setVisibility(View.GONE);
@@ -125,6 +146,8 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		btnTalkVideo.setOnTouchListener(this);
 		animVideoFull = AnimationUtils.loadAnimation(this, R.anim.video_full);
 		animVideoSmall = AnimationUtils.loadAnimation(this, R.anim.video_small);
+		
+		icVideoStatus = (ImageView) findViewById(R.id.talk_video_status_iv);
 
 		icVideoStatus = (ImageView) findViewById(R.id.talk_video_status_iv);
 		videoRate = (TextView) findViewById(R.id.video_rate);
@@ -235,6 +258,7 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 			case AirSession.MEDIA_BUTTON_STATE_CONNECTING:
 			case AirSession.MEDIA_BUTTON_STATE_REQUESTING:
 			case AirSession.MEDIA_BUTTON_STATE_QUEUE:
+				btnTalkVideo.setBackgroundResource(R.drawable.video_talk_normal);
 				btnTalkVideo.setBackgroundResource(R.drawable.video_talk_press);
 				break;
 		}
@@ -313,6 +337,43 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 	{
 		switch (v.getId())
 		{
+			case R.id.menu_left_button:
+			case R.id.bottom_left_icon:
+			{
+				finish();
+				break;
+			}
+			case R.id.talk_menu_right_button:
+			case R.id.bottom_right_icon:
+			{
+				/*
+				 * if (!isVideoRecording) { AlertDialog.Builder builder = new
+				 * AlertDialog.Builder(this);
+				 * builder.setTitle(getString(R.string
+				 * .talk_channel_create_tip));
+				 * builder.setMessage(getString(R.string
+				 * .talk_video_tio_to_open));
+				 * builder.setPositiveButton(getString(R.string.talk_ok), new
+				 * DialogInterface.OnClickListener() { public void
+				 * onClick(DialogInterface dialog, int which) {
+				 * videoRecordStart(); } });
+				 * builder.setNegativeButton(this.getString(R.string.talk_no),
+				 * null); builder.show(); } else { AlertDialog.Builder builder =
+				 * new AlertDialog.Builder(this);
+				 * builder.setTitle(getString(R.string
+				 * .talk_channel_create_tip));
+				 * builder.setMessage(getString(R.string
+				 * .talk_video_tio_to_close));
+				 * builder.setPositiveButton(getString(R.string.talk_ok), new
+				 * DialogInterface.OnClickListener() { public void
+				 * onClick(DialogInterface dialog, int which) { if (videoShow)
+				 * finish(); else videoRecordFinish(); } });
+				 * builder.setNegativeButton(this.getString(R.string.talk_no),
+				 * null); builder.show(); }
+				 */
+				break;
+			}
+			
 			case R.id.video_settings:
 			{
 				if (popWindow.isShowing())
@@ -334,12 +395,20 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 				}
 				break;
 			}
+			/*
+			 * case R.id.talk_btn_choose: { isVideoPlaying = !isVideoPlaying; if
+			 * (isVideoPlaying) refreshVideoPlayerStart(); else
+			 * refreshVideoPlayerStop(); break; }
+			 */
 		}
 	}
 
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId)
 	{
+		// TODO Auto-generated method stub
+		videoSettingsLayout.setVisibility(View.GONE);
+		videoSufaceRecord.selectQuality(videoSettingRadio);
 		videoSufaceRecord.selectQuality(videoSettingRadio.getCheckedRadioButtonId());
 		popWindow.dismiss();
 		switch (checkedId)

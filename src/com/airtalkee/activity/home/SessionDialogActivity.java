@@ -44,6 +44,8 @@ public class SessionDialogActivity extends FragmentActivity implements
 
 	protected MediaStatusBar mediaStatusBar;
 	protected int actionType;
+	
+	
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -156,7 +158,8 @@ public class SessionDialogActivity extends FragmentActivity implements
 		}
 
 		@Override
-		public Fragment getItem(int position)
+
+		public BaseFragment getItem(int position)
 		{
 			return this.fragments.get(position);
 		}
@@ -226,6 +229,15 @@ public class SessionDialogActivity extends FragmentActivity implements
 		{
 			AirSessionControl.getInstance().SessionEndCall(session);
 		}
+	}
+	
+	public BaseFragment getIMFragment()
+	{
+		if(adapter != null)
+		{
+			return adapter.getItem(PAGE_IM);
+		}
+		return  null;
 	}
 
 }

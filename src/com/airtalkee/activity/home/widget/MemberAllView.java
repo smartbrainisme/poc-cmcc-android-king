@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 
 import com.airtalkee.R;
 import com.airtalkee.activity.home.AdapterMemberAll;
+import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.AdapterMemberAll.CheckedCallBack;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactTiny;
@@ -122,13 +123,30 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 			listener.onMemberChecked(isChecked);
 	}
 	
-	public List<AirContactTiny> getSelectedMember()
+	public void resetCheckBox()
 	{
 		if(adapterMember != null)
 		{
-			return adapterMember.getSelectedMemberListTiny();
+			adapterMember.resetCheckBox();
+		}
+	}
+	
+	public List<AirContact> getSelectedMember()
+	{
+		if(adapterMember != null)
+		{
+			return adapterMember.getSelectedMemberList();
 		}
 		return null;
+	}
+	
+	public int getSelectedMemberSize()
+	{
+		if(adapterMember != null)
+		{
+			return adapterMember.getSelectedMemberList().size();
+		}
+		return 0;
 	}
 
 }

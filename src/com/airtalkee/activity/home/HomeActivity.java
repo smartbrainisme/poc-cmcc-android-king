@@ -1,5 +1,15 @@
 package com.airtalkee.activity.home;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -8,6 +18,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
+
 import com.airtalkee.R;
 import com.airtalkee.Util.DensityUtil;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
@@ -126,5 +139,54 @@ public class HomeActivity extends SessionDialogActivity implements
 		{
 			mLayout.setPanelState(PanelState.COLLAPSED);
 		}
+	}
+	
+	@Override
+	@Deprecated
+	protected Dialog onCreateDialog(final int id) {
+		// TODO Auto-generated method stub
+		switch(id)
+		{
+		case R.id.talk_dialog_message_txt_send_fail:
+		case R.id.talk_dialog_message_txt:
+		{
+			final ListAdapter items = mSimpleAdapter(this, IMFragment.menuArray, R.layout.account_switch_listitem, R.id.AccountNameView);
+			return new AlertDialog.Builder(this).setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener()
+			{
+				public void onClick(DialogInterface dialog, int whichButton)
+				{
+					removeDialog(id);
+					if (items instanceof SimpleAdapter)
+					{
+						getIMFragment().onListItemLongClick(id, whichButton);
+					}
+				}
+			}).setOnCancelListener(new OnCancelListener()
+			{
+				@Override
+				public void onCancel(DialogInterface dialog)
+				{
+					// TODO Auto-generated method stub
+					removeDialog(id);
+				}
+			}).create();
+		}
+		}
+		return super.onCreateDialog(id);
+	}
+	
+	public SimpleAdapter mSimpleAdapter(Context contexts, String[] array, int layout, int id)
+	{
+		if (array == null)
+			return null;
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+		data.clear();
+		for (int i = 0; i < array.length; i++)
+		{
+			Map<String, Object> listItem = new HashMap<String, Object>();
+			listItem.put("accountName", array[i]);
+			data.add(listItem);
+		}
+		return new SimpleAdapter(this, data, layout, new String[] { "accountName" }, new int[] { id });
 	}
 }

@@ -79,7 +79,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	private MacRecordingView mvRecording;
 	private boolean recordCancel = false;
 	private float startY = 0;
-	public String menuArray[];
+	public static String menuArray[];
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -416,6 +416,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 			}
 		}
 	}
+	
 
 	public void onListItemLongClick(int id, int selectedItem) {
 		if (currentMessage == null)

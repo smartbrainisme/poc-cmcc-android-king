@@ -45,6 +45,7 @@ import com.airtalkee.sdk.video.codec.VideoQuality;
 import com.airtalkee.sdk.video.gl.SurfaceView;
 import com.airtalkee.sdk.video.hw.external.CameraUsbManager;
 import com.airtalkee.sdk.video.rtsp.RtspClient;
+import com.airtalkee.sdk.video.hw.external.CameraUsbManager;
 import com.luktong.multistream.sdk.ui.PreviewSurfaceView;
 import com.luktong.multistream.sdk.usb.DeviceFilter;
 import com.luktong.multistream.sdk.usb.USBMonitor;
@@ -64,6 +65,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	private View parentView;
 	private SurfaceView mSurfaceView;
 	private PreviewSurfaceView mUSBSurfaceView = null;
+	private TextView mTextBitrate;
 //	private TextView mTextBitrate;
 	private ProgressBar mProgressBar;
 	private Session mSession;
@@ -137,6 +139,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		mButtonMic = (ImageButton) findViewById(R.id.mic);
 		mSurfaceView = (SurfaceView) findViewById(R.id.surface);
 		// mUSBSurfaceView = (PreviewSurfaceView) findViewById(R.id.svPreview3);
+		mTextBitrate = (TextView) findViewById(R.id.bitrate);
 //		mTextBitrate = (TextView) findViewById(R.id.bitrate);
 		mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
 		// mButtonStart.setOnClickListener(this);
@@ -189,12 +192,14 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		mClient.setSession(mSession);
 		mClient.setSessionCode(session != null ? session.getSessionCode() : "");
 		mClient.setCallback(this);
+		selectQuality(rg);
 		selectQuality(rg.getCheckedRadioButtonId());
 		toggleStream();
 
 		switch (cameraType)
 		{
 			case Session.CAMERA_EXTERNAL_TYPE_NONE:
+//				mUSBSurfaceView.setVisibility(View.GONE);
 				// mUSBSurfaceView.setVisibility(View.GONE);
 				mSurfaceView.getHolder().addCallback(this);
 				mSurfaceView.setVisibility(View.VISIBLE);
