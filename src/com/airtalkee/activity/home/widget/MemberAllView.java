@@ -13,15 +13,15 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.airtalkee.R;
 import com.airtalkee.activity.home.AdapterMemberAll;
-import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.AdapterMemberAll.CheckedCallBack;
+import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.entity.AirContact;
-import com.airtalkee.sdk.entity.AirContactTiny;
 import com.airtalkee.widget.MListView;
 
 public class MemberAllView extends LinearLayout implements OnClickListener,
@@ -54,6 +54,8 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 
 		adapterMember = new AdapterMemberAll(getContext(), this);
 		lvMemberAll.setAdapter(adapterMember);
+		lvMemberAll.setOnItemClickListener(this);
+		
 	}
 
 	@Override
@@ -92,7 +94,19 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 			long id) {
 		// TODO Auto-generated method stub
 		switch (parent.getId()) {
-
+		case R.id.talk_lv_member_all: {
+			CheckBox cb = (CheckBox) view
+					.findViewById(R.id.talk_cb_group_member);
+			AirContact c = (AirContact) adapterMember.getItem(position - 1);
+			if (c != null) {
+				if (!AirtalkeeAccount.getInstance().getUserId()
+						.equals(c.getIpocId())) {
+					if (cb != null)
+						cb.setChecked(!cb.isChecked());
+				}
+			}
+			break;
+		}
 		}
 
 	}

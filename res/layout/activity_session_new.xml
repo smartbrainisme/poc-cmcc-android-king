@@ -3,8 +3,32 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginBottom="-1dip">
-		<include layout="@layout/include_main_header" />
+	<LinearLayout android:layout_width="fill_parent" android:layout_height="45dp" android:orientation="vertical" android:layout_marginBottom="-1dip">
+		<RelativeLayout
+            android:id="@+id/menu_left_button"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="3dip"
+            >
+
+            <ImageView
+                android:id="@+id/btn_close"
+                android:layout_width="@dimen/main_menu_btn_width"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_close" />
+
+            <TextView
+                android:id="@+id/tv_new"
+                android:layout_centerHorizontal="true"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:gravity="center"
+                android:text="新建会话"
+                android:textColor="#ffffff"
+                />
+        </RelativeLayout>
 	</LinearLayout>
 	<LinearLayout android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" android:id="@+id/containner" android:layout_weight="1">
 	

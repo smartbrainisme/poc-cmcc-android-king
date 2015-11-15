@@ -74,6 +74,14 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 					btnLeft.setVisibility(View.INVISIBLE);
 					tvTitle.setCompoundDrawables(null, null, null, null);
 				}
+				if(session.isVoiceLocked())
+				{
+					ivBtnLeft.setImageResource(R.drawable.ic_lock);
+				}
+				else
+				{
+					ivBtnLeft.setImageResource(R.drawable.ic_unlock);
+				}
 				tvTitle.setText(session.getDisplayName());
 				switch (session.getSessionState())
 				{

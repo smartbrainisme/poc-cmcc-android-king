@@ -22,16 +22,40 @@
             android:layout_height="wrap_content"
             android:text="4G行业团队测试频道"
             android:textColor="@android:color/white" />
-         <TextView
-            android:id="@+id/tv_count"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="15dp"
-             android:text="12/4"
-            android:textSize="12sp"
-            android:layout_height="wrap_content"
-            android:textColor="@android:color/white" />
+        <LinearLayout  
+            android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal"
+	        android:layout_gravity="center_vertical"
+		    >
+	         <TextView
+	            android:drawableLeft="@drawable/ic_member"
+	            android:drawablePadding="5dp"
+	            android:id="@+id/tv_count"
+	            android:layout_width="0dp"
+	            android:layout_weight="1"
+	            android:layout_marginTop="15dp"
+	            android:text="12/4"
+	            android:textSize="12sp"
+	            android:layout_height="wrap_content"
+	            android:textColor="@android:color/white" />
+	       		<ImageView  android:layout_weight="2" android:id="@+id/iv_listen" 
+	       		    android:visibility="gone"
+	       		     android:scaleType="fitEnd"
+	       		     android:layout_marginTop="5dp"
+	       		     android:layout_width="0dp" android:layout_height="wrap_content" 
+	       		     android:src="@drawable/ic_listen" />
+	          
+	        
+         </LinearLayout>
     </LinearLayout>
-    
+    <ImageView   android:id="@+id/iv_lock" 
+        android:layout_gravity="center_vertical|right"
+	       		     android:scaleType="fitCenter"
+	       		     android:layout_marginRight="10dp"
+	       		     android:visibility="gone"
+	       		     android:layout_width="wrap_content" android:layout_height="wrap_content" 
+	       		     android:src="@drawable/ic_channel_lock" />
      <TextView
             android:id="@+id/tv_unread_count"
             android:layout_width="wrap_content"

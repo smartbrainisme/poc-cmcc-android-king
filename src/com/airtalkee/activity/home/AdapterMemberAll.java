@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.airtalkee.R;
 import com.airtalkee.sdk.AirtalkeeAccount;
+import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeContactPresence;
 import com.airtalkee.sdk.OnContactPresenceListener;
 import com.airtalkee.sdk.entity.AirContact;
@@ -29,8 +30,8 @@ import com.airtalkee.sdk.entity.AirContactTiny;
 public class AdapterMemberAll extends BaseAdapter implements
 		OnContactPresenceListener {
 	private Context context = null;
-	private List<AirContact> memberList = null;
-	private HashMap<Integer, AirContact> isSelected;
+	private List<AirContact> memberList = AirtalkeeChannel.getInstance().getChannels().get(0).MembersGet();
+	private HashMap<Integer, AirContact> isSelected = new HashMap<Integer, AirContact>();
 	private CheckedCallBack checkedCallBack;
 
 	public interface CheckedCallBack { // shiyishi

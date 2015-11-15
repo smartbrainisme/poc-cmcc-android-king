@@ -31,11 +31,11 @@ public class AdapterSession extends BaseAdapter
 		
 		if (convertView == null)
 		{
-//			if(position == 0)
-//			{
-//				convertView = LayoutInflater.from(mContext).inflate(R.layout.session_header_item, null);
-//			}
-//			else
+			if(position == 0)
+			{
+				convertView = LayoutInflater.from(mContext).inflate(R.layout.session_header_item, null);
+			}
+			else
 			{
 				convertView = LayoutInflater.from(mContext).inflate(R.layout.channel_listitem, null);
 			}
@@ -75,7 +75,7 @@ public class AdapterSession extends BaseAdapter
 	public int getCount()
 	{
 		// TODO Auto-generated method stub
-		return AirtalkeeSessionManager.getInstance().getSessionList().size();
+		return AirtalkeeSessionManager.getInstance().getSessionList().size()+1;
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class AdapterSession extends BaseAdapter
 		AirSession ses = null;
 		try
 		{
-			ses = AirtalkeeSessionManager.getInstance().getSessionList().get(position);
+			ses = AirtalkeeSessionManager.getInstance().getSessionList().get(position-1);
 		}
 		catch (Exception e)
 		{
