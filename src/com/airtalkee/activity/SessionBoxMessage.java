@@ -894,7 +894,7 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 			}
 		}
 	}
-	
+
 	public void onListItemLongClick(int id, int selectedItem)
 	{
 		if (currentMessage == null)

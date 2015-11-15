@@ -23,7 +23,8 @@ import com.airtalkee.config.Config;
 public class MenuManualActivity extends ActivityBase implements OnClickListener
 {
 
-	private static final String MANUAL_URL = "http://www.haoliantech.com/atk/client_manual.php?market=%s&vplatform=%s&vtype=%s&vcode=%s&lang=%s";
+//	private static final String MANUAL_URL = "http://www.haoliantech.com/atk/client_manual.php?market=%s&vplatform=%s&vtype=%s&vcode=%s&lang=%s";
+	private static final String MANUAL_URL = "file:///android_asset/manual/page_help/help.html";
 	private static String manual_url = MANUAL_URL;
 
 	private MenuManualActivity mInstance;

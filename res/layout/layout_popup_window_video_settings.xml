@@ -38,7 +38,6 @@
                 style="@style/RadioButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:checked="true"
                 android:gravity="center"
                 android:text="480 * 640" />
 

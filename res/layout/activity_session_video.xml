@@ -177,7 +177,6 @@
                         android:layout_below="@id/video_settings"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="5dp"
-                        android:text="480 * 640"
                         android:textColor="#FFFFFF" />
                 </RelativeLayout>
             </RelativeLayout>
