@@ -15,20 +15,24 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.hardware.usb.UsbDevice;
 import android.os.Build;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
+import com.airtalkee.activity.VideoSessionActivity;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeReport;
 import com.airtalkee.sdk.controller.AirTaskController;
@@ -39,6 +43,7 @@ import com.airtalkee.sdk.video.Session;
 import com.airtalkee.sdk.video.SessionBuilder;
 import com.airtalkee.sdk.video.codec.VideoQuality;
 import com.airtalkee.sdk.video.gl.SurfaceView;
+import com.airtalkee.sdk.video.hw.external.CameraUsbManager;
 import com.airtalkee.sdk.video.rtsp.RtspClient;
 import com.airtalkee.sdk.video.hw.external.CameraUsbManager;
 import com.luktong.multistream.sdk.ui.PreviewSurfaceView;
@@ -52,7 +57,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		SensorEventListener, AirTaskTakePictureListener,
 		OnDeviceConnectListener
 {
-	private ImageButton mButtonStart;
+	// private ImageButton mButtonStart;
 	private ImageButton mButtonFlash;
 	private ImageButton mButtonCamera;
 	private ImageButton mButtonSettings;
@@ -61,6 +66,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	private SurfaceView mSurfaceView;
 	private PreviewSurfaceView mUSBSurfaceView = null;
 	private TextView mTextBitrate;
+//	private TextView mTextBitrate;
 	private ProgressBar mProgressBar;
 	private Session mSession;
 	private String mSessionUid = "";
@@ -81,6 +87,10 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	private boolean allowCheckedChangeEvent = true;
 	private int cameraType = Session.CAMERA_EXTERNAL_TYPE_NONE;
 	private boolean isCameraUsbReady = false;
+
+	private TextView tv_status;
+	private Chronometer ch_time;
+	private ImageView iv_back;
 
 	public VideoSufaceView(Context context)
 	{
@@ -122,7 +132,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		sm = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
 		mAccelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 		AirTaskController.getInstance().setAirTaskTakePictureListener(this);
-		mButtonStart = (ImageButton) findViewById(R.id.start);
+		// mButtonStart = (ImageButton) findViewById(R.id.start);
 		mButtonFlash = (ImageButton) findViewById(R.id.flash);
 		mButtonCamera = (ImageButton) findViewById(R.id.camera);
 		mButtonSettings = (ImageButton) findViewById(R.id.settings);
@@ -130,8 +140,9 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		mSurfaceView = (SurfaceView) findViewById(R.id.surface);
 		// mUSBSurfaceView = (PreviewSurfaceView) findViewById(R.id.svPreview3);
 		mTextBitrate = (TextView) findViewById(R.id.bitrate);
+//		mTextBitrate = (TextView) findViewById(R.id.bitrate);
 		mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
-		mButtonStart.setOnClickListener(this);
+		// mButtonStart.setOnClickListener(this);
 		mButtonFlash.setOnClickListener(this);
 		mButtonCamera.setOnClickListener(this);
 		mButtonSettings.setOnClickListener(this);
@@ -144,6 +155,11 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		mUSBMonitor.register();
 		cameraUsbBinder = CameraUsbManager.getInstance();
 		cameraUsbBinder.startManager();
+
+		tv_status = (TextView) findViewById(R.id.tv_video_status);
+		ch_time = (Chronometer) findViewById(R.id.ch_timer);
+		iv_back = (ImageView) findViewById(R.id.iv_video_back);
+		iv_back.setOnClickListener(this);
 
 	}
 
@@ -177,12 +193,14 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		mClient.setSessionCode(session != null ? session.getSessionCode() : "");
 		mClient.setCallback(this);
 		selectQuality(rg);
+		selectQuality(rg.getCheckedRadioButtonId());
 		toggleStream();
 
 		switch (cameraType)
 		{
 			case Session.CAMERA_EXTERNAL_TYPE_NONE:
 //				mUSBSurfaceView.setVisibility(View.GONE);
+				// mUSBSurfaceView.setVisibility(View.GONE);
 				mSurfaceView.getHolder().addCallback(this);
 				mSurfaceView.setVisibility(View.VISIBLE);
 				break;
@@ -203,6 +221,8 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 			if (sm != null)
 				sm.unregisterListener(this);
 			mProgressBar.setVisibility(View.GONE);
+			ch_time.stop();
+			ch_time.setBase(SystemClock.elapsedRealtime());
 			this.setVisibility(View.GONE);
 			mClient.stopStream();
 			mSession.release();
@@ -254,6 +274,13 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 			case R.id.camera:
 				mSession.switchCamera();
 				break;
+			case R.id.iv_video_back:
+				finish();
+				if (null != VideoSessionActivity.getInstance())
+				{
+					VideoSessionActivity.getInstance().finish();
+				}
+				break;
 		}
 	}
 
@@ -280,9 +307,51 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		Log.d("m", "Selected resolution: " + mVideoWidth + "x" + mVideoHeight);
 	}
 
+	public void selectQuality(int radioButtonId)
+	{
+		RadioButton button = (RadioButton) parentView.findViewById(radioButtonId);
+		if (button == null)
+			return;
+		int bitrate = 0;
+		mFramerate = 20;
+		switch (radioButtonId)
+		{
+			case R.id.radio_low:
+				mVideoWidth = 480;
+				mVideoHeight = 320;
+				bitrate = 300;
+				break;
+			case R.id.radio_normal:
+				mVideoWidth = 640;
+				mVideoHeight = 480;
+				bitrate = 500;
+				break;
+			case R.id.radio_high:
+				mVideoWidth = 960;
+				mVideoHeight = 640;
+				bitrate = 600;
+				break;
+			case R.id.radio_best:
+				mVideoWidth = 1280;
+				mVideoHeight = 720;
+				bitrate = 800;
+				break;
+			default:
+				mVideoWidth = 640;
+				mVideoHeight = 480;
+				bitrate = 500;
+				break;
+		}
+
+		mSession.setVideoQuality(new VideoQuality(mVideoWidth, mVideoHeight, mFramerate, bitrate * 1000));
+		Util.Toast(this.getContext(), button.getText().toString());
+
+		Log.d("m", "Selected resolution: " + mVideoWidth + "x" + mVideoHeight);
+	}
+
 	private void enableUI()
 	{
-		mButtonStart.setEnabled(true);
+		// mButtonStart.setEnabled(true);
 		mButtonCamera.setEnabled(true);
 	}
 
@@ -291,7 +360,8 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	{
 		finish();
 
-		mProgressBar.setVisibility(View.VISIBLE);
+		mProgressBar.setVisibility(View.GONE);
+		tv_status.setText(getContext().getString(R.string.talk_video_connecting));
 		if (!mClient.isStreaming())
 		{
 			String ip, port, path;
@@ -327,10 +397,11 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	@Override
 	public void onBitrateUpdate(long bitrate)
 	{
+		/*
 		String text = mVideoWidth + " x " + mVideoHeight + "\n";
 		text += mFramerate + " fps\n";
 		text += bitrate / 1000 + " kbps";
-		mTextBitrate.setText(text);
+		mTextBitrate.setText(text);*/
 	}
 
 	@Override
@@ -358,8 +429,9 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	public void onSessionStarted()
 	{
 		enableUI();
-		mButtonStart.setImageResource(R.drawable.ic_switch_video_active);
+		// mButtonStart.setImageResource(R.drawable.ic_switch_video_active);
 		mProgressBar.setVisibility(View.GONE);
+
 		this.setVisibility(View.VISIBLE);
 		if (this.l != null)
 		{
@@ -372,6 +444,9 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		// mButtonMic.setTag(true);
 		// mButtonMic.setEnabled(true);
 		// mButtonMic.setImageResource(R.drawable.ic_microphone_on);
+		ch_time.start();
+		ch_time.setBase(SystemClock.elapsedRealtime());
+		tv_status.setText(getContext().getString(R.string.talk_video_uploading));
 	}
 
 	@Override
@@ -381,8 +456,9 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		if (sm != null)
 			sm.unregisterListener(this);
 		AirTaskController.getInstance().setAirTaskTakePictureListener(null);
-		mButtonStart.setImageResource(R.drawable.ic_switch_video);
+		// mButtonStart.setImageResource(R.drawable.ic_switch_video);
 		mProgressBar.setVisibility(View.GONE);
+		// tv_status.setText(getContext().getString(R.string.talk_video_stop));
 		this.setVisibility(View.GONE);
 		if (this.l != null)
 		{
@@ -397,6 +473,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	public void onSessionError(int reason, int streamType, Exception e)
 	{
 		mProgressBar.setVisibility(View.GONE);
+		// tv_status.setText(getContext().getString(R.string.talk_video_connect_fail));
 		if (sm != null)
 			sm.unregisterListener(this);
 		switch (reason)

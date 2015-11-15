@@ -158,6 +158,7 @@ public class SessionDialogActivity extends FragmentActivity implements
 		}
 
 		@Override
+
 		public BaseFragment getItem(int position)
 		{
 			return this.fragments.get(position);
