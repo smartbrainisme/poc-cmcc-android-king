@@ -62,7 +62,7 @@
 	<string name="talk_tools_report_vid">视频上报</string>
 	<string name="talk_tools_report_uploading">正在上报..</string>
 	<string name="talk_tools_report_waiting">等待上报..</string>
-	<string name="talk_tools_report_click">点击上传</string>
+	<string name="talk_tools_report_click">点击重发</string>
 	<string name="talk_tools_report_fail">上传失败</string>
 	<string name="talk_tools_report_success">上传成功，可在更多界面查看</string>
 	<string name="talk_tools_call_center">呼叫中心</string>

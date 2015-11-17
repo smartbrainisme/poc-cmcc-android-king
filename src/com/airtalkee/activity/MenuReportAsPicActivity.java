@@ -215,7 +215,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 				refreshUI();
 				// Util.Toast(this,
 				// getString(R.string.talk_report_upload_getting_gps), 60, -1);
-				myToast = Toast.makeText1(this, R.drawable.toast_loading, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
+				myToast = Toast.makeText1(this, true, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
 				myToast.setDuration(3600);
 				myToast.show();
 				// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
@@ -293,7 +293,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 					}
 					else
 					{
-						Util.Toast(this, getString(R.string.talk_report_upload_vid_err_select_pic));
+						Util.Toast(this, getString(R.string.talk_report_upload_pic_err_select_pic));
 					}
 				}
 				else

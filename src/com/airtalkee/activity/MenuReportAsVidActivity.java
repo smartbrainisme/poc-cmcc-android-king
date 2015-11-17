@@ -186,7 +186,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 				isUploading = true;
 				Util.hideSoftInput(this);
 				refreshUI();
-				myToast = Toast.makeText1(this, R.drawable.toast_loading, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
+				myToast = Toast.makeText1(this, true, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
 				myToast.setDuration(3600);
 				myToast.show();
 				// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
