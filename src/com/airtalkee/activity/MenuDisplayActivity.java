@@ -16,7 +16,6 @@ import com.airtalkee.config.Config;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeUserInfo;
 import com.airtalkee.sdk.OnUserInfoListener;
-import com.airtalkee.sdk.controller.AccountInfoController;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactGroup;
 import com.airtalkee.sdk.util.Utils;

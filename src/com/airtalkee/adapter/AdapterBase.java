@@ -4,7 +4,6 @@ import android.graphics.Bitmap;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.sdk.util.Log;

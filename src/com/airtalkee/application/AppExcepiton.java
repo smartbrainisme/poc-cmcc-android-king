@@ -4,21 +4,19 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.lang.Thread.UncaughtExceptionHandler;
-
-import com.airtalkee.bluetooth.BluetoothManager;
-
 import android.content.Context;
 import android.os.Environment;
 import android.text.format.Time;
 import android.util.Log;
+import com.airtalkee.bluetooth.BluetoothManager;
 
 public class AppExcepiton implements UncaughtExceptionHandler
 {
 
-	// »ñÈ¡application ¶ÔÏó£»
+	// ï¿½ï¿½È¡application ï¿½ï¿½ï¿½ï¿½
 	// private Context mContext;
 	private Thread.UncaughtExceptionHandler defaultExceptionHandler;
-	// µ¥ÀýÉùÃ÷CustomException;
+	// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½CustomException;
 	private static AppExcepiton appException;
 
 	private AppExcepiton()
@@ -45,19 +43,19 @@ public class AppExcepiton implements UncaughtExceptionHandler
 			if (defaultExceptionHandler != null)
 			{
 				String state = Environment.getExternalStorageState();
-				// ÅÐ¶ÏSdCardÊÇ·ñ´æÔÚ²¢ÇÒÊÇ¿ÉÓÃµÄ
+				// ï¿½Ð¶ï¿½SdCardï¿½Ç·ï¿½ï¿½ï¿½Ú²ï¿½ï¿½ï¿½ï¿½Ç¿ï¿½ï¿½Ãµï¿½
 				if (Environment.MEDIA_MOUNTED.equals(state))
 				{
 					path = Environment.getExternalStorageDirectory().getPath();
 				}
-				// ´´½¨Ò»¸ölogcatÄ¿Â¼
+				// ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½logcatÄ¿Â¼
 				path = path + "/AirTalkee/log";
 				File file = new File(path);
 				if (!file.exists())
 				{
 					file.mkdir();
 				}
-				// É¾³ý¹ýÆÚÎÄ¼þ
+				// É¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
 				deleteOldFile(path);
 				String time = getCurrentTime();
 				String fileName = time.substring(0, 9);
@@ -76,7 +74,7 @@ public class AppExcepiton implements UncaughtExceptionHandler
 				fos.close();
 
 			}
-			// ½«Òì³£Å×³ö£¬ÔòÓ¦ÓÃ»áµ¯³öÒì³£¶Ô»°¿ò.ÕâÀïÏÈ×¢ÊÍµô
+			// ï¿½ï¿½ï¿½ì³£ï¿½×³ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ã»áµ¯ï¿½ï¿½ï¿½ì³£ï¿½Ô»ï¿½ï¿½ï¿½.ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×¢ï¿½Íµï¿½
 			Log.e("m", "exception" + ex.toString());
 		}
 		catch (Exception e)
@@ -91,7 +89,7 @@ public class AppExcepiton implements UncaughtExceptionHandler
 	}
 
 	/**
-	 * »ñµÃµ±Ç°Ê±¼ä
+	 * ï¿½ï¿½Ãµï¿½Ç°Ê±ï¿½ï¿½
 	 * 
 	 * @return
 	 */
@@ -129,7 +127,7 @@ public class AppExcepiton implements UncaughtExceptionHandler
 				File file = new File(path + "/" + filename);
 				Long ago = file.lastModified();
 				Long now = System.currentTimeMillis();
-				// Èç¹û×îºóÒ»´ÎÐÞ¸ÄÊ±¼ä³¬¹ýÒ»Äê£º3153600Ãë
+				// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½Þ¸ï¿½Ê±ï¿½ä³¬ï¿½ï¿½Ò»ï¿½ê£º3153600ï¿½ï¿½
 				if ((now - ago) > 31536000)
 				{
 					file.delete();

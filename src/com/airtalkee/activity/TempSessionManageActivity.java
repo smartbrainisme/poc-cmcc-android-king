@@ -1,7 +1,6 @@
 package com.airtalkee.activity;
 
 import java.util.List;
-
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -13,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.adapter.AdapterSession;

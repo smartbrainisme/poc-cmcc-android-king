@@ -2,7 +2,6 @@ package com.airtalkee.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.text.Spannable;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Language;
 import com.airtalkee.Util.ThemeUtil;

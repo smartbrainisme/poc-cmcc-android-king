@@ -23,7 +23,6 @@ import android.view.ViewGroup;
 import android.view.accessibility.AccessibilityEvent;
 import android.widget.ListView;
 import android.widget.ScrollView;
-
 import com.airtalkee.R;
 import com.nineoldandroids.view.animation.AnimatorProxy;
 

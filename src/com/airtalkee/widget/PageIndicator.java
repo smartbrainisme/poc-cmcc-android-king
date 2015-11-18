@@ -1,6 +1,5 @@
 package com.airtalkee.widget;
 import java.lang.reflect.Field;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,7 +12,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 
 public class PageIndicator extends LinearLayout  {

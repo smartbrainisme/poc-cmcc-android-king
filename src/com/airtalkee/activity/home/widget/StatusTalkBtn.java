@@ -9,7 +9,6 @@ import android.view.View.OnTouchListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.AirMmiTimerListener;

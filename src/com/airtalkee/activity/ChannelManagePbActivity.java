@@ -1,7 +1,6 @@
 package com.airtalkee.activity;
 
 import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.PendingIntent;
@@ -24,7 +23,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.adapter.AdapterPhoneBook;

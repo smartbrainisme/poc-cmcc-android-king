@@ -1,11 +1,9 @@
 package com.airtalkee.control;
 
 import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.Util.Util;
@@ -24,13 +22,15 @@ import com.airtalkee.sdk.OnMessageListener;
 import com.airtalkee.sdk.OnMessagePttListener;
 import com.airtalkee.sdk.OnSystemBroadcastListener;
 import com.airtalkee.sdk.OnSystemFenceWarningListener;
+import com.airtalkee.sdk.controller.AirTaskController;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
-import com.airtalkee.sdk.controller.AirTaskController;
 
-public class AirMessageTransaction implements OnMessageListener, OnMessagePttListener, OnSystemBroadcastListener, OnSystemFenceWarningListener, AirTaskController.AirTaskPushListener
+public class AirMessageTransaction implements OnMessageListener,
+		OnMessagePttListener, OnSystemBroadcastListener,
+		OnSystemFenceWarningListener, AirTaskController.AirTaskPushListener
 {
 
 	/**********************************
@@ -219,9 +219,7 @@ public class AirMessageTransaction implements OnMessageListener, OnMessagePttLis
 	public void onMessagePttRecord(AirSession session, AirMessage message, String msgCode, String resId)
 	{
 		// TODO Auto-generated method stub
-		if (session != null && message != null && AirSession.sessionType(message.getSessionCode()) == AirSession.TYPE_CHANNEL
-			&& !TextUtils.equals(message.getIpocidFrom(), AirtalkeeAccount.getInstance().getUserId()) && AirServices.getInstance() != null
-			&& !Util.isScreenOn(AirServices.getInstance()) && (MainActivity.getInstance() != null && !MainActivity.getInstance().isShowing))
+		if (session != null && message != null && AirSession.sessionType(message.getSessionCode()) == AirSession.TYPE_CHANNEL && !TextUtils.equals(message.getIpocidFrom(), AirtalkeeAccount.getInstance().getUserId()) && AirServices.getInstance() != null && !Util.isScreenOn(AirServices.getInstance()) && (MainActivity.getInstance() != null && !MainActivity.getInstance().isShowing))
 		{
 			AirChannel channel = AirtalkeeChannel.getInstance().ChannelGetByCode(message.getSessionCode());
 			if (channel != null)
@@ -271,8 +269,7 @@ public class AirMessageTransaction implements OnMessageListener, OnMessagePttLis
 			intent.setClass(ct, MenuNoticeActivity.class);
 			intent.putExtra("url", url);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			Util.showNotification(Util.NOTIFI_ID_NOTICE, ct, intent, title, "[" + ct.getString(R.string.talk_tools_notice) + "] " + title,
-				title, null);
+			Util.showNotification(Util.NOTIFI_ID_NOTICE, ct, intent, title, "[" + ct.getString(R.string.talk_tools_notice) + "] " + title, title, null);
 			Sound.playSound(Sound.PLAYER_NEWINFO, false, ct);
 		}
 		if (noticeListener != null)
@@ -296,19 +293,17 @@ public class AirMessageTransaction implements OnMessageListener, OnMessagePttLis
 		{
 			Intent intent = new Intent();
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			Util.showNotification(Util.NOTIFI_ID_FENCE_WARNING, ct, intent, ct.getString(R.string.talk_fence_warning_title), "[" + ct.getString(R.string.talk_fence_warning_title)
-				+ "] " + ct.getString(R.string.talk_fence_warning_tip), ct.getString(R.string.talk_fence_warning_tip), null);
+			Util.showNotification(Util.NOTIFI_ID_FENCE_WARNING, ct, intent, ct.getString(R.string.talk_fence_warning_title), "[" + ct.getString(R.string.talk_fence_warning_title) + "] " + ct.getString(R.string.talk_fence_warning_tip), ct.getString(R.string.talk_fence_warning_tip), null);
 			Sound.playSound(Sound.PLAYER_PTI, false, ct);
 		}
 	}
-	
-	
+
 	/**********************************
 	 * 
 	 * Task Dispatch
 	 * 
 	 **********************************/
-	
+
 	@Override
 	public void onTaskDispatch(String taskId, String taskName)
 	{

@@ -1,7 +1,6 @@
 package com.airtalkee.Util;
 
 import android.media.AudioManager;
-
 import com.airtalkee.config.Config;
 import com.airtalkee.sdk.engine.AirEngine;
 import com.airtalkee.services.AirServices;

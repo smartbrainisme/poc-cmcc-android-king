@@ -24,7 +24,6 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
-import com.airtalkee.R.string;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
@@ -580,6 +579,13 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 				break;
 			}
 		}
+	}
+
+	@Override
+	public void onClickOk(int id, boolean isChecked)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

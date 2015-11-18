@@ -1,7 +1,6 @@
 package com.airtalkee.adapter;
 
 import java.util.HashMap;
-
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.sdk.AirtalkeeAccount;

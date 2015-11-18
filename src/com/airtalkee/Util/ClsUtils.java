@@ -2,7 +2,6 @@ package com.airtalkee.Util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.util.Log;

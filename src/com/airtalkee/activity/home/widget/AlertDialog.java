@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.airtalkee.R;
@@ -18,6 +19,7 @@ public class AlertDialog extends Dialog implements
 	protected TextView tvContent;
 	protected Button cancle, sure;
 	protected ImageView ivCancle, ivSure;
+	protected CheckBox cbRemember;
 	//
 	protected View c;
 	protected View s;
@@ -26,12 +28,15 @@ public class AlertDialog extends Dialog implements
 	protected String textSure = "确定";
 	protected int id;
 	protected int tvContentSize = 16;
+	protected boolean cbVisible = false;
 	//
 	protected DialogListener listener;
 
 	public interface DialogListener
 	{
 		void onClickOk(int id);
+
+		void onClickOk(int id, boolean isChecked);
 
 		void onClickCancel(int id);
 	}
@@ -52,6 +57,17 @@ public class AlertDialog extends Dialog implements
 		super(context, R.style.alert_dialog);
 		this.title = title;
 		this.content = content;
+		this.listener = listener;
+		this.id = id;
+	}
+
+	public AlertDialog(Context context, String title, String content, String textSure, boolean cbVisible, DialogListener listener, int id)
+	{
+		super(context, R.style.alert_dialog);
+		this.title = title;
+		this.content = content;
+		this.textSure = textSure;
+		this.cbVisible = cbVisible;
 		this.listener = listener;
 		this.id = id;
 	}
@@ -104,9 +120,9 @@ public class AlertDialog extends Dialog implements
 
 	protected void initView()
 	{
-
 		tvTitle = (TextView) findViewById(R.id.tv_title);
 		tvContent = (TextView) findViewById(R.id.tv_content);
+		cbRemember = (CheckBox) findViewById(R.id.cb_remember);
 
 		c = findViewById(R.id.cancle);
 		s = findViewById(R.id.sure);
@@ -121,7 +137,6 @@ public class AlertDialog extends Dialog implements
 
 	protected void fillView()
 	{
-
 		if (TextUtils.isEmpty(title))
 		{
 			tvTitle.setVisibility(View.GONE);
@@ -142,6 +157,8 @@ public class AlertDialog extends Dialog implements
 			cancle.setText(textcancle);
 		if (null != sure)
 			sure.setText(textSure);
+		if(!cbVisible)
+			cbRemember.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -153,14 +170,23 @@ public class AlertDialog extends Dialog implements
 			{
 				this.dismiss();
 				if (null != listener)
-					listener.onClickOk(this.id);
+				{
+					if (cbVisible)
+					{
+						listener.onClickOk(this.id, cbRemember.isChecked());
+					}
+					else
+					{
+						listener.onClickOk(this.id);
+					}
+				}
 				break;
 			}
 			case R.id.cancle:
 			{
 				this.cancel();
 				if (null != listener)
-					listener.onClickCancel(id);
+					listener.onClickCancel(this.id);
 				break;
 			}
 		}

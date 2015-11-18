@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,7 +11,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -23,20 +21,13 @@ import android.widget.ListAdapter;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
-import com.airtalkee.Util.Util;
 import com.airtalkee.adapter.AdapterReport;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirReportManager;
 import com.airtalkee.entity.AirReport;
 import com.airtalkee.listener.OnMmiReportListener;
-import com.airtalkee.sdk.AirtalkeeAccount;
-import com.airtalkee.sdk.AirtalkeeSessionManager;
-import com.airtalkee.sdk.controller.SessionController;
-import com.airtalkee.sdk.entity.AirSession;
-import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.MListView;
 
 public class MenuReportActivity extends ActivityBase implements OnClickListener, OnMmiReportListener, OnItemLongClickListener, OnItemClickListener

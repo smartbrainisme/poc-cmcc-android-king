@@ -2,7 +2,6 @@ package com.airtalkee.Util;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import android.content.ComponentName;
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -12,7 +11,6 @@ import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-
 import com.airtalkee.sdk.util.Log;
 
 public class ApnManager
@@ -134,7 +132,7 @@ public class ApnManager
 	}
 
 	/**
-	 * »ñµÃÍøÂçÁ¬½Ó¹ÜÀí
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¹ï¿½ï¿½ï¿½
 	 * 
 	 * @return
 	 */
@@ -201,7 +199,7 @@ public class ApnManager
 	{
 		boolean ret = false;
 		if (apnName.trim().toLowerCase().endsWith("net") || apnApn.trim().toLowerCase().endsWith("net")
-			|| (apnName.contains("ÖÐ¹úµçÐÅ") || apnName.toLowerCase().contains("ct") || apnApn.trim().contains("777")))
+			|| (apnName.contains("ï¿½Ð¹ï¿½ï¿½ï¿½ï¿½") || apnName.toLowerCase().contains("ct") || apnApn.trim().contains("777")))
 			ret = true;
 		return ret;
 	}
@@ -272,7 +270,7 @@ public class ApnManager
 				}
 			}
 			else
-			// ÎÞÍøÂç¼¤»î
+			// ï¿½ï¿½ï¿½ï¿½ï¿½ç¼¤ï¿½ï¿½
 			{
 				ConnectionType = CONNECTION_TYPE_MOBILE;
 				//ConnectionFeature = updateToNetApn(context);
@@ -289,14 +287,14 @@ public class ApnManager
 	}
 
 	/**
-	 * Ìø×ªÏµÍ³ÍøÂçÉèÖÃ½çÃæ
+	 * ï¿½ï¿½×ªÏµÍ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½
 	 * 
 	 * @param context
 	 */
 	public static void startActivitySetting(Context context)
 	{
-		// µ÷ÓÃÆäËûÓ¦ÓÃµÄactivity
-		// ÔÚ´úÂëÖÐ"com.android.settings"ÊÇÒª´ò¿ªµÄ³ÌÐò°üÃû£¬"com.android.settings.WirelessSettings"ÊÇÒª´ò¿ªµÄActivity¡£
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ãµï¿½activity
+		// ï¿½Ú´ï¿½ï¿½ï¿½ï¿½ï¿½"com.android.settings"ï¿½ï¿½Òªï¿½ò¿ªµÄ³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½"com.android.settings.WirelessSettings"ï¿½ï¿½Òªï¿½ò¿ªµï¿½Activityï¿½ï¿½
 		if (context != null)
 		{
 			Intent intent = null;

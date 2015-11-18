@@ -13,7 +13,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-
 import com.airtalkee.R;
 
 public class MListView extends ListView implements OnScrollListener, OnClickListener

@@ -254,7 +254,7 @@
 	<string name="talk_userlogin_login_forbidden">您所使用的账户或所在的组织已经被禁用！</string>
 	<string name="talk_user_temp_code_expire">验证码无效或已经过期！</string>
 	<string name="talk_group_no_connect">[无频道]</string>
-	<string name="talk_exit_tip">确认退出</string>
+	<string name="talk_exit_tip">确定要退出登录?</string>
 	<string name="talk_delete_tip">确认删除</string>
 	<string name="talk_deleteing">正在删除...</string>
 	<string name="talk_ok">确认</string>

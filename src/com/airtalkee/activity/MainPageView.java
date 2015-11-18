@@ -2,7 +2,6 @@ package com.airtalkee.activity;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,7 +11,6 @@ import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Setting;
 import com.airtalkee.Util.Util;

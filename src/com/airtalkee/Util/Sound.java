@@ -7,7 +7,6 @@ import android.media.MediaPlayer;
 import android.media.MediaPlayer.OnCompletionListener;
 import android.os.Vibrator;
 import android.provider.Settings;
-
 import com.airtalkee.R;
 import com.airtalkee.config.Config;
 import com.airtalkee.sdk.util.Log;

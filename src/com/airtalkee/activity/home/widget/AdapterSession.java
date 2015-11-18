@@ -1,14 +1,12 @@
 package com.airtalkee.activity.home.widget;
 
 import java.util.ArrayList;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirChannel;

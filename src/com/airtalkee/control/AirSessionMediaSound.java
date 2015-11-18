@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.Util.SoundPlayer;

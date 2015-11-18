@@ -3,7 +3,6 @@ package com.airtalkee.adapter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,7 +14,6 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirSession;

@@ -3,10 +3,8 @@ package com.airtalkee.bluetooth;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -15,7 +13,6 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Xml;
 import android.view.InflateException;
-
 import com.airtalkee.R;
 import com.airtalkee.sdk.util.Log;
 

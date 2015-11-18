@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -20,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.DensityUtil;
 import com.airtalkee.activity.home.widget.MediaStatusBar;

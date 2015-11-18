@@ -837,4 +837,11 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	{
 
 	}
+
+	@Override
+	public void onClickOk(int id, boolean isChecked)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

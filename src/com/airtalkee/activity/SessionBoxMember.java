@@ -2,7 +2,6 @@ package com.airtalkee.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -18,7 +17,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.adapter.AdapterMember;

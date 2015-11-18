@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
-
 import com.airtalkee.R;
 
 public class PagerControl extends View

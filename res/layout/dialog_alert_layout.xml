@@ -18,8 +18,8 @@
             android:id="@+id/tv_title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginBottom="16dp"
+            android:gravity="center"
             android:textColor="@android:color/black"
             android:textSize="17sp" />
 
@@ -31,6 +31,18 @@
             android:maxLines="3"
             android:textColor="#757575"
             android:textSize="14sp" />
+
+        <CheckBox
+            android:id="@+id/cb_remember"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:button="?theme_btn_check"
+            android:checked="true"
+            android:paddingLeft="10dp"
+            android:text="@string/talk_auto_login"
+            android:textColor="@color/black" />
     </LinearLayout>
 
     <View
@@ -41,10 +53,9 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="47dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:background="@drawable/bg_bottom_radius"
-         >
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/cancle"

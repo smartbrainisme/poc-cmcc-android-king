@@ -2,7 +2,6 @@ package com.airtalkee.activity;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -23,7 +22,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.ApnManager;
 import com.airtalkee.Util.Util;

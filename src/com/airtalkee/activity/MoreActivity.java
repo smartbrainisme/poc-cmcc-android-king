@@ -1,44 +1,28 @@
 package com.airtalkee.activity;
 
 import java.util.List;
-import android.R.integer;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import com.airtalkee.R;
-import com.airtalkee.Util.AirMmiTimer;
-import com.airtalkee.Util.AirMmiTimerListener;
-import com.airtalkee.Util.Setting;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.config.Config;
 import com.airtalkee.sdk.AirtalkeeAccount;
-import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.AirtalkeeUserInfo;
 import com.airtalkee.sdk.OnUserInfoListener;
 import com.airtalkee.sdk.controller.AccountController;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactGroup;
 import com.airtalkee.sdk.entity.AirFunctionSetting;
-import com.airtalkee.sdk.entity.AirStatisticsNetworkByte;
-import com.airtalkee.sdk.util.IOoperate;
-import com.airtalkee.sdk.util.Utils;
 
 public class MoreActivity extends ActivityBase implements OnClickListener,
 		OnUserInfoListener, OnSeekBarChangeListener

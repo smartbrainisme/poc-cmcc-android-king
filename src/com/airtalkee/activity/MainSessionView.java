@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirMessageTransaction;

@@ -2,7 +2,6 @@ package com.airtalkee.activity.home.widget;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -16,7 +15,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-
 import com.airtalkee.R;
 import com.airtalkee.activity.home.AdapterMemberAll;
 import com.airtalkee.activity.home.AdapterMemberAll.CheckedCallBack;

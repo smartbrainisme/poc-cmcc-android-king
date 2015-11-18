@@ -1,7 +1,6 @@
 package com.airtalkee.Util;
 
 import java.util.HashMap;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -9,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
-
 import com.airtalkee.sdk.engine.AirPower;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.services.AirServices;

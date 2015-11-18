@@ -10,12 +10,10 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
 import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.airtalkee.config.Config;
 import com.airtalkee.receiver.ReceiverNoScreenOper;
 import com.sinovoice.hcicloudsdk.android.tts.player.TTSPlayer;

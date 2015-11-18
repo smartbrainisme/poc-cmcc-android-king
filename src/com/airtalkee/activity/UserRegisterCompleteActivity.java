@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.control.AirAccountManager;

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
-
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.services.AirServices;

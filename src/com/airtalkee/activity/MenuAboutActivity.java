@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,7 +24,6 @@ import com.airtalkee.sdk.AirtalkeeVersionUpdate;
 import com.airtalkee.sdk.OnVersionUpdateListener;
 import com.airtalkee.sdk.entity.AirStatisticsNetworkByte;
 import com.airtalkee.sdk.util.IOoperate;
-import com.airtalkee.services.AirServices;
 
 public class MenuAboutActivity extends ActivityBase implements OnClickListener, AirMmiTimerListener, OnVersionUpdateListener
 {

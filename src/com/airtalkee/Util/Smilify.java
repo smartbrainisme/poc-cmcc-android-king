@@ -2,7 +2,6 @@ package com.airtalkee.Util;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -13,7 +12,6 @@ import android.text.Spannable;
 import android.text.Spanned;
 import android.text.style.LineHeightSpan;
 import android.text.style.ReplacementSpan;
-
 import com.airtalkee.R;
 
 public class Smilify

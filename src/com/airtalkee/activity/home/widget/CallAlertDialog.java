@@ -1,13 +1,11 @@
 package com.airtalkee.activity.home.widget;
 
 import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-
 import com.airtalkee.R;
 import com.airtalkee.activity.TempSessionActivity;
 import com.airtalkee.activity.home.SessionDialogActivity;
@@ -136,6 +134,13 @@ public class CallAlertDialog extends AlertDialog implements
 	@Override
 	public void onSessionMemberUpdate(AirSession session,
 			List<AirContact> members, boolean isOk) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onClickOk(int id, boolean isChecked)
+	{
 		// TODO Auto-generated method stub
 		
 	}

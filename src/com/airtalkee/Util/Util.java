@@ -30,7 +30,6 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.format.Time;
 import android.view.inputmethod.InputMethodManager;
-import com.airtalkee.Util.Toast;
 import com.airtalkee.R;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.entity.AirContact;
