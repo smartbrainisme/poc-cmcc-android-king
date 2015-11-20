@@ -20,27 +20,29 @@ import com.airtalkee.sdk.util.Log;
 import com.airtalkee.services.AirServices;
 
 public class CallAlertDialog extends AlertDialog implements
-		android.view.View.OnClickListener ,DialogListener,OnMmiSessionListener{
+		android.view.View.OnClickListener, DialogListener, OnMmiSessionListener
+{
 	private String sessionCode;
 	private AirSession session;
-	
-	public CallAlertDialog(Context context, String title, String content,
-			String sessionCode,  int id) {
+
+	public CallAlertDialog(Context context, String title, String content, String sessionCode, int id)
+	{
 		super(context, title, content, "", "", null, id);
 		this.sessionCode = sessionCode;
 		setListener(this);
 	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 
 		setContentView(R.layout.dialog_call_receiver_layout);
 		initView();
 		fillView();
-		
+
 		session = AirtalkeeSessionManager.getInstance().getSessionByCode(sessionCode);
 		AirSessionControl.getInstance().setOnMmiSessionListener(this);
-		if(null != session)
+		if (null != session)
 		{
 			if (session.getSpecialNumber() == 0)
 			{
@@ -53,25 +55,28 @@ public class CallAlertDialog extends AlertDialog implements
 			AirtalkeeMessage.getInstance().MessageSystemGenerate(session, getContext().getString(R.string.talk_call_state_outgoing_call), false);
 
 		}
-		
+
 	}
 
-	protected void fillView() {
+	protected void fillView()
+	{
 
-		if (TextUtils.isEmpty(title)) {
+		if (TextUtils.isEmpty(title))
+		{
 			tvTitle.setVisibility(View.GONE);
 		}
 
-		if (TextUtils.isEmpty(content)) {
+		if (TextUtils.isEmpty(content))
+		{
 			tvContent.setVisibility(View.GONE);
 		}
 
-		s.setVisibility(View.GONE );
+		s.setVisibility(View.GONE);
 
 		tvTitle.setText(title);
 		tvContent.setText(content);
 	}
-	
+
 	private void finishCall()
 	{
 		Log.e(TempSessionActivity.class, "handleSession.SessionBye(session)");
@@ -82,31 +87,36 @@ public class CallAlertDialog extends AlertDialog implements
 	}
 
 	@Override
-	public void onClickOk(int id) {
+	public void onClickOk(int id)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void onClickCancel(int id) {
+	public void onClickCancel(int id)
+	{
 		// TODO Auto-generated method stub
 		finishCall();
 	}
 
 	@Override
-	public void onSessionOutgoingRinging(AirSession session) {
+	public void onSessionOutgoingRinging(AirSession session)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void onSessionEstablishing(AirSession session) {
+	public void onSessionEstablishing(AirSession session)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void onSessionEstablished(AirSession session, boolean isOk) {
+	public void onSessionEstablished(AirSession session, boolean isOk)
+	{
 		// TODO Auto-generated method stub
 		AirSessionControl.getInstance().setOnMmiSessionListener(null);
 		Intent it = new Intent(getContext(), SessionDialogActivity.class);
@@ -117,7 +127,8 @@ public class CallAlertDialog extends AlertDialog implements
 	}
 
 	@Override
-	public void onSessionReleased(AirSession session, int reason) {
+	public void onSessionReleased(AirSession session, int reason)
+	{
 		// TODO Auto-generated method stub
 		AirSessionControl.getInstance().setOnMmiSessionListener(null);
 		this.cancel();
@@ -125,24 +136,24 @@ public class CallAlertDialog extends AlertDialog implements
 	}
 
 	@Override
-	public void onSessionPresence(AirSession session,
-			List<AirContact> membersAll, List<AirContact> membersPresence) {
+	public void onSessionPresence(AirSession session, List<AirContact> membersAll, List<AirContact> membersPresence)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
-	public void onSessionMemberUpdate(AirSession session,
-			List<AirContact> members, boolean isOk) {
+	public void onSessionMemberUpdate(AirSession session, List<AirContact> members, boolean isOk)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onClickOk(int id, boolean isChecked)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

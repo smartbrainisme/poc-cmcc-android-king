@@ -599,9 +599,9 @@ public class Util
 		String edateString = date;
 		if (!Utils.isEmpty(date))
 		{
-			edateString = edateString.replace("��", "/");
-			edateString = edateString.replace("��", "/");
-			edateString = edateString.replace("��", "");
+			edateString = edateString.replace("年", "/");
+			edateString = edateString.replace("月", "/");
+			edateString = edateString.replace("日", "");
 			String d[] = edateString.split("/");
 			if (d != null && d.length == 3)
 			{

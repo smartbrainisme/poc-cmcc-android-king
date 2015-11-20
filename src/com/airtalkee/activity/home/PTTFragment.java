@@ -130,7 +130,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 					}
 					break;
 				case R.id.bar_right:
-					dialog = new AlertDialog(getActivity(), "确定呼叫中心", null, this, DIALOG_CALL_CENTER);
+					dialog = new AlertDialog(getActivity(), getString(R.string.talk_tools_call_center_confirm), null, this, DIALOG_CALL_CENTER);
 					dialog.show();
 					break;
 			}

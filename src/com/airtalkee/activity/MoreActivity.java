@@ -110,7 +110,6 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 				// findViewById(R.id.talk_lv_tool_gps).setVisibility(View.VISIBLE);
 				// findViewById(R.id.talk_lv_tool_gps_divider).setVisibility(View.VISIBLE);
 
-				// 2015���10���15���16:33:27 zuocy
 				findViewById(R.id.talk_lv_tool_gps).setVisibility(View.GONE);
 				findViewById(R.id.talk_lv_tool_gps_divider).setVisibility(View.GONE);
 			}

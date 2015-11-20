@@ -3,34 +3,45 @@ package com.airtalkee.control;
 import java.util.List;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.text.TextUtils;
 import com.airtalkee.R;
 import com.airtalkee.Util.Sound;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.AccountActivity;
 import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.MenuNoticeActivity;
 import com.airtalkee.activity.MenuTaskActivity;
 import com.airtalkee.activity.TempSessionActivity;
+import com.airtalkee.activity.home.HomeActivity;
+import com.airtalkee.activity.home.SessionDialogActivity;
+import com.airtalkee.activity.home.widget.AlertDialog;
+import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.config.Config;
 import com.airtalkee.listener.OnMmiMessageListener;
 import com.airtalkee.listener.OnMmiNoticeListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeMessage;
+import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.OnMessageListener;
 import com.airtalkee.sdk.OnMessagePttListener;
 import com.airtalkee.sdk.OnSystemBroadcastListener;
 import com.airtalkee.sdk.OnSystemFenceWarningListener;
 import com.airtalkee.sdk.controller.AirTaskController;
+import com.airtalkee.sdk.controller.SessionController;
 import com.airtalkee.sdk.entity.AirChannel;
+import com.airtalkee.sdk.entity.AirFunctionSetting;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.services.AirServices;
 
 public class AirMessageTransaction implements OnMessageListener,
 		OnMessagePttListener, OnSystemBroadcastListener,
-		OnSystemFenceWarningListener, AirTaskController.AirTaskPushListener
+		OnSystemFenceWarningListener, AirTaskController.AirTaskPushListener,
+		DialogListener
 {
 
 	/**********************************
@@ -38,9 +49,11 @@ public class AirMessageTransaction implements OnMessageListener,
 	 * ����ģʽ�ӿڷ���
 	 * 
 	 **********************************/
+	private static final int DIALOG_CALL_CENTER = 100;
 	private static AirMessageTransaction mInstance = null;
 	private OnMmiMessageListener msgListener = null;
 	private OnMmiNoticeListener noticeListener = null;
+	AlertDialog dialog;
 
 	private AirMessageTransaction()
 	{
@@ -262,7 +275,7 @@ public class AirMessageTransaction implements OnMessageListener,
 	public void onSystemBroadcastPush(String title, String url)
 	{
 		// TODO Auto-generated method stub
-		Context ct = AirServices.getInstance();
+		Context ct = HomeActivity.getInstance();
 		if (ct != null)
 		{
 			Intent intent = new Intent();
@@ -271,6 +284,17 @@ public class AirMessageTransaction implements OnMessageListener,
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			Util.showNotification(Util.NOTIFI_ID_NOTICE, ct, intent, title, "[" + ct.getString(R.string.talk_tools_notice) + "] " + title, title, null);
 			Sound.playSound(Sound.PLAYER_NEWINFO, false, ct);
+			// 弹出窗口
+			try
+			{
+				dialog = new AlertDialog(ct, ct.getString(R.string.talk_tools_notice), title, ct.getString(R.string.talk_tools_know), ct.getString(R.string.talk_session_call), this, DIALOG_CALL_CENTER);
+				dialog.show();
+			}
+			catch (Exception e)
+			{
+				String str = e.getMessage();
+				e.printStackTrace();
+			}
 		}
 		if (noticeListener != null)
 		{
@@ -280,7 +304,7 @@ public class AirMessageTransaction implements OnMessageListener,
 
 	/**********************************
 	 * 
-	 * ����Χ���澯
+	 * 告警 电子围栏
 	 * 
 	 **********************************/
 
@@ -294,6 +318,7 @@ public class AirMessageTransaction implements OnMessageListener,
 			Intent intent = new Intent();
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			Util.showNotification(Util.NOTIFI_ID_FENCE_WARNING, ct, intent, ct.getString(R.string.talk_fence_warning_title), "[" + ct.getString(R.string.talk_fence_warning_title) + "] " + ct.getString(R.string.talk_fence_warning_tip), ct.getString(R.string.talk_fence_warning_tip), null);
+			Toast.makeText1(ct, R.drawable.ic_error, ct.getString(R.string.talk_fence_warning_title) + "\r\n" + ct.getString(R.string.talk_fence_warning_tip), Toast.LENGTH_LONG).show();
 			Sound.playSound(Sound.PLAYER_PTI, false, ct);
 		}
 	}
@@ -307,7 +332,6 @@ public class AirMessageTransaction implements OnMessageListener,
 	@Override
 	public void onTaskDispatch(String taskId, String taskName)
 	{
-		// TODO Auto-generated method stub
 		if (Config.funcTaskDispatch)
 		{
 			Context ct = AirServices.getInstance();
@@ -320,6 +344,49 @@ public class AirMessageTransaction implements OnMessageListener,
 				Sound.playSound(Sound.PLAYER_NEWINFO, false, ct);
 			}
 		}
+	}
+
+	@Override
+	public void onClickOk(int id)
+	{
+		// TODO Auto-generated method stub
+		// 呼叫中心
+		Context ct = AirServices.getInstance();
+		if (Config.funcCenterCall == AirFunctionSetting.SETTING_ENABLE)
+		{
+			if (AirtalkeeAccount.getInstance().isAccountRunning())
+			{
+				if (AirtalkeeAccount.getInstance().isEngineRunning())
+				{
+					AirSession session = SessionController.SessionMatchSpecial(AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER, ct.getString(R.string.talk_tools_call_center));
+					Intent it = new Intent(ct, SessionDialogActivity.class);
+					it.putExtra("sessionCode", session.getSessionCode());
+					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+					ct.startActivity(it);
+				}
+				else
+				{
+					Util.Toast(ct, ct.getString(R.string.talk_network_warning));
+				}
+			}
+		}
+		else if (Config.funcCenterCall == AirFunctionSetting.SETTING_CALL_NUMBER && !Utils.isEmpty(Config.funcCenterCallNumber))
+		{
+			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Config.funcCenterCallNumber));
+			ct.startActivity(intent);
+		}
+	}
+
+	@Override
+	public void onClickOk(int id, boolean isChecked)
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void onClickCancel(int id)
+	{
+		// TODO Auto-generated method stub
 	}
 
 }

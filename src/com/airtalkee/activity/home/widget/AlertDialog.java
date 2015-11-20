@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -49,7 +50,6 @@ public class AlertDialog extends Dialog implements
 	public AlertDialog(Context context)
 	{
 		super(context, R.style.alert_dialog);
-
 	}
 
 	public AlertDialog(Context context, String title, String content, DialogListener listener, int id)
@@ -157,7 +157,7 @@ public class AlertDialog extends Dialog implements
 			cancle.setText(textcancle);
 		if (null != sure)
 			sure.setText(textSure);
-		if(!cbVisible)
+		if (!cbVisible)
 			cbRemember.setVisibility(View.GONE);
 	}
 

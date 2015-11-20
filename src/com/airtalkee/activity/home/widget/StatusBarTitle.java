@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.activity.MoreActivity;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirContact;
@@ -24,6 +25,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 	private View btnLeft, btnRight;
 	private ImageView ivBtnLeft;
 	private AirSession session = null;
+
 	public StatusBarTitle(Context context, AttributeSet attrs)
 	{
 		super(context, attrs);
@@ -43,10 +45,10 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		btnLeft = findViewById(R.id.left_button);
 		btnRight = findViewById(R.id.right_button);
 		tvTitle = (TextView) findViewById(R.id.tv_title);
-		ivMeidiaStatus =(ImageView)findViewById(R.id.iv_media_status);
+		ivMeidiaStatus = (ImageView) findViewById(R.id.iv_media_status);
 		tvMediaStatus = (TextView) findViewById(R.id.tv_media_status);
 		ivBtnLeft = (ImageView) findViewById(R.id.bottom_left_icon);
-		//findViewById(R.id.title_drag).setOnClickListener(this);
+		// findViewById(R.id.title_drag).setOnClickListener(this);
 		btnLeft.setOnClickListener(this);
 		btnRight.setOnClickListener(this);
 	}
@@ -56,7 +58,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		this.session = s;
 		refreshMediaStatus();
 	}
-	
+
 	public void setLeftMenuInVisible()
 	{
 		btnLeft.setVisibility(View.INVISIBLE);
@@ -68,12 +70,12 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		{
 			try
 			{
-				if(session.getType() == AirSession.TYPE_DIALOG)
+				if (session.getType() == AirSession.TYPE_DIALOG)
 				{
 					btnLeft.setVisibility(View.INVISIBLE);
 					tvTitle.setCompoundDrawables(null, null, null, null);
 				}
-				if(session.isVoiceLocked())
+				if (session.isVoiceLocked())
 				{
 					ivBtnLeft.setImageResource(R.drawable.ic_lock);
 				}
@@ -154,11 +156,13 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 					{
 						AirtalkeeSessionManager.getInstance().SessionLock(session, false);
 						ivBtnLeft.setImageResource(R.drawable.ic_unlock);
+						Toast.makeText1(this.getContext(), getContext().getString(R.string.talk_channel_unlock_tip), Toast.LENGTH_LONG).show();
 					}
 					else
 					{
 						AirtalkeeSessionManager.getInstance().SessionLock(session, true);
 						ivBtnLeft.setImageResource(R.drawable.ic_lock);
+						Toast.makeText1(this.getContext(), getContext().getString(R.string.talk_channel_lock_tip), Toast.LENGTH_LONG).show();
 					}
 				}
 				break;

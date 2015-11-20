@@ -208,6 +208,6 @@ public class MenuAccountActivity extends ActivityBase implements
 	@Override
 	public void onClickCancel(int id)
 	{
-		dialog.dismiss();
+		
 	}
 }

@@ -1,9 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout android:layout_width="fill_parent"  android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical">
-    <LinearLayout android:layout_width="fill_parent" android:layout_height="40dp" android:id="@+id/tab_contaner" android:orientation="horizontal" android:layout_marginLeft="50dp" android:layout_marginRight="50dp" android:layout_marginTop="10dp">  
-    	<TextView android:id="@+id/tab_member_session" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1"  android:background="@drawable/selector_tab_member_session" android:text="频道成员" android:gravity="center" />    
-    	<TextView android:id="@+id/tab_member_all" android:layout_width="fill_parent" android:layout_height="fill_parent" android:layout_weight="1" android:background="@drawable/selector_tab_member_all" android:text="全部成员" android:gravity="center" />    
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/tab_contaner"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/tab_member_session"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_tab_member_session"
+            android:gravity="center"
+            android:text="频道成员" />
+
+        <TextView
+            android:id="@+id/tab_member_all"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@drawable/selector_tab_member_all"
+            android:gravity="center"
+            android:text="全部成员" />
     </LinearLayout>
-    <com.airtalkee.widget.MListView android:id="@+id/talk_lv_member"  android:layout_width="fill_parent"  android:layout_height="fill_parent"  android:cacheColorHint="#00000000"  android:dividerHeight="0.5dp"  android:divider="@drawable/divider_line"    android:descendantFocusability="afterDescendants" android:layout_marginTop="10dp" android:layout_marginLeft="20dp" android:layout_marginRight="20dp"/>    
-    <LinearLayout android:id="@+id/mem_container" android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical" android:visibility="gone"/>
+
+    <com.airtalkee.widget.MListView
+        android:id="@+id/talk_lv_member"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:headerDividersEnabled="false"
+        android:cacheColorHint="#00000000"
+        android:scrollbars="none"
+        android:descendantFocusability="afterDescendants"
+        android:divider="@drawable/divider_line"
+        android:dividerHeight="0.5dp" />
+
+    <LinearLayout
+        android:id="@+id/mem_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="gone" />
+
 </LinearLayout>

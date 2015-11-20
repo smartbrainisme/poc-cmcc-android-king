@@ -184,7 +184,7 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 			AirtalkeeMediaVisualizer.getInstance().setMediaAudioVisualizerValid(true, false);
 			AirtalkeeMediaVisualizer.getInstance().setMediaAudioVisualizerSpectrumNumber(SessionBoxTalk.mVisualizerSpectrumNum);
 			AirtalkeeAccount.getInstance().AirTalkeePowerManagerRun(this);
-			AirtalkeeAccount.getInstance().AirTalkeeTimerApiRun(this);
+			//AirtalkeeAccount.getInstance().AirTalkeeTimerApiRun(this);
 			AirtalkeeAccount.getInstance().AirTalkeeConfig(this, Config.serverAddress, 4001);
 			AirtalkeeAccount.getInstance().AirTalkeeConfigMarketCode(Config.marketCode);
 			if (Config.SUB_PLATFORM_VALID)

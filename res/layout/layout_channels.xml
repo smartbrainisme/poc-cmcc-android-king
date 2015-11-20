@@ -1,53 +1,173 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="fill_parent" android:layout_height="fill_parent" >
- <LinearLayout android:layout_above="@+id/sliding_back"  android:layout_width="fill_parent"  android:layout_height="fill_parent"  android:orientation="vertical" android:paddingLeft="10dp" android:paddingRight="10dp"	>
-     <RelativeLayout  android:orientation="horizontal" android:layout_width="fill_parent" android:clickable="true" android:layout_height="@dimen/main_header_height"   android:padding="?theme_title_menu_pading"   >
-	 		<RelativeLayout  android:layout_width="@dimen/main_menu_btn_width" android:layout_height="fill_parent"  android:clickable="true"  android:layout_centerVertical="true" android:layout_marginRight="3dip">
-	 		 	<ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true"  android:contentDescription="@string/app_name"/>
-	 		</RelativeLayout>
-	 		<RelativeLayout   android:layout_width="wrap_content" android:layout_height="fill_parent"  android:layout_centerInParent="true" android:layout_toRightOf="@+id/left_button" android:layout_toLeftOf="@+id/right_button" >
-	 			<TextView android:id="@+id/channel_title" android:layout_height="fill_parent" android:layout_width="wrap_content"   android:textSize="20sp" android:gravity="center" android:textColor="#ffffff" android:layout_alignParentTop="true" android:singleLine="true"  android:layout_centerInParent="true"  android:text="频道和会话"  android:drawablePadding="10dp" />
-	 		</RelativeLayout>
-	        <RelativeLayout android:id="@+id/channel_button_more" android:layout_width="@dimen/main_menu_btn_width" android:layout_height="fill_parent" android:layout_alignParentRight="true" android:clickable="true"  >
-	       		<ImageView  android:id="@+id/channel_right_icon" android:layout_width="wrap_content" android:layout_height="wrap_content"  android:src="@drawable/ic_more" android:layout_centerInParent="true" android:contentDescription="@string/app_name" />
-	        	<TextView android:id="@+id/tv_new_notice" android:layout_width="fill_parent" android:layout_height="fill_parent" android:background="?theme_nav_unread_bg" android:layout_margin="5dip" android:gravity="center"  android:textColor="#ffffff" android:maxLength="3" android:textSize="12sp" android:visibility="gone"/>
-	        </RelativeLayout>
-	  </RelativeLayout>
-     
-     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="10dp" android:background="@drawable/selector_title_channel" android:layout_marginBottom="10dp">
-		<TextView android:id="@+id/tv_channel_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="12sp" android:textColor="#fff" android:layout_weight="1" android:text="频道"/>
-		<ImageView android:layout_width="wrap_content" android:layout_height="fill_parent" android:scaleType="fitCenter"  />
-	</LinearLayout>
-	<GridView
-        android:id="@+id/gv_channels"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="170dp"
-        android:listSelector="@android:color/transparent"
-        android:fadingEdge="none"
-        android:fadingEdgeLength="0dp"
-        android:numColumns="2"
-        android:gravity="center"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/sliding_back"
         android:orientation="vertical"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:layout_marginBottom="10dp" />
-     <LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:padding="10dp" android:background="@drawable/selector_title_channel" android:layout_marginBottom="10dp" >
-		<TextView android:id="@+id/tv_session_title" android:layout_width="fill_parent" android:layout_height="wrap_content" android:textSize="12sp" android:textColor="#fff" android:layout_weight="1" android:text="会话"/>
-		<ImageView android:id="@+id/iv_setting" android:layout_width="wrap_content" android:layout_height="fill_parent" android:scaleType="fitCenter" android:src="@drawable/ic_setting" />
-	</LinearLayout>
-	<GridView
-        android:id="@+id/gv_session"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/main_header_height"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:padding="?theme_title_menu_pading" >
+
+            <RelativeLayout
+                android:layout_width="@dimen/main_menu_btn_width"
+                android:layout_height="fill_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="3dip"
+                android:clickable="true" >
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/app_name" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_centerInParent="true"
+                android:layout_toLeftOf="@+id/right_button"
+                android:layout_toRightOf="@+id/left_button" >
+
+                <TextView
+                    android:id="@+id/channel_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:drawablePadding="10dp"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="频道和会话"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/channel_button_more"
+                android:layout_width="@dimen/main_menu_btn_width"
+                android:layout_height="fill_parent"
+                android:layout_alignParentRight="true"
+                android:clickable="true" >
+
+                <ImageView
+                    android:id="@+id/channel_right_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_more" />
+
+                <TextView
+                    android:id="@+id/tv_new_notice"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="5dip"
+                    android:background="?theme_nav_unread_bg"
+                    android:gravity="center"
+                    android:maxLength="3"
+                    android:textColor="#ffffff"
+                    android:textSize="12sp"
+                    android:visibility="gone" />
+            </RelativeLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/selector_title_channel"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/tv_channel_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="频道"
+                android:textColor="#fff"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:scaleType="fitCenter" />
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/gv_channels"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:fadingEdge="none"
+            android:fadingEdgeLength="0dp"
+            android:gravity="center"
+            android:horizontalSpacing="10dp"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="2"
+            android:orientation="vertical"
+            android:verticalSpacing="10dp" />
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/selector_title_channel"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="10dp" >
+
+            <TextView
+                android:id="@+id/tv_session_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="会话"
+                android:textColor="#fff"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/iv_setting"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_setting" />
+        </LinearLayout>
+
+        <GridView
+            android:id="@+id/gv_session"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="60dp"
+            android:fadingEdge="none"
+            android:fadingEdgeLength="0dp"
+            android:gravity="center"
+            android:horizontalSpacing="10dp"
+            android:listSelector="@android:color/transparent"
+            android:numColumns="2"
+            android:orientation="vertical"
+            android:verticalSpacing="10dp" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/sliding_back"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:listSelector="@android:color/transparent"
-        android:fadingEdge="none"
-        android:fadingEdgeLength="0dp"
-        android:numColumns="2"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:verticalSpacing="10dp"
-        android:horizontalSpacing="10dp"
-        android:layout_marginBottom="60dp" />
- </LinearLayout>
- <ImageView android:id="@+id/sliding_back" android:layout_width="fill_parent" android:layout_height="40dp" android:scaleType="center" android:src="@drawable/ic_back" android:layout_alignParentBottom="true" android:visibility="gone"/>
- </RelativeLayout>
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:scaleType="center"
+        android:src="@drawable/ic_back"
+        android:visibility="gone" />
+
+</RelativeLayout>

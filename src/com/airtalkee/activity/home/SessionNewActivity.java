@@ -23,7 +23,8 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
 
 public class SessionNewActivity extends Activity implements OnClickListener,
-		MemberCheckListener {
+		MemberCheckListener
+{
 
 	private LinearLayout containner;
 	private MemberAllView memAllView;
@@ -33,7 +34,8 @@ public class SessionNewActivity extends Activity implements OnClickListener,
 	private int DIALOG_CALL = 111;
 
 	@Override
-	protected void onCreate(Bundle bundle) {
+	protected void onCreate(Bundle bundle)
+	{
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
 		setContentView(R.layout.activity_session_new);
@@ -48,72 +50,93 @@ public class SessionNewActivity extends Activity implements OnClickListener,
 	}
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(View v)
+	{
 		// TODO Auto-generated method stub
-		if (v.getId() == R.id.btn_close) {
+		if (v.getId() == R.id.btn_close)
+		{
 			this.finish();
-		} else if (v.getId() == R.id.bar_left) {
+		}
+		else if (v.getId() == R.id.bar_left)
+		{
 			callSelectMember(true);
-		} else if (v.getId() == R.id.bar_mid) {
+		}
+		else if (v.getId() == R.id.bar_mid)
+		{
 			AirtalkeeMessage.getInstance().MessageRecordPlayStop();
 			callSelectMember(false);
 			callSelectClean();
-		} else if (v.getId() == R.id.bar_right) {
+		}
+		else if (v.getId() == R.id.bar_right)
+		{
 			callSelectClean();
 		}
 	}
-	
-	public void callSelectClean() {
+
+	public void callSelectClean()
+	{
 		memAllView.resetCheckBox();
 		refreshBottomView(false);
 	}
 
-	public void callSelectMember(boolean isCall) {
+	public void callSelectMember(boolean isCall)
+	{
 		if (tempCallMembers == null)
 			tempCallMembers = new ArrayList<AirContact>();
 		else
 			tempCallMembers.clear();
 
-		for (AirContact c : memAllView.getSelectedMember()) {
-			if (!TextUtils.equals(c.getIpocId(), AirtalkeeAccount.getInstance()
-					.getUserId())) {
+		for (AirContact c : memAllView.getSelectedMember())
+		{
+			if (!TextUtils.equals(c.getIpocId(), AirtalkeeAccount.getInstance().getUserId()))
+			{
 				tempCallMembers.add(c);
 			}
 		}
 
-		if (tempCallMembers.size() > 0) {
-			if (AirtalkeeAccount.getInstance().isEngineRunning()) {
+		if (tempCallMembers.size() > 0)
+		{
+			if (AirtalkeeAccount.getInstance().isEngineRunning())
+			{
 
 				AirSession s = SessionController.SessionMatch(tempCallMembers);
-				if (isCall) {
-					alertDialog = new CallAlertDialog(this, "正在呼叫"
-							+ s.getDisplayName(), "请稍后...", s.getSessionCode(),
-							DIALOG_CALL);
+				if (isCall)
+				{
+					alertDialog = new CallAlertDialog(this, "正在呼叫" + s.getDisplayName(), "请稍后...", s.getSessionCode(), DIALOG_CALL);
 					alertDialog.show();
-				} else {
+				}
+				else
+				{
 					Intent it = new Intent(this, SessionDialogActivity.class);
 					it.putExtra("sessionCode", s.getSessionCode());
 					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
 					startActivity(it);
 				}
 
-			} else {
+			}
+			else
+			{
 				Util.Toast(this, getString(R.string.talk_network_warning));
 			}
-		} else {
+		}
+		else
+		{
 			Util.Toast(this, getString(R.string.talk_tip_session_call));
 		}
 
 	}
 
 	@Override
-	public void onMemberChecked(boolean isChecked) {
+	public void onMemberChecked(boolean isChecked)
+	{
 		// TODO Auto-generated method stub
 		refreshBottomView(isChecked);
 	}
 
-	private void refreshBottomView(boolean isChecked) {
-		for (int i = 0; i < bottom.getChildCount(); i++) {
+	private void refreshBottomView(boolean isChecked)
+	{
+		for (int i = 0; i < bottom.getChildCount(); i++)
+		{
 			View child = bottom.getChildAt(i);
 			child.setEnabled(isChecked);
 		}

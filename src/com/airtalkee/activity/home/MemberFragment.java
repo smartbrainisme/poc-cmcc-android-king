@@ -36,7 +36,8 @@ import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.MListView;
 
 public class MemberFragment extends BaseFragment implements OnClickListener,
-		OnItemClickListener, CheckedCallBack, MemberCheckListener {
+		OnItemClickListener, CheckedCallBack, MemberCheckListener
+{
 	private static final int DIALOG_CALL = 99;
 	private TextView tabMemberSession, tabMemberAll;
 	private List<AirContact> tempCallMembers = null;
@@ -52,25 +53,24 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	private boolean memberAllChecked = false;
 
 	@Override
-	public void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState)
+	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
 		// TODO Auto-generated method stub
 		v = inflater.inflate(getLayout(), container, false);
 
 		memAllContainer = (LinearLayout) findViewById(R.id.mem_container);
-		memAllContainer.addView(memberAllView = new MemberAllView(
-				getActivity(), this));
+		memAllContainer.addView(memberAllView = new MemberAllView(getActivity(), this));
 
 		lvMember = (MListView) findViewById(R.id.talk_lv_member);
-		lvMember.setAdapter(adapterMember = new AdapterMember(getActivity(),
-				null, null, true, true, this));
+		lvMember.setAdapter(adapterMember = new AdapterMember(getActivity(), null, null, true, true, this));
 		lvMember.setOnItemClickListener(this);
 		tabMemberSession = (TextView) findViewById(R.id.tab_member_session);
 		tabMemberAll = (TextView) findViewById(R.id.tab_member_all);
@@ -88,7 +88,8 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	}
 
 	@Override
-	public void onResume() {
+	public void onResume()
+	{
 		// TODO Auto-generated method stub
 		super.onResume();
 		if (mediaStatusBar != null)
@@ -98,44 +99,53 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	}
 
 	@Override
-	public int getLayout() {
+	public int getLayout()
+	{
 		// TODO Auto-generated method stub
 		return R.layout.frag_member_layout;
 	}
 
 	@Override
-	public void dispatchBarClickEvent(int page, int id) {
+	public void dispatchBarClickEvent(int page, int id)
+	{
 		// TODO Auto-generated method stub
-		if (page == HomeActivity.PAGE_MEMBER) {
-			switch (id) {
-			case R.id.bar_left:
-				callSelectMember(true);
-				break;
-			case R.id.bar_mid:
-				AirtalkeeMessage.getInstance().MessageRecordPlayStop();
-				callSelectMember(false);
-				callSelectClean();
-				break;
-			case R.id.bar_right:
-				callSelectClean();
-				break;
+		if (page == HomeActivity.PAGE_MEMBER)
+		{
+			switch (id)
+			{
+				case R.id.bar_left:
+					callSelectMember(true);
+					break;
+				case R.id.bar_mid:
+					AirtalkeeMessage.getInstance().MessageRecordPlayStop();
+					callSelectMember(false);
+					callSelectClean();
+					break;
+				case R.id.bar_right:
+					callSelectClean();
+					break;
 			}
 		}
 	}
 
-	public void refreshTab(int id) {
+	public void refreshTab(int id)
+	{
 		Iterator<Integer> iter = ids.keySet().iterator();
-		while (iter.hasNext()) {
+		while (iter.hasNext())
+		{
 			Integer i = iter.next();
 			TextView v = ids.get(i);
 			v.setOnClickListener(this);
 			v.setSelected(i == id);
 		}
 
-		if (id == R.id.tab_member_session) {
+		if (id == R.id.tab_member_session)
+		{
 			lvMember.setVisibility(View.VISIBLE);
 			memAllContainer.setVisibility(View.GONE);
-		} else {
+		}
+		else
+		{
 			lvMember.setVisibility(View.GONE);
 			memAllContainer.setVisibility(View.VISIBLE);
 		}
@@ -143,44 +153,54 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	}
 
 	@Override
-	public void onClick(View v) {
+	public void onClick(View v)
+	{
 		// TODO Auto-generated method stub
-		switch (v.getId()) {
-		case R.id.tab_member_session:
-		case R.id.tab_member_all:
-			currentSelectPage = v.getId();
-			refreshTab(v.getId());
-			break;
+		switch (v.getId())
+		{
+			case R.id.tab_member_session:
+			case R.id.tab_member_all:
+				currentSelectPage = v.getId();
+				refreshTab(v.getId());
+				break;
 		}
 	}
 
-	public void setSession(AirSession s) {
+	public void setSession(AirSession s)
+	{
 
-		if (s != null) {
-			switch (s.getType()) {
-			case AirSession.TYPE_CHANNEL: {
-				AirChannel c = AirtalkeeChannel.getInstance().ChannelGetByCode(
-						s.getSessionCode());
-				if (c != null) {
-					c.MembersSort();
-					refreshMembers(s, c.MembersGet());
+		if (s != null)
+		{
+			switch (s.getType())
+			{
+				case AirSession.TYPE_CHANNEL:
+				{
+					AirChannel c = AirtalkeeChannel.getInstance().ChannelGetByCode(s.getSessionCode());
+					if (c != null)
+					{
+						c.MembersSort();
+						refreshMembers(s, c.MembersGet());
+					}
+					break;
 				}
-				break;
-			}
-			case AirSession.TYPE_DIALOG: {
-				s.MembersSort();
-				refreshMembers(s, s.getMemberAll());
-				break;
-			}
+				case AirSession.TYPE_DIALOG:
+				{
+					s.MembersSort();
+					refreshMembers(s, s.getMemberAll());
+					break;
+				}
 			}
 			// refreshMemberOnline(s.SessionPresenceList());
-		} else {
+		}
+		else
+		{
 			refreshMembers(null, null);
 			// sessionBoxMember.refreshMemberOnline(null);
 		}
 	}
 
-	public void refreshMembers(AirSession session, List<AirContact> members) {
+	public void refreshMembers(AirSession session, List<AirContact> members)
+	{
 		// this.session = session;
 		// sessionBox.sessionBoxTalk.refreshRole(false);
 		adapterMember.notifyMember(session, members);
@@ -189,98 +209,110 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		// SessionBox.PAGE_MEMBER);
 	}
 
-	public void refreshMembers() {
+	public void refreshMembers()
+	{
 		adapterMember.notifyDataSetChanged();
 	}
 
 	@Override
-	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
-			String key) {
+	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)
+	{
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position,
-			long id) {
-		switch (parent.getId()) {
-		case R.id.talk_lv_member: {
-			CheckBox cb = (CheckBox) view
-					.findViewById(R.id.talk_cb_group_member);
-			AirContact c = (AirContact) adapterMember.getItem(position - 1);
-			if (c != null) {
-				if (!AirtalkeeAccount.getInstance().getUserId()
-						.equals(c.getIpocId())) {
-					if (cb != null)
-						cb.setChecked(!cb.isChecked());
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+	{
+		switch (parent.getId())
+		{
+			case R.id.talk_lv_member:
+			{
+				CheckBox cb = (CheckBox) view.findViewById(R.id.talk_cb_group_member);
+				AirContact c = (AirContact) adapterMember.getItem(position - 1);
+				if (c != null)
+				{
+					if (!AirtalkeeAccount.getInstance().getUserId().equals(c.getIpocId()))
+					{
+						if (cb != null)
+							cb.setChecked(!cb.isChecked());
+					}
 				}
+				break;
 			}
-			break;
-		}
 		}
 	}
 
-	public void callSelectMember(boolean isCall) {
-		if ((adapterMember.getSelectedMemberList() != null && adapterMember
-				.getSelectedMemberList().size() > 0)
-				|| memberAllView.getSelectedMemberSize() > 0) {
+	public void callSelectMember(boolean isCall)
+	{
+		if ((adapterMember.getSelectedMemberList() != null && adapterMember.getSelectedMemberList().size() > 0) || memberAllView.getSelectedMemberSize() > 0)
+		{
 			if (tempCallMembers == null)
 				tempCallMembers = new ArrayList<AirContact>();
 			tempCallMembers.clear();
 			tempCallMembersCache.clear();
-			for (AirContact c : adapterMember.getSelectedMemberList()) {
-				if (!TextUtils.equals(c.getIpocId(), AirtalkeeAccount
-						.getInstance().getUserId())) {
-					if (!tempCallMembersCache.containsKey(c.getIpocId())) {
+			for (AirContact c : adapterMember.getSelectedMemberList())
+			{
+				if (!TextUtils.equals(c.getIpocId(), AirtalkeeAccount.getInstance().getUserId()))
+				{
+					if (!tempCallMembersCache.containsKey(c.getIpocId()))
+					{
 						tempCallMembersCache.put(c.getIpocId(), c);
 						tempCallMembers.add(c);
 					}
 				}
 			}
 
-			for (AirContact c : memberAllView.getSelectedMember()) {
-				if (!TextUtils.equals(c.getIpocId(), AirtalkeeAccount
-						.getInstance().getUserId())) {
-					if (!tempCallMembersCache.containsKey(c.getIpocId())) {
+			for (AirContact c : memberAllView.getSelectedMember())
+			{
+				if (!TextUtils.equals(c.getIpocId(), AirtalkeeAccount.getInstance().getUserId()))
+				{
+					if (!tempCallMembersCache.containsKey(c.getIpocId()))
+					{
 						tempCallMembersCache.put(c.getIpocId(), c);
 						tempCallMembers.add(c);
 					}
 				}
 			}
 
-			if (tempCallMembers.size() > 0) {
-				if (AirtalkeeAccount.getInstance().isEngineRunning()) {
+			if (tempCallMembers.size() > 0)
+			{
+				if (AirtalkeeAccount.getInstance().isEngineRunning())
+				{
 
-					AirSession s = SessionController
-							.SessionMatch(tempCallMembers);
-					if (isCall) {
-						alertDialog = new CallAlertDialog(getActivity(), "正在呼叫"
-								+ s.getDisplayName(), "请稍后...",
-								s.getSessionCode(), DIALOG_CALL);
+					AirSession s = SessionController.SessionMatch(tempCallMembers);
+					if (isCall)
+					{
+						alertDialog = new CallAlertDialog(getActivity(), "正在呼叫" + s.getDisplayName(), "请稍后...", s.getSessionCode(), DIALOG_CALL);
 						alertDialog.show();
-					} else {
-						Intent it = new Intent(getActivity(),
-								SessionDialogActivity.class);
+					}
+					else
+					{
+						Intent it = new Intent(getActivity(), SessionDialogActivity.class);
 						it.putExtra("sessionCode", s.getSessionCode());
-						it.putExtra("type",
-								AirServices.TEMP_SESSION_TYPE_MESSAGE);
+						it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
 						getActivity().startActivity(it);
 					}
 
-				} else {
-					Util.Toast(getActivity(),
-							getString(R.string.talk_network_warning));
 				}
-			} else {
-				Util.Toast(getActivity(),
-						getString(R.string.talk_tip_session_call));
+				else
+				{
+					Util.Toast(getActivity(), getString(R.string.talk_network_warning));
+				}
 			}
-		} else {
+			else
+			{
+				Util.Toast(getActivity(), getString(R.string.talk_tip_session_call));
+			}
+		}
+		else
+		{
 			Util.Toast(getActivity(), getString(R.string.talk_tip_session_call));
 		}
 	}
 
-	public void callSelectClean() {
+	public void callSelectClean()
+	{
 		memberAllChecked = false;
 		memberSessionChecked = false;
 		adapterMember.resetCheckBox();
@@ -289,25 +321,26 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	}
 
 	@Override
-	public void onChecked(boolean isChecked) {
+	public void onChecked(boolean isChecked)
+	{
 		// TODO Auto-generated method stub
 		memberSessionChecked = isChecked;
-		mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER,
-				memberSessionChecked || memberAllChecked);
+		mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, memberSessionChecked || memberAllChecked);
 	}
 
 	@Override
-	public void onMemberChecked(boolean isChecked) {
+	public void onMemberChecked(boolean isChecked)
+	{
 		// TODO Auto-generated method stub
 		memberAllChecked = isChecked;
-		mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER,
-				memberSessionChecked || memberAllChecked);
+		mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, memberSessionChecked || memberAllChecked);
 	}
 
 	@Override
-	public void onListItemLongClick(int id, int selectedItem) {
+	public void onListItemLongClick(int id, int selectedItem)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
