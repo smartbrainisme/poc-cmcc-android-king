@@ -184,7 +184,6 @@ public class MediaStatusBar extends LinearLayout implements
 	@Override
 	public void onSessionEstablishing(AirSession session)
 	{
-		// TODO Auto-generated method stub
 		sessionRefresh();
 	}
 
@@ -200,6 +199,7 @@ public class MediaStatusBar extends LinearLayout implements
 	{
 		// TODO Auto-generated method stub
 		sessionRefresh();
+		
 	}
 
 	@Override

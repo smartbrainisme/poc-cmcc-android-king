@@ -18,12 +18,16 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.AdapterMember.CheckedCallBack;
+import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.CallAlertDialog;
+import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.airtalkee.activity.home.widget.MemberAllView;
+import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.MemberAllView.MemberCheckListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
@@ -51,6 +55,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	private MemberAllView memberAllView;
 	private boolean memberSessionChecked = false;
 	private boolean memberAllChecked = false;
+	AlertDialog dialog;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -279,11 +284,26 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 			{
 				if (AirtalkeeAccount.getInstance().isEngineRunning())
 				{
-
 					AirSession s = SessionController.SessionMatch(tempCallMembers);
 					if (isCall)
 					{
-						alertDialog = new CallAlertDialog(getActivity(), "正在呼叫" + s.getDisplayName(), "请稍后...", s.getSessionCode(), DIALOG_CALL);
+						alertDialog = new CallAlertDialog(getActivity(), "正在呼叫" + s.getDisplayName(), "请稍后...", s.getSessionCode(), DIALOG_CALL, new OnAlertDialogCancelListener()
+						{
+							@Override
+							public void onDialogCancel(int reason)
+							{
+								// TODO Auto-generated method stub
+								switch (reason)
+								{
+									case AirSession.SESSION_RELEASE_REASON_NOTREACH:
+										dialog = new AlertDialog(getActivity(), null, getString(R.string.talk_call_offline_tip), getString(R.string.talk_session_call_cancel), getString(R.string.talk_call_leave_msg), listener, reason);
+										dialog.show();
+										break;
+									default:
+										break;
+								}
+							}
+						});
 						alertDialog.show();
 					}
 					else
@@ -343,4 +363,28 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 
 	}
 
+	private DialogListener listener = new DialogListener()
+	{
+		@Override
+		public void onClickOk(int id, boolean isChecked)
+		{
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void onClickOk(int id)
+		{
+			AirtalkeeMessage.getInstance().MessageRecordPlayStop();
+			callSelectMember(false);
+			callSelectClean();
+		}
+
+		@Override
+		public void onClickCancel(int id)
+		{
+			// TODO Auto-generated method stub
+
+		}
+	};
 }

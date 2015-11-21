@@ -18,23 +18,24 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
 
-public class InCommingAlertDialog extends AlertDialog implements DialogListener{
+public class InCommingAlertDialog extends AlertDialog implements DialogListener
+{
 	private AirSession temAirSession;
-	
-	public InCommingAlertDialog (Context ct,AirSession s, AirContact caller)
+
+	public InCommingAlertDialog(Context ct, AirSession s, AirContact caller)
 	{
 		super(ct);
 		temAirSession = s;
-		if(s != null)
+		if (s != null)
 		{
-			title = caller.getDisplayName() + ct.getString(R.string.talk_incoming);
-			content = ct.getString(R.string.talk_incoming);
+			title = caller.getDisplayName() + "   " + ct.getString(R.string.talk_incoming);
+			content = ct.getString(R.string.talk_incoming_tip);
 		}
 	}
-	
-	
+
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	protected void onCreate(Bundle savedInstanceState)
+	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		this.setCancelable(false);
@@ -44,15 +45,15 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener{
 		fillView();
 		setListener(this);
 	}
-	
+
 	@Override
-	public void onClickOk(int id) {
+	public void onClickOk(int id)
+	{
 		// TODO Auto-generated method stub
 		Sound.stopSound(Sound.PLAYER_INCOMING_RING);
 		AirtalkeeSessionManager.getInstance().SessionIncomingAccept(temAirSession);
 		AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, getContext().getString(R.string.talk_call_state_incoming_call), false);
-		if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().getSession() != null
-			&& !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), temAirSession.getSessionCode()))
+		if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().getSession() != null && !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), temAirSession.getSessionCode()))
 		{
 			TempSessionActivity.getInstance().setSession(temAirSession);
 		}
@@ -61,8 +62,9 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener{
 	}
 
 	@Override
-	public void onClickCancel(int id) {
-		
+	public void onClickCancel(int id)
+	{
+
 		try
 		{
 			Sound.stopSound(Sound.PLAYER_INCOMING_RING);
@@ -76,28 +78,28 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener{
 		}
 		// TODO Auto-generated method stub
 	}
-	
+
 	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	public boolean onKeyDown(int keyCode, KeyEvent event)
+	{
 		// TODO Auto-generated method stub
-		
+
 		switch (keyCode)
 		{
 			case KeyEvent.KEYCODE_CALL:
 			{
 				this.cancel();
 				Sound.stopSound(Sound.PLAYER_INCOMING_RING);
-//				isCalling = false;
+				// isCalling = false;
 				AirtalkeeSessionManager.getInstance().SessionIncomingAccept(temAirSession);
 				AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, getContext().getString(R.string.talk_call_state_incoming_call), false);
 				try
 				{
-					if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().getSession() != null
-						&& !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), temAirSession.getSessionCode()))
+					if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().getSession() != null && !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), temAirSession.getSessionCode()))
 					{
 						TempSessionActivity.getInstance().setSession(temAirSession);
 					}
-					
+
 					Intent it = new Intent(AirServices.getInstance(), SessionDialogActivity.class);
 					it.putExtra("sessionCode", temAirSession.getSessionCode());
 					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
@@ -117,8 +119,7 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener{
 				cancel();
 				Sound.stopSound(Sound.PLAYER_INCOMING_RING);
 				AirtalkeeSessionManager.getInstance().SessionIncomingReject(temAirSession);
-				AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, temAirSession.getCaller(), getContext().getString(R.string.talk_call_state_rejected_call),
-					true);
+				AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, temAirSession.getCaller(), getContext().getString(R.string.talk_call_state_rejected_call), true);
 
 				return true;
 			}
@@ -134,6 +135,7 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener{
 		}
 		return super.onKeyDown(keyCode, event);
 	}
+
 	private void switchToSessionDialog()
 	{
 		AirSessionControl.getInstance().setOnMmiSessionListener(null);
@@ -145,11 +147,10 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener{
 		this.cancel();
 	}
 
-
 	@Override
 	public void onClickOk(int id, boolean isChecked)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 }
