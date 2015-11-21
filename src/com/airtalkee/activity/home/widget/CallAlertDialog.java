@@ -1,6 +1,7 @@
 package com.airtalkee.activity.home.widget;
 
 import java.util.List;
+import android.R.integer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,7 +25,19 @@ public class CallAlertDialog extends AlertDialog implements
 {
 	private String sessionCode;
 	private AirSession session;
+	public interface OnAlertDialogCancelListener
+	{
+		public void onDialogCancel(int reason);
+	}
+	OnAlertDialogCancelListener listener;
+	
+	public CallAlertDialog(Context context, String title, String content, String sessionCode, int id,OnAlertDialogCancelListener l)
+	{
+		this(context, title, content, sessionCode, id);
+		this.listener = l;
+	}
 
+	
 	public CallAlertDialog(Context context, String title, String content, String sessionCode, int id)
 	{
 		super(context, title, content, "", "", null, id);
@@ -133,6 +146,11 @@ public class CallAlertDialog extends AlertDialog implements
 		AirSessionControl.getInstance().setOnMmiSessionListener(null);
 		this.cancel();
 		this.session = null;
+		
+		if(listener != null)
+		{
+			listener.onDialogCancel(reason);
+		}
 	}
 
 	@Override

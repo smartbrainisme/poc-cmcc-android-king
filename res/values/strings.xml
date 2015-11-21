@@ -447,5 +447,6 @@
     <string name="talk_video_stop">Stop!</string>
     <string name="talk_tools_know">知道了</string>
     <string name="talk_typewriter_init">在此输入文字</string>
-
+    <string name="talk_call_offline_tip">呼叫的用户暂时不在线\r\n您可以去消息页面留言联系</string>
+    <string name="talk_call_leave_msg">前去留言</string>
 </resources>

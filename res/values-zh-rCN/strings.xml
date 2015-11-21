@@ -152,7 +152,8 @@
 	<string name="talk_line_reject">对方拒绝了您的对讲！</string>
 	<string name="talk_had_idel">对讲已断开！</string>
 	<string name="talk_channel_idle">频道未连接</string>
-	<string name="talk_incoming"> 按BACK或MENU键可关闭振铃声音</string>
+	<string name="talk_incoming_tip"> 按BACK或MENU键可关闭振铃声音</string>
+	<string name="talk_incoming"> 来电</string>
 	<string name="talk_login_account">请输入用户名和密码</string>
 	<string name="talk_account_match">网络连接错误！</string>
 	<string name="talk_exit">退出</string>
@@ -454,4 +455,6 @@
     <string name="talk_video_uploading">正在实时回传</string>
     <string name="talk_video_stop">已停止</string>
     <string name="talk_typewriter_init">在此输入文字</string>
+    <string name="talk_call_offline_tip">呼叫的用户暂时不在线\r\n您可以去消息页面留言联系</string>
+    <string name="talk_call_leave_msg">前去留言</string>
 </resources>
