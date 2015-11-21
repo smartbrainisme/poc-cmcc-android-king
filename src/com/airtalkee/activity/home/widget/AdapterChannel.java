@@ -2,7 +2,7 @@ package com.airtalkee.activity.home.widget;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.R.integer;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.airtalkee.R;
-import com.airtalkee.R.string;
-import com.airtalkee.adapter.GroupBean;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeContactPresence;
@@ -83,21 +82,21 @@ public class AdapterChannel extends BaseAdapter
 						tvUnread.setVisibility(View.VISIBLE);
 					else
 						tvUnread.setVisibility(View.GONE);
-					List<AirContact> members = item.MembersGet();
-					if (null != members && members.size() > 0)
-					{
-						int online = 0;
-						final AirtalkeeContactPresence contactPresence = AirtalkeeContactPresence.getInstance();
-						for (AirContact member : members)
-						{
-							if (contactPresence.getContactStateById(member.getIpocId()) != AirContact.CONTACT_STATE_NONE)
-							{
-								online += 1;
-							}
-						}
-						item.setOnlineNumber(online + 1);
-					}
-					tvCount.setText(item.getOnlineNumber() + "/" + item.getCount());
+//					List<AirContact> members = item.MembersGet();
+//					if (null != members && members.size() > 0)
+//					{
+//						int online = 0;
+//						final AirtalkeeContactPresence contactPresence = AirtalkeeContactPresence.getInstance();
+//						for (AirContact member : members)
+//						{
+//							if (contactPresence.getContactStateById(member.getIpocId()) != AirContact.CONTACT_STATE_NONE)
+//							{
+//								online += 1;
+//							}
+//						}
+//						item.setOnlineNumber(online + 1);
+//					}
+//					
 				}
 				else
 				{
@@ -105,6 +104,7 @@ public class AdapterChannel extends BaseAdapter
 					ivListener.setBackgroundResource(R.drawable.ic_listen);
 					tvUnread.setVisibility(View.GONE);
 				}
+				tvCount.setText(item.getOnlineNumber() + "/" + item.getCount());
 				if (item.getSession() != null && item.getSession().getSessionState() == AirSession.SESSION_STATE_DIALOG)
 				{
 					ivListener.setVisibility(View.VISIBLE);

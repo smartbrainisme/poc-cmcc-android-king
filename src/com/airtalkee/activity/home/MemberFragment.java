@@ -84,6 +84,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 			mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, false);
 
 		setSession(getSession());
+		
 		return v;
 	}
 

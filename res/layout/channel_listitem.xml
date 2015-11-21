@@ -17,7 +17,7 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="4G行业团队测试频道"
+            android:text=""
             android:textColor="@android:color/white"
             android:textSize="16sp" />
 
@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:drawableLeft="@drawable/ic_member"
                 android:drawablePadding="5dp"
-                android:text="12/4"
+                android:text="0/0"
                 android:textColor="@android:color/white"
                 android:textSize="12sp" />
 
