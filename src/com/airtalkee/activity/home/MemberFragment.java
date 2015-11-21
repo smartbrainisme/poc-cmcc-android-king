@@ -374,7 +374,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		}
 
 		@Override
-		public void onClickOk(int id)
+		public void onClickOk(int id,Object object)
 		{
 			AirtalkeeMessage.getInstance().MessageRecordPlayStop();
 			callSelectMember(false);

@@ -30,6 +30,7 @@ public class AlertDialog extends Dialog implements
 	protected String textcancle = "取消";
 	protected String textSure = "确定";
 	protected int id;
+	protected Object object;
 	protected int tvContentSize = 16;
 	protected boolean cbVisible = false;
 	//
@@ -37,7 +38,7 @@ public class AlertDialog extends Dialog implements
 
 	public interface DialogListener
 	{
-		void onClickOk(int id);
+		void onClickOk(int id,Object obj);
 
 		void onClickOk(int id, boolean isChecked);
 
@@ -80,6 +81,20 @@ public class AlertDialog extends Dialog implements
 	public AlertDialog(Context context, String title, String content, String textcancle, String textSure, DialogListener listener, int id)
 	{
 		super(context, R.style.alert_dialog);
+		this.title = title;
+		this.content = content;
+		this.textcancle = textcancle;
+
+		this.textSure = textSure;
+		this.listener = listener;
+		this.id = id;
+		this.context = context;
+	}
+	
+	public AlertDialog(Context context, String title, String content, String textcancle, String textSure, DialogListener listener, int id,Object object)
+	{
+		super(context, R.style.alert_dialog);
+		this.object = object;
 		this.title = title;
 		this.content = content;
 		this.textcancle = textcancle;
@@ -195,7 +210,7 @@ public class AlertDialog extends Dialog implements
 					}
 					else
 					{
-						listener.onClickOk(this.id);
+						listener.onClickOk(this.id,object);
 					}
 				}
 				break;

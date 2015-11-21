@@ -47,7 +47,7 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 	}
 
 	@Override
-	public void onClickOk(int id)
+	public void onClickOk(int id,Object obj)
 	{
 		// TODO Auto-generated method stub
 		Sound.stopSound(Sound.PLAYER_INCOMING_RING);
