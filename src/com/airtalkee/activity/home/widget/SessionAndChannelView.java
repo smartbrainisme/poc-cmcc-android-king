@@ -23,6 +23,7 @@ import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
+import com.airtalkee.widget.MyRelativeLayout;
 
 public class SessionAndChannelView extends LinearLayout implements
 		OnClickListener, OnItemClickListener {
@@ -166,5 +167,7 @@ public class SessionAndChannelView extends LinearLayout implements
 			}
 		}, filter);
 	}
+	
+	
 
 }

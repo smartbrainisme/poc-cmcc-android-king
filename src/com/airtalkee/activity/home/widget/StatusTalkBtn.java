@@ -128,8 +128,8 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 				bgTalkFront.setImageResource(R.drawable.btn_talk_empy);
 				tvBold.setVisibility(View.VISIBLE);
 				tvNormal.setVisibility(View.VISIBLE);
-				tvBold.setText("排队中");
-				tvNormal.setText("...");
+				tvBold.setText(session.usersQueues().size()+"");
+				tvNormal.setText("排队中");
 				break;
 			case AirSession.MEDIA_BUTTON_STATE_REQUESTING:
 				bgTalkFront.setVisibility(View.VISIBLE);

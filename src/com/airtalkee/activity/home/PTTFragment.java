@@ -74,7 +74,8 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	{
 		// TODO Auto-generated method stub
 		super.onPause();
-		setViedoReportPannelVisiblity(View.GONE);
+		if(HomeActivity.getInstance().pageIndex == HomeActivity.PAGE_PTT)
+			setViedoReportPannelVisiblity(View.GONE);
 	}
 
 	@Override

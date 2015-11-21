@@ -113,6 +113,7 @@ public class SessionDialogActivity extends FragmentActivity implements
 	public void onPageSelected(int page)
 	{
 		// TODO Auto-generated method stub
+		
 		if (mediaStatusBar != null)
 			mediaStatusBar.onPageChanged(page);
 		if (mPageIndicator != null)
