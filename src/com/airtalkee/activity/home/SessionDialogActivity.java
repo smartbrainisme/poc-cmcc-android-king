@@ -167,7 +167,11 @@ public class SessionDialogActivity extends FragmentActivity implements
 		}
 	}
 
-	@Override
+	/*
+	 * 点击输入框外的地方隐藏输入法
+	 * 目前不需要
+	 * 
+	 * @Override
 	public boolean dispatchTouchEvent(MotionEvent ev)
 	{
 		// TODO Auto-generated method stub
@@ -191,7 +195,7 @@ public class SessionDialogActivity extends FragmentActivity implements
 			return true;
 		}
 		return onTouchEvent(ev);
-	}
+	}*/
 
 	public boolean isShouldHideInput(View v, MotionEvent event)
 	{

@@ -3,6 +3,7 @@ package com.airtalkee.activity.home;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,6 +35,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimerListener;
 import com.airtalkee.Util.Smilify;
