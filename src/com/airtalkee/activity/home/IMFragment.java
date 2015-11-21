@@ -586,6 +586,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 			{
 				adapterMessage.notifyDataSetChanged();
 				// refreshMessageNewCount(false);
+				getStatusBarTitle().refreshNewMsg();
 			}
 		}
 	}

@@ -1,7 +1,11 @@
 package com.airtalkee.activity.home.widget;
 
+import java.util.List;
+
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -10,11 +14,15 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Toast;
 import com.airtalkee.activity.MoreActivity;
+import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
+import com.airtalkee.sdk.controller.MessageController;
+import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 
@@ -23,7 +31,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 	private TextView tvTitle, tvMediaStatus;
 	private ImageView ivMeidiaStatus;
 	private View btnLeft, btnRight;
-	private ImageView ivBtnLeft;
+	private ImageView ivBtnLeft,ivUnReadDot;
 	private AirSession session = null;
 
 	public StatusBarTitle(Context context, AttributeSet attrs)
@@ -42,6 +50,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 
 	private void initFindView()
 	{
+		ivUnReadDot = (ImageView)findViewById(R.id.unread_dot);
 		btnLeft = findViewById(R.id.left_button);
 		btnRight = findViewById(R.id.right_button);
 		tvTitle = (TextView) findViewById(R.id.tv_title);
@@ -57,6 +66,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 	{
 		this.session = s;
 		refreshMediaStatus();
+		refreshNewMsg();
 	}
 
 	public void setLeftMenuInVisible()
@@ -138,11 +148,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		}
 	}
 
-	private Drawable getDrawable(int resid)
-	{
-		return getResources().getDrawable(ThemeUtil.getResourceId(R.attr.theme_media_idle, this.getContext()));
-	}
-
+	
 	@Override
 	public void onClick(View arg0)
 	{
@@ -172,4 +178,26 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 				break;
 		}
 	}
+	
+	public void refreshNewMsg()
+	{
+		int count = 0;
+		
+		List<AirChannel> channels = AirtalkeeChannel.getInstance().getChannels();
+		for (int i = 0; i < channels.size(); i++)
+		{
+			AirChannel c = (AirChannel) channels.get(i);
+			if (c != null)
+			{
+				if (c.getMsgUnReadCount() > 0)
+					count++;
+			}
+		}
+		count += MessageController.checkUnReadMessage();
+		
+		ivUnReadDot.setVisibility(count >0 ? View.VISIBLE :View.GONE);
+	}
+	
+	
+	
 }

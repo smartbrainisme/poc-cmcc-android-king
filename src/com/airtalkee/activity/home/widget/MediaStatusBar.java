@@ -69,7 +69,10 @@ public class MediaStatusBar extends LinearLayout implements
 
 	@SuppressLint("UseSparseArrays")
 	private Map<Integer, StatusBarBottom> bars = new HashMap<Integer, StatusBarBottom>();
-
+	public StatusBarTitle getStatusBarTitle()
+	{
+		return barTitle;
+	}
 	protected SharedPreferences sessionSp;
 
 	public MediaStatusBar(Context context, AttributeSet attrs)
