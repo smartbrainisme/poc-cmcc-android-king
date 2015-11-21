@@ -51,13 +51,11 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 	private Uri picUriTemp = null;
 
 	AlertDialog dialog;
-
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-
+		super.onCreate(savedInstanceState); 
 	}
 
 	@Override
