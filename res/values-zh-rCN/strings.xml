@@ -62,10 +62,11 @@
 	<string name="talk_tools_report_vid">视频上报</string>
 	<string name="talk_tools_report_uploading">正在上报..</string>
 	<string name="talk_tools_report_waiting">等待上报..</string>
-	<string name="talk_tools_report_click">点击上传</string>
+	<string name="talk_tools_report_click">点击重发</string>
 	<string name="talk_tools_report_fail">上传失败</string>
 	<string name="talk_tools_report_success">上传成功，可在更多界面查看</string>
 	<string name="talk_tools_call_center">呼叫中心</string>
+	<string name="talk_tools_call_center_confirm">确定呼叫中心?</string>
 	<string name="talk_tools_session">会话管理</string>
 	<string name="talk_tools_channel">频道管理</string>
 	<string name="talk_tools_setting">设置</string>
@@ -97,6 +98,7 @@
 	<string name="talk_tools_defect_report_error">网络连接失败，请重新尝试！</string>
 	<string name="talk_tools_about">关于版本</string>
 	<string name="talk_tools_notice">广播</string>
+	<string name="talk_tools_know">知道了</string>
 	<string name="talk_tools_notice_comment_tip">输入您的评论</string>
 	<string name="talk_tools_notice_comment_send">发表</string>
 	<string name="talk_tools_location">位置回传</string> 
@@ -254,7 +256,7 @@
 	<string name="talk_userlogin_login_forbidden">您所使用的账户或所在的组织已经被禁用！</string>
 	<string name="talk_user_temp_code_expire">验证码无效或已经过期！</string>
 	<string name="talk_group_no_connect">[无频道]</string>
-	<string name="talk_exit_tip">确认退出</string>
+	<string name="talk_exit_tip">确定要退出登录?</string>
 	<string name="talk_delete_tip">确认删除</string>
 	<string name="talk_deleteing">正在删除...</string>
 	<string name="talk_ok">确认</string>
@@ -447,9 +449,9 @@
 	<string name="talk_secret_nocard">未插入有效的加密卡！</string>
 	<string name="talk_tools_setting_vox">VOX侦测</string>
 	<string name="talk_tools_setting_vox_tip">开启此项后，自动识别声音并开启对讲</string>
-
 	<string name="talk_video_connecting">正在连接</string>
 	<string name="talk_video_connect_fail">连接失败</string>
     <string name="talk_video_uploading">正在实时回传</string>
     <string name="talk_video_stop">已停止</string>
+    <string name="talk_typewriter_init">在此输入文字</string>
 </resources>

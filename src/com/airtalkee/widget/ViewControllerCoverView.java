@@ -7,7 +7,6 @@ import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-
 import com.airtalkee.R;
 
 public class ViewControllerCoverView extends HorizontalScrollView implements Runnable

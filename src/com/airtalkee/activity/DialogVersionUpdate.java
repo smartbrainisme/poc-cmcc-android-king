@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
@@ -18,7 +17,6 @@ import android.view.View;
 import android.webkit.URLUtil;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.airtalkee.R;
 import com.airtalkee.sdk.util.IOoperate;
 

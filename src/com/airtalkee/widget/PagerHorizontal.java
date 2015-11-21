@@ -39,7 +39,6 @@ package com.airtalkee.widget;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -55,7 +54,6 @@ import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.Scroller;
-
 import com.airtalkee.R;
 
 public class PagerHorizontal extends ViewGroup

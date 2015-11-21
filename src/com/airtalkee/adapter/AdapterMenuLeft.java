@@ -2,7 +2,6 @@ package com.airtalkee.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -16,7 +15,6 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;

@@ -3,14 +3,11 @@ package com.airtalkee.Util;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
 import com.airtalkee.sdk.entity.AirContact;
 
 public class XMLContentHandler extends DefaultHandler
@@ -54,7 +51,7 @@ public class XMLContentHandler extends DefaultHandler
 			users.add(user);
 			user = null;
 		}
-		preTag = null; // ÕâÒ»¾ä±ØĞëÓĞ£¬´¦ÀíXMLµÄÊ±ºòÈİÒ×³ö´í£¬×¢Òâ£¡
+		preTag = null; // ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½XMLï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½ï¿½×³ï¿½ï¿½?×¢ï¿½â£¡
 	}
 
 	@Override
@@ -76,9 +73,9 @@ public class XMLContentHandler extends DefaultHandler
 	public static List<AirContact> readXML(InputStream inStream) throws Exception
 	{
 		SAXParserFactory spf = SAXParserFactory.newInstance();
-		SAXParser saxParser = spf.newSAXParser(); // ´´½¨½âÎöÆ÷
-		// ÉèÖÃ½âÎöÆ÷µÄÏà¹ØÌØĞÔ£¬http://xml.org/sax/features/namespaces = true
-		// ±íÊ¾¿ªÆôÃüÃû¿Õ¼äÌØĞÔ
+		SAXParser saxParser = spf.newSAXParser(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô£ï¿½http://xml.org/sax/features/namespaces = true
+		// ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¼ï¿½ï¿½ï¿½ï¿½ï¿½
 		// saxParser.setProperty("http://xml.org/sax/features/namespaces",
 		// true);
 		XMLContentHandler handler = new XMLContentHandler();

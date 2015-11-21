@@ -13,7 +13,6 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-
 import com.airtalkee.R;
 
 public class PullToRefreshListView extends ListView implements OnScrollListener

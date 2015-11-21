@@ -5,7 +5,6 @@ import android.content.Context;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.control.AirMessageTransaction;

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
-
 import com.airtalkee.widget.ViewControllerCoverView.OnLKCoverViewListener;
 
 public class ViewControllerSlideView extends FrameLayout implements OnLKCoverViewListener, Runnable

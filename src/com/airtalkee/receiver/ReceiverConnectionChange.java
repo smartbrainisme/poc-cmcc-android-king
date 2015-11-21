@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-
 import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.AirMmiTimerListener;
-import com.airtalkee.activity.MainActivity;
 import com.airtalkee.control.AirAccountManager;
 import com.airtalkee.control.AirSessionMediaSound;
 import com.airtalkee.sdk.AirtalkeeAccount;

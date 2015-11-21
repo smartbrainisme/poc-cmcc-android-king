@@ -3,11 +3,9 @@ package com.airtalkee.control;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.airtalkee.Util.Sound;
 import com.airtalkee.bluetooth.BluetoothManager;
 import com.airtalkee.listener.OnMmiSessionListener;

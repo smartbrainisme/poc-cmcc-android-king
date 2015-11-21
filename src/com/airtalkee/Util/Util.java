@@ -30,7 +30,6 @@ import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.format.Time;
 import android.view.inputmethod.InputMethodManager;
-import com.airtalkee.Util.Toast;
 import com.airtalkee.R;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.entity.AirContact;
@@ -600,9 +599,9 @@ public class Util
 		String edateString = date;
 		if (!Utils.isEmpty(date))
 		{
-			edateString = edateString.replace("��", "/");
-			edateString = edateString.replace("��", "/");
-			edateString = edateString.replace("��", "");
+			edateString = edateString.replace("年", "/");
+			edateString = edateString.replace("月", "/");
+			edateString = edateString.replace("日", "");
 			String d[] = edateString.split("/");
 			if (d != null && d.length == 3)
 			{

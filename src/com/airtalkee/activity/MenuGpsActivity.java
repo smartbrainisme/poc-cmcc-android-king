@@ -9,9 +9,9 @@ import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.RadioGroup;
 import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
@@ -19,8 +19,6 @@ import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.config.Config;
 import com.airtalkee.listener.OnMmiLocationListener;
 import com.airtalkee.location.AirLocation;
-import com.airtalkee.sdk.entity.AirFunctionSetting;
-import com.umeng.common.net.r;
 
 public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		OnMmiLocationListener, OnCheckedChangeListener

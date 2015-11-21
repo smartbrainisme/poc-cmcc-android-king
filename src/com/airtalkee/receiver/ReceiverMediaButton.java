@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.media.AudioManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-
 import com.airtalkee.activity.AccountActivity;
 import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.TempSessionActivity;

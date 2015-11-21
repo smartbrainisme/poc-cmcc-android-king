@@ -5,8 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -18,7 +16,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -215,7 +212,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 				refreshUI();
 				// Util.Toast(this,
 				// getString(R.string.talk_report_upload_getting_gps), 60, -1);
-				myToast = Toast.makeText1(this, R.drawable.toast_loading, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
+				myToast = Toast.makeText1(this, true, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
 				myToast.setDuration(3600);
 				myToast.show();
 				// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
@@ -293,7 +290,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 					}
 					else
 					{
-						Util.Toast(this, getString(R.string.talk_report_upload_vid_err_select_pic));
+						Util.Toast(this, getString(R.string.talk_report_upload_pic_err_select_pic));
 					}
 				}
 				else

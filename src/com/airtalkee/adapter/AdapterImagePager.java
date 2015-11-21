@@ -1,7 +1,6 @@
 package com.airtalkee.adapter;
 
 import java.util.List;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Parcelable;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;

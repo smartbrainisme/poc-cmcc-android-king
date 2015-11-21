@@ -6,8 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,10 +24,8 @@ import com.airtalkee.sdk.AirtalkeeVersionUpdate;
 import com.airtalkee.sdk.OnVersionUpdateListener;
 import com.airtalkee.sdk.entity.AirStatisticsNetworkByte;
 import com.airtalkee.sdk.util.IOoperate;
-import com.airtalkee.services.AirServices;
 
-public class MenuAboutActivity extends ActivityBase implements OnClickListener,
-		AirMmiTimerListener, OnVersionUpdateListener
+public class MenuAboutActivity extends ActivityBase implements OnClickListener, AirMmiTimerListener, OnVersionUpdateListener
 {
 	private LinearLayout statLayout, checkVersionLayout;
 	private TextView statLayoutTime, statLayoutBytes, tvVersion, versionMsg, versionCode;
@@ -102,12 +100,12 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener,
 		tvVersion.setText(getString(R.string.talk_version) + Config.VERSION_CODE);
 
 		versionMsg = (TextView) findViewById(R.id.talk_tv_update_msg);
-		
+
 		versionCode = (TextView) findViewById(R.id.talk_tv_version_code);
 		ivUpdateIcon = (ImageView) findViewById(R.id.talk_iv_update_icon);
-		checkVersion();
 		checkVersionLayout = (LinearLayout) findViewById(R.id.talk_check_version);
 		checkVersionLayout.setOnClickListener(this);
+		checkVersion();
 
 		statLayout = (LinearLayout) findViewById(R.id.talk_tv_statistic);
 		statLayoutTime = (TextView) findViewById(R.id.talk_tv_statistic_time);
@@ -129,7 +127,6 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener,
 			}
 			case R.id.talk_check_version:
 			{
-				
 				checkVersion();
 				break;
 			}
@@ -220,21 +217,21 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener,
 	@Override
 	public void UserVersionUpdate(int versionFlag, String versionInfo, final String url)
 	{
-//		versionFlag = 1;
+		// versionFlag = 1;
 		if (versionFlag == 0)
 		{
-//			versionMsg.setVisibility(View.VISIBLE);
+			// versionMsg.setVisibility(View.VISIBLE);
 			versionMsg.setText(R.string.talk_verion_latest);
 			versionMsg.setTextColor(getResources().getColor(R.color.update_text_none));
-			
+
 			versionCode.setVisibility(View.GONE);
 			ivUpdateIcon.setVisibility(View.GONE);
 		}
 		else
 		{
 			ivUpdateIcon.setVisibility(View.VISIBLE);
-//			versionCode.setText(versionInfo);
-			versionCode.setText("V2.3.1");
+			versionCode.setText(versionInfo);
+			// versionCode.setText("V2.3.1");
 			versionCode.setVisibility(View.VISIBLE);
 			versionMsg.setText(R.string.talk_version_new);
 			versionMsg.setTextColor(getResources().getColor(R.color.update_text_new));

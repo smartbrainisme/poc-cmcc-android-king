@@ -2,7 +2,6 @@ package com.airtalkee.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.application.MainApplication;
 import com.airtalkee.config.Config;

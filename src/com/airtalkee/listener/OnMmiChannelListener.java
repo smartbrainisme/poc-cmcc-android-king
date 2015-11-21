@@ -2,7 +2,6 @@ package com.airtalkee.listener;
 
 import java.util.LinkedHashMap;
 import java.util.List;
-
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 

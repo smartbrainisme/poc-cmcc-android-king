@@ -2,11 +2,9 @@ package com.airtalkee.Util;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.SoundPool;
-
 import com.airtalkee.R;
 import com.airtalkee.sdk.util.Log;
 

@@ -3,7 +3,6 @@ package com.airtalkee.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-
 import com.airtalkee.activity.AccountActivity;
 import com.airtalkee.config.Config;
 import com.airtalkee.sdk.util.Log;

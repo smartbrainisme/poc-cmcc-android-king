@@ -1,7 +1,6 @@
 package com.airtalkee.listener;
 
 import java.util.List;
-
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 

@@ -59,6 +59,7 @@
     <string name="talk_tools_report_pic">Picture Submit</string>
     <string name="talk_tools_report_vid">Video Submit</string>
     <string name="talk_tools_call_center">Call center</string>
+    <string name="talk_tools_call_center_confirm">Call center?</string>
     <string name="talk_tools_session">History Management</string>
     <string name="talk_tools_channel">Channel Channel</string>
     <string name="talk_tools_setting">Settings</string>
@@ -158,6 +159,8 @@
     <string name="talk_user_login">User</string>
     <string name="talk_close">Close</string>
     <string name="talk_channel_attach_tip">通过勾选可设定启动附着频道</string>
+    <string name="talk_channel_lock_tip">锁定频道\r\n默认只收听当前频道的对讲信息</string>
+    <string name="talk_channel_unlock_tip">取消锁定频道</string>
     <string name="talk_channel_try">Re-connect</string>
     <string name="talk_channel_select">Select channel</string>
     <string name="talk_channel_build_fail">Channel connection failed</string>
@@ -442,5 +445,7 @@
     <string name="talk_video_connect_fail">Connection fail!</string>
     <string name="talk_video_uploading">Uploading!</string>
     <string name="talk_video_stop">Stop!</string>
+    <string name="talk_tools_know">知道了</string>
+    <string name="talk_typewriter_init">在此输入文字</string>
 
 </resources>

@@ -16,6 +16,12 @@
         android:layout_marginBottom="10dp"
         android:visibility="gone" />
 
+    <ProgressBar
+        android:id="@+id/toast_pb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:visibility="gone"/>
+
     <TextView
         android:id="@+id/toast_text"
         android:layout_width="wrap_content"

@@ -2,13 +2,10 @@ package com.airtalkee.control;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.json.JSONObject;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.dao.DBProxyReport;
@@ -74,7 +71,7 @@ public class AirReportManager implements OnReportListener
 		}
 		return report;
 	}
-	
+
 	public void Report(int resType, String resTypeExtension, Uri resUri, String resPath, String resContent, int resSize, double locationX, double locationY)
 	{
 		Report(null, null, resType, resTypeExtension, resUri, resPath, resContent, resSize, locationX, locationY);
@@ -187,7 +184,6 @@ public class AirReportManager implements OnReportListener
 			mDbProxy.DbReportDelete(report.getCode());
 		}
 
-		
 	}
 
 	private AirReport reportGetTask(String code)
@@ -296,17 +292,17 @@ public class AirReportManager implements OnReportListener
 			{
 				if (reportDoing.getType() == AirtalkeeReport.RESOURCE_TYPE_PICTURE)
 				{
-					Util.Toast(AirServices.getInstance(), AirServices.getInstance().getString(R.string.talk_report_upload_pic_err));
+					Util.Toast(AirServices.getInstance(), AirServices.getInstance().getString(R.string.talk_report_upload_pic_err), R.drawable.ic_error);
 				}
 				else
 				{
-					Util.Toast(AirServices.getInstance(), AirServices.getInstance().getString(R.string.talk_report_upload_vid_err));
+					Util.Toast(AirServices.getInstance(), AirServices.getInstance().getString(R.string.talk_report_upload_vid_err), R.drawable.ic_error);
 				}
 			}
 			reportDoing.setState(statusCode == AirtalkeeReport.RESOURCE_STATUS_CODE_OK ? AirReport.STATE_RESULT_OK : AirReport.STATE_RESULT_FAIL);
 			reportDoing.setProgress(0);
 			broadCastReportState();
-			
+
 			AirReport report = reportGetTask(reportDoing.getCode());
 			if (report != null)
 			{
@@ -340,23 +336,23 @@ public class AirReportManager implements OnReportListener
 		if (data != null)
 		{
 			if (report.getTarget() == AirReport.TARGET_NORMAL)
-				AirtalkeeReport.getInstance().ReportResource(report.getType(), report.getTypeExtension(), data, report.getResContent(), AirtalkeeReport.LOCATION_TYPE_CELL,
-					report.getLocLatitude() + "", report.getLocLongitude() + "");
+				AirtalkeeReport.getInstance().ReportResource(report.getType(), report.getTypeExtension(), data, report.getResContent(), AirtalkeeReport.LOCATION_TYPE_CELL, report.getLocLatitude() + "", report.getLocLongitude() + "");
 			else
-				AirtalkeeReport.getInstance().ReportResource(report.getTaskId(), report.getType(), report.getTypeExtension(), data, report.getResContent(), AirtalkeeReport.LOCATION_TYPE_CELL,
-					report.getLocLatitude() + "", report.getLocLongitude() + "");
-			//AirtalkeeReport.getInstance().ReportResource(true, report.getType(), report.getResFileName(), data, report.getResContent(), AirtalkeeReport.LOCATION_TYPE_CELL,
-			//	report.getLocLatitude() + "", report.getLocLongitude() + "");
+				AirtalkeeReport.getInstance().ReportResource(report.getTaskId(), report.getType(), report.getTypeExtension(), data, report.getResContent(), AirtalkeeReport.LOCATION_TYPE_CELL, report.getLocLatitude() + "", report.getLocLongitude() + "");
+			// AirtalkeeReport.getInstance().ReportResource(true,
+			// report.getType(), report.getResFileName(), data,
+			// report.getResContent(), AirtalkeeReport.LOCATION_TYPE_CELL,
+			// report.getLocLatitude() + "", report.getLocLongitude() + "");
 			isOk = true;
 		}
 		return isOk;
 	}
-	
+
 	public AirReport getCurrentReportDoing()
 	{
 		return reportDoing;
 	}
-	
+
 	/********************************************
 	 * 
 	 * Events
@@ -376,7 +372,7 @@ public class AirReportManager implements OnReportListener
 		// TODO Auto-generated method stub
 		reportActionResult(statusCode, resId);
 	}
-	
+
 	/********************************************
 	 * 
 	 * BroadCast
@@ -385,31 +381,32 @@ public class AirReportManager implements OnReportListener
 	public static final String AIR_ACTION = "com.airtalkee.action";
 	public static final int OPER_UPLOAD_PICTURE = 1000;
 	public static final int OPER_UPLOAD_VIDEO = 1001;
+
 	private void broadCastReportState()
 	{
-		Intent intent = new Intent(AIR_ACTION); 
-		
-		if(reportDoing != null)
+		Intent intent = new Intent(AIR_ACTION);
+
+		if (reportDoing != null)
 		{
-			int oper =  OPER_UPLOAD_VIDEO;
-			if(reportDoing.getType() ==  AirtalkeeReport.RESOURCE_TYPE_PICTURE)
+			int oper = OPER_UPLOAD_VIDEO;
+			if (reportDoing.getType() == AirtalkeeReport.RESOURCE_TYPE_PICTURE)
 				oper = OPER_UPLOAD_PICTURE;
 			intent.putExtra("operCode", oper);
 			try
 			{
 				JSONObject obj = new JSONObject();
 				obj.put("state", reportDoing.getState());
-				Log.d(AirReportManager.class, "------state----="+obj.optInt("state"));
-				
+				Log.d(AirReportManager.class, "------state----=" + obj.optInt("state"));
+
 				intent.putExtra("json", obj.toString());
-				if(AirServices.getInstance() != null)
+				if (AirServices.getInstance() != null)
 				{
 					AirServices.getInstance().sendBroadcast(intent);
 				}
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
-				Log.e(AirReportManager.class, "broadCastReportState Exception e"+e.toString());
+				Log.e(AirReportManager.class, "broadCastReportState Exception e" + e.toString());
 			}
 		}
 	}

@@ -2,11 +2,9 @@ package com.airtalkee.dao;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.util.Log;
 

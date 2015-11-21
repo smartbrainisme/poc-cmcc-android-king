@@ -31,8 +31,7 @@ import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.VideoCamera;
 
-public class PTTFragment extends BaseFragment implements OnClickListener,
-		DialogListener
+public class PTTFragment extends BaseFragment implements OnClickListener, DialogListener
 {
 
 	private static final int DIALOG_CALL_CENTER = 100;
@@ -129,7 +128,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 					}
 					break;
 				case R.id.bar_right:
-					dialog = new AlertDialog(getActivity(), "确定呼叫中心", null, this, DIALOG_CALL_CENTER);
+					dialog = new AlertDialog(getActivity(), getString(R.string.talk_tools_call_center_confirm), null, this, DIALOG_CALL_CENTER);
 					dialog.show();
 					break;
 			}
@@ -151,11 +150,9 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 				if (AirtalkeeAccount.getInstance().isEngineRunning())
 				{
 					AirSession session = SessionController.SessionMatchSpecial(AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER, getString(R.string.talk_tools_call_center));
-					Intent it = new Intent(getActivity(),
-							SessionDialogActivity.class);
+					Intent it = new Intent(getActivity(), SessionDialogActivity.class);
 					it.putExtra("sessionCode", session.getSessionCode());
-					it.putExtra("type",
-							AirServices.TEMP_SESSION_TYPE_MESSAGE);
+					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
 					getActivity().startActivity(it);
 				}
 				else
@@ -287,6 +284,12 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 				break;
 		}
 	}
+	
+	@Override
+	public void onClickOk(int id, boolean isChecked)
+	{
+		// TODO Auto-generated method stub
+	}
 
 	@Override
 	public void onClickCancel(int id)
@@ -342,8 +345,9 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 	}
 
 	@Override
-	public void onListItemLongClick(int id, int selectedItem) {
+	public void onListItemLongClick(int id, int selectedItem)
+	{
 		// TODO Auto-generated method stub
-		
+
 	}
 }

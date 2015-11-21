@@ -1,12 +1,10 @@
 package com.airtalkee.activity;
 
 import java.util.List;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
-
 import com.airtalkee.R;
 import com.airtalkee.adapter.AdapterImagePager;
 

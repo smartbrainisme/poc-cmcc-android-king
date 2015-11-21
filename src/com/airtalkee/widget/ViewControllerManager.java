@@ -5,12 +5,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import android.content.Context;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.airtalkee.R;
 import com.airtalkee.widget.ViewControllerAnimation.OnAnimationDelegate;
 

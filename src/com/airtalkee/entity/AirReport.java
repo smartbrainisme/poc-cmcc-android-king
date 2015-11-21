@@ -1,7 +1,6 @@
 package com.airtalkee.entity;
 
 import android.net.Uri;
-
 import com.airtalkee.sdk.AirtalkeeReport;
 
 public class AirReport

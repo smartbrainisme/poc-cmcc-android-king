@@ -16,9 +16,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
@@ -48,6 +48,10 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 {
 	private static final int DIALOG_RECORD_START = 100;
 	private static final int DIALOG_RECORD_STOP = 101;
+	private static final String VIDEO_QUALITY_LOW = "320 * 480";
+	private static final String VIDEO_QUALITY_NORMAL = "480 * 640";
+	private static final String VIDEO_QUALITY_HIGH = "640 * 960";
+	private static final String VIDEO_QUALITY_BEST = "720 * 1280";
 
 	private static VideoSessionActivity mInstance;
 	private AirSession session;
@@ -58,9 +62,10 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 
 	private ImageView videoSettings, videoStop;
 	private RadioGroup videoSettingRadio;
-	private FrameLayout videoSettingsLayout;
+	// private FrameLayout videoSettingsLayout;
 	private RelativeLayout videoPanel, topPanel;
 	private TextView videoStatusText, videoRate;
+	private static String videoRateStr;
 	private ImageView btnTalkVideo, icVideoStatus;
 	private Animation animVideoFull, animVideoSmall;
 	private boolean isVideoRecording = false;
@@ -75,6 +80,11 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 	public static VideoSessionActivity getInstance()
 	{
 		return mInstance;
+	}
+
+	public boolean getRecordingState()
+	{
+		return getInstance().isVideoRecording;
 	}
 
 	@Override
@@ -107,22 +117,6 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 
 	private void loadView()
 	{
-		/*
-		 * tvTitle = (TextView) findViewById(R.id.tv_main_title);
-		 * 
-		 * View btnLeft = findViewById(R.id.menu_left_button); ivLeft =
-		 * (ImageView) findViewById(R.id.bottom_left_icon);
-		 * ivLeft.setImageResource
-		 * (ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this));
-		 * btnLeft.setOnClickListener(this);
-		 * 
-		 * RelativeLayout ivRightLay = (RelativeLayout)
-		 * findViewById(R.id.talk_menu_right_button); ivRight = (ImageView)
-		 * findViewById(R.id.bottom_right_icon);
-		 * ivRight.setImageResource(R.drawable.ic_topbar_video_open);
-		 * ivRightLay.setOnClickListener(this);
-		 */
-
 		mSurfacePlayer = (SurfaceView) findViewById(R.id.talk_video_surface_player);
 		mSurfacePlayer.getHolder().addCallback(null);
 
@@ -132,12 +126,7 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		videoStop = (ImageView) findViewById(R.id.video_stop);
 		videoStop.setOnClickListener(this);
 
-		videoSettingRadio = (RadioGroup) findViewById(R.id.radio);
-		videoSettingRadio.setOnCheckedChangeListener(this);
-		videoSettingsLayout = (FrameLayout) findViewById(R.id.video_layout);
-		videoPanel = (RelativeLayout) findViewById(R.id.talk_video_panel);
-		videoPanel.setVisibility(View.GONE);
-		videoSettingsLayout = (FrameLayout) findViewById(R.id.video_layout);
+		// videoSettingsLayout = (FrameLayout) findViewById(R.id.video_layout);
 		videoPanel = (RelativeLayout) findViewById(R.id.talk_video_panel);
 		videoPanel.setVisibility(View.GONE);
 		topPanel = (RelativeLayout) findViewById(R.id.topbar_status);
@@ -146,8 +135,6 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		btnTalkVideo.setOnTouchListener(this);
 		animVideoFull = AnimationUtils.loadAnimation(this, R.anim.video_full);
 		animVideoSmall = AnimationUtils.loadAnimation(this, R.anim.video_small);
-		
-		icVideoStatus = (ImageView) findViewById(R.id.talk_video_status_iv);
 
 		icVideoStatus = (ImageView) findViewById(R.id.talk_video_status_iv);
 		videoRate = (TextView) findViewById(R.id.video_rate);
@@ -161,6 +148,41 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		popWindow.setOutsideTouchable(true);
 
 		videoSettingRadio = (RadioGroup) popView.findViewById(R.id.radio_panel);
+		if (VIDEO_QUALITY_LOW.equals(videoRateStr))
+		{
+			videoRate.setText(VIDEO_QUALITY_LOW);
+			videoRateStr = VIDEO_QUALITY_LOW;
+			RadioButton rb = (RadioButton) videoSettingRadio.findViewById(R.id.radio_low);
+			rb.setChecked(true);
+		}
+		else if (VIDEO_QUALITY_NORMAL.equals(videoRateStr))
+		{
+			videoRate.setText(VIDEO_QUALITY_NORMAL);
+			videoRateStr = VIDEO_QUALITY_NORMAL;
+			RadioButton rb = (RadioButton) videoSettingRadio.findViewById(R.id.radio_normal);
+			rb.setChecked(true);
+		}
+		else if (VIDEO_QUALITY_HIGH.equals(videoRateStr))
+		{
+			videoRate.setText(VIDEO_QUALITY_HIGH);
+			videoRateStr = VIDEO_QUALITY_HIGH;
+			RadioButton rb = (RadioButton) videoSettingRadio.findViewById(R.id.radio_high);
+			rb.setChecked(true);
+		}
+		else if (VIDEO_QUALITY_BEST.equals(videoRateStr))
+		{
+			videoRate.setText(VIDEO_QUALITY_BEST);
+			videoRateStr = VIDEO_QUALITY_BEST;
+			RadioButton rb = (RadioButton) videoSettingRadio.findViewById(R.id.radio_best);
+			rb.setChecked(true);
+		}
+		else
+		{
+			videoRate.setText(VIDEO_QUALITY_HIGH);
+			videoRateStr = VIDEO_QUALITY_HIGH;
+			RadioButton rb = (RadioButton) videoSettingRadio.findViewById(R.id.radio_high);
+			rb.setChecked(true);
+		}
 		videoSettingRadio.setOnCheckedChangeListener(this);
 	}
 
@@ -226,7 +248,7 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 						getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 					}
 				}
-			}, cameraType, videoSettingRadio, videoPanel, session, AirAccountManager.VIDEO_IP, AirAccountManager.VIDEO_PORT, 0, 0);
+			}, cameraType, videoSettingRadio, videoPanel, session, AirAccountManager.VIDEO_IP, AirAccountManager.VIDEO_PORT, 0, 0, false);
 			// ivRight.setImageResource(R.drawable.ic_topbar_video_close);
 			refreshVideoRecorderStart();
 		}
@@ -258,7 +280,6 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 			case AirSession.MEDIA_BUTTON_STATE_CONNECTING:
 			case AirSession.MEDIA_BUTTON_STATE_REQUESTING:
 			case AirSession.MEDIA_BUTTON_STATE_QUEUE:
-				btnTalkVideo.setBackgroundResource(R.drawable.video_talk_normal);
 				btnTalkVideo.setBackgroundResource(R.drawable.video_talk_press);
 				break;
 		}
@@ -337,43 +358,6 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 	{
 		switch (v.getId())
 		{
-			case R.id.menu_left_button:
-			case R.id.bottom_left_icon:
-			{
-				finish();
-				break;
-			}
-			case R.id.talk_menu_right_button:
-			case R.id.bottom_right_icon:
-			{
-				/*
-				 * if (!isVideoRecording) { AlertDialog.Builder builder = new
-				 * AlertDialog.Builder(this);
-				 * builder.setTitle(getString(R.string
-				 * .talk_channel_create_tip));
-				 * builder.setMessage(getString(R.string
-				 * .talk_video_tio_to_open));
-				 * builder.setPositiveButton(getString(R.string.talk_ok), new
-				 * DialogInterface.OnClickListener() { public void
-				 * onClick(DialogInterface dialog, int which) {
-				 * videoRecordStart(); } });
-				 * builder.setNegativeButton(this.getString(R.string.talk_no),
-				 * null); builder.show(); } else { AlertDialog.Builder builder =
-				 * new AlertDialog.Builder(this);
-				 * builder.setTitle(getString(R.string
-				 * .talk_channel_create_tip));
-				 * builder.setMessage(getString(R.string
-				 * .talk_video_tio_to_close));
-				 * builder.setPositiveButton(getString(R.string.talk_ok), new
-				 * DialogInterface.OnClickListener() { public void
-				 * onClick(DialogInterface dialog, int which) { if (videoShow)
-				 * finish(); else videoRecordFinish(); } });
-				 * builder.setNegativeButton(this.getString(R.string.talk_no),
-				 * null); builder.show(); }
-				 */
-				break;
-			}
-			
 			case R.id.video_settings:
 			{
 				if (popWindow.isShowing())
@@ -395,35 +379,31 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 				}
 				break;
 			}
-			/*
-			 * case R.id.talk_btn_choose: { isVideoPlaying = !isVideoPlaying; if
-			 * (isVideoPlaying) refreshVideoPlayerStart(); else
-			 * refreshVideoPlayerStop(); break; }
-			 */
 		}
 	}
 
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId)
 	{
-		// TODO Auto-generated method stub
-		videoSettingsLayout.setVisibility(View.GONE);
-		videoSufaceRecord.selectQuality(videoSettingRadio);
-		videoSufaceRecord.selectQuality(videoSettingRadio.getCheckedRadioButtonId());
+		videoSufaceRecord.selectQuality(videoSettingRadio.getCheckedRadioButtonId(), true);
 		popWindow.dismiss();
 		switch (checkedId)
 		{
 			case R.id.radio_low:
-				videoRate.setText("320*480");
+				videoRateStr = VIDEO_QUALITY_LOW;
+				videoRate.setText(VIDEO_QUALITY_LOW);
 				break;
 			case R.id.radio_normal:
-				videoRate.setText("480*640");
+				videoRateStr = VIDEO_QUALITY_NORMAL;
+				videoRate.setText(VIDEO_QUALITY_NORMAL);
 				break;
 			case R.id.radio_high:
-				videoRate.setText("640*960");
+				videoRateStr = VIDEO_QUALITY_HIGH;
+				videoRate.setText(VIDEO_QUALITY_HIGH);
 				break;
 			case R.id.radio_best:
-				videoRate.setText("720*1280");
+				videoRateStr = VIDEO_QUALITY_BEST;
+				videoRate.setText(VIDEO_QUALITY_BEST);
 				break;
 		}
 	}
@@ -599,6 +579,13 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 				break;
 			}
 		}
+	}
+
+	@Override
+	public void onClickOk(int id, boolean isChecked)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

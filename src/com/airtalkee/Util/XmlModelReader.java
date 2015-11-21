@@ -1,10 +1,8 @@
 package com.airtalkee.Util;
 
 import java.io.IOException;
-
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
-
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.TypedArray;
@@ -14,7 +12,6 @@ import android.util.Xml;
 import android.view.InflateException;
 import android.view.KeyEvent;
 import android.view.View;
-
 import com.airtalkee.R;
 import com.airtalkee.config.Config;
 import com.airtalkee.sdk.util.Log;

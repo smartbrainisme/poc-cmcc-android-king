@@ -144,4 +144,12 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener{
 		getContext().startActivity(it);
 		this.cancel();
 	}
+
+
+	@Override
+	public void onClickOk(int id, boolean isChecked)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

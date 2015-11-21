@@ -2,7 +2,6 @@ package com.airtalkee.activity;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -18,7 +17,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;

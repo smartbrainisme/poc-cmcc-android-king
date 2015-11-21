@@ -10,9 +10,8 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
-
-import com.airtalkee.activity.home.widget.StatusBarBottom;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
+import com.airtalkee.activity.home.widget.StatusBarBottom;
 import com.airtalkee.sdk.entity.AirSession;
 
 public abstract class BaseFragment extends Fragment implements OnSharedPreferenceChangeListener

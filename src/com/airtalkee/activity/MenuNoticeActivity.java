@@ -1,9 +1,7 @@
 package com.airtalkee.activity;
 
 import java.net.URLEncoder;
-
 import org.apache.http.util.EncodingUtils;
-
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -21,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Language;
 import com.airtalkee.Util.ThemeUtil;

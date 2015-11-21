@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -45,7 +44,6 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.AirMmiTimerListener;
@@ -894,7 +892,7 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 			}
 		}
 	}
-	
+
 	public void onListItemLongClick(int id, int selectedItem)
 	{
 		if (currentMessage == null)

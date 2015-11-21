@@ -1,7 +1,6 @@
 package com.airtalkee.dao;
 
 import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -9,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-
 import com.airtalkee.entity.AirReport;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
@@ -20,7 +18,7 @@ import com.airtalkee.sdk.entity.DBProxy;
 import com.airtalkee.sdk.util.Log;
 
 /**
- * @author ³ÂÇå·É TODO Ìá¹©Ò»¸ö ÔöÉ¾¸Ä²éµÄ UTILº¯Êý Í¬Ê±Õâ¸öÀàÒ²Ìá¹©ÁËÊý¾Ý¿âµÄ´´½¨ºÍ±íµÄ´´½¨
+ * @author ï¿½ï¿½ï¿½ï¿½ï¿½ TODO ï¿½á¹©Ò»ï¿½ï¿½ ï¿½ï¿½É¾ï¿½Ä²ï¿½ï¿½ UTILï¿½ï¿½ï¿½ï¿½ Í¬Ê±ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½á¹©ï¿½ï¿½ï¿½ï¿½Ý¿ï¿½Ä´ï¿½ï¿½ï¿½ï¿½Í±ï¿½Ä´ï¿½ï¿½ï¿½
  */
 
 public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
@@ -37,7 +35,7 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 	public DBHelp(Context context)
 	{
 		super(context, DBDefine.DBNAME, null, DBDefine.DBVERSION);
-		// TODO ´´½¨database
+		// TODO ï¿½ï¿½ï¿½ï¿½database
 		iReportDao = TableReportDao.getInstance(this);
 		iChannelDao = TableChannelDao.getInstance(this);
 		iMessageDao = TableMessageDao.getInstance(this);
@@ -57,7 +55,7 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 	@SuppressWarnings("static-access")
 	public void onCreate(SQLiteDatabase db)
 	{
-		// TODO ´´½¨table
+		// TODO ï¿½ï¿½ï¿½ï¿½table
 		Log.e(DBHelp.class, "DB onCreate!!");
 		this.db = db;
 		createTable();

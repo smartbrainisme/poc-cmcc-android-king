@@ -11,7 +11,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.sdk.util.Utils;

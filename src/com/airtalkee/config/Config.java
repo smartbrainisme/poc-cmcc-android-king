@@ -278,7 +278,7 @@ public class Config
 				funcShowCustomLogoIconId = R.drawable.logo_cmcc;
 				funcShowCustomLogoStringId1 = R.string.copyright_cmcc1;
 				funcShowCustomLogoStringId2 = R.string.copyright_cmcc2;
-				funcCenterCall = AirFunctionSetting.SETTING_DISABLE;
+//				funcCenterCall = AirFunctionSetting.SETTING_DISABLE;
 				app_name = context.getString(R.string.app_name_cmcc);
 				break;
 			case MARKET_CMCCLIMIT:

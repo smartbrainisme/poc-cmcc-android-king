@@ -167,12 +167,6 @@
                 android:layout_marginBottom="6dip"
                 android:visibility="gone" >
 
-<!--                 <ProgressBar -->
-<!--                     android:id="@+id/talk_report_progress" -->
-<!--                     style="?android:attr/progressBarStyleHorizontal" -->
-<!--                     android:layout_width="fill_parent" -->
-<!--                     android:layout_height="18dip" /> -->
-
                 <TextView
                     android:id="@+id/talk_report_progress_text"
                     android:layout_width="fill_parent"

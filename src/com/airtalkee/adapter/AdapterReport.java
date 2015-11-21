@@ -1,36 +1,26 @@
 package com.airtalkee.adapter;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
-import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MenuReportActivity;
-import com.airtalkee.activity.MenuReportAsPicActivity;
 import com.airtalkee.control.AirReportManager;
 import com.airtalkee.entity.AirReport;
 import com.airtalkee.listener.OnMmiLocationListener;
-import com.airtalkee.location.AirLocation;
 import com.airtalkee.sdk.AirtalkeeReport;
-import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -85,7 +75,6 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		// TODO Auto-generated method stub
 		ViewHolder holder = null;
 		AirReport report = (AirReport) getItem(position);
 		if (convertView == null)
@@ -104,9 +93,12 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 			holder.state = (ImageView) convertView.findViewById(R.id.talk_report_state);
 			// holder.stateRetry = (Button)
 			// convertView.findViewById(R.id.talk_report_btn_retry);
+			// 重发按钮图片
 			holder.stateRetry = (ImageView) convertView.findViewById(R.id.talk_report_retry);
-			holder.stateRetry.setImageResource(R.drawable.selector_report_retry);
+
+			// 上传失败
 			holder.failText = (TextView) convertView.findViewById(R.id.talk_report_fail_message);
+			// 点击重发 等待重发
 			holder.uploadStep = (TextView) convertView.findViewById(R.id.talk_report_retry_step);
 			convertView.setTag(holder);
 		}
@@ -142,28 +134,30 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 			}
 			else
 			{
-				holder.detail.setText(context.getString(R.string.talk_tools_report_description) + "：" + context.getString(R.string.talk_report_upload_no_content));
+				holder.detail.setText(context.getString(R.string.talk_tools_report_description) + "：" + context.getString(R.string.talk_report_upload_no_content) + System.getProperty("line.separator", "/n"));
 			}
 
 			switch (report.getState())
 			{
 				case AirReport.STATE_WAITING:
 				{
-					holder.state.setImageResource(R.drawable.report_state_waiting);
-					// holder.stateRetry.setVisibility(View.GONE);
+					// holder.state.setImageResource(R.drawable.report_state_waiting);
+					holder.stateRetry.setVisibility(View.GONE);
 					holder.detail.setVisibility(View.VISIBLE);
-					// holder.progressLayout.setVisibility(View.GONE);
 					holder.progressBar.setVisibility(View.VISIBLE);
-					holder.uploadStep.setText(context.getString(R.string.talk_tools_report_uploading));
+					holder.uploadStep.setText(context.getString(R.string.talk_tools_report_waiting));
+					holder.uploadStep.setVisibility(View.VISIBLE);
+					holder.failText.setVisibility(View.VISIBLE);
 					break;
 				}
 				case AirReport.STATE_UPLOADING:
 				{
-					holder.state.setImageResource(R.drawable.report_state_uploading);
+					// holder.state.setImageResource(R.drawable.report_state_uploading);
 					holder.uploadStep.setText(context.getString(R.string.talk_tools_report_uploading));
 					holder.progressBar.setVisibility(View.VISIBLE);
 					holder.uploadStep.setVisibility(View.VISIBLE);
-					// holder.stateRetry.setVisibility(View.GONE);
+					holder.failText.setVisibility(View.VISIBLE);
+					 holder.stateRetry.setVisibility(View.GONE);
 					// holder.detail.setVisibility(View.GONE);
 					// holder.progressLayout.setVisibility(View.VISIBLE);
 					// holder.progressBar.setProgress(report.getProgress());
@@ -172,10 +166,8 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 				}
 				case AirReport.STATE_RESULT_OK:
 				{
-					holder.state.setImageResource(R.drawable.report_state_ok);
-					// holder.stateRetry.setVisibility(View.GONE);
 					holder.detail.setVisibility(View.VISIBLE);
-					holder.progressLayout.setVisibility(View.GONE);
+					// holder.progressLayout.setVisibility(View.GONE);
 					if (report.getType() == AirtalkeeReport.RESOURCE_TYPE_VIDEO)
 					{
 						holder.play.setVisibility(View.VISIBLE);
@@ -185,6 +177,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 					{
 						holder.play.setVisibility(View.GONE);
 					}
+					holder.progressBar.setVisibility(View.GONE);
 					holder.stateRetry.setVisibility(View.GONE);
 					holder.uploadStep.setVisibility(View.GONE);
 					holder.failText.setVisibility(View.GONE);
@@ -193,12 +186,13 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 				case AirReport.STATE_RESULT_FAIL:
 				{
 					// holder.state.setImageResource(R.drawable.report_state_error);
+					holder.stateRetry.setImageResource(R.drawable.selector_report_retry);
 					holder.stateRetry.setVisibility(View.VISIBLE);
 					holder.stateRetry.setOnClickListener(this);
 					holder.stateRetry.setTag(report.getCode());
 					holder.failText.setVisibility(View.VISIBLE);
 					holder.uploadStep.setVisibility(View.VISIBLE);
-					holder.progressLayout.setVisibility(View.GONE);
+					// holder.progressLayout.setVisibility(View.GONE);
 					break;
 				}
 			}

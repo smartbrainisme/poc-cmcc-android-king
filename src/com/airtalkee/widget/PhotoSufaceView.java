@@ -1,9 +1,6 @@
 package com.airtalkee.widget;
 
-import java.io.IOException;
 import android.content.Context;
-import android.graphics.ImageFormat;
-import android.graphics.PixelFormat;
 import android.hardware.Camera;
 import android.view.SurfaceHolder;
 import android.widget.FrameLayout;

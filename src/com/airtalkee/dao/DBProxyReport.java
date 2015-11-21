@@ -1,7 +1,6 @@
 package com.airtalkee.dao;
 
 import java.util.List;
-
 import com.airtalkee.entity.AirReport;
 
 public interface DBProxyReport

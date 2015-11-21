@@ -19,7 +19,6 @@
             android:layout_height="fill_parent"
             android:layout_centerVertical="true"
             android:layout_marginRight="3dip"
-            android:background="?theme_menu_bg"
             android:clickable="true" >
 
             <ImageView
@@ -118,7 +117,6 @@
                 android:id="@id/talk_menu_right_button"
                 android:layout_width="@dimen/main_menu_btn_width"
                 android:layout_height="fill_parent"
-                android:background="?theme_menu_bg"
                 android:clickable="true" >
 
                 <ImageView

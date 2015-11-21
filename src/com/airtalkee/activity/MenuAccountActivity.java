@@ -1,15 +1,10 @@
 package com.airtalkee.activity;
 
 import java.util.List;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +12,8 @@ import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.HomeActivity;
+import com.airtalkee.activity.home.widget.AlertDialog;
+import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.bluetooth.BluetoothManager;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirAccountManager;
@@ -27,10 +24,12 @@ import com.airtalkee.sdk.entity.AirContactGroup;
 import com.airtalkee.services.AirServices;
 
 public class MenuAccountActivity extends ActivityBase implements
-		OnClickListener, OnUserInfoListener
+		OnClickListener, OnUserInfoListener, DialogListener
 {
 	public TextView tvUserName;
 	public TextView tvUserIpocid;
+
+	AlertDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -103,45 +102,11 @@ public class MenuAccountActivity extends ActivityBase implements
 			}
 			case R.id.talk_lv_tool_exit:
 			{
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle(getString(R.string.talk_exit_tip));
-				final CheckBox cb = new CheckBox(this);
-				cb.setText(getString(R.string.talk_auto_login));
-				cb.setChecked(true);
-				builder.setView(cb);
-				builder.setPositiveButton(getString(R.string.talk_exit), new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int whichButton)
-					{
-						if (!cb.isChecked())
-						{
-							AirServices.iOperator.putString(AirAccountManager.KEY_PWD, "");
-						}
-						AirServices.iOperator.putBoolean(AirAccountManager.KEY_HB, false);
-						BluetoothManager.getInstance().btStop();
-						AirtalkeeAccount.getInstance().Logout();
-						finish();
-						if (MoreActivity.getInstance() != null)
-						{
-							MoreActivity.getInstance().finish();
-						}
-						if(HomeActivity.getInstance()!=null)
-						{
-							HomeActivity.getInstance().finish();
-						}
-					}
-				});
-
-				builder.setNegativeButton(getString(R.string.talk_session_call_cancel), new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int whichButton)
-					{
-						dialog.cancel();
-					}
-				});
-				builder.show();
+				dialog = new AlertDialog(this, getString(R.string.talk_exit_tip), null, getString(R.string.talk_exit), true, this, 0);
+				dialog.show();
 				break;
 			}
+
 			default:
 				break;
 		}
@@ -211,5 +176,38 @@ public class MenuAccountActivity extends ActivityBase implements
 				tvUserName.setText(name);
 			}
 		}
+	}
+
+	@Override
+	public void onClickOk(int id)
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void onClickOk(int id, boolean isChecked)
+	{
+		if (!isChecked)
+		{
+			AirServices.iOperator.putString(AirAccountManager.KEY_PWD, "");
+		}
+		AirServices.iOperator.putBoolean(AirAccountManager.KEY_HB, false);
+		BluetoothManager.getInstance().btStop();
+		AirtalkeeAccount.getInstance().Logout();
+		finish();
+		if (MoreActivity.getInstance() != null)
+		{
+			MoreActivity.getInstance().finish();
+		}
+		if (HomeActivity.getInstance() != null)
+		{
+			HomeActivity.getInstance().finish();
+		}
+	}
+
+	@Override
+	public void onClickCancel(int id)
+	{
+		
 	}
 }

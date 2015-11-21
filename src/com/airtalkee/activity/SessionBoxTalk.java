@@ -13,20 +13,15 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.FrameLayout;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
@@ -40,7 +35,6 @@ import com.airtalkee.adapter.AdapterQueue;
 import com.airtalkee.adapter.AdapterTools;
 import com.airtalkee.bluetooth.BluetoothManager;
 import com.airtalkee.config.Config;
-import com.airtalkee.control.AirAccountManager;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.listener.OnMmiSessionBoxRefreshListener;
 import com.airtalkee.listener.OnMmiSessionListener;
@@ -56,8 +50,6 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.AudioVisualizerView;
-import com.airtalkee.widget.VideoSufaceView;
-import com.airtalkee.widget.VideoSufaceView.OnVideoStateChangeListener;
 
 public class SessionBoxTalk extends View implements OnClickListener,
 		OnItemClickListener, OnTouchListener, OnMediaAudioVisualizerListener,
