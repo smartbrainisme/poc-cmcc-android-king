@@ -345,13 +345,21 @@
                                 android:orientation="horizontal" >
 
                                 <TextView
-                                    android:layout_width="fill_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:gravity="center_vertical"
                                     android:paddingLeft="10dip"
                                     android:text="@string/talk_tools_notice"
                                     android:textColor="?theme_color_text"
                                     android:textSize="16dip" />
+
+                                <ImageView
+                                    android:id="@+id/iv_Unread"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:layout_marginLeft="2dp"
+                                    android:src="@drawable/record_unread" />
                             </LinearLayout>
 
                             <ImageView
@@ -502,8 +510,8 @@
                             android:layout_height="wrap_content"
                             android:background="?theme_sider_title_bg"
                             android:gravity="center_vertical"
-                            android:padding="10dip" 
-                            android:visibility="gone">
+                            android:padding="10dip"
+                            android:visibility="gone" >
 
                             <TextView
                                 android:layout_width="fill_parent"
@@ -519,8 +527,8 @@
                             android:id="@id/talk_lv_tool_manual_divider"
                             android:layout_width="fill_parent"
                             android:layout_height="1dip"
-                            android:background="@drawable/dicider_line2" 
-                            android:visibility="gone"/>
+                            android:background="@drawable/dicider_line2"
+                            android:visibility="gone" />
 
                         <LinearLayout
                             android:id="@id/talk_lv_tool_defect"
@@ -528,8 +536,8 @@
                             android:layout_height="wrap_content"
                             android:background="?theme_sider_title_bg"
                             android:gravity="center_vertical"
-                            android:padding="10dip" 
-                            android:visibility="gone">
+                            android:padding="10dip"
+                            android:visibility="gone" >
 
                             <TextView
                                 android:layout_width="fill_parent"
@@ -554,8 +562,8 @@
                             android:layout_height="wrap_content"
                             android:background="?theme_sider_title_bg"
                             android:gravity="center_vertical"
-                            android:padding="10dip" 
-                            android:visibility="gone">
+                            android:padding="10dip"
+                            android:visibility="gone" >
 
                             <TextView
                                 android:layout_width="fill_parent"
@@ -571,8 +579,8 @@
                             android:id="@id/talk_lv_tool_update_divider"
                             android:layout_width="fill_parent"
                             android:layout_height="1dip"
-                            android:background="@drawable/dicider_line2" 
-                            android:visibility="gone"/>
+                            android:background="@drawable/dicider_line2"
+                            android:visibility="gone" />
 
                         <LinearLayout
                             android:id="@+id/talk_change_theme"
@@ -580,8 +588,8 @@
                             android:layout_height="wrap_content"
                             android:background="?theme_sider_title_bg"
                             android:gravity="center_vertical"
-                            android:padding="10dip" 
-                            android:visibility="gone">
+                            android:padding="10dip"
+                            android:visibility="gone" >
 
                             <TextView
                                 android:layout_width="fill_parent"
@@ -597,8 +605,8 @@
                             android:id="@+id/talk_change_theme_divider"
                             android:layout_width="fill_parent"
                             android:layout_height="1dip"
-                            android:background="@drawable/dicider_line2" 
-                            android:visibility="gone"/>
+                            android:background="@drawable/dicider_line2"
+                            android:visibility="gone" />
 
                         <LinearLayout
                             android:id="@id/talk_lv_tool_exit"
@@ -606,8 +614,8 @@
                             android:layout_height="wrap_content"
                             android:background="?theme_sider_title_bg"
                             android:gravity="center_vertical"
-                            android:padding="10dip" 
-                            android:visibility="gone">
+                            android:padding="10dip"
+                            android:visibility="gone" >
 
                             <TextView
                                 android:layout_width="fill_parent"
@@ -623,8 +631,8 @@
                             android:id="@+id/talk_exit_divider"
                             android:layout_width="fill_parent"
                             android:layout_height="1dip"
-                            android:background="@drawable/dicider_line2" 
-                            android:visibility="gone"/>
+                            android:background="@drawable/dicider_line2"
+                            android:visibility="gone" />
                     </LinearLayout>
                 </ScrollView>
             </LinearLayout>
@@ -636,8 +644,8 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="10dip"
                 android:gravity="center"
-                android:orientation="horizontal" 
-                android:visibility="gone">
+                android:orientation="horizontal"
+                android:visibility="gone" >
 
                 <LinearLayout
                     android:layout_width="wrap_content"

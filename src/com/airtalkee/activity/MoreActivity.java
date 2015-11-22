@@ -34,6 +34,8 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 
 	private SeekBar mVoiceVolumeSeekBar;
 	private CheckBox mVoiceMode;
+	
+	private ImageView ivUnread;
 
 	private static MoreActivity mInstance = null;
 
@@ -239,6 +241,16 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		{
 			findViewById(R.id.talk_lv_tool_exit).setVisibility(View.GONE);
 			findViewById(R.id.talk_exit_divider).setVisibility(View.GONE);
+		}
+		
+		ivUnread = (ImageView) findViewById(R.id.iv_Unread);
+		if (Config.funcBroadcast && AirtalkeeAccount.getInstance().SystemBroadcastNumberGet() > 0)
+		{
+			ivUnread.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			ivUnread.setVisibility(View.GONE);
 		}
 	}
 

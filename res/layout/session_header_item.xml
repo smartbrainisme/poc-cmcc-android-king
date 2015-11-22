@@ -4,6 +4,7 @@
     android:layout_height="98dp" >
 
     <TextView
+        android:id="@+id/tv_create_session"
         android:layout_width="fill_parent"
         android:layout_height="80dp"
         android:background="@drawable/selector_listitem_channel"

@@ -1,7 +1,6 @@
 package com.airtalkee.activity.home.widget;
 
 import java.util.List;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,11 +13,12 @@ import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Toast;
 import com.airtalkee.activity.MoreActivity;
+import com.airtalkee.config.Config;
+import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.controller.MessageController;
@@ -31,7 +31,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 	private TextView tvTitle, tvMediaStatus;
 	private ImageView ivMeidiaStatus;
 	private View btnLeft, btnRight;
-	private ImageView ivBtnLeft,ivUnReadDot;
+	private ImageView ivBtnLeft, ivUnReadDot, ivNoticeUnread;
 	private AirSession session = null;
 
 	public StatusBarTitle(Context context, AttributeSet attrs)
@@ -50,7 +50,8 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 
 	private void initFindView()
 	{
-		ivUnReadDot = (ImageView)findViewById(R.id.unread_dot);
+		ivUnReadDot = (ImageView) findViewById(R.id.unread_dot);
+		ivNoticeUnread = (ImageView) findViewById(R.id.iv_Unread);
 		btnLeft = findViewById(R.id.left_button);
 		btnRight = findViewById(R.id.right_button);
 		tvTitle = (TextView) findViewById(R.id.tv_title);
@@ -60,6 +61,14 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		// findViewById(R.id.title_drag).setOnClickListener(this);
 		btnLeft.setOnClickListener(this);
 		btnRight.setOnClickListener(this);
+		if (Config.funcBroadcast && AirtalkeeAccount.getInstance().SystemBroadcastNumberGet() > 0)
+		{
+			ivNoticeUnread.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			ivNoticeUnread.setVisibility(View.GONE);
+		}
 	}
 
 	public void setSession(AirSession s)
@@ -148,7 +157,6 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		}
 	}
 
-	
 	@Override
 	public void onClick(View arg0)
 	{
@@ -178,11 +186,11 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 				break;
 		}
 	}
-	
+
 	public void refreshNewMsg()
 	{
 		int count = 0;
-		
+
 		List<AirChannel> channels = AirtalkeeChannel.getInstance().getChannels();
 		for (int i = 0; i < channels.size(); i++)
 		{
@@ -194,10 +202,8 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 			}
 		}
 		count += MessageController.checkUnReadMessage();
-		
-		ivUnReadDot.setVisibility(count >0 ? View.VISIBLE :View.GONE);
+
+		ivUnReadDot.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 	}
-	
-	
-	
+
 }

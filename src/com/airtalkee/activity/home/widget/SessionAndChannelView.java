@@ -18,12 +18,13 @@ import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MoreActivity;
 import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.SessionNewActivity;
+import com.airtalkee.config.Config;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.sdk.AirtalkeeAccount;
+import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
-import com.airtalkee.widget.MyRelativeLayout;
 
 public class SessionAndChannelView extends LinearLayout implements
 		OnClickListener, OnItemClickListener
@@ -37,9 +38,10 @@ public class SessionAndChannelView extends LinearLayout implements
 	private GridView gvSession;
 	private AdapterChannel adapterChannel;
 	private AdapterSession adapterSession;
-	private TextView tvChannelTitle, tvSessionTitle;
+	private TextView tvChannelTitle, tvSessionTitle, tvSettingCancel;
 	private CharSequence channelTitle, sessionTitle;
 	private ViewChangeListener listener;
+	private ImageView ivUnread, ivSetting;
 
 	public SessionAndChannelView(Context context, ViewChangeListener l)
 	{
@@ -47,23 +49,37 @@ public class SessionAndChannelView extends LinearLayout implements
 		// TODO Auto-generated constructor stub
 		LayoutInflater.from(this.getContext()).inflate(R.layout.layout_channels, this);
 		this.listener = l;
-		
+
 		gvChannels = (GridView) findViewById(R.id.gv_channels);
 		adapterChannel = new AdapterChannel(this.getContext(), null);
 		tvChannelTitle = (TextView) findViewById(R.id.tv_channel_title);
 		channelTitle = tvChannelTitle.getText();
 		gvChannels.setAdapter(adapterChannel);
 		gvChannels.setOnItemClickListener(this);
-		
+
 		gvSession = (GridView) findViewById(R.id.gv_session);
 		tvSessionTitle = (TextView) findViewById(R.id.tv_session_title);
 		sessionTitle = tvSessionTitle.getText();
-		adapterSession = new AdapterSession(getContext(), null);
+		adapterSession = new AdapterSession(context, null);
 		gvSession.setAdapter(adapterSession);
 		gvSession.setOnItemClickListener(this);
-		
+
 		findViewById(R.id.channel_button_more).setOnClickListener(this);
-		findViewById(R.id.iv_setting).setOnClickListener(this);
+		ivSetting = (ImageView) findViewById(R.id.iv_setting);
+		ivSetting.setOnClickListener(this);
+
+		tvSettingCancel = (TextView) findViewById(R.id.tv_setting_cancel);
+		tvSettingCancel.setOnClickListener(this);
+
+		ivUnread = (ImageView) findViewById(R.id.iv_Unread);
+		if (Config.funcBroadcast && AirtalkeeAccount.getInstance().SystemBroadcastNumberGet() > 0)
+		{
+			ivUnread.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			ivUnread.setVisibility(View.GONE);
+		}
 
 		registerSessionUpdateListener();
 	}
@@ -100,11 +116,59 @@ public class SessionAndChannelView extends LinearLayout implements
 				Intent it = new Intent(this.getContext(), MoreActivity.class);
 				this.getContext().startActivity(it);
 				break;
-//			case R.id.iv_setting:
-//			{
-//				
-//				break;
-//			}
+			case R.id.iv_setting:
+			{
+				int count = adapterSession.getCount();
+				if (count > 1)
+				{
+					for (int i = 0; i < count; i++)
+					{
+//						View view = null;
+						if (i == 0)
+						{
+							adapterSession.setCreateShow(false);
+							adapterSession.getView(i, null, null);
+						}
+						else
+						{
+							AirSession session = (AirSession) adapterSession.getItem(i);
+							session.setVisible(false);
+							adapterSession.getView(i, null, null);
+						}
+					}
+					tvSettingCancel.setVisibility(View.VISIBLE);
+					ivSetting.setVisibility(View.GONE);
+					gvSession.setClickable(false);
+					adapterSession.notifyDataSetChanged();
+				}
+				break;
+			}
+			case R.id.tv_setting_cancel:
+			{
+				int count = adapterSession.getCount();
+				if (count > 1)
+				{
+					for (int i = 0; i < count; i++)
+					{
+						if (i == 0)
+						{
+							adapterSession.setCreateShow(true);
+							adapterSession.getView(i, null, null);
+						}
+						else
+						{
+							AirSession session = (AirSession) adapterSession.getItem(i);
+							session.setVisible(true);
+							adapterSession.getView(i, null, null);
+						}
+					}
+					tvSettingCancel.setVisibility(View.GONE);
+					ivSetting.setVisibility(View.VISIBLE);
+					gvSession.setClickable(true);
+					adapterSession.notifyDataSetChanged();
+				}
+				break;
+			}
 		}
 	}
 
@@ -131,6 +195,7 @@ public class SessionAndChannelView extends LinearLayout implements
 						Util.Toast(getContext(), getContext().getString(R.string.talk_network_warning));
 					}
 				}
+				adapterChannel.notifyDataSetChanged();
 				break;
 			case R.id.gv_session:
 				if (position == 0)
@@ -149,6 +214,7 @@ public class SessionAndChannelView extends LinearLayout implements
 						getContext().startActivity(it);
 					}
 				}
+				adapterSession.notifyDataSetChanged();
 				break;
 		}
 	}

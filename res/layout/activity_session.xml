@@ -3,23 +3,75 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-	<LinearLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical" android:layout_marginBottom="-1dip">
-		<include layout="@layout/include_main_header" />
-	</LinearLayout>
-	<RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
-		<LinearLayout android:id="@+id/session_manage_panel" android:visibility="gone" android:layout_width="fill_parent"  android:layout_height="60dip" android:orientation="vertical" android:gravity="top" android:layout_alignParentBottom="true">
-			<View  android:layout_width="fill_parent"  android:layout_height="1dip"    android:background="?theme_divider_h"/>
-			<LinearLayout android:layout_width="fill_parent"  android:layout_height="fill_parent" android:orientation="horizontal">
-				<Button android:id="@+id/session_action_delete" android:layout_weight="1" android:text="@string/talk_channel_action_delete" android:layout_width="fill_parent" android:layout_height="fill_parent"  android:background="@drawable/selector_btn" android:textColor="?theme_button_text_color" android:textSize="21dip" />
-				<View  android:layout_width="1dip"  android:layout_height="fill_parent"    android:background="?theme_divider_v"/>
-				<Button android:id="@+id/session_action_cancel" android:layout_weight="1"  android:text="@string/talk_channel_action_cancel" android:layout_width="fill_parent" android:layout_height="fill_parent"  android:background="@drawable/selector_btn"  android:textColor="?theme_button_text_color" android:textSize="21dip"  />
-			</LinearLayout>
-		</LinearLayout>
-		<com.airtalkee.widget.MListView
-			android:id="@+id/session_list" android:layout_above="@id/session_manage_panel"
-			android:layout_width="fill_parent" android:layout_height="fill_parent"
-			android:cacheColorHint="#00000000" android:dividerHeight="1dip"
-			android:divider="?theme_divider_h"
-			android:descendantFocusability="blocksDescendants" />
-	</RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-1dip"
+        android:orientation="vertical" >
+
+        <include layout="@layout/include_main_header" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:id="@+id/session_manage_panel"
+            android:layout_width="fill_parent"
+            android:layout_height="60dip"
+            android:layout_alignParentBottom="true"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dip"
+                android:background="?theme_divider_h" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/session_action_delete"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_btn"
+                    android:text="@string/talk_channel_action_delete"
+                    android:textColor="?theme_button_text_color"
+                    android:textSize="21dip" />
+
+                <View
+                    android:layout_width="1dip"
+                    android:layout_height="fill_parent"
+                    android:background="?theme_divider_v" />
+
+                <Button
+                    android:id="@+id/session_action_cancel"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/selector_btn"
+                    android:text="@string/talk_channel_action_cancel"
+                    android:textColor="?theme_button_text_color"
+                    android:textSize="21dip" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.airtalkee.widget.MListView
+            android:id="@+id/session_list"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_above="@id/session_manage_panel"
+            android:cacheColorHint="#00000000"
+            android:descendantFocusability="blocksDescendants"
+            android:divider="?theme_divider_h"
+            android:dividerHeight="1dip" />
+    </RelativeLayout>
+
 </LinearLayout>
