@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
+
 import com.airtalkee.R;
 import com.airtalkee.Util.DensityUtil;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
@@ -57,10 +59,9 @@ public class HomeActivity extends SessionDialogActivity implements
 
 		setRequestedOrientation(Config.screenOrientation);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
+		
 		super.mediaStatusBar = (MediaStatusBar) findViewById(R.id.media_status_function_bar);
 		mediaStatusBar.init((StatusBarTitle) findViewById(R.id.media_status_title_bar), AirSessionControl.getInstance().getCurrentChannelSession());
-
 		final FragmentManager fm = getSupportFragmentManager();
 		this.viewPager = (ViewPager) findViewById(R.id.home_activity_page_content);
 		this.adapter = new PageFragmentAdapter(this, fm);

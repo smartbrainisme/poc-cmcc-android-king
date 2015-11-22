@@ -18,7 +18,9 @@ import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MenuReportAsPicActivity;
 import com.airtalkee.activity.VideoSessionActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
+import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
+import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.airtalkee.config.Config;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeMessage;
@@ -34,7 +36,9 @@ import com.airtalkee.widget.VideoCamera;
 public class PTTFragment extends BaseFragment implements OnClickListener, DialogListener
 {
 
-	private static final int DIALOG_CALL_CENTER = 100;
+	private static final int DIALOG_CALL_CENTER_CONFIRM = 100;
+	private static final int DIALOG_CALL_CENTER = 101;
+	private static final int DIALOG_2_SEND_MESSAGE = 101;
 	private LinearLayout recPlayback;
 	private ImageView recPlaybackIcon;
 	private TextView recPlaybackUser;
@@ -45,7 +49,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	private View videoPannel;
 	private AirSession session = null;
 	private AirMessage currentMessage;
-
+	private AlertDialog alertDialog;
 	private String picPathTemp = "";
 	private Uri picUriTemp = null;
 
@@ -70,7 +74,8 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	{
 		// TODO Auto-generated method stub
 		super.onPause();
-		setViedoReportPannelVisiblity(View.GONE);
+		if(HomeActivity.getInstance().pageIndex == HomeActivity.PAGE_PTT)
+			setViedoReportPannelVisiblity(View.GONE);
 	}
 
 	@Override
@@ -128,7 +133,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 					}
 					break;
 				case R.id.bar_right:
-					dialog = new AlertDialog(getActivity(), getString(R.string.talk_tools_call_center_confirm), null, this, DIALOG_CALL_CENTER);
+					dialog = new AlertDialog(getActivity(), getString(R.string.talk_tools_call_center_confirm), null, this, DIALOG_CALL_CENTER_CONFIRM);
 					dialog.show();
 					break;
 			}
@@ -149,11 +154,28 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 			{
 				if (AirtalkeeAccount.getInstance().isEngineRunning())
 				{
-					AirSession session = SessionController.SessionMatchSpecial(AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER, getString(R.string.talk_tools_call_center));
-					Intent it = new Intent(getActivity(), SessionDialogActivity.class);
-					it.putExtra("sessionCode", session.getSessionCode());
-					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
-					getActivity().startActivity(it);
+					final AirSession s = SessionController.SessionMatchSpecial(AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER, getString(R.string.talk_tools_call_center));
+					if(s != null)
+					{
+						alertDialog = new CallAlertDialog(getActivity(), "正在呼叫" + s.getDisplayName(), "请稍后...", s.getSessionCode(), DIALOG_CALL_CENTER, new OnAlertDialogCancelListener()
+						{
+							@Override
+							public void onDialogCancel(int reason)
+							{
+								// TODO Auto-generated method stub
+								switch (reason)
+								{
+									case AirSession.SESSION_RELEASE_REASON_NOTREACH:
+										dialog = new AlertDialog(getActivity(), null, getString(R.string.talk_call_offline_tip), getString(R.string.talk_session_call_cancel), getString(R.string.talk_call_leave_msg), PTTFragment.this, DIALOG_2_SEND_MESSAGE,s.getSessionCode());
+										dialog.show();
+										break;
+									default:
+										break;
+								}
+							}
+						});
+						alertDialog.show();
+					}
 				}
 				else
 				{
@@ -274,13 +296,23 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	}
 
 	@Override
-	public void onClickOk(int id)
+	public void onClickOk(int id,Object obj)
 	{
 		// TODO Auto-generated method stub
 		switch (id)
 		{
-			case DIALOG_CALL_CENTER:
+			case DIALOG_CALL_CENTER_CONFIRM:
 				callStationCenter();
+				break;
+			case DIALOG_2_SEND_MESSAGE:
+				if(obj != null)
+				{
+					String sessionCode = obj.toString();
+					Intent it = new Intent(getActivity(), SessionDialogActivity.class);
+					it.putExtra("sessionCode", sessionCode);
+					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+					getActivity().startActivity(it);
+				}
 				break;
 		}
 	}

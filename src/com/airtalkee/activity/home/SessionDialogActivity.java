@@ -113,6 +113,7 @@ public class SessionDialogActivity extends FragmentActivity implements
 	public void onPageSelected(int page)
 	{
 		// TODO Auto-generated method stub
+		
 		if (mediaStatusBar != null)
 			mediaStatusBar.onPageChanged(page);
 		if (mPageIndicator != null)
@@ -167,7 +168,11 @@ public class SessionDialogActivity extends FragmentActivity implements
 		}
 	}
 
-	@Override
+	/*
+	 * 点击输入框外的地方隐藏输入法
+	 * 目前不需要
+	 * 
+	 * @Override
 	public boolean dispatchTouchEvent(MotionEvent ev)
 	{
 		if (ev.getAction() == MotionEvent.ACTION_DOWN)
@@ -190,7 +195,7 @@ public class SessionDialogActivity extends FragmentActivity implements
 			return true;
 		}
 		return onTouchEvent(ev);
-	}
+	}*/
 
 	public boolean isShouldHideInput(View v, MotionEvent event)
 	{

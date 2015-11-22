@@ -827,7 +827,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	}
 
 	@Override
-	public void onClickOk(int id)
+	public void onClickOk(int id,Object obj)
 	{
 		VideoSessionActivity.getInstance().finish();
 	}

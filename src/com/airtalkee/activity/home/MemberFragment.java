@@ -6,7 +6,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,16 +22,16 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
+
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.AdapterMember.CheckedCallBack;
 import com.airtalkee.activity.home.widget.AlertDialog;
+import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.airtalkee.activity.home.widget.MemberAllView;
-import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.MemberAllView.MemberCheckListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
@@ -38,6 +42,7 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.MListView;
+import com.airtalkee.widget.MyRelativeLayout;
 
 public class MemberFragment extends BaseFragment implements OnClickListener,
 		OnItemClickListener, CheckedCallBack, MemberCheckListener
@@ -62,7 +67,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-
+		registerViewReSize();
 	}
 
 	@Override
@@ -374,7 +379,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		}
 
 		@Override
-		public void onClickOk(int id)
+		public void onClickOk(int id,Object object)
 		{
 			AirtalkeeMessage.getInstance().MessageRecordPlayStop();
 			callSelectMember(false);
@@ -388,4 +393,25 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 
 		}
 	};
+	
+	private void registerViewReSize()
+	{
+		final IntentFilter filter = new IntentFilter();
+		filter.addAction(MyRelativeLayout.ACTION_ON_VIEW_RESIZE);
+		filter.addCategory(Intent.CATEGORY_DEFAULT);
+
+		getActivity().registerReceiver(new BroadcastReceiver()
+		{
+			@Override
+			public void onReceive(Context context, Intent intent)
+			{
+				// TODO Auto-generated method stub
+				if (intent.getAction().equals(MyRelativeLayout.ACTION_ON_VIEW_RESIZE))
+				{
+					boolean isShow = intent.getBooleanExtra(MyRelativeLayout.EXTRA_IS_SOFTKEYBOARD_SHOWN, false);
+					mediaStatusBar.setMediaStatusBarVisibility(isShow ? View.GONE : View.VISIBLE);
+				}
+			}
+		}, filter);
+	}
 }

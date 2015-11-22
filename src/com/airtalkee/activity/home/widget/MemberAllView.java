@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -19,6 +20,7 @@ import com.airtalkee.R;
 import com.airtalkee.activity.home.AdapterMemberAll;
 import com.airtalkee.activity.home.AdapterMemberAll.CheckedCallBack;
 import com.airtalkee.sdk.AirtalkeeAccount;
+import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.widget.MListView;
 
@@ -27,8 +29,12 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 	public interface MemberCheckListener {
 		public void onMemberChecked(boolean isChecked);
 	}
+	
+	public interface OnEditTextViewFocus{
+		public void onEditTextViewFocusListener();
+	}
 
-	List<AirContact> memberAll = new ArrayList<AirContact>();
+	List<AirContact> memberAll = AirtalkeeChannel.getInstance().getChannels().get(0).MembersGet();;
 	List<AirContact> memberSearchResult = new ArrayList<AirContact>();
 	private MListView lvMemberAll;
 	private AdapterMemberAll adapterMember;
@@ -53,6 +59,7 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 		adapterMember = new AdapterMemberAll(getContext(), this);
 		lvMemberAll.setAdapter(adapterMember);
 		lvMemberAll.setOnItemClickListener(this);
+		adapterMember.notifyMember(memberAll);
 		
 	}
 
@@ -68,6 +75,11 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 		// TODO Auto-generated method stub
 		switch (v.getId()) {
 		case R.id.btn_search: {
+			InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+			if (imm != null)
+			{
+				imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+			}
 			String key = etSearch.getText().toString();
 			memberSearchResult.clear();
 			if (TextUtils.isEmpty(key)) {
@@ -120,6 +132,10 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 	public void onTextChanged(CharSequence s, int start, int before, int count) {
 		// TODO Auto-generated method stub
 		btnSearch.setEnabled(!TextUtils.isEmpty(etSearch.getText()));
+		if(TextUtils.isEmpty(etSearch.getText()))
+		{
+			adapterMember.notifyMember(memberAll);
+		}
 	}
 
 	@Override

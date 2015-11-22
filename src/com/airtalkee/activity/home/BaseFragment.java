@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
+import android.net.wifi.WifiConfiguration.Status;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
 import com.airtalkee.activity.home.widget.StatusBarBottom;
+import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.sdk.entity.AirSession;
 
 public abstract class BaseFragment extends Fragment implements OnSharedPreferenceChangeListener
@@ -42,6 +44,11 @@ public abstract class BaseFragment extends Fragment implements OnSharedPreferenc
 			return null;
 		
 		return mediaStatusBar.getSession();
+	}
+	
+	protected StatusBarTitle getStatusBarTitle()
+	{
+		return mediaStatusBar.getStatusBarTitle();
 	}
 
 	@Override

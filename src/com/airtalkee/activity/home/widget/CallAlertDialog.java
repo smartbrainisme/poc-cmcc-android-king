@@ -100,7 +100,7 @@ public class CallAlertDialog extends AlertDialog implements
 	}
 
 	@Override
-	public void onClickOk(int id)
+	public void onClickOk(int id,Object object)
 	{
 		// TODO Auto-generated method stub
 

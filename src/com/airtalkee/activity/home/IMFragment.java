@@ -3,6 +3,7 @@ package com.airtalkee.activity.home;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -28,12 +29,14 @@ import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimerListener;
 import com.airtalkee.Util.Smilify;
@@ -129,9 +132,11 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	{
 		// TODO Auto-generated method stub
 		super.onPause();
-
-		setVoicePannelVisiblity(View.GONE);
-		setTextPannelVisiblity(View.GONE);
+		if(HomeActivity.getInstance().pageIndex == HomeActivity.PAGE_IM)
+		{
+			setVoicePannelVisiblity(View.GONE);
+			setTextPannelVisiblity(View.GONE);
+		}
 	}
 
 	@Override
@@ -166,6 +171,11 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 					startActivityForResult(localIntent, REQUEST_CODE_BROWSE_IMAGE);
 					break;
 				case R.id.bar_right:
+					InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+					if (imm != null)
+					{
+						imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+					}
 					setTextPannelVisiblity(View.VISIBLE);
 					break;
 			}
@@ -212,6 +222,11 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		switch (v.getId())
 		{
 			case R.id.btn_text_close:
+				InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+				if (imm != null)
+				{
+					imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+				}
 				setTextPannelVisiblity(View.GONE);
 				etMsg.setText("");
 				break;
@@ -316,20 +331,14 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		}
 		else
 		{
-
 			if (textVoicePannel != null)
 				textVoicePannel.setVisibility(View.VISIBLE);
 			if (textPannel != null)
 				textPannel.setVisibility(View.VISIBLE);
 			if (mediaStatusBar != null)
 				mediaStatusBar.setMediaStatusBarVisibility(View.GONE);
-
-			if (etMsg != null)
-			{
-				etMsg.requestFocus();
-				etMsg.performClick();
-			}
 		}
+		
 	}
 
 	private void setVoicePannelVisiblity(int visiblility)
@@ -577,6 +586,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 			{
 				adapterMessage.notifyDataSetChanged();
 				// refreshMessageNewCount(false);
+				getStatusBarTitle().refreshNewMsg();
 			}
 		}
 	}

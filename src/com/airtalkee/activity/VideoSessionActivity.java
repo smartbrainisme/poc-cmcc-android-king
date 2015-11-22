@@ -542,7 +542,7 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 	}
 
 	@Override
-	public void onClickOk(int id)
+	public void onClickOk(int id,Object obj)
 	{
 		// TODO Auto-generated method stub
 		switch (id)

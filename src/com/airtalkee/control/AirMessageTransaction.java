@@ -347,7 +347,7 @@ public class AirMessageTransaction implements OnMessageListener,
 	}
 
 	@Override
-	public void onClickOk(int id)
+	public void onClickOk(int id,Object obj)
 	{
 		// TODO Auto-generated method stub
 		// 呼叫中心

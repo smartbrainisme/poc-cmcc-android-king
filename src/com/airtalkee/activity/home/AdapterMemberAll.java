@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
@@ -16,9 +17,9 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.airtalkee.R;
 import com.airtalkee.sdk.AirtalkeeAccount;
-import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeContactPresence;
 import com.airtalkee.sdk.OnContactPresenceListener;
 import com.airtalkee.sdk.entity.AirContact;
@@ -28,7 +29,7 @@ import com.airtalkee.sdk.entity.AirContactTiny;
 public class AdapterMemberAll extends BaseAdapter implements
 		OnContactPresenceListener {
 	private Context context = null;
-	private List<AirContact> memberList = AirtalkeeChannel.getInstance().getChannels().get(0).MembersGet();
+	private List<AirContact> memberList = new ArrayList<AirContact>();
 	private HashMap<Integer, AirContact> isSelected = new HashMap<Integer, AirContact>();
 	private CheckedCallBack checkedCallBack;
 
