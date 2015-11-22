@@ -22,13 +22,16 @@ import com.airtalkee.config.Config;
 public class MenuManualActivity extends ActivityBase implements OnClickListener
 {
 
-//	private static final String MANUAL_URL = "http://www.haoliantech.com/atk/client_manual.php?market=%s&vplatform=%s&vtype=%s&vcode=%s&lang=%s";
+	// private static final String MANUAL_URL =
+	// "http://www.haoliantech.com/atk/client_manual.php?market=%s&vplatform=%s&vtype=%s&vcode=%s&lang=%s";
 	private static final String MANUAL_URL = "file:///android_asset/manual/page_help/help.html";
 	private static String manual_url = MANUAL_URL;
 
 	private MenuManualActivity mInstance;
 	private WebView webView;
 	private ProgressBar webViewProgress;
+	private boolean isShowAll = false;
+	private ImageView ivRight;
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -52,12 +55,14 @@ public class MenuManualActivity extends ActivityBase implements OnClickListener
 			String lang = Language.getLocalLanguage(this);
 			if (lang.equals(Language.LAND_FR))
 			{
-				//manual_url = "http://www.geotalker.com/smartmax/notice_fr.html";
+				// manual_url =
+				// "http://www.geotalker.com/smartmax/notice_fr.html";
 				manual_url = "file:///android_asset/manual/MARKET_RUGGEAR_MTT/lang-fr.html";
 			}
 			else
 			{
-				//manual_url = "http://www.geotalker.com/smartmax/notice_en.html";
+				// manual_url =
+				// "http://www.geotalker.com/smartmax/notice_en.html";
 				manual_url = "file:///android_asset/manual/MARKET_RUGGEAR_MTT/lang-en.html";
 			}
 		}
@@ -71,13 +76,15 @@ public class MenuManualActivity extends ActivityBase implements OnClickListener
 		ivTitle.setText(R.string.talk_tools_manual);
 		View btnLeft = findViewById(R.id.menu_left_button);
 		ImageView ivLeft = (ImageView) findViewById(R.id.bottom_left_icon);
-		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this) );
+		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this));
 		btnLeft.setOnClickListener(this);
 
 		RelativeLayout ivRightLay = (RelativeLayout) findViewById(R.id.talk_menu_right_button);
-		ImageView ivRight = (ImageView) findViewById(R.id.bottom_right_icon);
-		ivRight.setVisibility(View.GONE);
-		ivRightLay.setVisibility(View.INVISIBLE);
+		ivRight = (ImageView) findViewById(R.id.bottom_right_icon);
+		ivRight.setImageResource(R.drawable.btn_muanul_show);
+		ivRight.setVisibility(View.VISIBLE);
+		ivRight.setOnClickListener(this);
+		ivRightLay.setVisibility(View.VISIBLE);
 
 		webView = (WebView) findViewById(R.id.talk_layout_webbrowser);
 		webView.getSettings().setJavaScriptEnabled(true);
@@ -103,6 +110,27 @@ public class MenuManualActivity extends ActivityBase implements OnClickListener
 			case R.id.bottom_left_icon:
 				finish();
 				break;
+			case R.id.bottom_right_icon:
+			{
+				loadJS();
+				break;
+			}
+		}
+	}
+	
+	private void loadJS()
+	{
+		if (!isShowAll)
+		{
+			webView.loadUrl("javascript:showAll()");
+			isShowAll = true;
+			ivRight.setImageResource(R.drawable.btn_muanul_close);
+		}
+		else
+		{
+			webView.loadUrl("javascript:closeAll()");
+			isShowAll = false;
+			ivRight.setImageResource(R.drawable.btn_muanul_show);
 		}
 	}
 
