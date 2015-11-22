@@ -170,7 +170,6 @@ public class SessionDialogActivity extends FragmentActivity implements
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev)
 	{
-		// TODO Auto-generated method stub
 		if (ev.getAction() == MotionEvent.ACTION_DOWN)
 		{
 			View v = mediaStatusBar.getBottomBarParent();
