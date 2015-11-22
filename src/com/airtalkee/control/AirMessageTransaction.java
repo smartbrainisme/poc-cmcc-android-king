@@ -15,9 +15,12 @@ import com.airtalkee.activity.MenuNoticeActivity;
 import com.airtalkee.activity.MenuTaskActivity;
 import com.airtalkee.activity.TempSessionActivity;
 import com.airtalkee.activity.home.HomeActivity;
+import com.airtalkee.activity.home.PTTFragment;
 import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
+import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
+import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.airtalkee.config.Config;
 import com.airtalkee.listener.OnMmiMessageListener;
 import com.airtalkee.listener.OnMmiNoticeListener;
@@ -43,17 +46,15 @@ public class AirMessageTransaction implements OnMessageListener,
 		OnSystemFenceWarningListener, AirTaskController.AirTaskPushListener,
 		DialogListener
 {
-
-	/**********************************
-	 * 
-	 * ����ģʽ�ӿڷ���
-	 * 
-	 **********************************/
+	private static final int DIALOG_2_SEND_MESSAGE = 101;
 	private static final int DIALOG_CALL_CENTER = 100;
+	private static final int DIALOG_CALL = 102;
+	
 	private static AirMessageTransaction mInstance = null;
 	private OnMmiMessageListener msgListener = null;
 	private OnMmiNoticeListener noticeListener = null;
 	AlertDialog dialog;
+	private AlertDialog alertDialog;
 
 	private AirMessageTransaction()
 	{
@@ -287,7 +288,7 @@ public class AirMessageTransaction implements OnMessageListener,
 			// 弹出窗口
 			try
 			{
-				dialog = new AlertDialog(ct, ct.getString(R.string.talk_tools_notice), title, ct.getString(R.string.talk_tools_know), ct.getString(R.string.talk_session_call), this, DIALOG_CALL_CENTER);
+				dialog = new AlertDialog(ct, ct.getString(R.string.talk_tools_notice), title, ct.getString(R.string.talk_tools_know), ct.getString(R.string.talk_session_call), this, DIALOG_CALL);
 				dialog.show();
 			}
 			catch (Exception e)
@@ -347,33 +348,27 @@ public class AirMessageTransaction implements OnMessageListener,
 	}
 
 	@Override
-	public void onClickOk(int id,Object obj)
+	public void onClickOk(int id, Object obj)
 	{
-		// TODO Auto-generated method stub
-		// 呼叫中心
-		Context ct = AirServices.getInstance();
-		if (Config.funcCenterCall == AirFunctionSetting.SETTING_ENABLE)
+		switch (id)
 		{
-			if (AirtalkeeAccount.getInstance().isAccountRunning())
-			{
-				if (AirtalkeeAccount.getInstance().isEngineRunning())
+			case DIALOG_CALL:
+				callStationCenter();
+				break;
+			case DIALOG_2_SEND_MESSAGE:
+				if (obj != null)
 				{
-					AirSession session = SessionController.SessionMatchSpecial(AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER, ct.getString(R.string.talk_tools_call_center));
-					Intent it = new Intent(ct, SessionDialogActivity.class);
-					it.putExtra("sessionCode", session.getSessionCode());
-					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
-					ct.startActivity(it);
+					String sessionCode = obj.toString();
+					Context context = AirServices.getInstance();
+					if (null != context)
+					{
+						Intent it = new Intent(context, SessionDialogActivity.class);
+						it.putExtra("sessionCode", sessionCode);
+						it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+						context.startActivity(it);
+					}
 				}
-				else
-				{
-					Util.Toast(ct, ct.getString(R.string.talk_network_warning));
-				}
-			}
-		}
-		else if (Config.funcCenterCall == AirFunctionSetting.SETTING_CALL_NUMBER && !Utils.isEmpty(Config.funcCenterCallNumber))
-		{
-			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Config.funcCenterCallNumber));
-			ct.startActivity(intent);
+				break;
 		}
 	}
 
@@ -387,6 +382,51 @@ public class AirMessageTransaction implements OnMessageListener,
 	public void onClickCancel(int id)
 	{
 		// TODO Auto-generated method stub
+	}
+
+	private void callStationCenter()
+	{
+		final Context context = HomeActivity.getInstance();
+		if (Config.funcCenterCall == AirFunctionSetting.SETTING_ENABLE)
+		{
+			if (AirtalkeeAccount.getInstance().isAccountRunning())
+			{
+				if (AirtalkeeAccount.getInstance().isEngineRunning())
+				{
+					final AirSession s = SessionController.SessionMatchSpecial(AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER, context.getString(R.string.talk_tools_call_center));
+					if (s != null)
+					{
+						alertDialog = new CallAlertDialog(context, "正在呼叫" + s.getDisplayName(), "请稍后...", s.getSessionCode(), DIALOG_CALL_CENTER, new OnAlertDialogCancelListener()
+						{
+							@Override
+							public void onDialogCancel(int reason)
+							{
+								// TODO Auto-generated method stub
+								switch (reason)
+								{
+									case AirSession.SESSION_RELEASE_REASON_NOTREACH:
+										dialog = new AlertDialog(context, null, context.getString(R.string.talk_call_offline_tip), context.getString(R.string.talk_session_call_cancel), context.getString(R.string.talk_call_leave_msg), AirMessageTransaction.this, DIALOG_2_SEND_MESSAGE, s.getSessionCode());
+										dialog.show();
+										break;
+									default:
+										break;
+								}
+							}
+						});
+						alertDialog.show();
+					}
+				}
+				else
+				{
+					Util.Toast(context, context.getString(R.string.talk_network_warning));
+				}
+			}
+		}
+		else if (Config.funcCenterCall == AirFunctionSetting.SETTING_CALL_NUMBER && !Utils.isEmpty(Config.funcCenterCallNumber))
+		{
+			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Config.funcCenterCallNumber));
+			context.startActivity(intent);
+		}
 	}
 
 }

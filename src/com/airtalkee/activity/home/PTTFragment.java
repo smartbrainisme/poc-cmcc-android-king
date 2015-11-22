@@ -38,7 +38,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 
 	private static final int DIALOG_CALL_CENTER_CONFIRM = 100;
 	private static final int DIALOG_CALL_CENTER = 101;
-	private static final int DIALOG_2_SEND_MESSAGE = 101;
+	private static final int DIALOG_2_SEND_MESSAGE = 102;
 	private LinearLayout recPlayback;
 	private ImageView recPlaybackIcon;
 	private TextView recPlaybackUser;
