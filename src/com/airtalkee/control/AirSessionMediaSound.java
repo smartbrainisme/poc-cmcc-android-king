@@ -65,8 +65,7 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 			}
 			if (show)
 			{
-				Util.showNotification(Util.NOTIFI_ID_VOICE_LISTEN, context, intent, content, content + " " + context.getString(R.string.talk_speaking),
-					context.getString(R.string.talk_speaking), null);
+				Util.showNotification(Util.NOTIFI_ID_VOICE_LISTEN, context, intent, content, content + " " + context.getString(R.string.talk_speaking), context.getString(R.string.talk_speaking), null);
 			}
 		}
 	}
@@ -90,17 +89,14 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 	public void onMediaSoundTalkBegin(AirSession session)
 	{
 		// TODO Auto-generated method stub
-		/*Sound.playSound(Sound.PLAYER_MEDIA_ME_ON, context,new OnCompletionListener()
-		{
-			
-			@Override
-			public void onCompletion(MediaPlayer mp)
-			{
-				// TODO Auto-generated method stub
-				am.setBluetoothScoOn(true);
-				am.startBluetoothSco();
-			}
-		});*/
+		/*
+		 * Sound.playSound(Sound.PLAYER_MEDIA_ME_ON, context,new
+		 * OnCompletionListener() {
+		 * 
+		 * @Override public void onCompletion(MediaPlayer mp) { // TODO
+		 * Auto-generated method stub am.setBluetoothScoOn(true);
+		 * am.startBluetoothSco(); } });
+		 */
 		pttLightStateRefresh(session, SessionMediaController.MEDIA_SOUND_ME_ON);
 		if (BluetoothManager.getInstance().getMode() == AudioManager.MODE_IN_COMMUNICATION)
 			SoundPlayer.soundPlay(SoundPlayer.PLAYER_MEDIA_ME_ON_LOW, false);
@@ -133,8 +129,8 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 				SoundPlayer.soundPlay(SoundPlayer.PLAYER_MEDIA_ME_OFF, false);
 		}
 
-		//am.setBluetoothScoOn(false);
-		//am.stopBluetoothSco();
+		// am.setBluetoothScoOn(false);
+		// am.stopBluetoothSco();
 	}
 
 	@Override
@@ -155,7 +151,7 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 	{
 		try
 		{
-			com.airtalkee.sdk.util.Log.d(AirSessionMediaSound.class, "pttLightStateRefresh begin state =["+state+"]");
+			com.airtalkee.sdk.util.Log.d(AirSessionMediaSound.class, "pttLightStateRefresh begin state =[" + state + "]");
 			int color = 0xFFFF0000;
 			boolean on = false;
 
@@ -178,7 +174,7 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 					on = false;
 					break;
 				default:
-					if(session != null)
+					if (session != null)
 					{
 						switch (session.getMediaState())
 						{
@@ -200,17 +196,17 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 
 			if (on)
 			{
-				//Log.i(AirSessionMediaSound.class, "PTT LIGHT "+color+" ON");
+				// Log.i(AirSessionMediaSound.class, "PTT LIGHT "+color+" ON");
 				com.airtalkee.sdk.util.Log.d(AirSessionMediaSound.class, "pttLightStateRefresh PTT LIGHT " + color + " ON");
 			}
 			else
 			{
-				//Log.i(AirSessionMediaSound.class, "PTT LIGHT "+color+" OFF");
+				// Log.i(AirSessionMediaSound.class, "PTT LIGHT "+color+" OFF");
 				com.airtalkee.sdk.util.Log.d(AirSessionMediaSound.class, "pttLightStateRefresh PTT LIGHT " + color + " OFF");
 			}
 			toggleLight(on, color, context);
 			changeAudioFocus(on, context);
-			if(0xFFFF0000 == color)
+			if (0xFFFF0000 == color)
 				BluetoothManager.getInstance().ackSpeakState(on);
 			toggleLedStatus(color == 0xFFFF0000 ? 0 : 1, on ? 1 : 0);
 			com.airtalkee.sdk.util.Log.d(AirSessionMediaSound.class, "pttLightStateRefresh end");
@@ -226,8 +222,8 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		try
 		{
 			Intent intent = new Intent(PTT_ACTION);
-			intent.putExtra("on", on); //打开指示灯
-			intent.putExtra("color", color); //传入值为红色，传入绿色为0xFF00FF00
+			intent.putExtra("on", on); // 打开指示灯
+			intent.putExtra("color", color); // 传入值为红色，传入绿色为0xFF00FF00
 			context.sendBroadcast(intent);
 		}
 		catch (Exception e)
@@ -265,8 +261,8 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		toggleLight(false, 0xFFFF0000, context);
 		changeAudioFocus(false, context);
 		BluetoothManager.getInstance().ackSpeakState(false);
-		toggleLedStatus( 0, 0);
-		toggleLedStatus( 1, 0);
+		toggleLedStatus(0, 0);
+		toggleLedStatus(1, 0);
 	}
 
 	/**
@@ -298,7 +294,9 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		}
 	}
 
-	private static  native void setGreenLedStatusNative(int status);//status: 0 关闭灯 1 开灯
+	private static native void setGreenLedStatusNative(int status);// status: 0
+																	// 关闭灯 1 开灯
 
-	private static native void setRedLedStatusNative(int status);//status: 0 关闭灯 1 开灯
+	private static native void setRedLedStatusNative(int status);// status: 0
+																	// 关闭灯 1 开灯
 }

@@ -34,7 +34,7 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 		public void onEditTextViewFocusListener();
 	}
 
-	List<AirContact> memberAll = AirtalkeeChannel.getInstance().getChannels().get(0).MembersGet();;
+	List<AirContact> memberAll = AirtalkeeChannel.getInstance().getChannels().get(0).MembersGet();
 	List<AirContact> memberSearchResult = new ArrayList<AirContact>();
 	private MListView lvMemberAll;
 	private AdapterMemberAll adapterMember;

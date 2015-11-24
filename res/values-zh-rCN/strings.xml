@@ -376,7 +376,9 @@
 	<string name="last_update">上次更新</string>
 	<string name="load_completed">已全部加载</string>
 	<string name="talk_call_state_missed_call">(呼叫未接)未接呼叫</string>
+	<string name="talk_call_state_missed_call_short">未接呼叫</string>
 	<string name="talk_call_state_rejected_call">(呼叫拒接)拒接呼叫</string>
+	<string name="talk_call_state_rejected_call_short">拒接呼叫</string>
 	<string name="talk_call_state_outgoing_call">(呼出)呼出</string>
 	<string name="talk_call_state_incoming_call">(呼入)呼入</string>
 	<string name="bluetooth_scanning">正在扫描蓝牙设备...</string>

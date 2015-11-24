@@ -18,6 +18,7 @@ import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MoreActivity;
 import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.SessionNewActivity;
+import com.airtalkee.activity.home.widget.AdapterSession.HodlerView;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.sdk.AirtalkeeAccount;
@@ -60,7 +61,7 @@ public class SessionAndChannelView extends LinearLayout implements
 		gvSession = (GridView) findViewById(R.id.gv_session);
 		tvSessionTitle = (TextView) findViewById(R.id.tv_session_title);
 		sessionTitle = tvSessionTitle.getText();
-		adapterSession = new AdapterSession(context, null);
+		adapterSession = new AdapterSession(context);
 		gvSession.setAdapter(adapterSession);
 		gvSession.setOnItemClickListener(this);
 
@@ -121,52 +122,21 @@ public class SessionAndChannelView extends LinearLayout implements
 				int count = adapterSession.getCount();
 				if (count > 1)
 				{
-					for (int i = 0; i < count; i++)
-					{
-//						View view = null;
-						if (i == 0)
-						{
-							adapterSession.setCreateShow(false);
-							adapterSession.getView(i, null, null);
-						}
-						else
-						{
-							AirSession session = (AirSession) adapterSession.getItem(i);
-							session.setVisible(false);
-							adapterSession.getView(i, null, null);
-						}
-					}
+					adapterSession.setEditing(true);
+					adapterSession.notifyDataSetChanged();
 					tvSettingCancel.setVisibility(View.VISIBLE);
 					ivSetting.setVisibility(View.GONE);
 					gvSession.setClickable(false);
-					adapterSession.notifyDataSetChanged();
 				}
 				break;
 			}
 			case R.id.tv_setting_cancel:
 			{
-				int count = adapterSession.getCount();
-				if (count > 1)
-				{
-					for (int i = 0; i < count; i++)
-					{
-						if (i == 0)
-						{
-							adapterSession.setCreateShow(true);
-							adapterSession.getView(i, null, null);
-						}
-						else
-						{
-							AirSession session = (AirSession) adapterSession.getItem(i);
-							session.setVisible(true);
-							adapterSession.getView(i, null, null);
-						}
-					}
-					tvSettingCancel.setVisibility(View.GONE);
-					ivSetting.setVisibility(View.VISIBLE);
-					gvSession.setClickable(true);
-					adapterSession.notifyDataSetChanged();
-				}
+				adapterSession.setEditing(false);
+				adapterSession.notifyDataSetChanged();
+				tvSettingCancel.setVisibility(View.GONE);
+				ivSetting.setVisibility(View.VISIBLE);
+				gvSession.setClickable(true);
 				break;
 			}
 		}
@@ -198,23 +168,26 @@ public class SessionAndChannelView extends LinearLayout implements
 				adapterChannel.notifyDataSetChanged();
 				break;
 			case R.id.gv_session:
-				if (position == 0)
+				if (!adapterSession.isEditing())
 				{
-					Intent it = new Intent(getContext(), SessionNewActivity.class);
-					getContext().startActivity(it);
-				}
-				else
-				{
-					AirSession s = (AirSession) adapterSession.getItem(position);
-					if (s != null)
+					if (position == 0)
 					{
-						Intent it = new Intent(getContext(), SessionDialogActivity.class);
-						it.putExtra("sessionCode", s.getSessionCode());
-						it.putExtra("type", AirServices.TEMP_SESSION_TYPE_RESUME);
+						Intent it = new Intent(getContext(), SessionNewActivity.class);
 						getContext().startActivity(it);
 					}
+					else
+					{
+						AirSession s = (AirSession) adapterSession.getItem(position);
+						if (s != null)
+						{
+							Intent it = new Intent(getContext(), SessionDialogActivity.class);
+							it.putExtra("sessionCode", s.getSessionCode());
+							it.putExtra("type", AirServices.TEMP_SESSION_TYPE_RESUME);
+							getContext().startActivity(it);
+						}
+					}
+					adapterSession.notifyDataSetChanged();
 				}
-				adapterSession.notifyDataSetChanged();
 				break;
 		}
 	}

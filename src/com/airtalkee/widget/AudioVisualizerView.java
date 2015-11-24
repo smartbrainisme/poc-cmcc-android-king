@@ -53,7 +53,6 @@ public class AudioVisualizerView extends View
 
 		mRect.set(0, 0, getWidth(), getHeight());
 
-		//»æÖÆÆµÆ×  
 		final int baseX = mRect.width() / mVisualizerSpectrumNum;
 		final int height = mRect.height();
 

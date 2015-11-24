@@ -64,7 +64,6 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 	@Override
 	public void onClickCancel(int id)
 	{
-
 		try
 		{
 			Sound.stopSound(Sound.PLAYER_INCOMING_RING);

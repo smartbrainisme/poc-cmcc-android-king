@@ -368,7 +368,9 @@
     <string name="last_update">Last refresh</string>
     <string name="load_completed">No more message!</string>
     <string name="talk_call_state_missed_call">(呼叫未接)[Missed call]</string>
+    <string name="talk_call_state_missed_call_short">Missed call</string>
     <string name="talk_call_state_rejected_call">(呼叫拒接)[Rejected call]</string>
+    <string name="talk_call_state_rejected_call_short">Rejected call</string>
     <string name="talk_call_state_outgoing_call">(呼出)[Dialed call]</string>
     <string name="talk_call_state_incoming_call">(呼入)[Received call]</string>
     <string name="bluetooth_scanning">Scanning the bluetooth devices...</string>
@@ -449,4 +451,5 @@
     <string name="talk_typewriter_init">在此输入文字</string>
     <string name="talk_call_offline_tip">呼叫的用户暂时不在线\r\n您可以去消息页面留言联系</string>
     <string name="talk_call_leave_msg">前去留言</string>
+
 </resources>
