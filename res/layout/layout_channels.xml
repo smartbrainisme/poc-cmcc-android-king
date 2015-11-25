@@ -167,7 +167,8 @@
         <GridView
             android:id="@+id/gv_session"
             android:layout_width="fill_parent"
-            android:layout_height="186dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginBottom="60dp"
             android:fadingEdge="none"
             android:fadingEdgeLength="0dp"

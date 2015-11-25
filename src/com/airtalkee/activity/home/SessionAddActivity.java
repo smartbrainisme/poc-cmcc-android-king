@@ -3,72 +3,67 @@ package com.airtalkee.activity.home;
 import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.airtalkee.R;
-import com.airtalkee.Util.Util;
-import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.MemberAllView;
 import com.airtalkee.activity.home.widget.MemberAllView.MemberCheckListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
-import com.airtalkee.sdk.AirtalkeeMessage;
+import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.controller.SessionController;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
-import com.airtalkee.services.AirServices;
 
-public class SessionNewActivity extends Activity implements OnClickListener, MemberCheckListener
+public class SessionAddActivity extends Activity implements OnClickListener,
+		MemberCheckListener
 {
 
 	private LinearLayout containner;
 	private MemberAllView memAllView;
 	private ViewGroup bottom;
 	private List<AirContact> tempCallMembers = null;
-	private CallAlertDialog alertDialog;
-	private int DIALOG_CALL = 111;
+	private ImageView ivAddMember;
+	private String sessionCode = "";
 
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
-		// TODO Auto-generated method stub
 		super.onCreate(bundle);
-		setContentView(R.layout.activity_session_new);
+		setContentView(R.layout.activity_session_addmember);
 		bottom = (ViewGroup) findViewById(R.id.layout_bottom);
 		memAllView = new MemberAllView(this, this);
 		findViewById(R.id.btn_close).setOnClickListener(this);
 		containner = (LinearLayout) findViewById(R.id.containner);
 		containner.addView(memAllView);
-		findViewById(R.id.bar_left).setOnClickListener(this);
-		findViewById(R.id.bar_mid).setOnClickListener(this);
-		findViewById(R.id.bar_right).setOnClickListener(this);
+		ivAddMember = (ImageView) findViewById(R.id.iv_add_member);
+		ivAddMember.setOnClickListener(this);
+		bundle = getIntent().getExtras();
+		if (bundle != null)
+		{
+			sessionCode = bundle.getString("sessionCode");
+		}
 	}
 
 	@Override
 	public void onClick(View v)
 	{
-		// TODO Auto-generated method stub
-		if (v.getId() == R.id.btn_close)
+		switch (v.getId())
 		{
-			this.finish();
-		}
-		else if (v.getId() == R.id.bar_left)
-		{
-			callSelectMember(true);
-		}
-		else if (v.getId() == R.id.bar_mid)
-		{
-			AirtalkeeMessage.getInstance().MessageRecordPlayStop();
-			callSelectMember(false);
-			callSelectClean();
-		}
-		else if (v.getId() == R.id.bar_right)
-		{
-			callSelectClean();
+			case R.id.btn_close:
+			{
+				this.finish();
+				break;
+			}
+			case R.id.iv_add_member:
+			{
+				callAddMember();
+				break;
+			}
 		}
 	}
 
@@ -78,7 +73,7 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 		refreshBottomView(false);
 	}
 
-	public void callSelectMember(boolean isCall)
+	public void callAddMember()
 	{
 		if (tempCallMembers == null)
 			tempCallMembers = new ArrayList<AirContact>();
@@ -92,44 +87,24 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 				tempCallMembers.add(c);
 			}
 		}
-
-		if (tempCallMembers.size() > 0)
-		{
-			if (AirtalkeeAccount.getInstance().isEngineRunning())
-			{
-
-				AirSession s = SessionController.SessionMatch(tempCallMembers);
-				if (isCall)
-				{
-					alertDialog = new CallAlertDialog(this, "正在呼叫" + s.getDisplayName(), "请稍后...", s.getSessionCode(), DIALOG_CALL);
-					alertDialog.show();
-				}
-				else
-				{
-					Intent it = new Intent(this, SessionDialogActivity.class);
-					it.putExtra("sessionCode", s.getSessionCode());
-					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
-					startActivity(it);
-				}
-
-			}
-			else
-			{
-				Util.Toast(this, getString(R.string.talk_network_warning));
-			}
-		}
-		else
-		{
-			Util.Toast(this, getString(R.string.talk_tip_session_call));
-		}
-
+		AirtalkeeSessionManager.getInstance().sessionMemberUpdate(sessionCode, tempCallMembers);
+		finish();
 	}
 
 	@Override
 	public void onMemberChecked(boolean isChecked)
 	{
-		// TODO Auto-generated method stub
 		refreshBottomView(isChecked);
+		if (null != memAllView.getSelectedMember() && memAllView.getSelectedMember().size() > 0)
+		{
+			ivAddMember.setImageResource(R.drawable.btn_add_orange);
+			ivAddMember.setClickable(true);
+		}
+		else
+		{
+			ivAddMember.setImageResource(R.drawable.btn_add_black);
+			ivAddMember.setClickable(false);
+		}
 	}
 
 	private void refreshBottomView(boolean isChecked)

@@ -82,21 +82,6 @@ public class AdapterChannel extends BaseAdapter
 						tvUnread.setVisibility(View.VISIBLE);
 					else
 						tvUnread.setVisibility(View.GONE);
-//					List<AirContact> members = item.MembersGet();
-//					if (null != members && members.size() > 0)
-//					{
-//						int online = 0;
-//						final AirtalkeeContactPresence contactPresence = AirtalkeeContactPresence.getInstance();
-//						for (AirContact member : members)
-//						{
-//							if (contactPresence.getContactStateById(member.getIpocId()) != AirContact.CONTACT_STATE_NONE)
-//							{
-//								online += 1;
-//							}
-//						}
-//						item.setOnlineNumber(online + 1);
-//					}
-//					
 				}
 				else
 				{

@@ -102,6 +102,7 @@
     <string name="talk_session_call">Call</string>
     <string name="talk_session_call_title">Invite</string>
     <string name="talk_session_call_add">Invite</string>
+    <string name="talk_session_call_add_tip">Invite</string>
     <string name="talk_session_call_cancel">Cancel</string>
     <string name="talk_click_talk">Click/Hold to talk</string>
     <string name="talk_click_talk_hold">Hold to talk</string>

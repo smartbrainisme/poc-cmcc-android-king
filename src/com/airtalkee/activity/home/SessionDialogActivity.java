@@ -12,7 +12,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import com.airtalkee.R;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
 import com.airtalkee.activity.home.widget.StatusBarTitle;
@@ -36,6 +35,11 @@ public class SessionDialogActivity extends FragmentActivity implements
 	/* 1 */PTTFragment.class,
 	/* 2 */IMFragment.class, };
 
+	protected static final Class<?>[] TABS_ADD = {
+	/* 0 */MemberTempFragment.class,
+	/* 1 */PTTFragment.class,
+	/* 2 */IMFragment.class, };
+
 	protected ViewPager viewPager;
 	protected PageFragmentAdapter adapter;
 	protected PageIndicator mPageIndicator;
@@ -43,6 +47,8 @@ public class SessionDialogActivity extends FragmentActivity implements
 
 	protected MediaStatusBar mediaStatusBar;
 	protected int actionType;
+
+	private boolean addFlag = false;
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -58,9 +64,19 @@ public class SessionDialogActivity extends FragmentActivity implements
 
 		String sessionCode = bundle.getString("sessionCode");
 		actionType = bundle.getInt("type");
-		if (actionType == AirServices.TEMP_SESSION_TYPE_MESSAGE)
+		switch (actionType)
 		{
-			pageIndex = PAGE_IM;
+			case AirServices.TEMP_SESSION_TYPE_RESUME:
+			case AirServices.TEMP_SESSION_TYPE_MESSAGE:
+				pageIndex = PAGE_IM;
+				addFlag = true;
+				break;
+			case AirServices.TEMP_SESSION_TYPE_OUTGOING:
+				addFlag = true;
+				break;
+			default:
+				addFlag = false;
+				break;
 		}
 		AirSession session = AirtalkeeSessionManager.getInstance().getSessionByCode(sessionCode);
 		if (null == session)
@@ -113,7 +129,7 @@ public class SessionDialogActivity extends FragmentActivity implements
 	public void onPageSelected(int page)
 	{
 		// TODO Auto-generated method stub
-		
+
 		if (mediaStatusBar != null)
 			mediaStatusBar.onPageChanged(page);
 		if (mPageIndicator != null)
@@ -149,9 +165,19 @@ public class SessionDialogActivity extends FragmentActivity implements
 		public PageFragmentAdapter(Context ctx, FragmentManager fm)
 		{
 			super(fm);
-			for (int i = 0; i < TABS.length; i++)
+			if (!addFlag)
 			{
-				this.fragments.add(BaseFragment.newInstantiate(ctx, TABS[i].getName(), mediaStatusBar));
+				for (int i = 0; i < TABS.length; i++)
+				{
+					this.fragments.add(BaseFragment.newInstantiate(ctx, TABS[i].getName(), mediaStatusBar));
+				}
+			}
+			else
+			{
+				for (int i = 0; i < TABS_ADD.length; i++)
+				{
+					this.fragments.add(BaseFragment.newInstantiate(ctx, TABS_ADD[i].getName(), mediaStatusBar));
+				}
 			}
 		}
 
@@ -169,33 +195,20 @@ public class SessionDialogActivity extends FragmentActivity implements
 	}
 
 	/*
-	 * 点击输入框外的地方隐藏输入法
-	 * 目前不需要
+	 * 点击输入框外的地方隐藏输入法 目前不需要
 	 * 
-	 * @Override
-	public boolean dispatchTouchEvent(MotionEvent ev)
-	{
-		if (ev.getAction() == MotionEvent.ACTION_DOWN)
-		{
-			View v = mediaStatusBar.getBottomBarParent();
-			if (isShouldHideInput(v, ev))
-			{
-
-				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				if (imm != null)
-				{
-					imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-				}
-			}
-			return super.dispatchTouchEvent(ev);
-		}
-
-		if (getWindow().superDispatchTouchEvent(ev))
-		{
-			return true;
-		}
-		return onTouchEvent(ev);
-	}*/
+	 * @Override public boolean dispatchTouchEvent(MotionEvent ev) { if
+	 * (ev.getAction() == MotionEvent.ACTION_DOWN) { View v =
+	 * mediaStatusBar.getBottomBarParent(); if (isShouldHideInput(v, ev)) {
+	 * 
+	 * InputMethodManager imm = (InputMethodManager)
+	 * getSystemService(Context.INPUT_METHOD_SERVICE); if (imm != null) {
+	 * imm.hideSoftInputFromWindow(v.getWindowToken(), 0); } } return
+	 * super.dispatchTouchEvent(ev); }
+	 * 
+	 * if (getWindow().superDispatchTouchEvent(ev)) { return true; } return
+	 * onTouchEvent(ev); }
+	 */
 
 	public boolean isShouldHideInput(View v, MotionEvent event)
 	{

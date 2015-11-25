@@ -42,8 +42,9 @@ import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.MListView;
 import com.airtalkee.widget.MyRelativeLayout;
 
-public class MemberFragment extends BaseFragment implements OnClickListener,
-		OnItemClickListener, CheckedCallBack, MemberCheckListener
+public class MemberTempFragment extends BaseFragment implements
+		OnClickListener, OnItemClickListener, CheckedCallBack,
+		MemberCheckListener
 {
 	private static final int DIALOG_CALL = 99;
 	private TextView tabMemberSession, tabMemberAll;
@@ -53,7 +54,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	private MListView lvMember;
 	private AdapterMember adapterMember;
 	private CallAlertDialog alertDialog;
-	private LinearLayout memAllContainer;
+	private LinearLayout memAllContainer, addMemberPanel;
 	private int currentSelectPage = R.id.tab_member_all;
 	private MemberAllView memberAllView;
 	private boolean memberSessionChecked = false;
@@ -77,6 +78,8 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		memAllContainer = (LinearLayout) findViewById(R.id.mem_container);
 		memAllContainer.addView(memberAllView = new MemberAllView(getActivity(), this));
 
+		addMemberPanel = (LinearLayout) findViewById(R.id.add_member_panel);
+		addMemberPanel.setOnClickListener(this);
 		lvMember = (MListView) findViewById(R.id.talk_lv_member);
 		lvMember.setAdapter(adapterMember = new AdapterMember(getActivity(), null, null, true, true, this));
 		lvMember.setOnItemClickListener(this);
@@ -111,7 +114,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	public int getLayout()
 	{
 		// TODO Auto-generated method stub
-		return R.layout.frag_member_layout;
+		return R.layout.frag_member_layout_temp;
 	}
 
 	@Override
@@ -172,12 +175,19 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 				currentSelectPage = v.getId();
 				refreshTab(v.getId());
 				break;
+			case R.id.add_member_panel:
+			{
+				Intent it = new Intent(getActivity(), SessionAddActivity.class);
+				it.putExtra("sessionCode", getSession().getSessionCode());
+				it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+				getActivity().startActivity(it);
+				break;
+			}
 		}
 	}
 
 	public void setSession(AirSession s)
 	{
-
 		if (s != null)
 		{
 			switch (s.getType())

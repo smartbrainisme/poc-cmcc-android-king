@@ -202,7 +202,6 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 			}
 		}
 		count += MessageController.checkUnReadMessage();
-
 		ivUnReadDot.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 	}
 

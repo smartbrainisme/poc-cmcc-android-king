@@ -111,7 +111,6 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 
 	public void onCreate()
 	{
-		// TODO Auto-generated method stub
 		super.onCreate();
 		context = this;
 		Log.i(AirServices.class, "AirServices onCreate");

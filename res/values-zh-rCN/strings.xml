@@ -111,6 +111,7 @@
 	<string name="talk_session_call">呼叫</string>
 	<string name="talk_session_call_title">会话邀请</string>
 	<string name="talk_session_call_add">邀请</string>
+	<string name="talk_session_call_add_tip">邀请会话成员</string>
 	<string name="talk_session_call_cancel">取消</string>
 	<string name="talk_click_talk">点击或按住 讲话</string>
 	<string name="talk_click_talk_hold">按住讲话</string>
