@@ -2,6 +2,7 @@ package com.airtalkee.widget;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -21,7 +22,7 @@ public class AudioVisualizerView extends View
 	{
 		super(context, attrs);
 		mForePaint.setAntiAlias(true);
-		mForePaint.setColor(0x20ffff00);
+		mForePaint.setColor(Color.rgb(255, 189, 0));
 	}
 
 	public void setSpectrumNum(int SpectrumNum)

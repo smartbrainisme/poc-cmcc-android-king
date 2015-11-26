@@ -1,5 +1,7 @@
 package com.airtalkee.activity.home;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -15,25 +17,32 @@ import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.Util;
+import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.MenuReportAsPicActivity;
+import com.airtalkee.activity.SessionBox;
 import com.airtalkee.activity.VideoSessionActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.airtalkee.config.Config;
+import com.airtalkee.listener.OnMmiSessionBoxRefreshListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
+import com.airtalkee.sdk.AirtalkeeMediaVisualizer;
 import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
+import com.airtalkee.sdk.OnMediaAudioVisualizerListener;
 import com.airtalkee.sdk.controller.SessionController;
 import com.airtalkee.sdk.entity.AirFunctionSetting;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.services.AirServices;
+import com.airtalkee.widget.AudioVisualizerView;
 import com.airtalkee.widget.VideoCamera;
 
-public class PTTFragment extends BaseFragment implements OnClickListener, DialogListener
+public class PTTFragment extends BaseFragment implements OnClickListener,
+		DialogListener, OnMediaAudioVisualizerListener
 {
 
 	private static final int DIALOG_CALL_CENTER_CONFIRM = 100;
@@ -50,15 +59,16 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	private AirSession session = null;
 	private AirMessage currentMessage;
 	private AlertDialog alertDialog;
-	private String picPathTemp = "";
-	private Uri picUriTemp = null;
+	public static final int mVisualizerSpectrumNum = 18;
+	private AudioVisualizerView mVisualizerView;
 
 	AlertDialog dialog;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState); 
+		super.onCreate(savedInstanceState);
 	}
 
 	@Override
@@ -74,7 +84,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	{
 		// TODO Auto-generated method stub
 		super.onPause();
-		if(HomeActivity.getInstance().pageIndex == HomeActivity.PAGE_PTT)
+		if (HomeActivity.getInstance().pageIndex == HomeActivity.PAGE_PTT)
 			setViedoReportPannelVisiblity(View.GONE);
 	}
 
@@ -98,7 +108,8 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 		recPlaybackTime = (TextView) findViewById(R.id.talk_playback_time);
 		recPlaybackNone = (TextView) findViewById(R.id.talk_playback_none);
 		recPlaybackNew = (ImageView) findViewById(R.id.talk_playback_user_unread);
-
+		mVisualizerView = (AudioVisualizerView) findViewById(R.id.talk_audio_visualizer_new);
+		mVisualizerView.setSpectrumNum(mVisualizerSpectrumNum);
 		refreshPlayback();
 		return v;
 	}
@@ -143,7 +154,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	public void setSession(AirSession s)
 	{
 		this.session = s;
-
+		AirtalkeeMediaVisualizer.getInstance().setOnMediaAudioVisualizerListener(this);
 	}
 
 	private void callStationCenter()
@@ -155,7 +166,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 				if (AirtalkeeAccount.getInstance().isEngineRunning())
 				{
 					final AirSession s = SessionController.SessionMatchSpecial(AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER, getString(R.string.talk_tools_call_center));
-					if(s != null)
+					if (s != null)
 					{
 						alertDialog = new CallAlertDialog(getActivity(), "正在呼叫" + s.getDisplayName(), "请稍后...", s.getSessionCode(), DIALOG_CALL_CENTER, new OnAlertDialogCancelListener()
 						{
@@ -166,7 +177,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 								switch (reason)
 								{
 									case AirSession.SESSION_RELEASE_REASON_NOTREACH:
-										dialog = new AlertDialog(getActivity(), null, getString(R.string.talk_call_offline_tip), getString(R.string.talk_session_call_cancel), getString(R.string.talk_call_leave_msg), PTTFragment.this, DIALOG_2_SEND_MESSAGE,s.getSessionCode());
+										dialog = new AlertDialog(getActivity(), null, getString(R.string.talk_call_offline_tip), getString(R.string.talk_session_call_cancel), getString(R.string.talk_call_leave_msg), PTTFragment.this, DIALOG_2_SEND_MESSAGE, s.getSessionCode());
 										dialog.show();
 										break;
 									default:
@@ -211,12 +222,11 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 						if (currentMessage.getState() == AirMessage.STATE_NEW)
 						{
 							session.setMessageUnreadCount(session.getMessageUnreadCount() - 1);
-							// refreshMessageNewCount(false);
 						}
 					}
 				}
-			}
 				break;
+			}
 			case R.id.btn_close:
 				setViedoReportPannelVisiblity(View.GONE);
 				break;
@@ -296,7 +306,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	}
 
 	@Override
-	public void onClickOk(int id,Object obj)
+	public void onClickOk(int id, Object obj)
 	{
 		// TODO Auto-generated method stub
 		switch (id)
@@ -305,7 +315,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 				callStationCenter();
 				break;
 			case DIALOG_2_SEND_MESSAGE:
-				if(obj != null)
+				if (obj != null)
 				{
 					String sessionCode = obj.toString();
 					Intent it = new Intent(getActivity(), SessionDialogActivity.class);
@@ -316,7 +326,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 				break;
 		}
 	}
-	
+
 	@Override
 	public void onClickOk(int id, boolean isChecked)
 	{
@@ -381,5 +391,11 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	{
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void onMediaAudioVisualizerChanged(byte[] values, int spectrumNum)
+	{
+		mVisualizerView.updateVisualizer(values);
 	}
 }

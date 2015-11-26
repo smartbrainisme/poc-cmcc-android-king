@@ -180,7 +180,7 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 			AirLocation.getInstance(this).locationRun();
 
 			//AirtalkeeMediaAudioControl.getInstance().setMediaAudioCodecAmrMode(AirtalkeeMediaAudioControl.AUDIO_CODEC_AMR_MODE_7);
-			AirtalkeeMediaVisualizer.getInstance().setMediaAudioVisualizerValid(true, false);
+			AirtalkeeMediaVisualizer.getInstance().setMediaAudioVisualizerValid(true, true);
 			AirtalkeeMediaVisualizer.getInstance().setMediaAudioVisualizerSpectrumNumber(SessionBoxTalk.mVisualizerSpectrumNum);
 			AirtalkeeAccount.getInstance().AirTalkeePowerManagerRun(this);
 			//AirtalkeeAccount.getInstance().AirTalkeeTimerApiRun(this);
