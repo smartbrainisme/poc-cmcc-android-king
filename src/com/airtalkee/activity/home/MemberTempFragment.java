@@ -171,7 +171,12 @@ public class MemberTempFragment extends BaseFragment implements
 		switch (v.getId())
 		{
 			case R.id.tab_member_session:
+				addMemberPanel.setVisibility(View.VISIBLE);
+				currentSelectPage = v.getId();
+				refreshTab(v.getId());
+				break;
 			case R.id.tab_member_all:
+				addMemberPanel.setVisibility(View.GONE);
 				currentSelectPage = v.getId();
 				refreshTab(v.getId());
 				break;
