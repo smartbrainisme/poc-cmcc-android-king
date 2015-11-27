@@ -1,7 +1,10 @@
 package com.airtalkee.control;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import org.json.JSONObject;
 import android.content.Intent;
 import android.net.Uri;
@@ -183,7 +186,19 @@ public class AirReportManager implements OnReportListener
 			}
 			mDbProxy.DbReportDelete(report.getCode());
 		}
+	}
 
+	public void ReportsDetele(Map<String, AirReport> reports)
+	{
+		if (null != reports && reports.size() > 0)
+		{
+			Iterator<Entry<String, AirReport>> iterator = reports.entrySet().iterator();
+			while (iterator.hasNext()) 
+			{
+				Map.Entry<String, AirReport> entry = (Map.Entry<String, AirReport>)iterator.next();
+				ReportDelete(entry.getKey());
+			}
+		}
 	}
 
 	private AirReport reportGetTask(String code)

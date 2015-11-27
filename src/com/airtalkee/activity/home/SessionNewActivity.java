@@ -97,7 +97,6 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 		{
 			if (AirtalkeeAccount.getInstance().isEngineRunning())
 			{
-
 				AirSession s = SessionController.SessionMatch(tempCallMembers);
 				if (isCall)
 				{

@@ -41,7 +41,6 @@ public class AdapterMemberAll extends BaseAdapter implements
 	{
 		this.checkedCallBack = checkedCallBack;
 		context = _context;
-
 	}
 
 	private void putSelected(Integer key, AirContact value, boolean isCheck)

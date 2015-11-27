@@ -4,40 +4,47 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.adapter.AdapterReport;
+import com.airtalkee.adapter.AdapterReport.onReportCheckedListener;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirReportManager;
 import com.airtalkee.entity.AirReport;
 import com.airtalkee.listener.OnMmiReportListener;
 import com.airtalkee.widget.MListView;
 
-public class MenuReportActivity extends ActivityBase implements OnClickListener, OnMmiReportListener, OnItemLongClickListener, OnItemClickListener
+public class MenuReportActivity extends ActivityBase implements
+		OnClickListener, OnMmiReportListener, OnItemClickListener,
+		onReportCheckedListener, OnCheckedChangeListener
 {
 
 	private AdapterReport adapterReport;
 	private MListView lvReportList;
-	private View talk_report_list_panel,talk_report_empty;
-	private String taskId = null;
-	private String taskName = null;
+	private View talk_report_list_panel, talk_report_empty;
+	private ImageView ivRight;
+	private RelativeLayout reportDelPanel;
+	private LinearLayout btReportDel;
+	private TextView tvReportTip;
+	private CheckBox cbSelectAll;
+	private Map<String, AirReport> isSelected = new HashMap<String, AirReport>();
+
+	private boolean isEditing = false;
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -48,13 +55,35 @@ public class MenuReportActivity extends ActivityBase implements OnClickListener,
 		setContentView(R.layout.activity_tool_report);
 		AirReportManager.getInstance().loadReports();
 		doInitView();
-		
-		bundle = getIntent().getExtras();
-		if (bundle != null)
+
+		// bundle = getIntent().getExtras();
+		// if (bundle != null)
+		// {
+		// taskId = bundle.getString("taskId");
+		// taskName = bundle.getString("taskName");
+		// }
+	}
+
+	private void putSelected(String code, AirReport value, boolean isCheck)
+	{
+		if (isCheck)
 		{
-			taskId = bundle.getString("taskId");
-			taskName = bundle.getString("taskName");
+			isSelected.put(code, value);
+			btReportDel.setClickable(true);
+			btReportDel.setBackgroundResource(R.drawable.bg_report_red);
 		}
+		else if (isSelected.size() > 0)
+		{
+			isSelected.remove(code);
+			btReportDel.setClickable(true);
+			btReportDel.setBackgroundResource(R.drawable.bg_report_red);
+		}
+		else
+		{
+			btReportDel.setClickable(false);
+			btReportDel.setBackgroundResource(R.drawable.bg_report_gray);
+		}
+		tvReportTip.setText("已选择" + isSelected.size() + "条记录");
 	}
 
 	@Override
@@ -73,45 +102,42 @@ public class MenuReportActivity extends ActivityBase implements OnClickListener,
 		super.onResume();
 		refreshListOrEmpty();
 		AirReportManager.getInstance().setReportListener(this);
-		if(adapterReport != null)
+		if (adapterReport != null)
 			adapterReport.notifyDataSetChanged();
-		// adapterReport.showIcons(true);
 	}
 
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
 		ivTitle.setText(R.string.talk_tools_report);
-		
+
 		View btnLeft = findViewById(R.id.menu_left_button);
 		ImageView ivLeft = (ImageView) findViewById(R.id.bottom_left_icon);
 		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_back, this));
 		btnLeft.setOnClickListener(this);
 
 		RelativeLayout ivRightLay = (RelativeLayout) findViewById(R.id.talk_menu_right_button);
-		ImageView ivRight = (ImageView) findViewById(R.id.bottom_right_icon);
-		ivRight.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_clean, this));
+		ivRight = (ImageView) findViewById(R.id.bottom_right_icon);
+		ivRight.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_setting, this));
 		ivRightLay.setOnClickListener(this);
-		
-//		ivRight.setVisibility(View.VISIBLE);
-//		ivRightLay.setVisibility(View.VISIBLE);
-		
+
 		talk_report_list_panel = findViewById(R.id.talk_report_list_panel);
-		talk_report_empty =findViewById(R.id.talk_report_empty);
+		talk_report_empty = findViewById(R.id.talk_report_empty);
 		lvReportList = (MListView) findViewById(R.id.talk_report_list);
-		adapterReport = new AdapterReport(this, lvReportList);
+		adapterReport = new AdapterReport(this, lvReportList, this);
 
 		lvReportList.setAdapter(adapterReport);
 		lvReportList.setOnItemClickListener(this);
-		lvReportList.setOnItemLongClickListener(this);
-		/*
-		findViewById(R.id.report_report_btn_pic).setOnClickListener(this);
-		findViewById(R.id.report_report_btn_vid).setOnClickListener(this);
-		if (Config.funcVideo)
-			findViewById(R.id.report_real_video).setOnClickListener(this);
-		else
-			findViewById(R.id.report_real_video).setVisibility(View.GONE);*/
-//		findViewById(R.id.report_report_btn_clean).setOnClickListener(this);
+
+		reportDelPanel = (RelativeLayout) findViewById(R.id.rl_report_panel);
+		btReportDel = (LinearLayout) findViewById(R.id.bt_report_del);
+		btReportDel.setOnClickListener(this);
+		tvReportTip = (TextView) findViewById(R.id.tv_report_select_count);
+		tvReportTip.setText("已选择0条记录");
+		btReportDel.setClickable(false);
+		cbSelectAll = (CheckBox) findViewById(R.id.cb_report_selectall);
+		cbSelectAll.setOnCheckedChangeListener(this);
+		// lvReportList.setOnItemLongClickListener(this);
 	}
 
 	private void refreshListOrEmpty()
@@ -123,14 +149,13 @@ public class MenuReportActivity extends ActivityBase implements OnClickListener,
 		}
 		else
 		{
-			
 			talk_report_list_panel.setVisibility(View.VISIBLE);
 			talk_report_empty.setVisibility(View.GONE);
-			AirReport  currentReport = AirReportManager.getInstance().getCurrentReportDoing();
-			if (currentReport != null )
+			AirReport currentReport = AirReportManager.getInstance().getCurrentReportDoing();
+			if (currentReport != null)
 			{
-				if(currentReport.getState() != AirReport.STATE_UPLOADING)
-				adapterReport.notifyDataSetChanged();
+				if (currentReport.getState() != AirReport.STATE_UPLOADING)
+					adapterReport.notifyDataSetChanged();
 			}
 			else
 				adapterReport.notifyDataSetChanged();
@@ -173,151 +198,68 @@ public class MenuReportActivity extends ActivityBase implements OnClickListener,
 			case R.id.bottom_left_icon:
 				finish();
 				break;
-			/*
-			case R.id.report_report_btn_pic:
-			{
-				Intent it = new Intent(this, MenuReportAsPicActivity.class);
-				if (!TextUtils.isEmpty(taskId))
-					it.putExtra("taskId", taskId);
-				if (!TextUtils.isEmpty(taskName))
-					it.putExtra("taskName", taskName);
-				it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(it);
-				break;
-			}
-			case R.id.report_report_btn_vid:
-			{
-				Intent it = new Intent(this, MenuReportAsVidActivity.class);
-				if (!TextUtils.isEmpty(taskId))
-					it.putExtra("taskId", taskId);
-				if (!TextUtils.isEmpty(taskName))
-					it.putExtra("taskName", taskName);
-				it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(it);
-				break;
-			}
-			case R.id.report_report_btn_clean:
-			{
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle(getString(R.string.talk_report_upload_cleanall));
-				builder.setMessage(getString(R.string.talk_report_upload_cleanall_tip));
-				builder.setPositiveButton(getString(R.string.talk_ok), new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int which)
-					{
-						AirReportManager.getInstance().ReportClean();
-					}
-				});
-				builder.setNegativeButton(this.getString(R.string.talk_no), null);
-				builder.show();
-				break;
-			}*/
 			case R.id.talk_menu_right_button:
 			{
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle(getString(R.string.talk_report_upload_cleanall));
-				builder.setMessage(getString(R.string.talk_report_upload_cleanall_tip));
-				builder.setPositiveButton(getString(R.string.talk_ok), new DialogInterface.OnClickListener()
+				if (lvReportList.getCount() > 0)
 				{
-					public void onClick(DialogInterface dialog, int which)
+					isEditing = !isEditing;
+					if (isEditing)
 					{
-						AirReportManager.getInstance().ReportClean();
-					}
-				});
-				builder.setNegativeButton(this.getString(R.string.talk_no), null);
-				builder.show();
-				break;
-			}
-			
-			/*
-			case R.id.report_real_video:
-			{
-				if (AirtalkeeAccount.getInstance().isAccountRunning())
-				{
-					if (AirtalkeeAccount.getInstance().isEngineRunning())
-					{
-						AirSession session = SessionController.SessionMatchSpecial(AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER,
-							getString(R.string.talk_tools_call_center));
-						
-						Intent intent = new Intent();
-						intent.setClass(this, TempSessionActivity.class);
-						intent.putExtra("sessionCode", session.getSessionCode());
-						intent.putExtra("type", AirServices.TEMP_SESSION_TYPE_OUTGOING);
-						intent.putExtra("video", true);
-						intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						this.startActivity(intent);
+						ivRight.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_clean, this));
+						reportDelPanel.setVisibility(View.VISIBLE);
+						adapterReport.setEditing(true);
+						lvReportList.setClickable(false);
+						tvReportTip.setText("已选择0条记录");
+						btReportDel.setBackgroundResource(R.drawable.bg_report_gray);
+						// rootPanel.setBackgroundResource(R.attr.theme_sider_title_bg_report);
 					}
 					else
 					{
-						Util.Toast(this, getString(R.string.talk_network_warning));
+						ivRight.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_setting, this));
+						reportDelPanel.setVisibility(View.GONE);
+						adapterReport.setEditing(false);
+						lvReportList.setClickable(true);
+						cbSelectAll.setChecked(false);
+						// rootPanel.setBackgroundResource(R.attr.theme_sider_title_bg);
 					}
+					refreshListOrEmpty();
 				}
 				break;
-			}*/
+			}
+			case R.id.bt_report_del:
+			{
+				AirReportManager.getInstance().ReportsDetele(isSelected);
+				tvReportTip.setText("已选择0条记录");
+				btReportDel.setClickable(false);
+				btReportDel.setBackgroundResource(R.drawable.bg_report_gray);
+				isSelected.clear();
+//				refreshListOrEmpty();
+				break;
+			}
 		}
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
 	{
-		// TODO Auto-generated method stub
 		AirReport report = (AirReport) adapterReport.getItem(position - 1);
 		if (report != null)
 		{
-			Intent it = new Intent(this, MenuReportViewActivity.class);
-			it.putExtra("code", report.getCode());
-			startActivity(it);
-		}
-	}
-
-	@Override
-	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id)
-	{
-		// TODO Auto-generated method stub
-		if (parent.getId() == R.id.talk_report_list)
-		{
-			final Activity activity = this;
-			final String menuArray[] = getResources().getStringArray(R.array.handle_report);
-			final ListAdapter items = mSimpleAdapter(this, menuArray, R.layout.account_switch_listitem, R.id.AccountNameView);
-			final AirReport report = (AirReport) adapterReport.getItem(position - 1);
-			if (report != null)
+			if (isEditing)
 			{
-				new AlertDialog.Builder(this).setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener()
+				CheckBox cb = (CheckBox) view.findViewById(R.id.cb_report);
+				if (cb != null)
 				{
-					@Override
-					public void onClick(DialogInterface dialog, int whichButton)
-					{
-						switch (whichButton)
-						{
-							case 0:
-							{
-								Intent it = new Intent(activity, MenuReportViewActivity.class);
-								it.putExtra("code", report.getCode());
-								startActivity(it);
-								break;
-							}
-							case 1:
-							{
-								AirReportManager.getInstance().ReportDelete(report.getCode());
-								break;
-							}
-						}
-						if (dialog != null)
-							dialog.dismiss();
-					}
-				}).setOnCancelListener(new OnCancelListener()
-				{
-					@Override
-					public void onCancel(DialogInterface dialog)
-					{
-						// TODO Auto-generated method stub
-						if (dialog != null)
-							dialog.cancel();
-					}
-				}).show();
+					cb.setChecked(!cb.isChecked());
+				}
+			}
+			else
+			{
+				Intent it = new Intent(this, MenuReportViewActivity.class);
+				it.putExtra("code", report.getCode());
+				startActivity(it);
 			}
 		}
-		return true;
 	}
 
 	public SimpleAdapter mSimpleAdapter(Context contexts, String[] array, int layout, int id)
@@ -346,8 +288,21 @@ public class MenuReportActivity extends ActivityBase implements OnClickListener,
 	public void onMmiReportDel()
 	{
 		// TODO Auto-generated method stub
-		if(adapterReport != null)
-			adapterReport.notifyDataSetChanged();
+		if (adapterReport != null)
+			refreshListOrEmpty();
+		// adapterReport.notifyDataSetChanged();
 	}
 
+	@Override
+	public void onReportChecked(boolean isChecked, AirReport report)
+	{
+		putSelected(report.getCode(), report, isChecked);
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+	{
+		adapterReport.setCheckedAll(isChecked);
+		refreshListOrEmpty();
+	}
 }

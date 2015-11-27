@@ -1,6 +1,9 @@
 package com.airtalkee.widget;
 
+import com.airtalkee.R;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -33,7 +36,7 @@ public class AudioVisualizerView extends View
 	public void updateVisualizer(byte[] fft)
 	{
 		mBytes = fft;
-		mForePaint.setStrokeWidth((float)getWidth() / (float)(mVisualizerSpectrumNum * 2));
+		mForePaint.setStrokeWidth((float) getWidth() / (float) (mVisualizerSpectrumNum * 2));
 		invalidate();
 	}
 
@@ -73,6 +76,8 @@ public class AudioVisualizerView extends View
 			mPoints[i * 4 + 3] = height - mBytes[i];
 		}
 
+		// Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_spectrum_point);
+		// canvas.drawBitmap(bitmap, null, mForePaint);
 		canvas.drawLines(mPoints, mForePaint);
 	}
 

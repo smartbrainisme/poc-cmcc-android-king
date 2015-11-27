@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -21,6 +24,7 @@ import com.airtalkee.control.AirReportManager;
 import com.airtalkee.entity.AirReport;
 import com.airtalkee.listener.OnMmiLocationListener;
 import com.airtalkee.sdk.AirtalkeeReport;
+import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.util.Utils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -35,15 +39,50 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 	// private boolean isShowIcons = true;
 	Map<String, RelativeLayout> viewMap = new HashMap<String, RelativeLayout>();
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
+	private onReportCheckedListener checkedListener;
+
+	private boolean isEditing = false;
+	private boolean isCheckedAll = false;
+
+	public boolean isEditing()
+	{
+		return isEditing;
+	}
+
+	public boolean isCheckedAll()
+	{
+		return isCheckedAll;
+	}
+
+	public void setCheckedAll(boolean isCheckedAll)
+	{
+		this.isCheckedAll = isCheckedAll;
+	}
+
+	public void setEditing(boolean isEditing)
+	{
+		this.isEditing = isEditing;
+	}
 
 	DisplayImageOptions options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.report_default_vid).showImageOnFail(R.drawable.report_default_vid).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(0)).build();
 	ListView lv;
+
+	public interface onReportCheckedListener
+	{
+		public void onReportChecked(boolean isChecked, AirReport report);
+	}
 
 	public AdapterReport(Context _context, ListView lv)
 	{
 		this.lv = lv;
 		context = _context;
 		reports = AirReportManager.getInstance().getReports();
+	}
+
+	public AdapterReport(Context _context, ListView lv, onReportCheckedListener listener)
+	{
+		this(_context, lv);
+		this.checkedListener = listener;
 	}
 
 	@Override
@@ -90,9 +129,6 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 			holder.progressLayout = (RelativeLayout) convertView.findViewById(R.id.talk_report_progress_layout);
 			holder.progressBar = (ProgressBar) convertView.findViewById(R.id.talk_report_progress);
 			holder.progressText = (TextView) convertView.findViewById(R.id.talk_report_progress_text);
-			holder.state = (ImageView) convertView.findViewById(R.id.talk_report_state);
-			// holder.stateRetry = (Button)
-			// convertView.findViewById(R.id.talk_report_btn_retry);
 			// 重发按钮图片
 			holder.stateRetry = (ImageView) convertView.findViewById(R.id.talk_report_retry);
 
@@ -100,13 +136,20 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 			holder.failText = (TextView) convertView.findViewById(R.id.talk_report_fail_message);
 			// 点击重发 等待重发
 			holder.uploadStep = (TextView) convertView.findViewById(R.id.talk_report_retry_step);
+			holder.cbReport = (CheckBox) convertView.findViewById(R.id.cb_report);
+			holder.ivReportEnter = (ImageView) convertView.findViewById(R.id.iv_report_enter);
 			convertView.setTag(holder);
 		}
 		else
 		{
 			holder = (ViewHolder) convertView.getTag();
 		}
+		fillView(report, holder);
+		return convertView;
+	}
 
+	private void fillView(final AirReport report, ViewHolder holder)
+	{
 		if (report != null)
 		{
 			viewMap.put(report.getCode(), holder.progressLayout);
@@ -115,7 +158,6 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 			else
 				imageLoader.displayImage(report.getResUri().toString(), holder.icon);
 
-			String time = report.getTime();
 			holder.time.setText(context.getString(R.string.talk_tools_report_date) + "：" + report.getTime().substring(0, 16));
 			holder.size.setText(MenuReportActivity.sizeMKB(report.getResSize()));
 
@@ -141,7 +183,6 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 			{
 				case AirReport.STATE_WAITING:
 				{
-					// holder.state.setImageResource(R.drawable.report_state_waiting);
 					holder.stateRetry.setVisibility(View.GONE);
 					holder.detail.setVisibility(View.VISIBLE);
 					holder.progressBar.setVisibility(View.VISIBLE);
@@ -152,16 +193,11 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 				}
 				case AirReport.STATE_UPLOADING:
 				{
-					// holder.state.setImageResource(R.drawable.report_state_uploading);
 					holder.uploadStep.setText(context.getString(R.string.talk_tools_report_uploading));
 					holder.progressBar.setVisibility(View.VISIBLE);
 					holder.uploadStep.setVisibility(View.VISIBLE);
 					holder.failText.setVisibility(View.VISIBLE);
-					 holder.stateRetry.setVisibility(View.GONE);
-					// holder.detail.setVisibility(View.GONE);
-					// holder.progressLayout.setVisibility(View.VISIBLE);
-					// holder.progressBar.setProgress(report.getProgress());
-					// holder.progressText.setText(report.getProgress() + "%");
+					holder.stateRetry.setVisibility(View.GONE);
 					break;
 				}
 				case AirReport.STATE_RESULT_OK:
@@ -185,19 +221,44 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 				}
 				case AirReport.STATE_RESULT_FAIL:
 				{
-					// holder.state.setImageResource(R.drawable.report_state_error);
 					holder.stateRetry.setImageResource(R.drawable.selector_report_retry);
 					holder.stateRetry.setVisibility(View.VISIBLE);
 					holder.stateRetry.setOnClickListener(this);
 					holder.stateRetry.setTag(report.getCode());
 					holder.failText.setVisibility(View.VISIBLE);
 					holder.uploadStep.setVisibility(View.VISIBLE);
-					// holder.progressLayout.setVisibility(View.GONE);
 					break;
 				}
 			}
+			if (isEditing)
+			{
+				holder.cbReport.setVisibility(View.VISIBLE);
+				holder.ivReportEnter.setVisibility(View.GONE);
+				holder.cbReport.setOnCheckedChangeListener(new OnCheckedChangeListener()
+				{
+					@Override
+					public void onCheckedChanged(CompoundButton buttonView, boolean isChecked)
+					{
+						// TODO Auto-generated method stub
+						if (checkedListener != null)
+							checkedListener.onReportChecked(isChecked, report);
+					}
+				});
+			}
+			else
+			{
+				holder.cbReport.setVisibility(View.GONE);
+				holder.ivReportEnter.setVisibility(View.VISIBLE);
+			}
+			if (isCheckedAll)
+			{
+				holder.cbReport.setChecked(true);
+			}
+			else
+			{
+				holder.cbReport.setChecked(false);
+			}
 		}
-		return convertView;
 	}
 
 	class ViewHolder
@@ -215,6 +276,8 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 		ImageView stateRetry;
 		TextView failText;
 		TextView uploadStep;
+		CheckBox cbReport;
+		ImageView ivReportEnter;
 	}
 
 	@Override
@@ -223,11 +286,6 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 		// TODO Auto-generated method stub
 		switch (v.getId())
 		{
-		// case R.id.talk_report_btn_retry:
-		// {
-		// AirReportManager.getInstance().ReportRetry((String) v.getTag());
-		// break;
-		// }
 			case R.id.talk_report_retry:
 			{
 				AirReportManager.getInstance().ReportRetry((String) v.getTag());

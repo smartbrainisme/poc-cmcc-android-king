@@ -25,6 +25,7 @@
         <item name="theme_color_text1">@color/color_hint_dark</item>
         <!-- <item name="theme_sider_title_bg">@color/white</item> -->
         <item name="theme_sider_title_bg">@drawable/selector_sider_title_bg</item>
+        <item name="theme_sider_title_bg_report">@color/white</item>
         <item name="theme_bg_input">@drawable/shape_cmcc_bg</item>
         <item name="theme_bg_title">@drawable/title_bg_dark</item>
         <item name="theme_divider_login">@drawable/login_line</item>
@@ -84,7 +85,8 @@
         <item name="theme_group_all">@drawable/group_all</item>
         <item name="theme_user_dialog">@drawable/user_dialog</item>
         <item name="theme_ic_topbar_back">@drawable/btn_back</item>
-        <item name="theme_ic_topbar_clean">@drawable/ic_close_cicle</item>
+        <item name="theme_ic_topbar_clean">@drawable/ic_fun_cancel</item>
+        <item name="theme_ic_topbar_setting">@drawable/ic_setting</item>
         <!-- <item name="theme_ic_topbar_back">@drawable/ic_topbar_back</item> -->
         <item name="theme_ic_refresh">@drawable/ic_refresh</item>
         <item name="theme_system_msg_bg">@color/color_system_msg_bg</item>

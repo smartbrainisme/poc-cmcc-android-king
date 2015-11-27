@@ -2,16 +2,15 @@ package com.airtalkee.activity.home.widget;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.sdk.AirtalkeeChannel;
@@ -67,7 +66,7 @@ public class AdapterChannel extends BaseAdapter
 			tvUnread = (TextView) convertView.findViewById(R.id.tv_unread_count);
 		}
 
-		public void fill(AirChannel item)
+		public void fill(final AirChannel item)
 		{
 			AirSession sessionCurrent = AirSessionControl.getInstance().getCurrentChannelSession();
 			if (item != null)
@@ -77,9 +76,20 @@ public class AdapterChannel extends BaseAdapter
 				{
 					baseView.setBackgroundResource(R.drawable.selector_listitem_channel_1);
 					ivListener.setBackgroundResource(R.drawable.ic_listen_high);
+					ivListener.setOnClickListener(new OnClickListener()
+					{
+						@Override
+						public void onClick(View v)
+						{
+							AirSessionControl.getInstance().SessionChannelOut(item.getId());
+						}
+					});
 					tvUnread.setText(sessionCurrent.getMessageUnreadCount() + "");
-					if (sessionCurrent.getMessageUnreadCount() > 0)
+					if (item.getMsgUnReadCount() > 0)
+					{
 						tvUnread.setVisibility(View.VISIBLE);
+						tvUnread.setText(item.getMsgUnReadCount() + "");
+					}
 					else
 						tvUnread.setVisibility(View.GONE);
 				}

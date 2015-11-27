@@ -45,27 +45,17 @@ public class AdapterSession extends BaseAdapter
 		if (!isEditing) // 非编辑状态
 		{
 			/*
-			if (convertView == null)
-			{
-				if (position == 0)
-				{
-					convertView = LayoutInflater.from(mContext).inflate(R.layout.session_header_item, null);
-				}
-				else
-				{
-					convertView = LayoutInflater.from(mContext).inflate(R.layout.session_listitem, null);
-				}
-				hodler = new HodlerView(convertView);
-				convertView.setTag(hodler);
-			}
-			else
-			{
-				if(position==0)
-				{
-					convertView = LayoutInflater.from(mContext).inflate(R.layout.session_header_item, null);
-				}
-				hodler = (HodlerView) convertView.getTag();
-			}*/
+			 * if (convertView == null) { if (position == 0) { convertView =
+			 * LayoutInflater
+			 * .from(mContext).inflate(R.layout.session_header_item, null); }
+			 * else { convertView =
+			 * LayoutInflater.from(mContext).inflate(R.layout.session_listitem,
+			 * null); } hodler = new HodlerView(convertView);
+			 * convertView.setTag(hodler); } else { if(position==0) {
+			 * convertView =
+			 * LayoutInflater.from(mContext).inflate(R.layout.session_header_item
+			 * , null); } hodler = (HodlerView) convertView.getTag(); }
+			 */
 			if (position == 0)
 			{
 				convertView = LayoutInflater.from(mContext).inflate(R.layout.session_header_item, null);
@@ -107,6 +97,7 @@ public class AdapterSession extends BaseAdapter
 		public TextView tvCancel;
 		public LinearLayout missedPanel;
 		public TextView tvMissed;
+		public TextView tvUnread;
 
 		public HodlerView(View baseView)
 		{
@@ -118,6 +109,7 @@ public class AdapterSession extends BaseAdapter
 			ivDel = (ImageView) baseView.findViewById(R.id.btn_session_del);
 			missedPanel = (LinearLayout) baseView.findViewById(R.id.session_missed_panel);
 			tvMissed = (TextView) baseView.findViewById(R.id.tv_session_missed);
+			tvUnread = (TextView) baseView.findViewById(R.id.tv_unread_count);
 		}
 
 		public void fill(final AirSession item)
@@ -127,6 +119,15 @@ public class AdapterSession extends BaseAdapter
 				String display = item.getDisplayName();
 				tvName.setText(display.toString());
 				tvCount.setText(item.getMemberAll().size() + "");
+				if (item.getMessageUnreadCount() > 0)
+				{
+					tvUnread.setVisibility(View.VISIBLE);
+					tvUnread.setText(item.getMessageUnreadCount() + "");
+				}
+				else
+				{
+					tvUnread.setVisibility(View.GONE);
+				}
 				if (isEditing)
 				{
 					delPannel.setVisibility(View.VISIBLE);

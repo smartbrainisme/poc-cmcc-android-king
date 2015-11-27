@@ -74,6 +74,9 @@ public class SessionDialogActivity extends FragmentActivity implements
 			case AirServices.TEMP_SESSION_TYPE_OUTGOING:
 				addFlag = true;
 				break;
+			case AirServices.TEMP_SESSION_TYPE_INCOMING:
+				addFlag = true;
+				break;
 			default:
 				addFlag = false;
 				break;

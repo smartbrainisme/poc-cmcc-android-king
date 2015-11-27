@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/list_report_panel"
     android:layout_width="fill_parent"
     android:layout_height="70dip"
     android:background="?theme_sider_title_bg"
@@ -7,11 +8,22 @@
     android:gravity="center"
     android:padding="10dp" >
 
+    <CheckBox
+        android:id="@+id/cb_report"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:button="?theme_btn_check"
+        android:scaleType="center" />
+
     <RelativeLayout
+        android:id="@+id/rl_report_panel"
         android:layout_width="100dip"
         android:layout_height="80dip"
-        android:layout_alignParentLeft="true"
-        android:layout_margin="5dip" >
+        android:layout_marginLeft="15dip"
+        android:layout_toRightOf="@id/cb_report" >
 
         <ImageView
             android:id="@+id/talk_report_icon"
@@ -58,8 +70,8 @@
                 android:id="@+id/talk_report_progress"
                 style="?android:attr/progressBarStyleSmall"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:visibility="gone"/>
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/talk_report_retry_step"
@@ -88,7 +100,8 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="110dip"
+        android:layout_marginLeft="10dip"
+        android:layout_toRightOf="@id/rl_report_panel"
         android:gravity="center"
         android:orientation="horizontal" >
 
@@ -129,11 +142,13 @@
                     android:textSize="14dip" />
 
                 <ImageView
+                    android:id="@+id/iv_report_enter"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:layout_weight="1"
-                    android:background="@drawable/btn_enter" />
+                    android:background="@drawable/btn_enter"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <TextView
@@ -151,9 +166,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dip"
+                android:background="@drawable/bg_report_fail"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
-                android:background="@drawable/bg_report_fail"
                 android:singleLine="true"
                 android:text="@string/talk_tools_report_fail"
                 android:textColor="#FFFFFF"
@@ -177,34 +192,6 @@
                     android:textSize="14dip" />
             </RelativeLayout>
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="50dip"
-        android:layout_height="70dip"
-        android:layout_alignParentRight="true"
-        android:gravity="center"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:id="@+id/talk_report_state"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dip"
-            android:src="@drawable/report_state_ok"
-            android:visibility="gone" />
-
-        <Button
-            android:id="@+id/talk_report_btn_retry"
-            android:layout_width="fill_parent"
-            android:layout_height="25dip"
-            android:layout_marginLeft="3dip"
-            android:layout_marginRight="3dip"
-            android:background="@drawable/selector_button"
-            android:text="@string/talk_report_upload_retry"
-            android:textColor="#ffffff"
-            android:textSize="10dip"
-            android:visibility="gone" />
     </LinearLayout>
 
     <View
