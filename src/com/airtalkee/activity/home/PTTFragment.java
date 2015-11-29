@@ -209,6 +209,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 		{
 			case R.id.talk_playback:
 			{
+				refreshPlayback();
 				if (session != null && session.getMessagePlayback() != null)
 				{
 					currentMessage = session.getMessagePlayback();

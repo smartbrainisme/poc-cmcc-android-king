@@ -123,7 +123,7 @@
             <com.airtalkee.widget.AudioVisualizerView
                 android:id="@+id/talk_audio_visualizer_new"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_alignBaseline="@+id/iv_spetrum"
                 android:layout_alignLeft="@+id/iv_spetrum"
                 android:layout_alignRight="@+id/iv_spetrum"
@@ -132,7 +132,7 @@
             <ImageView
                 android:id="@+id/iv_spetrum"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_centerHorizontal="true"
                 android:scaleType="fitXY"
                 android:src="@drawable/bg_spectrum" />

@@ -1,6 +1,7 @@
 package com.airtalkee.widget;
 
 import com.airtalkee.R;
+import android.R.integer;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -36,7 +37,9 @@ public class AudioVisualizerView extends View
 	public void updateVisualizer(byte[] fft)
 	{
 		mBytes = fft;
+		int length = mBytes.length;
 		mForePaint.setStrokeWidth((float) getWidth() / (float) (mVisualizerSpectrumNum * 2));
+//		mForePaint.setStrokeWidth(mVisualizerSpectrumNum * 4);
 		invalidate();
 	}
 
@@ -45,40 +48,40 @@ public class AudioVisualizerView extends View
 	{
 		super.onDraw(canvas);
 
-		if (mBytes == null)
+		try
 		{
-			return;
-		}
-
-		if (mPoints == null || mPoints.length < mBytes.length * 4)
-		{
-			mPoints = new float[mBytes.length * 4];
-		}
-
-		mRect.set(0, 0, getWidth(), getHeight());
-
-		final int baseX = mRect.width() / mVisualizerSpectrumNum;
-		final int height = mRect.height();
-
-		for (int i = 0; i < mVisualizerSpectrumNum; i++)
-		{
-			if (mBytes[i] < 0)
+			if (mBytes == null)
 			{
-				mBytes[i] = 127;
+				return;
 			}
+			if (mPoints == null || mPoints.length < mBytes.length * 4)
+			{
+				mPoints = new float[mBytes.length * 4];
+			}
+			mRect.set(0, 0, getWidth(), getHeight());
+			final int baseX = mRect.width() / mVisualizerSpectrumNum;
+			final int height = mRect.height();
+			for (int i = 0; i < mVisualizerSpectrumNum; i++)
+			{
+				if (mBytes[i] < 0)
+				{
+					mBytes[i] = 127;
+				}
+				final int xi = baseX * i + baseX / 2;
 
-			final int xi = baseX * i + baseX / 2;
+				mPoints[i * 4] = xi;
+				mPoints[i * 4 + 1] = height;
 
-			mPoints[i * 4] = xi;
-			mPoints[i * 4 + 1] = height;
-
-			mPoints[i * 4 + 2] = xi;
-			mPoints[i * 4 + 3] = height - mBytes[i];
+				mPoints[i * 4 + 2] = xi;
+				mPoints[i * 4 + 3] = height - mBytes[i];
+			}
+			// Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_spectrum_point);
+			// canvas.drawBitmap(bitmap, null, mForePaint);
+			canvas.drawLines(mPoints, mForePaint);
 		}
-
-		// Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_spectrum_point);
-		// canvas.drawBitmap(bitmap, null, mForePaint);
-		canvas.drawLines(mPoints, mForePaint);
+		catch (Exception e)
+		{
+		}
 	}
 
 }
