@@ -135,7 +135,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	@Override
 	public void onPause()
 	{
-		// TODO Auto-generated method stub
 		super.onPause();
 		if(HomeActivity.getInstance().pageIndex == HomeActivity.PAGE_IM)
 		{
@@ -147,7 +146,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	@Override
 	public void onResume()
 	{
-		// TODO Auto-generated method stub
 		super.onResume();
 		setSession(getSession());
 		AirMessageTransaction.getInstance().setOnMessageListener(this);
@@ -156,7 +154,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	@Override
 	public void dispatchBarClickEvent(int page, int id)
 	{
-		// TODO Auto-generated method stub
 		if (page == HomeActivity.PAGE_IM)
 		{
 			switch (id)

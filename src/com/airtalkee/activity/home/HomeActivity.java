@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -20,7 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.DensityUtil;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
@@ -29,6 +27,7 @@ import com.airtalkee.activity.home.widget.SessionAndChannelView.ViewChangeListen
 import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirSessionControl;
+import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.widget.PageIndicator;
 import com.airtalkee.widget.SlidingUpPanelLayout;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelSlideListener;
@@ -59,7 +58,7 @@ public class HomeActivity extends SessionDialogActivity implements
 
 		setRequestedOrientation(Config.screenOrientation);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
-		
+
 		super.mediaStatusBar = (MediaStatusBar) findViewById(R.id.media_status_function_bar);
 		mediaStatusBar.init((StatusBarTitle) findViewById(R.id.media_status_title_bar), AirSessionControl.getInstance().getCurrentChannelSession());
 		final FragmentManager fm = getSupportFragmentManager();
@@ -83,12 +82,14 @@ public class HomeActivity extends SessionDialogActivity implements
 		slidingBack = (ImageView) channelView.findViewById(R.id.sliding_back);
 	}
 
+	// 滑动
 	@Override
 	public void onPanelSlide(View panel, float slideOffset)
 	{
 		Log.i("HOME_ACTIVITY", "onPanelSlide, offset " + slideOffset);
 	}
 
+	// 展开
 	@Override
 	public void onPanelExpanded(View panel)
 	{
@@ -98,6 +99,7 @@ public class HomeActivity extends SessionDialogActivity implements
 		channelView.resume();
 	}
 
+	// 收起
 	@Override
 	public void onPanelCollapsed(View panel)
 	{
@@ -107,6 +109,10 @@ public class HomeActivity extends SessionDialogActivity implements
 		this.onPageSelected(pageIndex);
 		if (mediaStatusBar != null)
 			mediaStatusBar.setSession(AirSessionControl.getInstance().getCurrentChannelSession());
+		// 解决刷新频道成员
+		AirSession session = AirSessionControl.getInstance().getCurrentChannelSession();
+		MemberFragment memberFragment = (MemberFragment) adapter.getItem(0);
+		memberFragment.refreshMembers(session, session.getChannel().MembersGet());
 	}
 
 	@Override
@@ -139,41 +145,42 @@ public class HomeActivity extends SessionDialogActivity implements
 			mLayout.setPanelState(PanelState.COLLAPSED);
 		}
 	}
-	
+
 	@Override
 	@Deprecated
-	protected Dialog onCreateDialog(final int id) {
+	protected Dialog onCreateDialog(final int id)
+	{
 		// TODO Auto-generated method stub
-		switch(id)
+		switch (id)
 		{
-		case R.id.talk_dialog_message_txt_send_fail:
-		case R.id.talk_dialog_message_txt:
-		{
-			final ListAdapter items = mSimpleAdapter(this, IMFragment.menuArray, R.layout.account_switch_listitem, R.id.AccountNameView);
-			return new AlertDialog.Builder(this).setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener()
+			case R.id.talk_dialog_message_txt_send_fail:
+			case R.id.talk_dialog_message_txt:
 			{
-				public void onClick(DialogInterface dialog, int whichButton)
+				final ListAdapter items = mSimpleAdapter(this, IMFragment.menuArray, R.layout.account_switch_listitem, R.id.AccountNameView);
+				return new AlertDialog.Builder(this).setSingleChoiceItems(items, 0, new DialogInterface.OnClickListener()
 				{
-					removeDialog(id);
-					if (items instanceof SimpleAdapter)
+					public void onClick(DialogInterface dialog, int whichButton)
 					{
-						getIMFragment().onListItemLongClick(id, whichButton);
+						removeDialog(id);
+						if (items instanceof SimpleAdapter)
+						{
+							getIMFragment().onListItemLongClick(id, whichButton);
+						}
 					}
-				}
-			}).setOnCancelListener(new OnCancelListener()
-			{
-				@Override
-				public void onCancel(DialogInterface dialog)
+				}).setOnCancelListener(new OnCancelListener()
 				{
-					// TODO Auto-generated method stub
-					removeDialog(id);
-				}
-			}).create();
-		}
+					@Override
+					public void onCancel(DialogInterface dialog)
+					{
+						// TODO Auto-generated method stub
+						removeDialog(id);
+					}
+				}).create();
+			}
 		}
 		return super.onCreateDialog(id);
 	}
-	
+
 	public SimpleAdapter mSimpleAdapter(Context contexts, String[] array, int layout, int id)
 	{
 		if (array == null)

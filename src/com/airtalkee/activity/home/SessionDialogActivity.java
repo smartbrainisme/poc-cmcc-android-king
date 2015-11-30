@@ -22,8 +22,7 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.PageIndicator;
 
-public class SessionDialogActivity extends FragmentActivity implements
-		OnPageChangeListener
+public class SessionDialogActivity extends FragmentActivity implements OnPageChangeListener
 {
 
 	public static final int PAGE_MEMBER = 0;
