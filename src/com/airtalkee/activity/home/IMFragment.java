@@ -82,12 +82,18 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	private boolean recordCancel = false;
 	private float startY = 0;
 	public static String menuArray[];
+	private static IMFragment mInstance;
+	public static IMFragment getInstance()
+	{
+		return mInstance;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		mInstance = this;
 	}
 
 	@Override
@@ -116,7 +122,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 
 		mvRecording = (MacRecordingView) findViewById(R.id.mac_talking);
 		mvRecording.initChild();
-
 		return v;
 	}
 

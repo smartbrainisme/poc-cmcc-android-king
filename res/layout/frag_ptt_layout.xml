@@ -118,7 +118,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/talk_playback"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="60dp" >
+            android:layout_marginTop="60dp" 
+            android:background="#383838">
 
             <com.airtalkee.widget.AudioVisualizerView
                 android:id="@+id/talk_audio_visualizer_new"
@@ -135,7 +136,8 @@
                 android:layout_height="fill_parent"
                 android:layout_centerHorizontal="true"
                 android:scaleType="fitXY"
-                android:src="@drawable/bg_spectrum" />
+                android:src="@drawable/bg_spectrum_new" 
+                android:visibility="visible"/>
         </RelativeLayout>
     </RelativeLayout>
 

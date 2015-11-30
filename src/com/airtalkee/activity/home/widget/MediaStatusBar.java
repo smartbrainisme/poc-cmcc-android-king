@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.SessionBoxTalk;
 import com.airtalkee.activity.home.BaseFragment;
+import com.airtalkee.activity.home.IMFragment;
+import com.airtalkee.activity.home.PTTFragment;
 import com.airtalkee.activity.home.widget.StatusBarBottom.OnBarItemClickListener;
 import com.airtalkee.control.AirMessageTransaction;
 import com.airtalkee.control.AirSessionControl;
@@ -36,26 +36,26 @@ import com.airtalkee.sdk.util.Log;
 public class MediaStatusBar extends LinearLayout implements
 		OnBarItemClickListener, OnMmiSessionListener, OnMediaListener
 {
-	public static final int TYPE_ON_MEDIA_QUEUEOUT =0;
-	public static final int TYPE_ON_MEDIA_QUEUEIN =1;
-	public static final int TYPE_ON_MEDIA_QUEUE =2;
-	public static final int TYPE_ON_MEDIA_STATE_LISTEN_VOICE =3;
-	public static final int TYPE_ON_MEDIA_STATE_LISTEN_END =4;
-	public static final int TYPE_ON_MEDIA_STATE_LISTEN =5;
-	public static final int TYPE_ON_MEDIA_STATE_TALK_END =6;
-	public static final int TYPE_ON_MEDIA_STATE_TALK =7;
-	public static final int TYPE_ON_SESSION_OUTGOING_RINGING =8;
-	public static final int TYPE_ON_SESSION_ESTABLISHING =9;
-	public static final int TYPE_ON_SESSION_ESTABLISHED =10;
-	public static final int TYPE_ON_SESSION_RELEASED =11;
-	public static final int TYPE_ON_SESSION_PRESENCE =12;
-	public static final int TYPE_ON_SESSION_MEMBER_UPDATE =13;
-	public static final int TYPE_ON_MEDIA_STATE_TALK_PREPARING =14;
-	
-	public static String ACTION_ON_SESSION_UPDATE ="ON_SESSION_UPDATE";
-	public static String EXTRA_SESSION_CODE = "SESSION_CODE"; 
-	public static String EXTRA_TYPE = "TYPE"; 
-	
+	public static final int TYPE_ON_MEDIA_QUEUEOUT = 0;
+	public static final int TYPE_ON_MEDIA_QUEUEIN = 1;
+	public static final int TYPE_ON_MEDIA_QUEUE = 2;
+	public static final int TYPE_ON_MEDIA_STATE_LISTEN_VOICE = 3;
+	public static final int TYPE_ON_MEDIA_STATE_LISTEN_END = 4;
+	public static final int TYPE_ON_MEDIA_STATE_LISTEN = 5;
+	public static final int TYPE_ON_MEDIA_STATE_TALK_END = 6;
+	public static final int TYPE_ON_MEDIA_STATE_TALK = 7;
+	public static final int TYPE_ON_SESSION_OUTGOING_RINGING = 8;
+	public static final int TYPE_ON_SESSION_ESTABLISHING = 9;
+	public static final int TYPE_ON_SESSION_ESTABLISHED = 10;
+	public static final int TYPE_ON_SESSION_RELEASED = 11;
+	public static final int TYPE_ON_SESSION_PRESENCE = 12;
+	public static final int TYPE_ON_SESSION_MEMBER_UPDATE = 13;
+	public static final int TYPE_ON_MEDIA_STATE_TALK_PREPARING = 14;
+
+	public static String ACTION_ON_SESSION_UPDATE = "ON_SESSION_UPDATE";
+	public static String EXTRA_SESSION_CODE = "SESSION_CODE";
+	public static String EXTRA_TYPE = "TYPE";
+
 	private AirSession session;
 	private int currentPage = 0;
 	private LinearLayout barGroup;
@@ -64,15 +64,17 @@ public class MediaStatusBar extends LinearLayout implements
 	private int[] memRes = new int[] { R.drawable.selector_fun_call, R.drawable.selector_fun_msg, R.drawable.selector_fun_cancel };
 	private int[] pttRes = new int[] { R.drawable.ic_fun_report, R.drawable.ic_fun_video, R.drawable.ic_fun_call_center };
 	private int[] IMRes = new int[] { R.drawable.ic_fun_voice, R.drawable.ic_fun_pic, R.drawable.ic_fun_input };
-	
+
 	private int[][] barArray = new int[][] { memRes, pttRes, IMRes };
 
 	@SuppressLint("UseSparseArrays")
 	private Map<Integer, StatusBarBottom> bars = new HashMap<Integer, StatusBarBottom>();
+
 	public StatusBarTitle getStatusBarTitle()
 	{
 		return barTitle;
 	}
+
 	protected SharedPreferences sessionSp;
 
 	public MediaStatusBar(Context context, AttributeSet attrs)
@@ -185,7 +187,7 @@ public class MediaStatusBar extends LinearLayout implements
 		AirtalkeeSessionManager.getInstance().setOnMediaListener(null);
 		AirtalkeeMediaVisualizer.getInstance().setOnMediaAudioVisualizerListener(null);
 		AirSessionControl.getInstance().setOnMmiSessionListener(null);
-//		AirtalkeeContactPresence.getInstance().setContactPresenceListener(null);
+		// AirtalkeeContactPresence.getInstance().setContactPresenceListener(null);
 		AirMessageTransaction.getInstance().setOnMessageListener(null);
 		AirtalkeeMessage.getInstance().setOnMessageListListener(null);
 	}
@@ -217,7 +219,7 @@ public class MediaStatusBar extends LinearLayout implements
 	{
 		// TODO Auto-generated method stub
 		sessionRefresh();
-		notify2UpdateView(session.getSessionCode(),TYPE_ON_SESSION_ESTABLISHED);
+		notify2UpdateView(session.getSessionCode(), TYPE_ON_SESSION_ESTABLISHED);
 	}
 
 	@Override
@@ -225,21 +227,21 @@ public class MediaStatusBar extends LinearLayout implements
 	{
 		// TODO Auto-generated method stub
 		sessionRefresh();
-		notify2UpdateView(session.getSessionCode(),TYPE_ON_SESSION_RELEASED);
+		notify2UpdateView(session.getSessionCode(), TYPE_ON_SESSION_RELEASED);
 	}
 
 	@Override
 	public void onSessionPresence(AirSession session, List<AirContact> membersAll, List<AirContact> membersPresence)
 	{
 		// TODO Auto-generated method stub
-		notify2UpdateView(session.getSessionCode(),TYPE_ON_SESSION_PRESENCE);
+		notify2UpdateView(session.getSessionCode(), TYPE_ON_SESSION_PRESENCE);
 	}
 
 	@Override
 	public void onSessionMemberUpdate(AirSession session, List<AirContact> members, boolean isOk)
 	{
 		// TODO Auto-generated method stub
-		notify2UpdateView(session.getSessionCode(),TYPE_ON_SESSION_MEMBER_UPDATE);
+		notify2UpdateView(session.getSessionCode(), TYPE_ON_SESSION_MEMBER_UPDATE);
 	}
 
 	@Override
@@ -307,13 +309,17 @@ public class MediaStatusBar extends LinearLayout implements
 		}
 		barTitle.refreshMediaStatus();
 		talkBtn.refreshPttButton();
-		// AirMmiTimer.getInstance().TimerUnregister(getContext(),
-		// mSpeakingTimer);
+		// AirMmiTimer.getInstance().TimerUnregister(getContext(), mSpeakingTimer);
 		if (MainActivity.getInstance() != null && MainActivity.getInstance().viewControllerSlideView.isShowMenuLeft())
 		{
 			MainActivity.getInstance().viewLeft.refreshList();
 		}
 
+//		if (null != PTTFragment.getInstance())
+//		{
+//			PTTFragment.getInstance().refreshPlayback();
+//		}
+		
 		int val = sessionSp.getInt(BaseFragment.SESSION_EVENT_KEY, 1);
 		sessionSp.edit().putInt(BaseFragment.SESSION_EVENT_KEY, val + 1).commit();
 	}
@@ -346,6 +352,7 @@ public class MediaStatusBar extends LinearLayout implements
 			{
 				Log.i(SessionBoxTalk.class, "onMediaStateListenEnd");
 				barTitle.refreshMediaStatus();
+				PTTFragment.getInstance().refreshPlayback();
 			}
 			else
 			{
@@ -396,14 +403,15 @@ public class MediaStatusBar extends LinearLayout implements
 			Util.Toast(getContext(), getContext().getString(R.string.talk_channel_tip_media_queue_out));
 		}
 	}
-	
-	private void notify2UpdateView(String sessionCode,int type){
-		
+
+	private void notify2UpdateView(String sessionCode, int type)
+	{
+
 		final Intent intent = new Intent();
 		intent.setAction(ACTION_ON_SESSION_UPDATE);
 		intent.putExtra(EXTRA_SESSION_CODE, sessionCode);
 		intent.putExtra(EXTRA_TYPE, type);
-		
+
 		getContext().sendBroadcast(intent);
 	}
 

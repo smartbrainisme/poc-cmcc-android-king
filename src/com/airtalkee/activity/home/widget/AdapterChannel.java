@@ -82,6 +82,7 @@ public class AdapterChannel extends BaseAdapter
 						public void onClick(View v)
 						{
 							AirSessionControl.getInstance().SessionChannelOut(item.getId());
+							notifyDataSetChanged();
 						}
 					});
 					tvUnread.setText(sessionCurrent.getMessageUnreadCount() + "");

@@ -1,7 +1,5 @@
 package com.airtalkee.activity.home;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -17,16 +15,13 @@ import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.Util;
-import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.MenuReportAsPicActivity;
-import com.airtalkee.activity.SessionBox;
 import com.airtalkee.activity.VideoSessionActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
-import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
+import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.airtalkee.config.Config;
-import com.airtalkee.listener.OnMmiSessionBoxRefreshListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeMediaVisualizer;
 import com.airtalkee.sdk.AirtalkeeMessage;
@@ -63,12 +58,19 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 	private AudioVisualizerView mVisualizerView;
 
 	AlertDialog dialog;
+	
+	private static PTTFragment mInstance;
+	public static  PTTFragment getInstance()
+	{
+		return mInstance;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		mInstance = this;
 	}
 
 	@Override
@@ -209,7 +211,6 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 		{
 			case R.id.talk_playback:
 			{
-				refreshPlayback();
 				if (session != null && session.getMessagePlayback() != null)
 				{
 					currentMessage = session.getMessagePlayback();

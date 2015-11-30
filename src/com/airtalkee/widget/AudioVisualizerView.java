@@ -38,7 +38,7 @@ public class AudioVisualizerView extends View
 	{
 		mBytes = fft;
 		int length = mBytes.length;
-		mForePaint.setStrokeWidth((float) getWidth() / (float) (mVisualizerSpectrumNum * 2));
+		mForePaint.setStrokeWidth((float) getWidth() / (float) (mVisualizerSpectrumNum));
 //		mForePaint.setStrokeWidth(mVisualizerSpectrumNum * 4);
 		invalidate();
 	}
