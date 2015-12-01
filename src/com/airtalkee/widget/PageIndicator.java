@@ -1,4 +1,5 @@
 package com.airtalkee.widget;
+
 import java.lang.reflect.Field;
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -14,176 +15,204 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
 
-public class PageIndicator extends LinearLayout  {
-    public static final int INDICATOR_TYPE_CIRCLE = 0;
-    public static final int INDICATOR_TYPE_FRACTION = 1;
-    public static final String ACTION_PAGE_CHANGED ="com.airtalkee.ACTION_PAGE_CHANGED";
-    public static final String EXTRA_PAGE_INDEX ="EXTRA_PAGE_INDEX";
-    
-    public enum IndicatorType {
-        CIRCLE(INDICATOR_TYPE_CIRCLE),
-        FRACTION(INDICATOR_TYPE_FRACTION),
-        UNKNOWN(-1);
+public class PageIndicator extends LinearLayout
+{
+	public static final int INDICATOR_TYPE_CIRCLE = 0;
+	public static final int INDICATOR_TYPE_FRACTION = 1;
+	public static final String ACTION_PAGE_CHANGED = "com.airtalkee.ACTION_PAGE_CHANGED";
+	public static final String EXTRA_PAGE_INDEX = "EXTRA_PAGE_INDEX";
 
-        private int type;
-        IndicatorType(int type) {
-            this.type = type;
-        }
+	public enum IndicatorType
+	{
+		CIRCLE(INDICATOR_TYPE_CIRCLE), FRACTION(INDICATOR_TYPE_FRACTION), UNKNOWN(-1);
 
-        public static IndicatorType of(int value) {
-            switch (value) {
-                case INDICATOR_TYPE_CIRCLE:
-                    return CIRCLE;
-                case INDICATOR_TYPE_FRACTION:
-                    return FRACTION;
-                default:
-                    return UNKNOWN;
-            }
-        }
-    }
+		private int type;
 
-    public static final int DEFAULT_INDICATOR_SPACING = 5;
+		IndicatorType(int type)
+		{
+			this.type = type;
+		}
 
-    private int mActivePosition = -1;
-    private int mIndicatorSpacing;
-    private boolean mIndicatorTypeChanged = false;
+		public static IndicatorType of(int value)
+		{
+			switch (value)
+			{
+				case INDICATOR_TYPE_CIRCLE:
+					return CIRCLE;
+				case INDICATOR_TYPE_FRACTION:
+					return FRACTION;
+				default:
+					return UNKNOWN;
+			}
+		}
+	}
 
-    private IndicatorType mIndicatorType = IndicatorType.of(INDICATOR_TYPE_CIRCLE);
-    private ViewPager mViewPager;
+	public static final int DEFAULT_INDICATOR_SPACING = 15;
 
-    public PageIndicator(Context context) {
-        this(context, null);
-    }
+	private int mActivePosition = -1;
+	private int mIndicatorSpacing;
+	private boolean mIndicatorTypeChanged = false;
 
-    public PageIndicator(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
-    }
+	private IndicatorType mIndicatorType = IndicatorType.of(INDICATOR_TYPE_CIRCLE);
+	private ViewPager mViewPager;
 
-    public PageIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
+	public PageIndicator(Context context)
+	{
+		this(context, null);
+	}
 
-        TypedArray a = context.getTheme().obtainStyledAttributes(
-                attrs, R.styleable.PageIndicator, 0, 0);
-        try {
-            mIndicatorSpacing = a.getDimensionPixelSize(
-                    R.styleable.PageIndicator_indicator_spacing,
-                    dp2px(context, DEFAULT_INDICATOR_SPACING));
-            int indicatorTypeValue = a.getInt(
-                    R.styleable.PageIndicator_indicator_type,
-                    mIndicatorType.type);
-            mIndicatorType = IndicatorType.of(indicatorTypeValue);
-        } finally {
-            a.recycle();
-        }
+	public PageIndicator(Context context, AttributeSet attrs)
+	{
+		this(context, attrs, 0);
+	}
 
-        init();
-    }
+	public PageIndicator(Context context, AttributeSet attrs, int defStyleAttr)
+	{
+		super(context, attrs, defStyleAttr);
 
-    @SuppressLint("InlinedApi") 
-    private void init() {
-        setOrientation(HORIZONTAL);
-        if (!(getLayoutParams() instanceof FrameLayout.LayoutParams)) {
-            FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
-                    ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-            params.gravity = Gravity.BOTTOM | Gravity.START;
-            setLayoutParams(params);
-        }
-    }
+		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.PageIndicator, 0, 0);
+		try
+		{
+			mIndicatorSpacing = a.getDimensionPixelSize(R.styleable.PageIndicator_indicator_spacing, DEFAULT_INDICATOR_SPACING);
+			int indicatorTypeValue = a.getInt(R.styleable.PageIndicator_indicator_type, mIndicatorType.type);
+			mIndicatorType = IndicatorType.of(indicatorTypeValue);
+		}
+		finally
+		{
+			a.recycle();
+		}
 
-    public void setViewPager(ViewPager pager) {
-        mViewPager = pager;
-        setIndicatorType(mIndicatorType);
-    }
+		init();
+	}
 
-    public void setIndicatorType(IndicatorType indicatorType) {
-        mIndicatorType = indicatorType;
-        mIndicatorTypeChanged = true;
-        if (mViewPager != null) {
-            addIndicator(mViewPager.getAdapter().getCount());
-        }
-    }
+	@SuppressLint("InlinedApi")
+	private void init()
+	{
+		setOrientation(HORIZONTAL);
+		if (!(getLayoutParams() instanceof FrameLayout.LayoutParams))
+		{
+			FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+			params.gravity = Gravity.BOTTOM | Gravity.START;
+			setLayoutParams(params);
+		}
+	}
 
-    private void removeIndicator() {
-        removeAllViews();
-    }
+	public void setViewPager(ViewPager pager)
+	{
+		mViewPager = pager;
+		setIndicatorType(mIndicatorType);
+	}
 
-    private void addIndicator(int count) {
-        removeIndicator();
-        if (count <= 0) return;
-        if (mIndicatorType == IndicatorType.CIRCLE) {
-            for (int i = 0; i < count; i++) {
-                ImageView img = new ImageView(getContext());
-                LayoutParams params = new LayoutParams(
-                        LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-                params.leftMargin = mIndicatorSpacing;
-                params.rightMargin = mIndicatorSpacing;
-                img.setImageResource(R.drawable.circle_indicator_stroke);
-                addView(img, params);
-            }
-        } else if (mIndicatorType == IndicatorType.FRACTION) {
-            TextView textView = new TextView(getContext());
-            textView.setTextColor(Color.WHITE);
-            int padding = dp2px(getContext(), 10);
-            textView.setPadding(padding, padding >> 1, padding, padding >> 1);
-            textView.setBackgroundResource(R.drawable.fraction_indicator_bg);
-            textView.setTag(count);
-            LayoutParams params = new LayoutParams(
-                    LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-            addView(textView, params);
-        }
-        updateIndicator(mViewPager.getCurrentItem());
-    }
+	public void setIndicatorType(IndicatorType indicatorType)
+	{
+		mIndicatorType = indicatorType;
+		mIndicatorTypeChanged = true;
+		if (mViewPager != null)
+		{
+			addIndicator(mViewPager.getAdapter().getCount());
+		}
+	}
 
-    private void updateIndicator(int position) {
-        if (mIndicatorTypeChanged || mActivePosition != position) {
-            mIndicatorTypeChanged = false;
-            if (mIndicatorType == IndicatorType.CIRCLE) {
-                if (mActivePosition == -1){
-                    ((ImageView) getChildAt(position)).setImageResource(R.drawable.circle_indicator_solid);
-                    mActivePosition = position;
-                    return;
-                }
-                ((ImageView) getChildAt(mActivePosition))
-                        .setImageResource(R.drawable.circle_indicator_stroke);
-                ((ImageView) getChildAt(position))
-                        .setImageResource(R.drawable.circle_indicator_solid);
-            } else if (mIndicatorType == IndicatorType.FRACTION) {
-                TextView textView = (TextView) getChildAt(0);
-                //noinspection RedundantCast
-                textView.setText(String.format("%d/%d", position + 1, Integer.parseInt( textView.getTag().toString())));
-            }
-            mActivePosition = position;
-        }
-    }
+	private void removeIndicator()
+	{
+		removeAllViews();
+	}
 
-    /**
-     * {@link android.support.v4.view.ViewPager#setOnPageChangeListener(ViewPager.OnPageChangeListener)} is deprecated.
-     * We could keep a list of listeners by {@link android.support.v4.view.ViewPager#addOnPageChangeListener(ViewPager.OnPageChangeListener)}.
-     */
-    
-    @SuppressWarnings("unused")
-	private ViewPager.OnPageChangeListener getOnPageChangeListener(ViewPager pager) {
-        try {
-            Field f = pager.getClass().getDeclaredField("mOnPageChangeListener");
-            f.setAccessible(true);
-            return (ViewPager.OnPageChangeListener) f.get(pager);
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+	private void addIndicator(int count)
+	{
+		removeIndicator();
+		if (count <= 0)
+			return;
+		if (mIndicatorType == IndicatorType.CIRCLE)
+		{
+			for (int i = 0; i < count; i++)
+			{
+				ImageView img = new ImageView(getContext());
+				LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+				params.leftMargin = mIndicatorSpacing;
+				params.rightMargin = mIndicatorSpacing;
+				img.setImageResource(R.drawable.circle_indicator_stroke);
+				addView(img, params);
+			}
+		}
+		else if (mIndicatorType == IndicatorType.FRACTION)
+		{
+			TextView textView = new TextView(getContext());
+			textView.setTextColor(Color.WHITE);
+//			int padding = dp2px(getContext(), 10);
+			int padding = 10;
+			textView.setPadding(padding, padding >> 1, padding, padding >> 1);
+			textView.setBackgroundResource(R.drawable.fraction_indicator_bg);
+			textView.setTag(count);
+			LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+			addView(textView, params);
+		}
+		updateIndicator(mViewPager.getCurrentItem());
+	}
 
-    private int dp2px(Context context, int dpValue) {
-        return (int) context.getResources().getDisplayMetrics().density * dpValue;
-    }
+	private void updateIndicator(int position)
+	{
+		if (mIndicatorTypeChanged || mActivePosition != position)
+		{
+			mIndicatorTypeChanged = false;
+			if (mIndicatorType == IndicatorType.CIRCLE)
+			{
+				if (mActivePosition == -1)
+				{
+					((ImageView) getChildAt(position)).setImageResource(R.drawable.circle_indicator_solid);
+					mActivePosition = position;
+					return;
+				}
+				// 非当前页面
+				((ImageView) getChildAt(mActivePosition)).setImageResource(R.drawable.circle_indicator_stroke);
+				// 当前页面
+				((ImageView) getChildAt(position)).setImageResource(R.drawable.circle_indicator_solid);
+			}
+			else if (mIndicatorType == IndicatorType.FRACTION)
+			{
+				TextView textView = (TextView) getChildAt(0);
+				// noinspection RedundantCast
+				textView.setText(String.format("%d/%d", position + 1, Integer.parseInt(textView.getTag().toString())));
+			}
+			mActivePosition = position;
+		}
+	}
 
+	/**
+	 * {@link android.support.v4.view.ViewPager#setOnPageChangeListener(ViewPager.OnPageChangeListener)}
+	 * is deprecated. We could keep a list of listeners by
+	 * {@link android.support.v4.view.ViewPager#addOnPageChangeListener(ViewPager.OnPageChangeListener)}
+	 * .
+	 */
 
-    public void onPageChanged(int position) {
-        updateIndicator(position);
-    }
-   
-    
-  
+	@SuppressWarnings("unused")
+	private ViewPager.OnPageChangeListener getOnPageChangeListener(ViewPager pager)
+	{
+		try
+		{
+			Field f = pager.getClass().getDeclaredField("mOnPageChangeListener");
+			f.setAccessible(true);
+			return (ViewPager.OnPageChangeListener) f.get(pager);
+		}
+		catch (NoSuchFieldException e)
+		{
+			e.printStackTrace();
+		}
+		catch (IllegalAccessException e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private int dp2px(Context context, int dpValue)
+	{
+		return (int) context.getResources().getDisplayMetrics().density * dpValue;
+	}
+
+	public void onPageChanged(int position)
+	{
+		updateIndicator(position);
+	}
+
 }

@@ -1,7 +1,10 @@
 package com.airtalkee.activity;
 
 import java.util.List;
+import android.R.integer;
+import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -34,7 +37,7 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 
 	private SeekBar mVoiceVolumeSeekBar;
 	private CheckBox mVoiceMode;
-	
+
 	private ImageView ivUnread;
 
 	private static MoreActivity mInstance = null;
@@ -76,6 +79,9 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		ivRightLay.setVisibility(View.INVISIBLE);
 
 		mVoiceVolumeSeekBar = (SeekBar) findViewById(R.id.SoundSettingBarView);
+		AudioManager am = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+		int max = am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		mVoiceVolumeSeekBar.setMax(max);
 		mVoiceVolumeSeekBar.setProgress(Util.getStreamVolume(this));
 		mVoiceVolumeSeekBar.setOnSeekBarChangeListener(this);
 
@@ -242,7 +248,7 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 			findViewById(R.id.talk_lv_tool_exit).setVisibility(View.GONE);
 			findViewById(R.id.talk_exit_divider).setVisibility(View.GONE);
 		}
-		
+
 		ivUnread = (ImageView) findViewById(R.id.iv_Unread);
 		if (Config.funcBroadcast && AirtalkeeAccount.getInstance().SystemBroadcastNumberGet() > 0)
 		{

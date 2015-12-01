@@ -71,7 +71,8 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.umeng.analytics.MobclickAgent;
 
-public class AirServices extends Service implements OnSessionIncomingListener, OnChannelAlertListener, OnVersionUpdateListener
+public class AirServices extends Service implements OnSessionIncomingListener,
+		OnChannelAlertListener, OnVersionUpdateListener
 {
 	@SuppressWarnings("deprecation")
 	private KeyguardManager.KeyguardLock mKeyguardLock;
@@ -162,7 +163,8 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 			Setting.getPttClickSupport();
 			Setting.getPttVolumeSupport();
 
-			TTSManager.getInstance().init(this);//getBaseContext().getFilesDir().getAbsolutePath().replace("files", "lib")
+			TTSManager.getInstance().init(this);// getBaseContext().getFilesDir().getAbsolutePath().replace("files",
+												// "lib")
 			db_proxy = new DBHelp(this);
 			db_proxy.DbActionRun();
 			AirtalkeeAccount.getInstance();
@@ -179,11 +181,11 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 			AirReportManager.getInstance();
 			AirLocation.getInstance(this).locationRun();
 
-			//AirtalkeeMediaAudioControl.getInstance().setMediaAudioCodecAmrMode(AirtalkeeMediaAudioControl.AUDIO_CODEC_AMR_MODE_7);
+			// AirtalkeeMediaAudioControl.getInstance().setMediaAudioCodecAmrMode(AirtalkeeMediaAudioControl.AUDIO_CODEC_AMR_MODE_7);
 			AirtalkeeMediaVisualizer.getInstance().setMediaAudioVisualizerValid(true, true);
 			AirtalkeeMediaVisualizer.getInstance().setMediaAudioVisualizerSpectrumNumber(SessionBoxTalk.mVisualizerSpectrumNum);
 			AirtalkeeAccount.getInstance().AirTalkeePowerManagerRun(this);
-			//AirtalkeeAccount.getInstance().AirTalkeeTimerApiRun(this);
+			// AirtalkeeAccount.getInstance().AirTalkeeTimerApiRun(this);
 			AirtalkeeAccount.getInstance().AirTalkeeConfig(this, Config.serverAddress, 4001);
 			AirtalkeeAccount.getInstance().AirTalkeeConfigMarketCode(Config.marketCode);
 			if (Config.SUB_PLATFORM_VALID)
@@ -210,7 +212,24 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 			boolean userHb = iOperator.getBoolean(AirAccountManager.KEY_HB, false);
 			AirtalkeeAccount.getInstance().loginAutoBoot(userId, userPwd, userHb);
 
-
+			Thread t = new Thread(new Runnable()
+			{
+				public void run()
+				{
+					while (true)
+					{
+						try
+						{
+							Thread.sleep(1);
+						}
+						catch (InterruptedException e)
+						{
+							e.printStackTrace();
+						}
+					}
+				}
+			});
+			t.start();
 		}
 		catch (Exception e)
 		{
@@ -291,8 +310,7 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 			return;
 		}
 
-		if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().isShowing && TempSessionActivity.getInstance().getSession() != null
-			&& TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), session.getSessionCode()))
+		if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().isShowing && TempSessionActivity.getInstance().getSession() != null && TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), session.getSessionCode()))
 		{
 			AirtalkeeSessionManager.getInstance().SessionIncomingAccept(session);
 			return;
@@ -327,19 +345,19 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 				AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, getString(R.string.talk_call_state_incoming_call), false);
 				try
 				{
-					if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().getSession() != null
-						&& !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), temAirSession.getSessionCode()))
+					if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().getSession() != null && !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), temAirSession.getSessionCode()))
 					{
 						TempSessionActivity.getInstance().setSession(temAirSession);
 					}
-					
+
 					Intent it = new Intent(AirServices.getInstance(), SessionDialogActivity.class);
 					it.putExtra("sessionCode", session.getSessionCode());
 					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
 					it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					AirServices.getInstance().startActivity(it);
-					
-//					switchToSessionTemp(temAirSession.getSessionCode(), TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());
+
+					// switchToSessionTemp(temAirSession.getSessionCode(),
+					// TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());
 				}
 				catch (Exception e)
 				{
@@ -350,151 +368,173 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 			else
 			{
 				Sound.playSound(Sound.PLAYER_INCOMING_RING, true, context);
-				
+
 				incomingDialog = new InCommingAlertDialog(context, temAirSession, caller);
 				incomingDialog.show();
 			}
 		}
-//				if (caller != null)
-//				{
-//					builder.setMessage(caller.getDisplayName() + getString(R.string.talk_incoming));
-//				}
-//				builder.setCancelable(false);
-//				builder.setOnKeyListener(new OnKeyListener()
-//				{
-//
-//					@Override
-//					public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event)
-//					{
-//						// TODO Auto-generated method stub
-//						switch (keyCode)
-//						{
-//							case KeyEvent.KEYCODE_CALL:
-//							{
-//								dialog.cancel();
-//								Sound.stopSound(Sound.PLAYER_INCOMING_RING);
-//								isCalling = false;
-//								AirtalkeeSessionManager.getInstance().SessionIncomingAccept(temAirSession);
-//								AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, getString(R.string.talk_call_state_incoming_call), false);
-//								try
-//								{
-//									if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().getSession() != null
-//										&& !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), temAirSession.getSessionCode()))
-//									{
-//										TempSessionActivity.getInstance().setSession(temAirSession);
-//									}
-//									
-//									Intent it = new Intent(AirServices.getInstance(), SessionDialogActivity.class);
-//									it.putExtra("sessionCode", temAirSession.getSessionCode());
-//									it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
-//									it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
-//									AirServices.getInstance().startActivity(it);
-//									
-////									switchToSessionTemp(temAirSession.getSessionCode(), TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());
-//								}
-//								catch (Exception e)
-//								{
-//									// TODO: handle exception
-//								}
-//
-//								return true;
-//							}
-//							case KeyEvent.KEYCODE_ENDCALL:
-//							{
-//								dialog.cancel();
-//								Sound.stopSound(Sound.PLAYER_INCOMING_RING);
-//								isCalling = false;
-//								AirtalkeeSessionManager.getInstance().SessionIncomingReject(temAirSession);
-//								AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, temAirSession.getCaller(), getString(R.string.talk_call_state_rejected_call),
-//									true);
-//								try
-//								{
-//									if (MainActivity.getInstance() != null && MainActivity.getInstance().viewLeft != null)
-//									{
-//										MainActivity.getInstance().viewLeft.refreshList();
-//									}
-//								}
-//								catch (Exception e)
-//								{
-//									// TODO: handle exception
-//								}
-//								return true;
-//							}
-//							case KeyEvent.KEYCODE_MENU:
-//							case KeyEvent.KEYCODE_BACK:
-//							{
-//								if (Sound.soundIsPlaying(Sound.PLAYER_INCOMING_RING))
-//								{
-//									Sound.stopSound(Sound.PLAYER_INCOMING_RING);
-//								}
-//								return true;
-//							}
-//						}
-//						return false;
-//					}
-//
-//				});
-//
-//				builder.setPositiveButton(getString(R.string.talk_incoming_accept), new DialogInterface.OnClickListener()
-//				{
-//					public void onClick(DialogInterface dialog, int whichButton)
-//					{
-//						try
-//						{
-//							dialog.cancel();
-//							Sound.stopSound(Sound.PLAYER_INCOMING_RING);
-//							AirtalkeeSessionManager.getInstance().SessionIncomingAccept(temAirSession);
-//							AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, getString(R.string.talk_call_state_incoming_call), false);
-//							if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().getSession() != null
-//								&& !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), temAirSession.getSessionCode()))
-//							{
-//								TempSessionActivity.getInstance().setSession(temAirSession);
-//							}
-//							
-//							Intent it = new Intent(AirServices.getInstance(), SessionDialogActivity.class);
-//							it.putExtra("sessionCode", temAirSession.getSessionCode());
-//							it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
-//							it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//							AirServices.getInstance().startActivity(it);
-////							switchToSessionTemp(temAirSession.getSessionCode(), TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());
-//						}
-//						catch (Exception e)
-//						{
-//							// TODO: handle exception
-//						}
-//						isCalling = false;
-//					}
-//				});
-//
-//				builder.setNegativeButton(getString(R.string.talk_incoming_reject), new DialogInterface.OnClickListener()
-//				{
-//					public void onClick(DialogInterface dialog, int whichButton)
-//					{
-//						try
-//						{
-//							dialog.cancel();
-//							Sound.stopSound(Sound.PLAYER_INCOMING_RING);
-//							AirtalkeeSessionManager.getInstance().SessionIncomingReject(temAirSession);
-//							AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, temAirSession.getCaller(), getString(R.string.talk_call_state_rejected_call), true);
-//							if (MainActivity.getInstance() != null && MainActivity.getInstance().viewLeft != null)
-//							{
-//								MainActivity.getInstance().viewLeft.refreshList();
-//							}
-//						}
-//						catch (Exception e)
-//						{
-//							// TODO: handle exception
-//						}
-//						isCalling = false;
-//					}
-//				});
-//				incomingDialog = builder.create();
-//				incomingDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-//				incomingDialog.show();
-//			}
-			
-//			isCalling = true;
-//		}
+		// if (caller != null)
+		// {
+		// builder.setMessage(caller.getDisplayName() +
+		// getString(R.string.talk_incoming));
+		// }
+		// builder.setCancelable(false);
+		// builder.setOnKeyListener(new OnKeyListener()
+		// {
+		//
+		// @Override
+		// public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent
+		// event)
+		// {
+		// // TODO Auto-generated method stub
+		// switch (keyCode)
+		// {
+		// case KeyEvent.KEYCODE_CALL:
+		// {
+		// dialog.cancel();
+		// Sound.stopSound(Sound.PLAYER_INCOMING_RING);
+		// isCalling = false;
+		// AirtalkeeSessionManager.getInstance().SessionIncomingAccept(temAirSession);
+		// AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession,
+		// getString(R.string.talk_call_state_incoming_call), false);
+		// try
+		// {
+		// if (TempSessionActivity.getInstance() != null &&
+		// TempSessionActivity.getInstance().getSession() != null
+		// &&
+		// !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(),
+		// temAirSession.getSessionCode()))
+		// {
+		// TempSessionActivity.getInstance().setSession(temAirSession);
+		// }
+		//
+		// Intent it = new Intent(AirServices.getInstance(),
+		// SessionDialogActivity.class);
+		// it.putExtra("sessionCode", temAirSession.getSessionCode());
+		// it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
+		// it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
+		// AirServices.getInstance().startActivity(it);
+		//
+		// // switchToSessionTemp(temAirSession.getSessionCode(),
+		// TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());
+		// }
+		// catch (Exception e)
+		// {
+		// // TODO: handle exception
+		// }
+		//
+		// return true;
+		// }
+		// case KeyEvent.KEYCODE_ENDCALL:
+		// {
+		// dialog.cancel();
+		// Sound.stopSound(Sound.PLAYER_INCOMING_RING);
+		// isCalling = false;
+		// AirtalkeeSessionManager.getInstance().SessionIncomingReject(temAirSession);
+		// AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession,
+		// temAirSession.getCaller(),
+		// getString(R.string.talk_call_state_rejected_call),
+		// true);
+		// try
+		// {
+		// if (MainActivity.getInstance() != null &&
+		// MainActivity.getInstance().viewLeft != null)
+		// {
+		// MainActivity.getInstance().viewLeft.refreshList();
+		// }
+		// }
+		// catch (Exception e)
+		// {
+		// // TODO: handle exception
+		// }
+		// return true;
+		// }
+		// case KeyEvent.KEYCODE_MENU:
+		// case KeyEvent.KEYCODE_BACK:
+		// {
+		// if (Sound.soundIsPlaying(Sound.PLAYER_INCOMING_RING))
+		// {
+		// Sound.stopSound(Sound.PLAYER_INCOMING_RING);
+		// }
+		// return true;
+		// }
+		// }
+		// return false;
+		// }
+		//
+		// });
+		//
+		// builder.setPositiveButton(getString(R.string.talk_incoming_accept),
+		// new DialogInterface.OnClickListener()
+		// {
+		// public void onClick(DialogInterface dialog, int whichButton)
+		// {
+		// try
+		// {
+		// dialog.cancel();
+		// Sound.stopSound(Sound.PLAYER_INCOMING_RING);
+		// AirtalkeeSessionManager.getInstance().SessionIncomingAccept(temAirSession);
+		// AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession,
+		// getString(R.string.talk_call_state_incoming_call), false);
+		// if (TempSessionActivity.getInstance() != null &&
+		// TempSessionActivity.getInstance().getSession() != null
+		// &&
+		// !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(),
+		// temAirSession.getSessionCode()))
+		// {
+		// TempSessionActivity.getInstance().setSession(temAirSession);
+		// }
+		//
+		// Intent it = new Intent(AirServices.getInstance(),
+		// SessionDialogActivity.class);
+		// it.putExtra("sessionCode", temAirSession.getSessionCode());
+		// it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
+		// it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		// AirServices.getInstance().startActivity(it);
+		// // switchToSessionTemp(temAirSession.getSessionCode(),
+		// TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());
+		// }
+		// catch (Exception e)
+		// {
+		// // TODO: handle exception
+		// }
+		// isCalling = false;
+		// }
+		// });
+		//
+		// builder.setNegativeButton(getString(R.string.talk_incoming_reject),
+		// new DialogInterface.OnClickListener()
+		// {
+		// public void onClick(DialogInterface dialog, int whichButton)
+		// {
+		// try
+		// {
+		// dialog.cancel();
+		// Sound.stopSound(Sound.PLAYER_INCOMING_RING);
+		// AirtalkeeSessionManager.getInstance().SessionIncomingReject(temAirSession);
+		// AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession,
+		// temAirSession.getCaller(),
+		// getString(R.string.talk_call_state_rejected_call), true);
+		// if (MainActivity.getInstance() != null &&
+		// MainActivity.getInstance().viewLeft != null)
+		// {
+		// MainActivity.getInstance().viewLeft.refreshList();
+		// }
+		// }
+		// catch (Exception e)
+		// {
+		// // TODO: handle exception
+		// }
+		// isCalling = false;
+		// }
+		// });
+		// incomingDialog = builder.create();
+		// incomingDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
+		// incomingDialog.show();
+		// }
+
+		// isCalling = true;
+		// }
 
 	}
 
@@ -548,8 +588,7 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 	public void versionCheck()
 	{
 		String lang = Language.getLocalLanguage(this);
-		AirtalkeeVersionUpdate.getInstance().versionCheck(this, AirtalkeeAccount.getInstance().getUserId(), Config.marketCode, lang, Config.VERSION_PLATFORM, Config.VERSION_TYPE,
-			Config.model, Config.VERSION_CODE);
+		AirtalkeeVersionUpdate.getInstance().versionCheck(this, AirtalkeeAccount.getInstance().getUserId(), Config.marketCode, lang, Config.VERSION_PLATFORM, Config.VERSION_TYPE, Config.model, Config.VERSION_CODE);
 	}
 
 	@Override
@@ -725,21 +764,21 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 
 	private void initImageLoader()
 	{
-		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).threadPriority(Thread.NORM_PRIORITY - 2)
-			.denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).writeDebugLogs().build();
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).writeDebugLogs().build();
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
 	}
+
 	private boolean isSecretValid = false;
 
 	private void secretConfig()
 	{
 		if (Config.funcEncryption)
 		{
-			if(Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
+			if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
 			{
 				String path = Environment.getExternalStorageDirectory() + "/SANSECIO.CARD";
-				File file = new File(path); 
+				File file = new File(path);
 				if (file.exists())
 				{
 					isSecretValid = true;
@@ -747,37 +786,36 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 			}
 			if (!isSecretValid)
 				Util.Toast(this, getString(R.string.talk_secret_nocard));
-			
-			//set Encryption flag
+
+			// set Encryption flag
 			AirEngine.serviceSecretSettingType(AirEngine.SECRET_TYPE_SOFT);
 			AirEngine.serviceSecretSettingValid(isSecretValid);
 			AirEngine.serviceSecretSettingValidEncrypt(Setting.getPttEncrypt());
 		}
 	}
-	
+
 	public boolean secretValid()
 	{
 		return isSecretValid;
 	}
-	
-	
+
 	public static void sendBroadcast(String action)
 	{
-		if(action != null && action.length() > 0)
+		if (action != null && action.length() > 0)
 		{
 			Intent intent = new Intent();
 			intent.setAction(action);
-			if(AirServices.getInstance() != null)
-			AirServices.getInstance().sendBroadcast(intent);
-			Log.i(AirServices.class,"broadcast  " + action +"  send!!!" );
+			if (AirServices.getInstance() != null)
+				AirServices.getInstance().sendBroadcast(intent);
+			Log.i(AirServices.class, "broadcast  " + action + "  send!!!");
 		}
 	}
-	
+
 	public static void setVoxStatus(boolean status)
 	{
-		if(Config.funcVoxSetting)
+		if (Config.funcVoxSetting)
 		{
-			AudioManager vox = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+			AudioManager vox = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 			vox.setParameters(status ? "dmo_state=vox_switch_on" : "dmo_state=vox_switch_off"); // 设置VOX开关。
 		}
 	}

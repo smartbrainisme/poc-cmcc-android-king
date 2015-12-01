@@ -43,6 +43,11 @@ public class SessionAndChannelView extends LinearLayout implements
 	private CharSequence channelTitle, sessionTitle;
 	private ViewChangeListener listener;
 	private ImageView ivUnread, ivSetting;
+	private static SessionAndChannelView mInstance;
+	public static SessionAndChannelView getInstance()
+	{
+		return mInstance;
+	}
 
 	public SessionAndChannelView(Context context, ViewChangeListener l)
 	{
@@ -83,6 +88,7 @@ public class SessionAndChannelView extends LinearLayout implements
 		}
 
 		registerSessionUpdateListener();
+		mInstance = this;
 	}
 
 	@Override
@@ -220,5 +226,10 @@ public class SessionAndChannelView extends LinearLayout implements
 			}
 		}, filter);
 	}
-
+	
+	public void refreshChannelAndDialog()
+	{
+		adapterChannel.notifyDataSetChanged();
+		adapterSession.notifyDataSetChanged();
+	}
 }

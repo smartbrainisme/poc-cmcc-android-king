@@ -48,7 +48,7 @@ public class AirMessageTransaction implements OnMessageListener,
 	private static final int DIALOG_2_SEND_MESSAGE = 101;
 	private static final int DIALOG_CALL_CENTER = 100;
 	private static final int DIALOG_CALL = 102;
-	
+
 	private static AirMessageTransaction mInstance = null;
 	private OnMmiMessageListener msgListener = null;
 	private OnMmiNoticeListener noticeListener = null;
@@ -149,10 +149,20 @@ public class AirMessageTransaction implements OnMessageListener,
 			Util.showNotification(Util.NOTIFI_ID_MESSAGE, AirServices.getInstance(), intent, from, typeText, msg, null);
 			Sound.playSound(Sound.PLAYER_NEWINFO, false, ct);
 
-			if (MainActivity.getInstance() != null && MainActivity.getInstance().viewMiddle != null)
-			{
-				MainActivity.getInstance().viewMiddle.refreshNewMsg();
-			}
+//			if (MainActivity.getInstance() != null && MainActivity.getInstance().viewMiddle != null)
+//			{
+//				MainActivity.getInstance().viewMiddle.refreshNewMsg();
+//			}
+//
+//			if (SessionAndChannelView.getInstance() != null)
+//			{
+//				SessionAndChannelView.getInstance().refreshChannelAndDialog();
+//				SessionAndChannelView.getInstance().resume();
+//			}
+//			if (HomeActivity.getInstance() != null)
+//			{
+//				HomeActivity.getInstance().checkNewIM(false);
+//			}
 		}
 	}
 

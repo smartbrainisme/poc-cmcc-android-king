@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_content"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@id/talk_login_layout_input"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@id/talk_login_layout_logo"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <ScrollView
+            android:id="@id/talk_scroll_login"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:scrollbars="none" >
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:orientation="vertical" >
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="50dip"
+                    android:gravity="center_horizontal|bottom"
+                    android:orientation="vertical" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_light"
+                        android:paddingTop="25dp"
+                        android:scaleType="center"
+                        android:src="@drawable/icon_cmcc" />
+
+                    <TextView
+                        android:id="@+id/logo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text=""
+                        android:textColor="#fff"
+                        android:textSize="28dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/talk_account_input"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:orientation="vertical" >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="120dip"
+                        android:layout_marginLeft="20dip"
+                        android:layout_marginRight="20dip"
+                        android:background="?theme_bg_input"
+                        android:orientation="vertical" >
+
+                        <EditText
+                            android:id="@+id/talk_et_ipocid"
+                            android:layout_width="fill_parent"
+                            android:layout_height="60dip"
+                            android:layout_marginLeft="20dp"
+                            android:background="#00000000"
+                            android:drawableLeft="@drawable/ic_login_author"
+                            android:drawablePadding="20dp"
+                            android:focusableInTouchMode="false"
+                            android:gravity="center_vertical"
+                            android:hint="@string/talk_input_id"
+                            android:inputType="phone"
+                            android:maxLength="64"
+                            android:textColor="#fff"
+                            android:textColorHint="?theme_color_hint"
+                            android:textSize="15dip" />
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1px"
+                            android:layout_marginLeft="20dp"
+                            android:layout_marginRight="20dp"
+                            android:background="@drawable/ic_login_divider" />
+
+                        <EditText
+                            android:id="@+id/talk_et_ipocpwd"
+                            android:layout_width="fill_parent"
+                            android:layout_height="60dip"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginLeft="20dp"
+                            android:background="#00000000"
+                            android:digits="@string/talk_name_digits"
+                            android:drawableLeft="@drawable/ic_login_lock"
+                            android:drawablePadding="20dp"
+                            android:focusableInTouchMode="false"
+                            android:gravity="center_vertical"
+                            android:hint="@string/talk_input_pwd"
+                            android:inputType="number"
+                            android:isScrollContainer="true"
+                            android:maxLength="20"
+                            android:password="true"
+                            android:singleLine="true"
+                            android:textColor="#fff"
+                            android:textColorHint="?theme_color_hint"
+                            android:textSize="15dip" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/talk_btn_login"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dip"
+                        android:layout_marginBottom="20dip"
+                        android:layout_marginLeft="18dip"
+                        android:layout_marginRight="18dip"
+                        android:layout_marginTop="30dip"
+                        android:layout_weight="1"
+                        android:background="?theme_button"
+                        android:text="@string/talk_login"
+                        android:textColor="#fff"
+                        android:textSize="18dip" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/talk_account_waiting"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:gravity="center"
+                        android:orientation="horizontal" >
+
+                        <ProgressBar
+                            style="?android:attr/progressBarStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <TextView
+                            android:id="@+id/talk_account_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20dip"
+                            android:gravity="center"
+                            android:text="@string/talk_logining"
+                            android:textColor="#fff" />
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/talk_btn_login_cancel"
+                        android:layout_width="fill_parent"
+                        android:layout_height="50dip"
+                        android:layout_marginLeft="18dip"
+                        android:layout_marginRight="18dip"
+                        android:layout_marginTop="30dip"
+                        android:layout_weight="1"
+                        android:background="?theme_button"
+                        android:text="@string/talk_login_cancel"
+                        android:textColor="#fff"
+                        android:textSize="18dip"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@id/talk_login_layout_logo"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@id/talk_copyright_logo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dip"
+            android:layout_marginTop="20dip" />
+
+        <TextView
+            android:id="@id/talk_copyright_text"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:gravity="center"
+            android:text="@string/copyright"
+            android:textColor="?theme_color_text1"
+            android:textSize="11dip" />
+    </LinearLayout>
+
+</RelativeLayout>

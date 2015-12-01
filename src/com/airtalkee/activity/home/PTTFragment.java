@@ -23,11 +23,13 @@ import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.airtalkee.config.Config;
 import com.airtalkee.sdk.AirtalkeeAccount;
+import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeMediaVisualizer;
 import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.OnMediaAudioVisualizerListener;
 import com.airtalkee.sdk.controller.SessionController;
+import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirFunctionSetting;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
@@ -58,9 +60,10 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 	private AudioVisualizerView mVisualizerView;
 
 	AlertDialog dialog;
-	
+
 	private static PTTFragment mInstance;
-	public static  PTTFragment getInstance()
+
+	public static PTTFragment getInstance()
 	{
 		return mInstance;
 	}
@@ -224,6 +227,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 						if (currentMessage.getState() == AirMessage.STATE_NEW)
 						{
 							session.setMessageUnreadCount(session.getMessageUnreadCount() - 1);
+//							checkNewIM(false);
 						}
 					}
 				}
@@ -399,5 +403,42 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 	public void onMediaAudioVisualizerChanged(byte[] values, int spectrumNum)
 	{
 		mVisualizerView.updateVisualizer(values);
+	}
+
+	private void checkNewIM(boolean toClean)
+	{
+		int count = 0;
+		if (session != null)
+		{
+			int type = session.getType();
+			if (type == AirSession.TYPE_CHANNEL)
+			{
+				AirChannel channel = AirtalkeeChannel.getInstance().ChannelGetByCode(session.getSessionCode());
+				if (channel != null)
+				{
+					if (toClean)
+					{
+						channel.msgUnReadCountClean();
+					}
+					count = channel.getMsgUnReadCount();
+				}
+			}
+			else if (type == AirSession.TYPE_DIALOG)
+			{
+				if (toClean)
+				{
+					session.setMessageUnreadCount(0);
+				}
+				count = session.getMessageUnreadCount();
+			}
+		}
+		if (count > 0)
+		{
+//			ivIMNew.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+//			ivIMNew.setVisibility(View.GONE);
+		}
 	}
 }

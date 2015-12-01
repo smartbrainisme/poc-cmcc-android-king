@@ -3,7 +3,6 @@ package com.airtalkee.activity.home;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -36,7 +35,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimerListener;
 import com.airtalkee.Util.Smilify;
@@ -46,6 +44,7 @@ import com.airtalkee.Util.Util;
 import com.airtalkee.activity.ActivityImagePager;
 import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.SessionBoxMessage;
+import com.airtalkee.activity.home.widget.SessionAndChannelView;
 import com.airtalkee.adapter.AdapterSessionMessage;
 import com.airtalkee.control.AirMessageTransaction;
 import com.airtalkee.listener.OnMmiMessageListener;
@@ -83,6 +82,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	private float startY = 0;
 	public static String menuArray[];
 	private static IMFragment mInstance;
+
 	public static IMFragment getInstance()
 	{
 		return mInstance;
@@ -136,7 +136,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	public void onPause()
 	{
 		super.onPause();
-		if(HomeActivity.getInstance().pageIndex == HomeActivity.PAGE_IM)
+		if (HomeActivity.getInstance().pageIndex == HomeActivity.PAGE_IM)
 		{
 			setVoicePannelVisiblity(View.GONE);
 			setTextPannelVisiblity(View.GONE);
@@ -173,7 +173,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 					startActivityForResult(localIntent, REQUEST_CODE_BROWSE_IMAGE);
 					break;
 				case R.id.bar_right:
-					InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+					InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 					if (imm != null)
 					{
 						imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
@@ -224,7 +224,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		switch (v.getId())
 		{
 			case R.id.btn_text_close:
-				InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+				InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 				if (imm != null)
 				{
 					imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
@@ -340,7 +340,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 			if (mediaStatusBar != null)
 				mediaStatusBar.setMediaStatusBarVisibility(View.GONE);
 		}
-		
+
 	}
 
 	private void setVoicePannelVisiblity(int visiblility)
@@ -588,6 +588,8 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 			{
 				adapterMessage.notifyDataSetChanged();
 				// refreshMessageNewCount(false);
+				HomeActivity.getInstance().checkNewIM(false);
+				SessionAndChannelView.getInstance().refreshChannelAndDialog();
 				getStatusBarTitle().refreshNewMsg();
 			}
 		}
@@ -600,12 +602,14 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		if (!isCustom && message != null && session != null && TextUtils.equals(session.getSessionCode(), message.getSessionCode()))
 		{
 			boolean toClean = false;
-			// if (sessionBox.tabIndex() == SessionBox.PAGE_MSG)
-			// {
-			// toClean = true;
-			// }
+			if (HomeActivity.getInstance().pageIndex == HomeActivity.getInstance().PAGE_IM)
+			{
+				toClean = true;
+			}
 			adapterMessage.notifyDataSetChanged();
 			// refreshMessageNewCount(toClean);
+			HomeActivity.getInstance().checkNewIM(toClean);
+			SessionAndChannelView.getInstance().refreshChannelAndDialog();
 			isHandled = true;
 		}
 		return isHandled;
@@ -709,6 +713,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				// true, 1000, true, null);
 			}
 			sessionSp.edit().putInt(SESSION_EVENT_KEY, sessionSp.getInt(SESSION_EVENT_KEY, 1) + 1).commit();
+
 		}
 	}
 
@@ -763,11 +768,13 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 					text.setText(currentMessage.getRecordTimer() + "''");
 				}
 			}
-			if (session.getMessagePlayback() != null && TextUtils.equals(session.getMessagePlayback().getImageUri(), currentMessage.getImageUri()))
-			{
-				// recPlaybackSeconds.setText(currentMessage.getRecordTimer() +
-				// "''");
-			}
+			// if (session.getMessagePlayback() != null &&
+			// TextUtils.equals(session.getMessagePlayback().getImageUri(),
+			// currentMessage.getImageUri()))
+			// {
+			// recPlaybackSeconds.setText(currentMessage.getRecordTimer()
+			// +"''");
+			// }
 
 		}
 	}
@@ -779,10 +786,12 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		if (message != null && session != null && TextUtils.equals(session.getSessionCode(), message.getSessionCode()))
 		{
 			boolean toClean = false;
-			// if (sessionBox.tabIndex() == SessionBox.PAGE_MSG)
+			if (HomeActivity.getInstance().pageIndex == HomeActivity.getInstance().PAGE_IM)
 			{
 				toClean = true;
 			}
+			HomeActivity.getInstance().checkNewIM(toClean);
+			SessionAndChannelView.getInstance().refreshChannelAndDialog();
 			// refreshMessageNewCount(toClean);
 			// refreshPlayback();
 			adapterMessage.notifyDataSetChanged();

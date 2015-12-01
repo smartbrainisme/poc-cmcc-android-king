@@ -42,12 +42,33 @@
         android:layout_marginTop="180dp"
         android:orientation="vertical" />
 
-    <com.airtalkee.widget.PageIndicator
-        android:id="@+id/indicator"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:gravity="bottom|center_horizontal"
-        app:indicator_spacing="5dp"
-        app:indicator_type="circle" />
+        android:layout_height="20dp" >
+
+        <com.airtalkee.widget.PageIndicator
+            android:id="@+id/indicator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:indicator_spacing="5dp"
+            app:indicator_type="circle" />
+
+        <ImageView
+            android:id="@+id/iv_im_point"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="17dp"
+            android:src="@drawable/circle_indicator_new" />
+
+        <ImageView
+            android:id="@+id/iv_im_new"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="45dp"
+            android:src="@drawable/ic_im_new" />
+    </FrameLayout>
 
 </FrameLayout>

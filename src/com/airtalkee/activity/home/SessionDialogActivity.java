@@ -12,17 +12,22 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 import com.airtalkee.R;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
+import com.airtalkee.activity.home.widget.SessionAndChannelView;
 import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirSessionControl;
+import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
+import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.PageIndicator;
 
-public class SessionDialogActivity extends FragmentActivity implements OnPageChangeListener
+public class SessionDialogActivity extends FragmentActivity implements
+		OnPageChangeListener
 {
 
 	public static final int PAGE_MEMBER = 0;
@@ -42,10 +47,13 @@ public class SessionDialogActivity extends FragmentActivity implements OnPageCha
 	protected ViewPager viewPager;
 	protected PageFragmentAdapter adapter;
 	protected PageIndicator mPageIndicator;
+	protected ImageView ivIMNew,ivIMPoint;
 	protected int pageIndex = PAGE_PTT;
 
 	protected MediaStatusBar mediaStatusBar;
+	protected AirSession session;
 	protected int actionType;
+	protected final FragmentManager fm = getSupportFragmentManager();
 
 	private boolean addFlag = false;
 
@@ -55,6 +63,7 @@ public class SessionDialogActivity extends FragmentActivity implements OnPageCha
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
 		bundle = getIntent().getExtras();
+		
 		if (null == bundle)
 		{
 			// finish();
@@ -80,7 +89,7 @@ public class SessionDialogActivity extends FragmentActivity implements OnPageCha
 				addFlag = false;
 				break;
 		}
-		AirSession session = AirtalkeeSessionManager.getInstance().getSessionByCode(sessionCode);
+		session = AirtalkeeSessionManager.getInstance().getSessionByCode(sessionCode);
 		if (null == session)
 		{
 			// finish();
@@ -94,8 +103,8 @@ public class SessionDialogActivity extends FragmentActivity implements OnPageCha
 		mediaStatusBar = (MediaStatusBar) findViewById(R.id.media_status_function_bar);
 
 		mediaStatusBar.init((StatusBarTitle) findViewById(R.id.media_status_title_bar), session);
-
-		final FragmentManager fm = getSupportFragmentManager();
+		this.ivIMNew = (ImageView) findViewById(R.id.iv_im_new);
+		this.ivIMNew = (ImageView) findViewById(R.id.iv_im_point);
 		this.viewPager = (ViewPager) findViewById(R.id.home_activity_page_content);
 		this.adapter = new PageFragmentAdapter(this, fm);
 		this.viewPager.setAdapter(this.adapter);
@@ -103,6 +112,7 @@ public class SessionDialogActivity extends FragmentActivity implements OnPageCha
 		this.viewPager.setOffscreenPageLimit(TABS.length);
 		this.mPageIndicator = (PageIndicator) findViewById(R.id.indicator);
 		this.mPageIndicator.setViewPager(viewPager);
+		
 	}
 
 	@Override
@@ -151,6 +161,11 @@ public class SessionDialogActivity extends FragmentActivity implements OnPageCha
 		}
 		pageIndex = page;
 		viewPager.setCurrentItem(pageIndex);
+		if(page == PAGE_IM)
+		{
+			checkNewIM(true);
+			SessionAndChannelView.getInstance().refreshChannelAndDialog();
+		}
 	}
 
 	@Override
@@ -253,6 +268,53 @@ public class SessionDialogActivity extends FragmentActivity implements OnPageCha
 			return adapter.getItem(PAGE_IM);
 		}
 		return null;
+	}
+
+	public void checkNewIM(boolean toClean)
+	{
+		int count = 0;
+		try
+		{
+			if (session != null)
+			{
+				int type = session.getType();
+				if (type == AirSession.TYPE_CHANNEL)
+				{
+					AirChannel channel = AirtalkeeChannel.getInstance().ChannelGetByCode(session.getSessionCode());
+					if (channel != null)
+					{
+						if (toClean)
+						{
+							channel.msgUnReadCountClean();
+						}
+						count = channel.getMsgUnReadCount();
+					}
+				}
+				else if (type == AirSession.TYPE_DIALOG)
+				{
+					if (toClean)
+					{
+						session.setMessageUnreadCount(0);
+					}
+					count = session.getMessageUnreadCount();
+				}
+			}
+			if (count > 0)
+			{
+				ivIMNew.setVisibility(View.VISIBLE);
+				ivIMPoint.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				ivIMNew.setVisibility(View.GONE);
+				ivIMPoint.setVisibility(View.GONE);
+			}
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -62,6 +62,8 @@ public class HomeActivity extends SessionDialogActivity implements
 		super.mediaStatusBar = (MediaStatusBar) findViewById(R.id.media_status_function_bar);
 		mediaStatusBar.init((StatusBarTitle) findViewById(R.id.media_status_title_bar), AirSessionControl.getInstance().getCurrentChannelSession());
 		final FragmentManager fm = getSupportFragmentManager();
+		ivIMNew = (ImageView) findViewById(R.id.iv_im_new);
+		ivIMPoint = (ImageView) findViewById(R.id.iv_im_point);
 		this.viewPager = (ViewPager) findViewById(R.id.home_activity_page_content);
 		this.adapter = new PageFragmentAdapter(this, fm);
 		this.viewPager.setAdapter(this.adapter);
@@ -80,6 +82,11 @@ public class HomeActivity extends SessionDialogActivity implements
 		channelView = new SessionAndChannelView(this, this);
 		contaner.addView(channelView);
 		slidingBack = (ImageView) channelView.findViewById(R.id.sliding_back);
+		session = AirSessionControl.getInstance().getCurrentChannelSession();
+		if (null != session)
+		{
+			checkNewIM(false);
+		}
 	}
 
 	// 滑动
@@ -110,9 +117,11 @@ public class HomeActivity extends SessionDialogActivity implements
 		if (mediaStatusBar != null)
 			mediaStatusBar.setSession(AirSessionControl.getInstance().getCurrentChannelSession());
 		// 解决刷新频道成员
-		AirSession session = AirSessionControl.getInstance().getCurrentChannelSession();
+		session = AirSessionControl.getInstance().getCurrentChannelSession();
 		MemberFragment memberFragment = (MemberFragment) adapter.getItem(0);
 		memberFragment.refreshMembers(session, session.getChannel().MembersGet());
+		// 检测是否有新im消息
+		checkNewIM(false);
 	}
 
 	@Override
@@ -195,4 +204,5 @@ public class HomeActivity extends SessionDialogActivity implements
 		}
 		return new SimpleAdapter(this, data, layout, new String[] { "accountName" }, new int[] { id });
 	}
+
 }
