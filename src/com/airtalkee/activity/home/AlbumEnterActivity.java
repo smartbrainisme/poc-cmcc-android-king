@@ -1,5 +1,6 @@
 package com.airtalkee.activity.home;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,9 +9,11 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -25,10 +28,14 @@ import com.airtalkee.R;
 import com.airtalkee.R.string;
 import com.airtalkee.Util.AlbumHelper;
 import com.airtalkee.Util.Bimp;
+import com.airtalkee.Util.Const;
 import com.airtalkee.Util.ThemeUtil;
+import com.airtalkee.Util.Util;
+import com.airtalkee.activity.MenuReportAsPicActivity;
 import com.airtalkee.activity.home.widget.AdapterPhoto;
 import com.airtalkee.activity.home.widget.AdapterPhoto.TextCallback;
 import com.airtalkee.entity.ImageItem;
+import com.airtalkee.widget.PhotoCamera;
 
 public class AlbumEnterActivity extends Activity implements OnClickListener
 {
@@ -43,6 +50,8 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 	AlbumHelper helper;
 	private Button btSend;
 	private int type = TYPE_REPORT;
+	private Uri picUriTemp = null; // 原图uri
+	private String picPathTemp = ""; // 原图path
 
 	Handler mHandler = new Handler()
 	{
@@ -191,16 +200,21 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 					}
 					case TYPE_REPORT:
 					{
-
-						String path = c.iterator().next();
-						data.putExtra(KEYSTR, path);
-						setResult(Activity.RESULT_OK, data);
-						finish();
+						if (c.size() > 0)
+						{
+							String path = c.iterator().next();
+							data.putExtra(KEYSTR, path);
+							setResult(Activity.RESULT_OK, data);
+							finish();
+						}
+						else
+						{
+							com.airtalkee.Util.Toast.makeText1(this, "请至少选择一张图片", Toast.LENGTH_LONG);
+							return;
+						}
 						break;
 					}
 				}
-
-				// Toast.makeText(this, "图片", Toast.LENGTH_LONG).show();
 				break;
 			}
 			case R.id.menu_left_button:
@@ -210,10 +224,25 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 			}
 			case R.id.talk_menu_right_button:
 			{
-				Toast.makeText(this, "照相机", Toast.LENGTH_LONG).show();
+				if (type == TYPE_IM)
+				{
+					picPathTemp = Util.getImageTempFileName();
+					picUriTemp = Uri.fromFile(new File(picPathTemp));
+					Intent it = new Intent(this, PhotoCamera.class);
+					it.putExtra(MediaStore.EXTRA_OUTPUT, picPathTemp);
+					startActivityForResult(it, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
+				}
+				else if (type == TYPE_REPORT)
+				{
+					Intent itCamera = new Intent(this, MenuReportAsPicActivity.class);
+					itCamera.putExtra("type", "camera");
+					startActivity(itCamera);
+					finish();
+					AlbumChooseActivity.getInstance().finish();
+				}
+
 				break;
 			}
 		}
-
 	}
 }

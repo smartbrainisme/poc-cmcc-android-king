@@ -28,7 +28,6 @@ import com.airtalkee.Util.BitmapUtil;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Toast;
-import com.airtalkee.Util.UriUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.AlbumChooseActivity;
 import com.airtalkee.config.Config;
@@ -106,8 +105,10 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 				// user-defined photograph
 				Intent it = new Intent(this, PhotoCamera.class);
 				it.putExtra(MediaStore.EXTRA_OUTPUT, picPathTemp);
+				it.putExtra("type",AlbumChooseActivity.TYPE_REPORT);
 				startActivityForResult(it, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
-				// system photograph Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				// system photograph 
+				// Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 				// i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
 				// startActivityForResult(i, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
 			}
@@ -120,7 +121,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 					return;
 				}
 				Intent localIntent = new Intent(this, AlbumChooseActivity.class);
-				localIntent.putExtra("type", AlbumChooseActivity.TYPE_IM);
+				localIntent.putExtra("type", AlbumChooseActivity.TYPE_REPORT);
 				// 调用系统相册
 				// Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
 				// localIntent.setType("image/*");

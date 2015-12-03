@@ -49,6 +49,8 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 	private Camera camera;
 	private SurfaceHolder surfaceHolder;
 	private SurfaceView mSurfaceView;
+	
+	private int type;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -88,6 +90,7 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 		if (savedInstanceState != null)
 		{
 			picPathTemp = savedInstanceState.getString(MediaStore.EXTRA_OUTPUT);
+			type = savedInstanceState.getInt("type");
 		}
 	}
 

@@ -1,26 +1,37 @@
 package com.airtalkee.activity.home;
 
+import java.io.File;
 import java.io.Serializable;
 import java.util.List;
-import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 import com.airtalkee.R;
 import com.airtalkee.Util.AlbumHelper;
 import com.airtalkee.Util.Const;
+import com.airtalkee.Util.ThemeUtil;
+import com.airtalkee.Util.Util;
+import com.airtalkee.activity.MenuReportAsPicActivity;
 import com.airtalkee.activity.home.widget.AdapterAlbum;
 import com.airtalkee.entity.ImageBucket;
+import com.airtalkee.widget.PhotoCamera;
 
 // 相册选择
 public class AlbumChooseActivity extends Activity implements
-		OnItemClickListener
+		OnItemClickListener, OnClickListener
 {
 	public static final String EXTRA_IMAGE_LIST = "imagelist";
 	public static final int TYPE_REPORT = 1;
@@ -31,6 +42,15 @@ public class AlbumChooseActivity extends Activity implements
 	AlbumHelper helper;
 	private int type = TYPE_REPORT;
 	public static Bitmap bimap;
+	private Uri picUriTemp = null; // 原图uri
+	private String picPathTemp = ""; // 原图path
+
+	private static AlbumChooseActivity mInstance;
+
+	public static AlbumChooseActivity getInstance()
+	{
+		return mInstance;
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -46,6 +66,7 @@ public class AlbumChooseActivity extends Activity implements
 		helper.init(this);
 		initData();
 		initView();
+		mInstance = this;
 	}
 
 	// 初始化相册列表
@@ -58,6 +79,19 @@ public class AlbumChooseActivity extends Activity implements
 	// 初始化view视图
 	private void initView()
 	{
+		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
+		ivTitle.setText(R.string.talk_album);
+
+		View btnLeft = findViewById(R.id.menu_left_button);
+		ImageView ivLeft = (ImageView) findViewById(R.id.bottom_left_icon);
+		ivLeft.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_close, this));
+		btnLeft.setOnClickListener(this);
+
+		RelativeLayout ivRightLay = (RelativeLayout) findViewById(R.id.talk_menu_right_button);
+		ImageView ivRight = (ImageView) findViewById(R.id.bottom_right_icon);
+		ivRight.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_camera, this));
+		ivRightLay.setOnClickListener(this);
+
 		gridView = (GridView) findViewById(R.id.gv_albums);
 		// adapter = new AdapterAlbum(this, dataList,type);
 		adapter = new AdapterAlbum(this, dataList);
@@ -84,14 +118,54 @@ public class AlbumChooseActivity extends Activity implements
 		}
 		switch (requestCode)
 		{
+			// 自定义相册
 			case Const.image_select.REQUEST_CODE_BROWSE_IMAGE:
 			{
 				setResult(Activity.RESULT_OK, data);
 				finish();
 				break;
 			}
-			default:
+			// 自定义相机
+			case Const.image_select.REQUEST_CODE_CREATE_IMAGE:
+			{
+				setResult(Activity.RESULT_OK, data);
+				finish();
 				break;
+			}
+		}
+	}
+
+	@Override
+	public void onClick(View v)
+	{
+		switch (v.getId())
+		{
+			case R.id.menu_left_button:
+			{
+				finish();
+				break;
+			}
+			case R.id.talk_menu_right_button:
+			{
+				if (type == TYPE_IM)
+				{
+					picPathTemp = Util.getImageTempFileName();
+					picUriTemp = Uri.fromFile(new File(picPathTemp));
+					Intent itCamera = new Intent(this, PhotoCamera.class);
+					itCamera.putExtra(MediaStore.EXTRA_OUTPUT, picPathTemp);
+					itCamera.putExtra("type", TYPE_IM);
+					startActivity(itCamera);
+					
+				}
+				else if (type == TYPE_REPORT)
+				{
+					Intent itCamera = new Intent(this, MenuReportAsPicActivity.class);
+					itCamera.putExtra("type", "camera");
+					startActivity(itCamera);
+					finish();
+				}
+				break;
+			}
 		}
 	}
 }
