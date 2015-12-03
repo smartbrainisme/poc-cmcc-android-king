@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//src/com/airtalkee/Util/AlbumHelper.java=UTF-8
 encoding//src/com/airtalkee/activity/MenuAboutActivity.java=UTF-8
 encoding//src/com/airtalkee/activity/MenuAccountActivity.java=UTF-8
 encoding//src/com/airtalkee/activity/MenuDisplayActivity.java=UTF-8
@@ -6,4 +7,6 @@ encoding//src/com/airtalkee/activity/MenuHelpActivity.java=UTF-8
 encoding//src/com/airtalkee/activity/MenuPasswordActivity.java=UTF-8
 encoding//src/com/airtalkee/activity/MoreActivity.java=UTF-8
 encoding//src/com/airtalkee/config/Config.java=UTF-8
+encoding//src/com/airtalkee/entity/ImageBucket.java=UTF-8
+encoding//src/com/airtalkee/entity/ImageItem.java=UTF-8
 encoding/<project>=UTF-8

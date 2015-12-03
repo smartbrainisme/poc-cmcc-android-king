@@ -46,6 +46,7 @@
         <item name="theme_menu_left_icon">@drawable/ic_topbar_more</item>
         <item name="theme_menu_left_icon1">@drawable/ic_topbar_more</item>
         <item name="theme_menu_right_icon">@drawable/info</item>
+        <item name="theme_button_album">@drawable/selector_button_album</item>
         <item name="theme_menu_bg">@drawable/selector_btn_nav</item>
         <item name="theme_label_right">@drawable/selector_label_ptt_right</item>
         <item name="theme_label_left">@drawable/selector_label_ptt_left</item>
@@ -85,6 +86,8 @@
         <item name="theme_group_all">@drawable/group_all</item>
         <item name="theme_user_dialog">@drawable/user_dialog</item>
         <item name="theme_ic_topbar_back">@drawable/btn_back</item>
+        <item name="theme_ic_topbar_close">@drawable/ic_close</item>
+        <item name="theme_ic_topbar_camera">@drawable/ic_camera</item>
         <item name="theme_ic_topbar_clean">@drawable/ic_fun_cancel</item>
         <item name="theme_ic_topbar_setting">@drawable/ic_setting</item>
         <!-- <item name="theme_ic_topbar_back">@drawable/ic_topbar_back</item> -->
@@ -126,6 +129,7 @@
         <item name="theme_login_user">@drawable/login_user</item>
         <item name="theme_btn_check">@drawable/selector_btn_check</item>
         <item name="theme_btn_check_new">@drawable/selector_btn_check_new</item>
+        <item name="theme_btn_pic_check">@drawable/selector_btn_pic_check</item>
         <item name="theme_btn_listen_mode">@drawable/selector_btn_listen_mode</item>
         <item name="theme_radio_check">@drawable/selector_radio_check</item>
         <item name="theme_title_menu_pading">4dip</item>

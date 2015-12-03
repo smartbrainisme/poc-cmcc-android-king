@@ -9,7 +9,6 @@
 	<string name="app_name_unicom">沃对讲</string>
 	<string name="app_name_picc">人保视频定损</string>
 	<string name="app_name_cpic">CPIC</string>
-	
 	<string name="copyright"></string>
 	<string name="copyright_weptt1">Copyright 2009-2015 浩联时代</string>
 	<string name="copyright_weptt2">浩联时代  版权所有</string>
@@ -460,4 +459,7 @@
     <string name="talk_typewriter_init">在此输入文字</string>
     <string name="talk_call_offline_tip">呼叫的用户暂时不在线\r\n您可以去消息页面留言联系</string>
     <string name="talk_call_leave_msg">前去留言</string>
+    <string name="talk_photo_selected_tip">发送</string>
+    <string name="talk_photo_unselected_tip">未选择</string>
+    <string name="talk_album">相册</string>
 </resources>

@@ -22,7 +22,7 @@ import com.airtalkee.sdk.entity.AirSession;
 public class AdapterChannel extends BaseAdapter
 {
 	public static final int GROUP_POSITION = 0;
-	int itemHeight;
+	// int itemHeight;
 	Context mContext;
 
 	public AdapterChannel(Context mContext, ArrayList<AirChannel> data)

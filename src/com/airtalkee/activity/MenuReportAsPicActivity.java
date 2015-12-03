@@ -30,6 +30,7 @@ import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.UriUtil;
 import com.airtalkee.Util.Util;
+import com.airtalkee.activity.home.AlbumChooseActivity;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirReportManager;
 import com.airtalkee.listener.OnMmiLocationListener;
@@ -106,12 +107,9 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 				Intent it = new Intent(this, PhotoCamera.class);
 				it.putExtra(MediaStore.EXTRA_OUTPUT, picPathTemp);
 				startActivityForResult(it, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
-				// system photograph
-				// Intent i = new
-				// Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				// system photograph Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 				// i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
-				// startActivityForResult(i,
-				// Const.image_select.REQUEST_CODE_CREATE_IMAGE);
+				// startActivityForResult(i, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
 			}
 			else if (type.equals("image"))
 			{
@@ -121,8 +119,11 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 					Util.Toast(this, getString(R.string.talk_insert_sd_card));
 					return;
 				}
-				Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
-				localIntent.setType("image/*");
+				Intent localIntent = new Intent(this, AlbumChooseActivity.class);
+				localIntent.putExtra("type", AlbumChooseActivity.TYPE_IM);
+				// 调用系统相册
+				// Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
+				// localIntent.setType("image/*");
 				startActivityForResult(localIntent, Const.image_select.REQUEST_CODE_BROWSE_IMAGE);
 			}
 		}
@@ -177,11 +178,6 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 				imageLoader.displayImage(picUri.toString(), report_image);
 				rbCompress.setText(getString(R.string.talk_tools_report_compress) + "   " + MenuReportActivity.sizeMKB(picSize));
 			}
-			// else
-			// {
-			// imageLoader.displayImage(picUriTemp.toString(), report_image);
-			// report_image.setImageResource(R.drawable.report_default_pic);
-			// }
 		}
 	}
 
@@ -210,8 +206,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 				isUploading = true;
 				Util.hideSoftInput(this);
 				refreshUI();
-				// Util.Toast(this,
-				// getString(R.string.talk_report_upload_getting_gps), 60, -1);
+				// Util.Toast(this, getString(R.string.talk_report_upload_getting_gps), 60, -1);
 				myToast = Toast.makeText1(this, true, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
 				myToast.setDuration(3600);
 				myToast.show();
@@ -263,10 +258,10 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 					picSize = AirServices.iOperator.getFileSize("", picPath, true);
 					refreshUI();
 					/*
-					 * picUriTemp = Uri.fromFile(new File(picPathTemp)); picUri
-					 * = picUriTemp; picPath = picPathTemp; resizePicture(true);
-					 * picSize = AirServices.iOperator.getFileSize("",
-					 * picPathTemp, true); refreshUI();
+					 * picUriTemp = Uri.fromFile(new File(picPathTemp)); 
+					 * picUri = picUriTemp; picPath = picPathTemp; resizePicture(true);
+					 * picSize = AirServices.iOperator.getFileSize("", picPathTemp, true); 
+					 * refreshUI();
 					 */
 				}
 				else
@@ -279,11 +274,16 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 			case Const.image_select.REQUEST_CODE_BROWSE_IMAGE:
 				if (resultCode == RESULT_OK)
 				{
-					picPathTemp = UriUtil.getPath(this, data.getData());
+					// 系统相册调用
+					// picUriTemp = data.getData();
+					// picPathTemp = UriUtil.getPath(this, picUriTemp);
+					// 自定义相册
+					Bundle bundleData = data.getExtras();
+					picPathTemp = bundleData.getString("picPath");
 					if (picPathTemp != null && picPathTemp.length() > 0)
 					{
+						picUriTemp = Uri.fromFile(new File(picPathTemp));
 						picSizeTemp = AirServices.iOperator.getFileSize("", picPathTemp, true);
-						picUriTemp = data.getData();
 						resizePicture(true);
 						picSize = AirServices.iOperator.getFileSize("", picPath, true);
 						refreshUI();
@@ -303,28 +303,6 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		}
 	}
 
-	/*
-	 * public void pictureQualitySelect(final int id) { new
-	 * AlertDialog.Builder(this
-	 * ).setTitle(R.string.talk_quality_select).setItems(
-	 * R.array.picture_quality, new DialogInterface.OnClickListener() {
-	 * 
-	 * @Override public void onClick(DialogInterface dialog, int which) {
-	 * isHighQuality = which == 0; switch (id) { case R.id.report_image: case
-	 * R.id.report_btn_take: { picPathTemp = Util.getImageTempFileName();
-	 * picUriTemp = Uri.fromFile(new File(picPathTemp)); Intent i = new
-	 * Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-	 * i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
-	 * startActivityForResult(i, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
-	 * break; } case R.id.report_btn_native: { String status =
-	 * Environment.getExternalStorageState(); if
-	 * (!status.equals(Environment.MEDIA_MOUNTED)) {
-	 * Util.Toast(MenuReportAsPicActivity.this,
-	 * getString(R.string.talk_insert_sd_card)); return; } Intent localIntent =
-	 * new Intent("android.intent.action.GET_CONTENT", null);
-	 * localIntent.setType("image/*"); startActivityForResult(localIntent,
-	 * Const.image_select.REQUEST_CODE_BROWSE_IMAGE); break; } } } }).show(); }
-	 */
 
 	private void resizePicture(boolean toCreateFile)
 	{

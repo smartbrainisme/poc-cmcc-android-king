@@ -455,5 +455,8 @@
     <string name="talk_tools_report_click">点击重发</string>
     <string name="talk_tools_report_uploading">正在上报..</string>
     <string name="talk_tools_report_fail">上传失败</string>
+    <string name="talk_photo_selected_tip">发送</string>
+    <string name="talk_photo_unselected_tip">未选择</string>
+    <string name="talk_album">Album</string>
 
 </resources>

@@ -17,7 +17,7 @@ import com.airtalkee.sdk.entity.AirSession;
 
 public class AdapterSession extends BaseAdapter
 {
-	int itemHeight;
+	// int itemHeight;
 	Context mContext;
 	private AdapterSession adapterSession;
 	private boolean isEditing = false;

@@ -1,0 +1,97 @@
+package com.airtalkee.activity.home;
+
+import java.io.Serializable;
+import java.util.List;
+import android.R.integer;
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.GridView;
+import com.airtalkee.R;
+import com.airtalkee.Util.AlbumHelper;
+import com.airtalkee.Util.Const;
+import com.airtalkee.activity.home.widget.AdapterAlbum;
+import com.airtalkee.entity.ImageBucket;
+
+// 相册选择
+public class AlbumChooseActivity extends Activity implements
+		OnItemClickListener
+{
+	public static final String EXTRA_IMAGE_LIST = "imagelist";
+	public static final int TYPE_REPORT = 1;
+	public static final int TYPE_IM = 2;
+	List<ImageBucket> dataList;
+	GridView gridView;
+	AdapterAlbum adapter;
+	AlbumHelper helper;
+	private int type = TYPE_REPORT;
+	public static Bitmap bimap;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState)
+	{
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_album_choose);
+		Bundle bundle = this.getIntent().getExtras();
+		if (bundle != null)
+		{
+			type = bundle.getInt("type");
+		}
+		helper = AlbumHelper.getHelper();
+		helper.init(this);
+		initData();
+		initView();
+	}
+
+	// 初始化相册列表
+	private void initData()
+	{
+		dataList = helper.getImagesBucketList(false);
+		bimap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_addpic_unfocused);
+	}
+
+	// 初始化view视图
+	private void initView()
+	{
+		gridView = (GridView) findViewById(R.id.gv_albums);
+		// adapter = new AdapterAlbum(this, dataList,type);
+		adapter = new AdapterAlbum(this, dataList);
+		gridView.setAdapter(adapter);
+		gridView.setOnItemClickListener(this);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+	{
+		Intent intent = new Intent(this, AlbumEnterActivity.class);
+		intent.putExtra("type", type);
+		intent.putExtra(EXTRA_IMAGE_LIST, (Serializable) dataList.get(position).imageList);
+		startActivityForResult(intent, Const.image_select.REQUEST_CODE_BROWSE_IMAGE);
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode != Activity.RESULT_OK)
+		{
+			return;
+		}
+		switch (requestCode)
+		{
+			case Const.image_select.REQUEST_CODE_BROWSE_IMAGE:
+			{
+				setResult(Activity.RESULT_OK, data);
+				finish();
+				break;
+			}
+			default:
+				break;
+		}
+	}
+}

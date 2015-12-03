@@ -26,6 +26,7 @@
     <attr name="theme_button_text_color" format="color" />
     <attr name="theme_button_commit" format="color" />
     <attr name="theme_button_refresh" format="color" />
+    <attr name="theme_button_album" format="color" />
     <attr name="theme_text_color" format="color" />
     <attr name="theme_menu_left_icon" format="reference" />
     <attr name="theme_menu_left_icon1" format="reference" />
@@ -68,6 +69,8 @@
     <attr name="theme_group_all" format="reference" />
     <attr name="theme_user_dialog" format="reference" />
     <attr name="theme_ic_topbar_back" format="reference" />
+    <attr name="theme_ic_topbar_close" format="reference" />
+    <attr name="theme_ic_topbar_camera" format="reference" />
     <attr name="theme_ic_topbar_clean" format="reference" />
     <attr name="theme_ic_topbar_setting" format="reference" />
     <attr name="theme_ic_refresh" format="reference" />
@@ -107,6 +110,7 @@
     <attr name="theme_login_user" format="reference" />
     <attr name="theme_btn_check" format="reference" />
     <attr name="theme_btn_check_new" format="reference" />
+    <attr name="theme_btn_pic_check" format="reference" />
     <attr name="theme_btn_listen_mode" format="reference" />
     <attr name="theme_radio_check" format="reference" />
     <attr name="theme_report_retry" format="reference" />

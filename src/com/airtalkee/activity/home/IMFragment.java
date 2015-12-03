@@ -36,6 +36,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.airtalkee.R;
+import com.airtalkee.R.layout;
 import com.airtalkee.Util.AirMmiTimerListener;
 import com.airtalkee.Util.Smilify;
 import com.airtalkee.Util.Sound;
@@ -168,8 +169,13 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 						Util.Toast(getActivity(), getActivity().getString(R.string.insert_sd_card));
 						return;
 					}
-					Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
-					localIntent.setType("image/*");
+					// 系统相册
+					// Intent localIntent = new
+					// Intent("android.intent.action.GET_CONTENT", null);
+					// localIntent.setType("image/*");
+					// 自定义相册
+					Intent localIntent = new Intent(getActivity(), AlbumChooseActivity.class);
+					localIntent.putExtra("type", AlbumChooseActivity.TYPE_IM);
 					startActivityForResult(localIntent, REQUEST_CODE_BROWSE_IMAGE);
 					break;
 				case R.id.bar_right:
@@ -932,45 +938,54 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 					try
 					{
 						System.gc();
-						Uri originalUri = data.getData();
-						String[] proj = { MediaStore.Images.Media.DATA };
-						String path = null;
-						@SuppressWarnings("deprecation")
-						Cursor cursor = getActivity().managedQuery(originalUri, proj, null, null, null);
-						if (cursor != null)
+						Bundle bundleData = data.getExtras();
+						List<String> pathList = bundleData.getStringArrayList("picPath");
+						if (pathList != null && pathList.size() > 0)
 						{
-							int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-							cursor.moveToFirst();
-							path = cursor.getString(column_index);
-						}
-						else
-						{
-							path = originalUri.getPath();
-						}
-						Bitmap tempBitmap = null;
-						try
-						{
-							byte[] bitmapData = AirServices.iOperator.readByteFile("", path, true);
-							tempBitmap = PicFactory.getNormalMaxImage(bitmapData);
-						}
-						catch (OutOfMemoryError e)
-						{
-							// TODO: handle exception
-							return;
-						}
-						byte bphoto[] = null;
-						ByteArrayOutputStream streamOut = new ByteArrayOutputStream();
+							for (int i = 0; i < pathList.size(); i++)
+							{
+//								Uri originalUri = data.getData();
+//								String[] proj = { MediaStore.Images.Media.DATA };
+//								String path = null;
+//								@SuppressWarnings("deprecation")
+//								Cursor cursor = getActivity().managedQuery(originalUri, proj, null, null, null);
+//								if (cursor != null)
+//								{
+//									int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//									cursor.moveToFirst();
+//									path = cursor.getString(column_index);
+//								}
+//								else
+//								{
+//									path = originalUri.getPath();
+//								}
+								String path = pathList.get(i);
+								Bitmap tempBitmap = null;
+								try
+								{
+									byte[] bitmapData = AirServices.iOperator.readByteFile("", path, true);
+									tempBitmap = PicFactory.getNormalMaxImage(bitmapData);
+								}
+								catch (OutOfMemoryError e)
+								{
+									// TODO: handle exception
+									return;
+								}
+								byte bphoto[] = null;
+								ByteArrayOutputStream streamOut = new ByteArrayOutputStream();
 
-						tempBitmap.compress(CompressFormat.JPEG, 80, streamOut);
-						tempBitmap.recycle();
-						tempBitmap = null;
-						bphoto = streamOut.toByteArray();
-						streamOut.reset();
-						streamOut.close();
-						streamOut = null;
-						AirtalkeeMessage.getInstance().MessageImageSend(session, bphoto, true);
-						bphoto = null;
-						System.gc();
+								tempBitmap.compress(CompressFormat.JPEG, 80, streamOut);
+								tempBitmap.recycle();
+								tempBitmap = null;
+								bphoto = streamOut.toByteArray();
+								streamOut.reset();
+								streamOut.close();
+								streamOut = null;
+								AirtalkeeMessage.getInstance().MessageImageSend(session, bphoto, true);
+								bphoto = null;
+								System.gc();
+							}
+						}
 					}
 					catch (Exception e)
 					{
