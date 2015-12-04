@@ -2,6 +2,7 @@ package com.airtalkee.activity.home;
 
 import java.io.File;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
@@ -30,8 +31,7 @@ import com.airtalkee.entity.ImageBucket;
 import com.airtalkee.widget.PhotoCamera;
 
 // 相册选择
-public class AlbumChooseActivity extends Activity implements
-		OnItemClickListener, OnClickListener
+public class AlbumChooseActivity extends Activity implements OnItemClickListener, OnClickListener
 {
 	public static final String EXTRA_IMAGE_LIST = "imagelist";
 	public static final int TYPE_REPORT = 1;
@@ -109,6 +109,39 @@ public class AlbumChooseActivity extends Activity implements
 	}
 
 	@Override
+	public void onClick(View v)
+	{
+		switch (v.getId())
+		{
+			case R.id.menu_left_button:
+			{
+				finish();
+				break;
+			}
+			case R.id.talk_menu_right_button:
+			{
+				if (type == TYPE_IM)
+				{
+					picPathTemp = Util.getImageTempFileName();
+					// picUriTemp = Uri.fromFile(new File(picPathTemp));
+					Intent itCamera = new Intent(this, PhotoCamera.class);
+					itCamera.putExtra(MediaStore.EXTRA_OUTPUT, picPathTemp);
+					itCamera.putExtra("type", TYPE_IM);
+					startActivityForResult(itCamera, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
+				}
+				else if (type == TYPE_REPORT)
+				{
+					Intent itCamera = new Intent(this, MenuReportAsPicActivity.class);
+					itCamera.putExtra("type", "camera");
+					startActivity(itCamera);
+					finish();
+				}
+				break;
+			}
+		}
+	}
+	
+	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
@@ -128,42 +161,11 @@ public class AlbumChooseActivity extends Activity implements
 			// 自定义相机
 			case Const.image_select.REQUEST_CODE_CREATE_IMAGE:
 			{
+//				ArrayList<String> pathList = new ArrayList<String>();
+//				pathList.add(picPathTemp);
+//				data.putExtra("picPath", pathList);
 				setResult(Activity.RESULT_OK, data);
 				finish();
-				break;
-			}
-		}
-	}
-
-	@Override
-	public void onClick(View v)
-	{
-		switch (v.getId())
-		{
-			case R.id.menu_left_button:
-			{
-				finish();
-				break;
-			}
-			case R.id.talk_menu_right_button:
-			{
-				if (type == TYPE_IM)
-				{
-					picPathTemp = Util.getImageTempFileName();
-					picUriTemp = Uri.fromFile(new File(picPathTemp));
-					Intent itCamera = new Intent(this, PhotoCamera.class);
-					itCamera.putExtra(MediaStore.EXTRA_OUTPUT, picPathTemp);
-					itCamera.putExtra("type", TYPE_IM);
-					startActivity(itCamera);
-					
-				}
-				else if (type == TYPE_REPORT)
-				{
-					Intent itCamera = new Intent(this, MenuReportAsPicActivity.class);
-					itCamera.putExtra("type", "camera");
-					startActivity(itCamera);
-					finish();
-				}
 				break;
 			}
 		}

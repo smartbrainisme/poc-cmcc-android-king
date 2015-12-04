@@ -3,6 +3,7 @@ package com.airtalkee.activity.home;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -170,7 +171,8 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 					// Intent("android.intent.action.GET_CONTENT", null);
 					// localIntent.setType("image/*");
 					// 自定义相册
-					Intent localIntent = new Intent(getActivity(), AlbumChooseActivity.class);
+					Activity activity = getActivity();
+					Intent localIntent = new Intent(activity, AlbumChooseActivity.class);
 					localIntent.putExtra("type", AlbumChooseActivity.TYPE_IM);
 					startActivityForResult(localIntent, REQUEST_CODE_BROWSE_IMAGE);
 					break;
@@ -770,12 +772,9 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 					text.setText(currentMessage.getRecordTimer() + "''");
 				}
 			}
-			// if (session.getMessagePlayback() != null &&
-			// TextUtils.equals(session.getMessagePlayback().getImageUri(),
-			// currentMessage.getImageUri()))
+			// if (session.getMessagePlayback() != null && TextUtils.equals(session.getMessagePlayback().getImageUri(), currentMessage.getImageUri()))
 			// {
-			// recPlaybackSeconds.setText(currentMessage.getRecordTimer()
-			// +"''");
+			//    recPlaybackSeconds.setText(currentMessage.getRecordTimer() +"''");
 			// }
 
 		}
@@ -924,7 +923,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode)
 		{
@@ -940,21 +938,21 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 						{
 							for (int i = 0; i < pathList.size(); i++)
 							{
-//								Uri originalUri = data.getData();
-//								String[] proj = { MediaStore.Images.Media.DATA };
-//								String path = null;
-//								@SuppressWarnings("deprecation")
-//								Cursor cursor = getActivity().managedQuery(originalUri, proj, null, null, null);
-//								if (cursor != null)
-//								{
-//									int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//									cursor.moveToFirst();
-//									path = cursor.getString(column_index);
-//								}
-//								else
-//								{
-//									path = originalUri.getPath();
-//								}
+								// Uri originalUri = data.getData();
+								// String[] proj = { MediaStore.Images.Media.DATA };
+								// String path = null;
+								// @SuppressWarnings("deprecation")
+								// Cursor cursor = getActivity().managedQuery(originalUri, proj, null, null, null);
+								// if (cursor != null)
+								// {
+								//	 int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+								//   cursor.moveToFirst();
+								//	 path = cursor.getString(column_index);
+								// }
+								// else
+								// {
+								//	 path = originalUri.getPath();
+								// }
 								String path = pathList.get(i);
 								Bitmap tempBitmap = null;
 								try
@@ -964,7 +962,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 								}
 								catch (OutOfMemoryError e)
 								{
-									// TODO: handle exception
 									return;
 								}
 								byte bphoto[] = null;

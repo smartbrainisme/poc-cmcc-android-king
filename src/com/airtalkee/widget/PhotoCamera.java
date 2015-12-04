@@ -3,8 +3,10 @@ package com.airtalkee.widget;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,8 +31,11 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.airtalkee.R;
+import com.airtalkee.R.string;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.activity.MenuReportAsPicActivity;
+import com.airtalkee.activity.home.AlbumChooseActivity;
+import com.airtalkee.activity.home.IMFragment;
 
 public class PhotoCamera extends Activity implements OnClickListener, Callback
 {
@@ -51,6 +56,7 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 	private SurfaceView mSurfaceView;
 	
 	private int type;
+//	private Context mContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -91,6 +97,7 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 		{
 			picPathTemp = savedInstanceState.getString(MediaStore.EXTRA_OUTPUT);
 			type = savedInstanceState.getInt("type");
+//			mContext = (Context) savedInstanceState.get("context");
 		}
 	}
 
@@ -132,10 +139,28 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 				break;
 			case R.id.sure:
 				// TODO
-				Intent data = new Intent(this, MenuReportAsPicActivity.class);
-				setResult(RESULT_OK, data);
-				finish();
+				switch (type)
+				{
+					case AlbumChooseActivity.TYPE_IM:
+					{
+						Intent data = new Intent();
+						ArrayList<String> pathList = new ArrayList<String>();
+						pathList.add(picPathTemp);
+						data.putExtra("picPath", pathList);
+						setResult(Activity.RESULT_OK, data);
+						finish();
+						break;
+					}
+					case AlbumChooseActivity.TYPE_REPORT:
+					{
+						Intent data = new Intent(this, MenuReportAsPicActivity.class);
+						setResult(RESULT_OK, data);
+						finish();
+						break;
+					}
+				}
 				break;
+				
 			case R.id.to_album:
 			{
 				finish();

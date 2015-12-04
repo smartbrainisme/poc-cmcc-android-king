@@ -50,7 +50,7 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 	AlbumHelper helper;
 	private Button btSend;
 	private int type = TYPE_REPORT;
-	private Uri picUriTemp = null; // 原图uri
+	// private Uri picUriTemp = null; // 原图uri
 	private String picPathTemp = ""; // 原图path
 
 	Handler mHandler = new Handler()
@@ -227,10 +227,11 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 				if (type == TYPE_IM)
 				{
 					picPathTemp = Util.getImageTempFileName();
-					picUriTemp = Uri.fromFile(new File(picPathTemp));
-					Intent it = new Intent(this, PhotoCamera.class);
-					it.putExtra(MediaStore.EXTRA_OUTPUT, picPathTemp);
-					startActivityForResult(it, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
+					// picUriTemp = Uri.fromFile(new File(picPathTemp));
+					Intent itCamera = new Intent(this, PhotoCamera.class);
+					itCamera.putExtra(MediaStore.EXTRA_OUTPUT, picPathTemp);
+					itCamera.putExtra("type", TYPE_IM);
+					startActivityForResult(itCamera, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
 				}
 				else if (type == TYPE_REPORT)
 				{
@@ -240,7 +241,29 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 					finish();
 					AlbumChooseActivity.getInstance().finish();
 				}
-
+				break;
+			}
+		}
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode != Activity.RESULT_OK)
+		{
+			return;
+		}
+		switch (requestCode)
+		{
+			// 自定义相机
+			case Const.image_select.REQUEST_CODE_CREATE_IMAGE:
+			{
+//				ArrayList<String> pathList = new ArrayList<String>();
+//				pathList.add(picPathTemp);
+//				data.putExtra("picPath", pathList);
+				setResult(Activity.RESULT_OK, data);
+				finish();
 				break;
 			}
 		}
