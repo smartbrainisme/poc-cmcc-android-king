@@ -28,7 +28,19 @@ proguard/
 
 # Android Studio Navigation editor temp files
 .navigation/
+.idea/
+WepttApp.iml
 
+# Android Studio captures folder
+captures/
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
 # Android Studio captures folder
 captures/
 
@@ -37,3 +49,5 @@ captures/
 
 # SDK Dependence file
 project.properties
+
+
