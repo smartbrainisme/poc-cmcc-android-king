@@ -57,7 +57,7 @@
         <item name="theme_divider_v">@drawable/v_divider_line</item>
         <item name="theme_divider_title">@drawable/left_divider_line</item>
         <item name="theme_msg_audio_play">@drawable/msg_audio_play</item>
-        <item name="theme_msg_audio_stop">@drawable/msg_audio_stop</item>
+        <item name="theme_msg_audio_stop">@drawable/msg_audio_stop_new</item>
         <item name="theme_talk_call_idle">@drawable/btn_talk_call_idle</item>
         <item name="theme_talk_call_ing">@drawable/btn_talk_call_ing</item>
         <item name="theme_talk_idle">@drawable/btn_talk_idle</item>

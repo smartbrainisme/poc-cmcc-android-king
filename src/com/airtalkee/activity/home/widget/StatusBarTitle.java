@@ -107,7 +107,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 				{
 					case AirSession.SESSION_STATE_CALLING:
 						tvMediaStatus.setText(R.string.talk_session_building);
-						ivMeidiaStatus.setImageResource(R.drawable.media_idle);
+						ivMeidiaStatus.setImageResource(R.drawable.media_idle_green);
 						break;
 					case AirSession.SESSION_STATE_DIALOG:
 						switch (session.getMediaState())
@@ -115,7 +115,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 							case AirSession.MEDIA_STATE_IDLE:
 							{
 								tvMediaStatus.setText(R.string.talk_session_speak_idle);
-								ivMeidiaStatus.setImageResource(R.drawable.media_idle);
+								ivMeidiaStatus.setImageResource(R.drawable.media_idle_green);
 								break;
 							}
 							case AirSession.MEDIA_STATE_TALK:
@@ -146,7 +146,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 						{
 							tvMediaStatus.setText(R.string.talk_session_speak_idle);
 						}
-						ivMeidiaStatus.setImageResource(R.drawable.media_idle);
+						ivMeidiaStatus.setImageResource(R.drawable.media_idle_green);
 						break;
 				}
 			}

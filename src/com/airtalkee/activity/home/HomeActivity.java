@@ -47,6 +47,11 @@ public class HomeActivity extends SessionDialogActivity implements
 	{
 		return mInstance;
 	}
+	
+	public SessionAndChannelView getSessionAndChannelView()
+	{
+		return channelView;
+	}
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -110,6 +115,11 @@ public class HomeActivity extends SessionDialogActivity implements
 	@Override
 	public void onPanelCollapsed(View panel)
 	{
+		panelCollapsed();
+	}
+	
+	public void panelCollapsed()
+	{
 		Log.i("HOME_ACTIVITY", "onPanelCollapsed");
 		contaner.setBackgroundColor(0x00000000);
 		slidingBack.setVisibility(View.GONE);
@@ -117,7 +127,7 @@ public class HomeActivity extends SessionDialogActivity implements
 		if (mediaStatusBar != null)
 			mediaStatusBar.setSession(AirSessionControl.getInstance().getCurrentChannelSession());
 		// 解决刷新频道成员
-		session = AirSessionControl.getInstance().getCurrentChannelSession();
+		session = mediaStatusBar.getSession();
 		MemberFragment memberFragment = (MemberFragment) adapter.getItem(0);
 		memberFragment.refreshMembers(session, session.getChannel().MembersGet());
 		// 检测是否有新im消息

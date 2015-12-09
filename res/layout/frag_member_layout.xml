@@ -20,6 +20,7 @@
             android:layout_weight="1"
             android:background="@drawable/selector_tab_member_session"
             android:gravity="center"
+            android:textColor="@color/white"
             android:text="频道成员" />
 
         <TextView
@@ -29,6 +30,7 @@
             android:layout_weight="1"
             android:background="@drawable/selector_tab_member_all"
             android:gravity="center"
+            android:textColor="@color/white"
             android:text="全部成员" />
     </LinearLayout>
 

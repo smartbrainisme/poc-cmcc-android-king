@@ -24,7 +24,6 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactTiny;
 import com.airtalkee.sdk.entity.AirSession;
 
-
 @SuppressLint("UseSparseArrays")
 public class AdapterMember extends BaseAdapter implements OnContactPresenceListener
 {
@@ -35,13 +34,15 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 	private View vMemberBottom = null;
 	private boolean allowCheck = false;
 	private boolean allowRole = false;
-	private View layoutBtns; 
-	private CheckedCallBack checkedCallBack; 
-	public interface CheckedCallBack{ //shiyishi
+	private View layoutBtns;
+	private CheckedCallBack checkedCallBack;
+
+	public interface CheckedCallBack
+	{ // shiyishi
 		public void onChecked(boolean isChecked);
 	}
-	
-	public AdapterMember(Context _context, View v,View v2, boolean allowCheck, boolean allowRole,CheckedCallBack checkedCallBack)
+
+	public AdapterMember(Context _context, View v, View v2, boolean allowCheck, boolean allowRole, CheckedCallBack checkedCallBack)
 	{
 		this.checkedCallBack = checkedCallBack;
 		context = _context;
@@ -128,8 +129,7 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 			ct = (memberList != null) ? memberList.get(position) : null;
 		}
 		catch (Exception e)
-		{
-		}
+		{}
 		return ct;
 	}
 
@@ -167,12 +167,14 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 			if (TextUtils.equals(AirtalkeeAccount.getInstance().getUserId(), member.getIpocId()))
 			{
 				holder.ivSPresence.setImageResource(R.drawable.user_state_online);
+				holder.tvName.setTextColor(context.getResources().getColor(R.color.white));
 			}
 			else
 			{
 				if (member.getStateInChat() == AirContact.IN_CHAT_STATE_ONLINE)
 				{
 					holder.ivSPresence.setImageResource(R.drawable.user_state_online);
+					holder.tvName.setTextColor(context.getResources().getColor(R.color.white));
 				}
 				else
 				{
@@ -181,13 +183,12 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 					{
 						case AirContact.CONTACT_STATE_NONE:
 							holder.ivSPresence.setImageResource(R.drawable.user_state_offline);
+							holder.tvName.setTextColor(context.getResources().getColor(R.color.color_hint_dark));
 							break;
 						case AirContact.CONTACT_STATE_ONLINE:
-							holder.ivSPresence.setImageResource(R.drawable.user_state_online);
-							break;
 						case AirContact.CONTACT_STATE_ONLINE_BG:
 							holder.ivSPresence.setImageResource(R.drawable.user_state_online);
-							
+							holder.tvName.setTextColor(context.getResources().getColor(R.color.color_hint_dark));
 							break;
 					}
 				}
@@ -240,34 +241,33 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 				holder.checkBox.setVisibility(View.VISIBLE);
 				holder.checkBox.setClickable(true);
 			}
-			
 
 			holder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
 			{
 				public void onCheckedChanged(CompoundButton arg0, boolean isCheck)
 				{
 					putSelected(position, member, isCheck);
-					
-						if (isSelected.size() > 0)
-						{
-							if (vMemberBottom != null)
+
+					if (isSelected.size() > 0)
+					{
+						if (vMemberBottom != null)
 							vMemberBottom.setVisibility(View.VISIBLE);
-							if(layoutBtns != null)
+						if (layoutBtns != null)
 							layoutBtns.setVisibility(View.GONE);
-							if(checkedCallBack != null)
+						if (checkedCallBack != null)
 							checkedCallBack.onChecked(true);
-						}
-						else
-						{
-							if (vMemberBottom != null)
-							vMemberBottom.setVisibility(View.GONE);
-							if(layoutBtns != null)
-							layoutBtns.setVisibility(View.VISIBLE);
-							if(checkedCallBack != null)
-							checkedCallBack.onChecked(false);
-						}
 					}
-				
+					else
+					{
+						if (vMemberBottom != null)
+							vMemberBottom.setVisibility(View.GONE);
+						if (layoutBtns != null)
+							layoutBtns.setVisibility(View.VISIBLE);
+						if (checkedCallBack != null)
+							checkedCallBack.onChecked(false);
+					}
+				}
+
 			});
 			holder.checkBox.setChecked(!(isSelected != null && isSelected.get(position) == null));
 			if (!allowCheck)
@@ -285,7 +285,6 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 		ImageView ivSPresence;
 		ImageView ivRole;
 	}
-
 
 	@Override
 	public void onContactPresence(boolean isSubscribed, HashMap<String, Integer> presenceMap)

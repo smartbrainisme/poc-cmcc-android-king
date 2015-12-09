@@ -30,7 +30,7 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.PageIndicator;
 
-public class SessionDialogActivity extends FragmentActivity implements
+public class BaseActivity extends FragmentActivity implements
 		OnPageChangeListener
 {
 

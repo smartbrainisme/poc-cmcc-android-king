@@ -44,7 +44,8 @@
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
-                android:background="@drawable/ic_login_divider" />
+                android:background="@drawable/ic_login_divider" 
+                android:visibility="gone"/>
 
             <RadioButton
                 android:id="@+id/radio_high"
@@ -52,12 +53,14 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="640 * 960" />
+                android:text="640 * 960" 
+                android:visibility="gone"/>
 
             <View
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
-                android:background="@drawable/ic_login_divider" />
+                android:background="@drawable/ic_login_divider" 
+                android:visibility="gone"/>
 
             <RadioButton
                 android:id="@+id/radio_best"
@@ -65,7 +68,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="720 * 1280" />
+                android:text="720 * 1280" 
+                android:visibility="gone"/>
         </RadioGroup>
     </LinearLayout>
 

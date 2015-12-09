@@ -99,6 +99,11 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 			type = savedInstanceState.getInt("type");
 //			mContext = (Context) savedInstanceState.get("context");
 		}
+		if (type == AlbumChooseActivity.TYPE_IM)
+		{
+			mButtonToAlbum.setVisibility(View.INVISIBLE);
+			mButtonToVideo.setVisibility(View.INVISIBLE);
+		}
 	}
 
 	@Override
@@ -138,6 +143,7 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 				finish();
 				break;
 			case R.id.sure:
+			{
 				// TODO
 				switch (type)
 				{
@@ -160,7 +166,7 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 					}
 				}
 				break;
-				
+			}
 			case R.id.to_album:
 			{
 				finish();

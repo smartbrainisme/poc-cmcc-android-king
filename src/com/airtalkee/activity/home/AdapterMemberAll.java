@@ -157,12 +157,14 @@ public class AdapterMemberAll extends BaseAdapter implements
 			if (TextUtils.equals(AirtalkeeAccount.getInstance().getUserId(), member.getIpocId()))
 			{
 				holder.ivSPresence.setImageResource(R.drawable.user_state_online);
+				holder.tvName.setTextColor(context.getResources().getColor(R.color.white));
 			}
 			else
 			{
 				if (member.getStateInChat() == AirContact.IN_CHAT_STATE_ONLINE)
 				{
 					holder.ivSPresence.setImageResource(R.drawable.user_state_online);
+					holder.tvName.setTextColor(context.getResources().getColor(R.color.white));
 				}
 				else
 				{
@@ -171,13 +173,12 @@ public class AdapterMemberAll extends BaseAdapter implements
 					{
 						case AirContact.CONTACT_STATE_NONE:
 							holder.ivSPresence.setImageResource(R.drawable.user_state_offline);
+							holder.tvName.setTextColor(context.getResources().getColor(R.color.color_hint_dark));
 							break;
 						case AirContact.CONTACT_STATE_ONLINE:
-							holder.ivSPresence.setImageResource(R.drawable.user_state_online);
-							break;
 						case AirContact.CONTACT_STATE_ONLINE_BG:
 							holder.ivSPresence.setImageResource(R.drawable.user_state_online);
-
+							holder.tvName.setTextColor(context.getResources().getColor(R.color.color_hint_dark));
 							break;
 					}
 				}

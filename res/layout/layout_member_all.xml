@@ -12,17 +12,30 @@
         android:layout_height="40dp"
         android:orientation="horizontal" >
 
-        <EditText
-            android:id="@+id/et_search"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/selector_member_search_form"
-            android:hint="输入关键字搜索成员"
-            android:padding="5dp"
-            android:textColor="#dfffffff"
-            android:textColorHint="#b3ffffff"
-            android:textSize="12sp" />
+            android:clickable="false" >
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:background="@drawable/selector_member_search_form"
+                android:hint="输入关键字搜索成员"
+                android:padding="5dp"
+                android:textColor="#dfffffff"
+                android:textColorHint="#b3ffffff"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_member_search" />
+        </FrameLayout>
 
         <Button
             android:id="@+id/btn_search"
