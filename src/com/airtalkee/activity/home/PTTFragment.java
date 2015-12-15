@@ -38,8 +38,7 @@ import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.AudioVisualizerView;
 import com.airtalkee.widget.VideoCamera;
 
-public class PTTFragment extends BaseFragment implements OnClickListener,
-		DialogListener, OnMediaAudioVisualizerListener
+public class PTTFragment extends BaseFragment implements OnClickListener, DialogListener, OnMediaAudioVisualizerListener
 {
 
 	private static final int DIALOG_CALL_CENTER_CONFIRM = 100;

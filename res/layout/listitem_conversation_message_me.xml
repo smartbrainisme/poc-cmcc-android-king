@@ -50,14 +50,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:minWidth="100dp"
                     android:minHeight="30dip" >
 
                     <ImageView
                         android:id="@+id/pic"
-                        android:layout_width="@dimen/msg_pic_widht"
-                        android:layout_height="@dimen/msg_pic_height"
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
                         android:layout_centerVertical="true"
-                        android:scaleType="centerCrop" />
+                        android:scaleType="fitXY" />
 
                     <TextView
                         android:id="@+id/body"

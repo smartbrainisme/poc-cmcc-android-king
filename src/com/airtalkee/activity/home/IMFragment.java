@@ -676,7 +676,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				pro.clearAnimation();
 				record.setVisibility(View.INVISIBLE);
 			}
-
 			if (pro != null)
 			{
 				pro.setVisibility(View.VISIBLE);
@@ -717,7 +716,10 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				// true, 1000, true, null);
 			}
 			sessionSp.edit().putInt(SESSION_EVENT_KEY, sessionSp.getInt(SESSION_EVENT_KEY, 1) + 1).commit();
-
+			if (session.getMessagePlayback() != null && TextUtils.equals(session.getMessagePlayback().getImageUri(), resId))
+			{
+				PTTFragment.getInstance().refreshPlayback();
+			}
 		}
 	}
 
@@ -753,6 +755,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				}
 			}
 			sessionSp.edit().putInt(SESSION_EVENT_KEY, sessionSp.getInt(SESSION_EVENT_KEY, 1) + 1).commit();
+			PTTFragment.getInstance().refreshPlayback();
 		}
 	}
 
@@ -794,7 +797,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 			HomeActivity.getInstance().checkNewIM(toClean);
 			SessionAndChannelView.getInstance().refreshChannelAndDialog();
 			// refreshMessageNewCount(toClean);
-			// refreshPlayback();
+			PTTFragment.getInstance().refreshPlayback();
 			adapterMessage.notifyDataSetChanged();
 		}
 	}

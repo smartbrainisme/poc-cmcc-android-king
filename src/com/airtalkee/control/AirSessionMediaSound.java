@@ -35,7 +35,6 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 	@Override
 	public void onMediaSoundListenBegin(AirSession session, String content)
 	{
-		// TODO Auto-generated method stub
 		pttLightStateRefresh(session, SessionMediaController.MEDIA_SOUND_OTHER_ON);
 		if (!ReceiverPhoneState.isCalling)
 		{
@@ -73,7 +72,6 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 	@Override
 	public void onMediaSoundListenEnd(AirSession session)
 	{
-		// TODO Auto-generated method stub
 		pttLightStateRefresh(session, SessionMediaController.MEDIA_SOUND_OTHER_OFF);
 		if (!ReceiverPhoneState.isCalling)
 		{

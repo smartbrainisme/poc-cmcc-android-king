@@ -12,7 +12,9 @@ import android.content.DialogInterface.OnCancelListener;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -27,30 +29,30 @@ import com.airtalkee.activity.home.widget.SessionAndChannelView.ViewChangeListen
 import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirSessionControl;
+import com.airtalkee.sdk.AirtalkeeChannel;
+import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.widget.PageIndicator;
 import com.airtalkee.widget.SlidingUpPanelLayout;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelSlideListener;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelState;
 
-public class HomeActivity extends SessionDialogActivity implements
-		PanelSlideListener, ViewChangeListener
+public class HomeActivity extends BaseActivity implements PanelSlideListener, OnPageChangeListener, ViewChangeListener
 {
-
+	private AirSession session;
+	private PageFragmentAdapter adapter;
 	private SlidingUpPanelLayout mLayout;
 	private ImageView slidingBack;
 	private SessionAndChannelView channelView;
 	private LinearLayout contaner;
+	private ImageView ivIMNew, ivIMPoint;
+	private MediaStatusBar mediaStatusBar;
 	private static HomeActivity mInstance;
+	protected final FragmentManager fm = getSupportFragmentManager();
 
 	public static HomeActivity getInstance()
 	{
 		return mInstance;
-	}
-	
-	public SessionAndChannelView getSessionAndChannelView()
-	{
-		return channelView;
 	}
 
 	@Override
@@ -64,11 +66,10 @@ public class HomeActivity extends SessionDialogActivity implements
 		setRequestedOrientation(Config.screenOrientation);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
 
-		super.mediaStatusBar = (MediaStatusBar) findViewById(R.id.media_status_function_bar);
+		mediaStatusBar = (MediaStatusBar) findViewById(R.id.media_status_function_bar);
 		mediaStatusBar.init((StatusBarTitle) findViewById(R.id.media_status_title_bar), AirSessionControl.getInstance().getCurrentChannelSession());
-		final FragmentManager fm = getSupportFragmentManager();
 		ivIMNew = (ImageView) findViewById(R.id.iv_im_new);
-		ivIMPoint = (ImageView) findViewById(R.id.iv_im_point);
+		this.ivIMPoint = (ImageView) findViewById(R.id.iv_im_point);
 		this.viewPager = (ViewPager) findViewById(R.id.home_activity_page_content);
 		this.adapter = new PageFragmentAdapter(this, fm);
 		this.viewPager.setAdapter(this.adapter);
@@ -117,7 +118,7 @@ public class HomeActivity extends SessionDialogActivity implements
 	{
 		panelCollapsed();
 	}
-	
+
 	public void panelCollapsed()
 	{
 		Log.i("HOME_ACTIVITY", "onPanelCollapsed");
@@ -133,11 +134,60 @@ public class HomeActivity extends SessionDialogActivity implements
 		// 检测是否有新im消息
 		checkNewIM(false);
 	}
+	
+	@Override
+	protected void onResumeFragments()
+	{
+		// TODO Auto-generated method stub
+		super.onResumeFragments();
+		this.onPageSelected(pageIndex);
+	}
+
+	@Override
+	public void onPageSelected(int page)
+	{
+		if (mediaStatusBar != null)
+			mediaStatusBar.onPageChanged(page);
+		if (mPageIndicator != null)
+			mPageIndicator.onPageChanged(page);
+		for (int i = 0; i < TABS.length; i++)
+		{
+			if (null != adapter)
+				if (i == page)
+				{
+					adapter.getItem(i).onResume();
+				}
+				else
+				{
+					adapter.getItem(i).onPause();
+				}
+		}
+		pageIndex = page;
+		viewPager.setCurrentItem(pageIndex);
+		if (page == PAGE_IM)
+		{
+			checkNewIM(true);
+			SessionAndChannelView.getInstance().refreshChannelAndDialog();
+		}
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int arg0)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onPageScrolled(int arg0, float arg1, int arg2)
+	{
+		// TODO Auto-generated method stub
+
+	}
 
 	@Override
 	protected void onResume()
 	{
-		// TODO Auto-generated method stub
 		super.onResume();
 		if (mediaStatusBar != null)
 			mediaStatusBar.setSession(AirSessionControl.getInstance().getCurrentChannelSession());
@@ -200,6 +250,15 @@ public class HomeActivity extends SessionDialogActivity implements
 		return super.onCreateDialog(id);
 	}
 
+	private BaseFragment getIMFragment()
+	{
+		if (adapter != null)
+		{
+			return adapter.getItem(PAGE_IM);
+		}
+		return null;
+	}
+
 	public SimpleAdapter mSimpleAdapter(Context contexts, String[] array, int layout, int id)
 	{
 		if (array == null)
@@ -213,6 +272,79 @@ public class HomeActivity extends SessionDialogActivity implements
 			data.add(listItem);
 		}
 		return new SimpleAdapter(this, data, layout, new String[] { "accountName" }, new int[] { id });
+	}
+
+	final class PageFragmentAdapter extends FragmentPagerAdapter
+	{
+		private final List<BaseFragment> fragments = new ArrayList<BaseFragment>();
+
+		public PageFragmentAdapter(Context ctx, FragmentManager fm)
+		{
+			super(fm);
+			for (int i = 0; i < TABS.length; i++)
+			{
+				this.fragments.add(BaseFragment.newInstantiate(ctx, TABS[i].getName(), mediaStatusBar));
+			}
+		}
+
+		@Override
+		public BaseFragment getItem(int position)
+		{
+			return this.fragments.get(position);
+		}
+
+		@Override
+		public int getCount()
+		{
+			return this.fragments.size();
+		}
+	}
+
+	public void checkNewIM(boolean toClean)
+	{
+		int count = 0;
+		try
+		{
+			if (session != null)
+			{
+				int type = session.getType();
+				if (type == AirSession.TYPE_CHANNEL)
+				{
+					AirChannel channel = AirtalkeeChannel.getInstance().ChannelGetByCode(session.getSessionCode());
+					if (channel != null)
+					{
+						if (toClean)
+						{
+							channel.msgUnReadCountClean();
+						}
+						count = channel.getMsgUnReadCount();
+					}
+				}
+				else if (type == AirSession.TYPE_DIALOG)
+				{
+					if (toClean)
+					{
+						session.setMessageUnreadCount(0);
+					}
+					count = session.getMessageUnreadCount();
+				}
+			}
+			if (count > 0)
+			{
+				ivIMNew.setVisibility(View.VISIBLE);
+				ivIMPoint.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				ivIMNew.setVisibility(View.GONE);
+				ivIMPoint.setVisibility(View.GONE);
+			}
+		}
+		catch (Exception e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

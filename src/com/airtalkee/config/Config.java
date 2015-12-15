@@ -14,7 +14,7 @@ public class Config
 	public static final int TRACE_MODE_ON_FILE = 1;
 	public static final int TRACE_MODE_OFF = 2;
 	// =======================================================
-	// ������������
+	// 渠道配置
 	public final static int MARKET_WEPTT_TEST = 80;
 	public final static int MARKET_WEPTT_V2 = 88;
 	public final static int MARKET_WEPTT = 100; //@string/app_name

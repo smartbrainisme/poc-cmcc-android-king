@@ -9,6 +9,7 @@ import android.view.WindowManager;
 import com.airtalkee.R;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.activity.TempSessionActivity;
+import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.control.AirSessionControl;
@@ -75,7 +76,6 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 		{
 			// TODO: handle exception
 		}
-		// TODO Auto-generated method stub
 	}
 
 	@Override
@@ -119,7 +119,6 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 				Sound.stopSound(Sound.PLAYER_INCOMING_RING);
 				AirtalkeeSessionManager.getInstance().SessionIncomingReject(temAirSession);
 				AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, temAirSession.getCaller(), getContext().getString(R.string.talk_call_state_rejected_call), true);
-
 				return true;
 			}
 			case KeyEvent.KEYCODE_MENU:

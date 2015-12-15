@@ -315,13 +315,14 @@ public class MediaStatusBar extends LinearLayout implements
 			MainActivity.getInstance().viewLeft.refreshList();
 		}
 
-//		if (null != PTTFragment.getInstance())
-//		{
-//			PTTFragment.getInstance().refreshPlayback();
-//		}
+		
 		
 		int val = sessionSp.getInt(BaseFragment.SESSION_EVENT_KEY, 1);
 		sessionSp.edit().putInt(BaseFragment.SESSION_EVENT_KEY, val + 1).commit();
+		if (null != PTTFragment.getInstance())
+		{
+			PTTFragment.getInstance().refreshPlayback();
+		}
 	}
 
 	@Override

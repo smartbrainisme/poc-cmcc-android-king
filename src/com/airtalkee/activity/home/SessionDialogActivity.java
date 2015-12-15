@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -15,13 +14,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import com.airtalkee.R;
-import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
 import com.airtalkee.activity.home.widget.SessionAndChannelView;
 import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirSessionControl;
-import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
@@ -30,35 +27,14 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.PageIndicator;
 
-public class SessionDialogActivity extends FragmentActivity implements
+public class SessionDialogActivity extends BaseActivity implements
 		OnPageChangeListener
 {
-
-	public static final int PAGE_MEMBER = 0;
-	public static final int PAGE_PTT = 1;
-	public static final int PAGE_IM = 2;
-
-	protected static final Class<?>[] TABS = {
-	/* 0 */MemberFragment.class,
-	/* 1 */PTTFragment.class,
-	/* 2 */IMFragment.class, };
-
-	protected static final Class<?>[] TABS_ADD = {
-	/* 0 */MemberTempFragment.class,
-	/* 1 */PTTFragment.class,
-	/* 2 */IMFragment.class, };
-
-	protected ViewPager viewPager;
-	protected PageFragmentAdapter adapter;
-	protected PageIndicator mPageIndicator;
-	protected ImageView ivIMNew, ivIMPoint;
-	protected int pageIndex = PAGE_PTT;
-
-	protected MediaStatusBar mediaStatusBar;
-	protected AirSession session;
-	protected int actionType;
-	protected final FragmentManager fm = getSupportFragmentManager();
-
+	private AirSession session;
+	private PageFragmentAdapter adapter;
+	private ImageView ivIMNew, ivIMPoint;
+	private MediaStatusBar mediaStatusBar;
+	private final FragmentManager fm = getSupportFragmentManager();
 	private boolean addFlag = false;
 
 	@Override
@@ -106,15 +82,16 @@ public class SessionDialogActivity extends FragmentActivity implements
 		mediaStatusBar = (MediaStatusBar) findViewById(R.id.media_status_function_bar);
 
 		mediaStatusBar.init((StatusBarTitle) findViewById(R.id.media_status_title_bar), session);
-		this.ivIMNew = (ImageView) findViewById(R.id.iv_im_new);
 		this.ivIMPoint = (ImageView) findViewById(R.id.iv_im_point);
+		this.ivIMNew = (ImageView) findViewById(R.id.iv_im_new);
 		this.viewPager = (ViewPager) findViewById(R.id.home_activity_page_content);
 		this.adapter = new PageFragmentAdapter(this, fm);
 		this.viewPager.setAdapter(this.adapter);
 		this.viewPager.setOnPageChangeListener(this);
-		this.viewPager.setOffscreenPageLimit(TABS.length);
+		this.viewPager.setOffscreenPageLimit(TABS_ADD.length);
 		this.mPageIndicator = (PageIndicator) findViewById(R.id.indicator);
 		this.mPageIndicator.setViewPager(viewPager);
+		HomeActivity.getInstance().finish();
 	}
 
 	@Override
@@ -149,7 +126,7 @@ public class SessionDialogActivity extends FragmentActivity implements
 		if (mPageIndicator != null)
 			mPageIndicator.onPageChanged(page);
 
-		for (int i = 0; i < TABS.length; i++)
+		for (int i = 0; i < TABS_ADD.length; i++)
 		{
 			if (null != adapter)
 				if (i == page)
@@ -184,19 +161,9 @@ public class SessionDialogActivity extends FragmentActivity implements
 		public PageFragmentAdapter(Context ctx, FragmentManager fm)
 		{
 			super(fm);
-			if (!addFlag)
+			for (int i = 0; i < TABS_ADD.length; i++)
 			{
-				for (int i = 0; i < TABS.length; i++)
-				{
-					this.fragments.add(BaseFragment.newInstantiate(ctx, TABS[i].getName(), mediaStatusBar));
-				}
-			}
-			else
-			{
-				for (int i = 0; i < TABS_ADD.length; i++)
-				{
-					this.fragments.add(BaseFragment.newInstantiate(ctx, TABS_ADD[i].getName(), mediaStatusBar));
-				}
+				this.fragments.add(BaseFragment.newInstantiate(ctx, TABS_ADD[i].getName(), mediaStatusBar));
 			}
 		}
 
@@ -213,64 +180,19 @@ public class SessionDialogActivity extends FragmentActivity implements
 		}
 	}
 
-	/*
-	 * 点击输入框外的地方隐藏输入法 目前不需要
-	 * 
-	 * @Override public boolean dispatchTouchEvent(MotionEvent ev) { if
-	 * (ev.getAction() == MotionEvent.ACTION_DOWN) { View v =
-	 * mediaStatusBar.getBottomBarParent(); if (isShouldHideInput(v, ev)) {
-	 * 
-	 * InputMethodManager imm = (InputMethodManager)
-	 * getSystemService(Context.INPUT_METHOD_SERVICE); if (imm != null) {
-	 * imm.hideSoftInputFromWindow(v.getWindowToken(), 0); } } return
-	 * super.dispatchTouchEvent(ev); }
-	 * 
-	 * if (getWindow().superDispatchTouchEvent(ev)) { return true; } return
-	 * onTouchEvent(ev); }
-	 */
-
-	public boolean isShouldHideInput(View v, MotionEvent event)
-	{
-		if (v != null)
-		{
-			int[] leftTop = { 0, 0 };
-			v.getLocationInWindow(leftTop);
-			int left = leftTop[0];
-			int top = leftTop[1];
-			int bottom = top + v.getHeight();
-			int right = left + v.getWidth();
-			if (event.getX() > left && event.getX() < right && event.getY() > top && event.getY() < bottom)
-			{
-				return false;
-			}
-			else
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
 	@Override
 	public void finish()
 	{
 		// TODO Auto-generated method stub
 		super.finish();
-//		AirSession session = mediaStatusBar.getSession();
+		// AirSession session = mediaStatusBar.getSession();
 		if (session != null && session.getSessionState() != AirSession.SESSION_STATE_IDLE && session.getType() == AirSession.TYPE_DIALOG)
 		{
 			AirSessionControl.getInstance().SessionEndCall(session);
 		}
 		AirtalkeeMessage.getInstance().MessageListMoreClean(session);
-	}
-
-	public BaseFragment getIMFragment()
-	{
-		if (adapter != null)
-		{
-			return adapter.getItem(PAGE_IM);
-		}
-		return null;
+		Intent homeIntent = new Intent(this, HomeActivity.class);
+		startActivity(homeIntent);
 	}
 
 	public void checkNewIM(boolean toClean)
@@ -319,5 +241,4 @@ public class SessionDialogActivity extends FragmentActivity implements
 			e.printStackTrace();
 		}
 	}
-
 }

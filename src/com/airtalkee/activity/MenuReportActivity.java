@@ -21,6 +21,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.adapter.AdapterReport;
 import com.airtalkee.adapter.AdapterReport.onReportCheckedListener;
 import com.airtalkee.config.Config;
@@ -137,6 +138,7 @@ public class MenuReportActivity extends ActivityBase implements
 		btReportDel.setClickable(false);
 		cbSelectAll = (CheckBox) findViewById(R.id.cb_report_selectall);
 		cbSelectAll.setOnCheckedChangeListener(this);
+		adapterReport.notifyDataSetChanged();
 		// lvReportList.setOnItemLongClickListener(this);
 	}
 
@@ -233,6 +235,12 @@ public class MenuReportActivity extends ActivityBase implements
 				btReportDel.setClickable(false);
 				btReportDel.setBackgroundResource(R.drawable.bg_report_gray);
 				isSelected.clear();
+				Toast.makeText1(this, "已删除", Toast.LENGTH_LONG).show();
+				ivRight.setImageResource(ThemeUtil.getResourceId(R.attr.theme_ic_topbar_setting, this));
+				reportDelPanel.setVisibility(View.GONE);
+				adapterReport.setEditing(false);
+				lvReportList.setClickable(true);
+				cbSelectAll.setChecked(false);
 //				refreshListOrEmpty();
 				break;
 			}
