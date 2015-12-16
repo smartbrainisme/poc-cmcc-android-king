@@ -53,6 +53,7 @@
 	<string name="talk_tools_infosys">信息采集</string>
 	<string name="talk_tools_infosys_null">请下载信息采集系统客户端，下载安装后便可使用！</string>
 	<string name="talk_tools_report">现场上报</string>
+	<string name="talk_tools_report_continue">继续上传</string>
 	<string name="talk_tools_report_high">高清</string>
 	<string name="talk_tools_report_compress">压缩</string>
 	<string name="talk_tools_report_description">描述</string>
@@ -63,6 +64,7 @@
 	<string name="talk_tools_report_waiting">等待上报..</string>
 	<string name="talk_tools_report_click">点击重发</string>
 	<string name="talk_tools_report_fail">上传失败</string>
+	<string name="talk_tools_report_fail_tip">已经保存到本地，建议稍后去更多-上报记录页继续上传</string>
 	<string name="talk_tools_report_success">上传成功，可在更多界面查看</string>
 	<string name="talk_tools_call_center">呼叫中心</string>
 	<string name="talk_tools_call_center_confirm">确定呼叫中心?</string>
@@ -261,6 +263,7 @@
 	<string name="talk_delete_tip">确认删除</string>
 	<string name="talk_deleteing">正在删除...</string>
 	<string name="talk_ok">确认</string>
+	<string name="talk_ok_2">好</string>
 	<string name="talk_no">取消</string>
 	<string name="talk_auto_login">下次自动登录</string>
 	<string name="talk_session_del_confirm">是否确认要删除选中的会话？</string>

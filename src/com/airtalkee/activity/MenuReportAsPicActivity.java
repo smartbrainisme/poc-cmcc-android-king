@@ -24,14 +24,18 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
+import com.airtalkee.R.string;
 import com.airtalkee.Util.BitmapUtil;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.AlbumChooseActivity;
+import com.airtalkee.activity.home.widget.AlertDialog;
+import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirReportManager;
+import com.airtalkee.entity.AirReport;
 import com.airtalkee.listener.OnMmiLocationListener;
 import com.airtalkee.location.AirLocation;
 import com.airtalkee.sdk.AirtalkeeReport;
@@ -44,7 +48,8 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 public class MenuReportAsPicActivity extends ActivityBase implements
-		OnClickListener, OnMmiLocationListener, OnCheckedChangeListener
+		OnClickListener, OnMmiLocationListener, OnCheckedChangeListener,
+		DialogListener
 {
 
 	private EditText report_detail;
@@ -67,6 +72,14 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 	private String taskId = null;
 	private String taskName = null;
 	private String type = null;
+	private String reportCode;
+	AlertDialog dialog;
+	private static MenuReportAsPicActivity mInstance;
+
+	public static MenuReportAsPicActivity getInstance()
+	{
+		return mInstance;
+	}
 
 	private android.widget.Toast myToast;
 
@@ -92,6 +105,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 			type = bundle.getString("type");
 		}
 		loadCamera(type);
+		mInstance = this;
 	}
 
 	private void loadCamera(String type)
@@ -105,12 +119,14 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 				// user-defined photograph
 				Intent it = new Intent(this, PhotoCamera.class);
 				it.putExtra(MediaStore.EXTRA_OUTPUT, picPathTemp);
-				it.putExtra("type",AlbumChooseActivity.TYPE_REPORT);
+				it.putExtra("type", AlbumChooseActivity.TYPE_REPORT);
 				startActivityForResult(it, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
-				// system photograph 
-				// Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+				// system photograph
+				// Intent i = new
+				// Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 				// i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
-				// startActivityForResult(i, Const.image_select.REQUEST_CODE_CREATE_IMAGE);
+				// startActivityForResult(i,
+				// Const.image_select.REQUEST_CODE_CREATE_IMAGE);
 			}
 			else if (type.equals("image"))
 			{
@@ -123,7 +139,8 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 				Intent localIntent = new Intent(this, AlbumChooseActivity.class);
 				localIntent.putExtra("type", AlbumChooseActivity.TYPE_REPORT);
 				// 调用系统相册
-				// Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
+				// Intent localIntent = new
+				// Intent("android.intent.action.GET_CONTENT", null);
 				// localIntent.setType("image/*");
 				startActivityForResult(localIntent, Const.image_select.REQUEST_CODE_BROWSE_IMAGE);
 			}
@@ -194,25 +211,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 				break;
 			case R.id.report_btn_post:
 			{
-				if (isUploading)
-				{
-					Util.Toast(this, getString(R.string.talk_report_uploading));
-					break;
-				}
-				if (picUriTemp == null && picUri == null)
-				{
-					Util.Toast(this, getString(R.string.talk_report_upload_pic_err_select_pic));
-					break;
-				}
-				isUploading = true;
-				Util.hideSoftInput(this);
-				refreshUI();
-				// Util.Toast(this, getString(R.string.talk_report_upload_getting_gps), 60, -1);
-				myToast = Toast.makeText1(this, true, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
-				myToast.setDuration(3600);
-				myToast.show();
-				// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
-				AirLocation.getInstance(this).onceGet(this, 30);
+				reportPost();
 				break;
 			}
 			case R.id.report_btn_take:
@@ -245,6 +244,30 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		}
 	}
 
+	public void reportPost()
+	{
+		if (isUploading)
+		{
+			Util.Toast(this, getString(R.string.talk_report_uploading));
+			return;
+		}
+		if (picUriTemp == null && picUri == null)
+		{
+			Util.Toast(this, getString(R.string.talk_report_upload_pic_err_select_pic));
+			return;
+		}
+		isUploading = true;
+		Util.hideSoftInput(this);
+		refreshUI();
+		// Util.Toast(this,
+		// getString(R.string.talk_report_upload_getting_gps), 60, -1);
+		myToast = Toast.makeText1(this, true, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
+		myToast.setDuration(3600);
+		myToast.show();
+		// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
+		AirLocation.getInstance(this).onceGet(this, 30);
+	}
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
@@ -259,10 +282,10 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 					picSize = AirServices.iOperator.getFileSize("", picPath, true);
 					refreshUI();
 					/*
-					 * picUriTemp = Uri.fromFile(new File(picPathTemp)); 
-					 * picUri = picUriTemp; picPath = picPathTemp; resizePicture(true);
-					 * picSize = AirServices.iOperator.getFileSize("", picPathTemp, true); 
-					 * refreshUI();
+					 * picUriTemp = Uri.fromFile(new File(picPathTemp)); picUri
+					 * = picUriTemp; picPath = picPathTemp; resizePicture(true);
+					 * picSize = AirServices.iOperator.getFileSize("",
+					 * picPathTemp, true); refreshUI();
 					 */
 				}
 				else
@@ -303,7 +326,6 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 				break;
 		}
 	}
-
 
 	private void resizePicture(boolean toCreateFile)
 	{
@@ -375,10 +397,19 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 			Log.i(MenuReportAsPicActivity.class, "ReportPicture: TASK[" + taskId + "][" + taskName + "] text=[" + report_detail.getText().toString() + "] x=[" + latitude + "] y=[" + longitude + "]");
 			AirReportManager.getInstance().Report(taskId, taskName, AirtalkeeReport.RESOURCE_TYPE_PICTURE, "jpg", uri, picPath, detail, picSize, latitude, longitude);
 			isUploading = false;
-			myToast = Toast.makeText1(this, R.drawable.ic_success, getString(R.string.talk_tools_report_success), Toast.LENGTH_LONG);
-			myToast.setDuration(3600);
-			myToast.show();
-			finish();
+//			AirReport report = AirReportManager.getInstance().getReports().get(AirReportManager.getInstance().getReports().size() - 1);
+//			reportCode = report.getCode();
+//			if (report.getState() == AirReport.STATE_RESULT_OK)
+//			{
+//				myToast = Toast.makeText1(this, R.drawable.ic_success, getString(R.string.talk_tools_report_success), Toast.LENGTH_LONG);
+//				myToast.show();
+//				finish();
+//			}
+//			else
+//			{
+//				dialog = new AlertDialog(this, getString(R.string.talk_tools_report_fail), getString(R.string.talk_tools_report_fail_tip), getString(R.string.talk_tools_report_continue), getString(R.string.talk_ok_2), this, -1);
+//				dialog.show();
+//			}
 		}
 	}
 
@@ -407,6 +438,24 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 			default:
 				break;
 		}
+	}
+
+	@Override
+	public void onClickOk(int id, Object obj)
+	{
+		this.finish();
+	}
+
+	@Override
+	public void onClickOk(int id, boolean isChecked)
+	{
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void onClickCancel(int id)
+	{
+		AirReportManager.getInstance().ReportRetry(reportCode);
 	}
 
 }

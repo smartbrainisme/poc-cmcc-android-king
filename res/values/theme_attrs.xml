@@ -63,6 +63,7 @@
     <attr name="theme_btn_send" format="reference" />
     <attr name="theme_msg_recv" format="reference" />
     <attr name="theme_msg_send" format="reference" />
+    <attr name="theme_msg_send_new" format="reference" />
     <attr name="theme_user_head" format="reference" />
     <attr name="theme_group_me" format="reference" />
     <attr name="theme_group_others" format="reference" />

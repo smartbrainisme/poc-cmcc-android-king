@@ -6,11 +6,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.json.JSONObject;
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 import com.airtalkee.R;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
+import com.airtalkee.activity.MenuReportAsPicActivity;
+import com.airtalkee.activity.MenuReportAsVidActivity;
+import com.airtalkee.activity.home.widget.AlertDialog;
+import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.dao.DBProxyReport;
 import com.airtalkee.entity.AirReport;
 import com.airtalkee.listener.OnMmiReportListener;
@@ -30,6 +36,7 @@ public class AirReportManager implements OnReportListener
 	private List<AirReport> reports = new ArrayList<AirReport>();
 	private AirReport reportDoing = null;
 	private boolean isReportLoaded = false;
+	
 
 	public static AirReportManager getInstance()
 	{
@@ -193,9 +200,9 @@ public class AirReportManager implements OnReportListener
 		if (null != reports && reports.size() > 0)
 		{
 			Iterator<Entry<String, AirReport>> iterator = reports.entrySet().iterator();
-			while (iterator.hasNext()) 
+			while (iterator.hasNext())
 			{
-				Map.Entry<String, AirReport> entry = (Map.Entry<String, AirReport>)iterator.next();
+				Map.Entry<String, AirReport> entry = (Map.Entry<String, AirReport>) iterator.next();
 				ReportDelete(entry.getKey());
 			}
 		}
@@ -298,6 +305,17 @@ public class AirReportManager implements OnReportListener
 			if (statusCode == AirtalkeeReport.RESOURCE_STATUS_CODE_OK)
 			{
 				mDbProxy.DbReportResultOk(reportDoing.getCode());
+				Toast myToast = Toast.makeText1(AirServices.getInstance(), R.drawable.ic_success, AirServices.getInstance().getString(R.string.talk_tools_report_success), Toast.LENGTH_LONG);
+				myToast.show();
+				if (reportDoing.getType() == AirtalkeeReport.RESOURCE_TYPE_PICTURE)
+				{
+					MenuReportAsPicActivity.getInstance().finish();
+				}
+				else
+				{
+					MenuReportAsVidActivity.getInstance().finish();
+				}
+				// finish()
 			}
 			else if (statusCode == AirtalkeeReport.RESOURCE_STATUS_CODE_ERR_SPACE_OVERFLOW)
 			{
@@ -307,11 +325,59 @@ public class AirReportManager implements OnReportListener
 			{
 				if (reportDoing.getType() == AirtalkeeReport.RESOURCE_TYPE_PICTURE)
 				{
-					Util.Toast(AirServices.getInstance(), AirServices.getInstance().getString(R.string.talk_report_upload_pic_err), R.drawable.ic_error);
+					MenuReportAsPicActivity context = MenuReportAsPicActivity.getInstance();
+					AlertDialog dialog = new AlertDialog(context, context.getString(R.string.talk_tools_report_fail), context.getString(R.string.talk_tools_report_fail_tip), context.getString(R.string.talk_tools_report_continue), context.getString(R.string.talk_ok_2), new DialogListener()
+					{
+						@Override
+						public void onClickOk(int id, boolean isChecked)
+						{
+							
+						}
+
+						@Override
+						public void onClickOk(int id, Object obj)
+						{
+							MenuReportAsPicActivity.getInstance().finish();
+						}
+
+						@Override
+						public void onClickCancel(int id)
+						{
+							// TODO Auto-generated method stub
+							MenuReportAsPicActivity.getInstance().reportPost();
+						}
+					}, -1);
+					dialog.show();
+					// Util.Toast(AirServices.getInstance(),
+					// AirServices.getInstance().getString(R.string.talk_report_upload_pic_err),
+					// R.drawable.ic_error);
 				}
 				else
 				{
-					Util.Toast(AirServices.getInstance(), AirServices.getInstance().getString(R.string.talk_report_upload_vid_err), R.drawable.ic_error);
+					MenuReportAsVidActivity context = MenuReportAsVidActivity.getInstance();
+					AlertDialog dialog = new AlertDialog(context, context.getString(R.string.talk_tools_report_fail), context.getString(R.string.talk_tools_report_fail_tip), context.getString(R.string.talk_tools_report_continue), context.getString(R.string.talk_ok_2), new DialogListener()
+					{
+						@Override
+						public void onClickOk(int id, boolean isChecked)
+						{
+						}
+
+						@Override
+						public void onClickOk(int id, Object obj)
+						{
+							MenuReportAsVidActivity.getInstance().finish();
+						}
+
+						@Override
+						public void onClickCancel(int id)
+						{
+							MenuReportAsVidActivity.getInstance().reportPost();
+						}
+					}, -1);
+					dialog.show();
+					// Util.Toast(AirServices.getInstance(),
+					// AirServices.getInstance().getString(R.string.talk_report_upload_vid_err),
+					// R.drawable.ic_error);
 				}
 			}
 			reportDoing.setState(statusCode == AirtalkeeReport.RESOURCE_STATUS_CODE_OK ? AirReport.STATE_RESULT_OK : AirReport.STATE_RESULT_FAIL);
@@ -425,5 +491,4 @@ public class AirReportManager implements OnReportListener
 			}
 		}
 	}
-
 }

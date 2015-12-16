@@ -31,8 +31,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
-public class AdapterReport extends BaseAdapter implements OnClickListener,
-		OnMmiLocationListener
+public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmiLocationListener
 {
 	private Context context = null;
 	private List<AirReport> reports = null;
@@ -289,6 +288,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener,
 			case R.id.talk_report_retry:
 			{
 				AirReportManager.getInstance().ReportRetry((String) v.getTag());
+				notifyDataSetChanged();
 				// AirLocation.getInstance(context).onceGet(this, 30);
 				break;
 			}

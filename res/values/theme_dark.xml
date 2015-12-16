@@ -79,6 +79,7 @@
         <item name="theme_btn_send">@drawable/msg_send0</item>
         <item name="theme_msg_recv">@drawable/selector_chat_from</item>
         <item name="theme_msg_send">@drawable/selector_chat_to</item>
+        <item name="theme_msg_send_new">@drawable/bg_msgbox_send_normal_new</item>
         <!-- <item name="theme_user_head">@drawable/user_head</item> -->
         <item name="theme_user_head">@drawable/head_portrait</item>
         <item name="theme_group_me">@drawable/group_me</item>

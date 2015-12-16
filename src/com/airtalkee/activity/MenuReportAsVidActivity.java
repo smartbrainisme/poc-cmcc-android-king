@@ -56,6 +56,11 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 	private String type = null;
 
 	private android.widget.Toast myToast;
+	private static MenuReportAsVidActivity mInstance;
+	public static MenuReportAsVidActivity getInstance()
+	{
+		return mInstance;
+	}
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -75,6 +80,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		doInitView();
 		refreshUI();
 		loadAlbum(type);
+		mInstance = this;
 	}
 
 	private void loadAlbum(String type)
@@ -173,24 +179,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 				break;
 			case R.id.report_btn_post:
 			{
-				if (isUploading)
-				{
-					Util.Toast(this, getString(R.string.talk_report_uploading));
-					break;
-				}
-				if (videoPath.equals(""))
-				{
-					Util.Toast(this, getString(R.string.talk_report_upload_vid_err_select_pic));
-					break;
-				}
-				isUploading = true;
-				Util.hideSoftInput(this);
-				refreshUI();
-				myToast = Toast.makeText1(this, true, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
-				myToast.setDuration(3600);
-				myToast.show();
-				// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
-				AirLocation.getInstance(this).onceGet(this, 30);
+				reportPost();
 				break;
 			}
 			case R.id.report_image:
@@ -252,6 +241,28 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		}
 	}
 
+	public void reportPost()
+	{
+		if (isUploading)
+		{
+			Util.Toast(this, getString(R.string.talk_report_uploading));
+			return;
+		}
+		if (videoPath.equals(""))
+		{
+			Util.Toast(this, getString(R.string.talk_report_upload_vid_err_select_pic));
+			return;
+		}
+		isUploading = true;
+		Util.hideSoftInput(this);
+		refreshUI();
+		myToast = Toast.makeText1(this, true, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
+		myToast.setDuration(3600);
+		myToast.show();
+		// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
+		AirLocation.getInstance(this).onceGet(this, 30);
+	}
+	
 	Uri gUri;
 
 	public Uri getOutputMediaFile()

@@ -38,7 +38,7 @@ public class AlertDialog extends Dialog implements
 
 	public interface DialogListener
 	{
-		void onClickOk(int id,Object obj);
+		void onClickOk(int id, Object obj);
 
 		void onClickOk(int id, boolean isChecked);
 
@@ -90,8 +90,8 @@ public class AlertDialog extends Dialog implements
 		this.id = id;
 		this.context = context;
 	}
-	
-	public AlertDialog(Context context, String title, String content, String textcancle, String textSure, DialogListener listener, int id,Object object)
+
+	public AlertDialog(Context context, String title, String content, String textcancle, String textSure, DialogListener listener, int id, Object object)
 	{
 		super(context, R.style.alert_dialog);
 		this.object = object;
@@ -210,7 +210,7 @@ public class AlertDialog extends Dialog implements
 					}
 					else
 					{
-						listener.onClickOk(this.id,object);
+						listener.onClickOk(this.id, object);
 					}
 				}
 				break;

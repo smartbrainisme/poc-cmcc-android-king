@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.text.Spannable;
 import android.text.TextUtils;
 import android.view.View;
@@ -25,7 +26,8 @@ import com.airtalkee.sdk.controller.AccountController;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
 
-public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCompletedListener
+public class AdapterSessionMessage extends AdapterBase implements
+		OnImageLoadCompletedListener
 {
 	AirSession currentSession = null;
 	final int TYPE_ME = 0;
@@ -48,7 +50,8 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		currentSession = session;
 
 		String able = Language.getLocalLanguage(mContext);
-//		isChinese = able.equals(Language.LANG_CN) || able.equals(Language.LANG_CN_HK) || able.equals(Language.LANG_CN_TW);
+		// isChinese = able.equals(Language.LANG_CN) ||
+		// able.equals(Language.LANG_CN_HK) || able.equals(Language.LANG_CN_TW);
 	}
 
 	@Override
@@ -56,7 +59,8 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 	{
 		// TODO Auto-generated method stub
 		String able = Language.getLocalLanguage(mContext);
-//		isChinese = able.equals(Language.LANG_CN) || able.equals(Language.LANG_CN_HK) || able.equals(Language.LANG_CN_TW);
+		// isChinese = able.equals(Language.LANG_CN) ||
+		// able.equals(Language.LANG_CN_HK) || able.equals(Language.LANG_CN_TW);
 
 		super.notifyDataSetChanged();
 	}
@@ -211,13 +215,13 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 			if (!iMessage.isRecordPlaying())
 			{
 				holder1.record_time.setText("" + iMessage.getImageLength() + "''");
-				holder1.record_default.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_play, mContext) );
+				holder1.record_default.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_play, mContext));
 				// holder1.record_default.setSelected(false);
 			}
 			else
 			{
 				holder1.record_time.setText("" + iMessage.getRecordTimer() + "''");
-				holder1.record_default.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_stop, mContext) );
+				holder1.record_default.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_stop, mContext));
 				// holder1.record_default.setSelected(true);
 			}
 		}
@@ -320,13 +324,13 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 			if (!iMessage.isRecordPlaying())
 			{
 				holder2.record_time.setText("" + iMessage.getImageLength() + "''");
-				holder2.record_default.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_play, mContext) );
+				holder2.record_default.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_play, mContext));
 				// holder2.record_default.setSelected(false);
 			}
 			else
 			{
 				holder2.record_time.setText("" + iMessage.getRecordTimer() + "''");
-				holder2.record_default.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_stop, mContext) );
+				holder2.record_default.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_stop, mContext));
 				// holder2.record_default.setSelected(true);
 			}
 		}
@@ -403,10 +407,10 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		protected ImageView msg_ptt;
 		protected View bodyContent;
 
-//		protected View layoutFriendInfo;
-//		protected View btnAddFriend;
-//		protected View btnAddBlack;
-//		protected TextView tvAddFriendsTips;
+		// protected View layoutFriendInfo;
+		// protected View btnAddFriend;
+		// protected View btnAddBlack;
+		// protected TextView tvAddFriendsTips;
 
 		protected void ViewHolderInit(View convertView)
 		{
@@ -425,16 +429,17 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 			this.bodyContent = convertView.findViewById(R.id.body_content);
 			this.tvSystem = (TextView) convertView.findViewById(R.id.tv_system);
 			this.msg_ptt = (ImageView) convertView.findViewById(R.id.msg_ptt);
-//			this.layoutFriendInfo = convertView.findViewById(R.id.layout_friend_info);
-//			this.btnAddFriend = convertView.findViewById(R.id.tv_agree);
-//			this.btnAddBlack = convertView.findViewById(R.id.tv_reject);
-//			this.tvAddFriendsTips = (TextView)convertView.findViewById(R.id.tv_add_friend_tips);
+			// this.layoutFriendInfo =
+			// convertView.findViewById(R.id.layout_friend_info);
+			// this.btnAddFriend = convertView.findViewById(R.id.tv_agree);
+			// this.btnAddBlack = convertView.findViewById(R.id.tv_reject);
+			// this.tvAddFriendsTips =
+			// (TextView)convertView.findViewById(R.id.tv_add_friend_tips);
 		}
 	}
 
 	/**
-	 * @author CQF
-	 *         �Լ�������Ϣ
+	 * @author CQF �Լ�������Ϣ
 	 */
 	protected class ViewHolder1 extends ViewHolder
 	{
@@ -443,8 +448,7 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 
 	/**
 	 * 
-	 * @author CQF
-	 *         ���˷�����Ϣ
+	 * @author CQF ���˷�����Ϣ
 	 */
 	class ViewHolder2 extends ViewHolder
 	{
@@ -537,16 +541,16 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		switch (orientation)
 		{
 			case AdapterSessionMessage.ORIENTATION_HORIZONTAL:
-				params.width = (int) mContext.getResources().getDimension(R.dimen.msg_pic_widht);
-				params.height = (int) mContext.getResources().getDimension(R.dimen.msg_pic_height);
+				params.width = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_widht));
+				params.height = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_height));
 				break;
 			case AdapterSessionMessage.ORIENTATION_VERTICAL:
-				params.width = (int) mContext.getResources().getDimension(R.dimen.msg_pic_height);
-				params.height = (int) mContext.getResources().getDimension(R.dimen.msg_pic_widht);
+				params.width = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_height) * 2);
+				params.height = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_widht) * 2);
 				break;
 			case AdapterSessionMessage.ORIENTATION_SQUARE:
-				params.width = (int) mContext.getResources().getDimension(R.dimen.msg_pic_height_width);
-				params.height = (int) mContext.getResources().getDimension(R.dimen.msg_pic_height_width);
+				params.width = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_height_width) * 2);
+				params.height = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_height_width) * 2);
 				break;
 		}
 		v.setLayoutParams(params);
