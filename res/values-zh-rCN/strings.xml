@@ -272,7 +272,7 @@
 	<string name="talk_session_queue_see">查看全部排队</string>
 	<string name="talk_session_speak_idle">空闲</string>
 	<string name="talk_current_user">当前用户:%s</string>
-	<string name="talk_account_other">您的帐号已在另一台设备上登录！请重新登录！</string>
+	<string name="talk_account_other">您的账号已在另一台设备上登录！请重新登录！</string>
 	<string name="talk_video_addr_error">视频地址无效！</string>
 	<string name="talk_video_tio_to_open">确认开始实时视频回传？</string>
 	<string name="talk_video_tio_to_close">是否要关闭视频？</string>

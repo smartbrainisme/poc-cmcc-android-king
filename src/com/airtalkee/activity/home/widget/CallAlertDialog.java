@@ -66,7 +66,6 @@ public class CallAlertDialog extends AlertDialog implements
 				AirSessionControl.getInstance().SessionMakeSpecialCall(session);
 			}
 			AirtalkeeMessage.getInstance().MessageSystemGenerate(session, getContext().getString(R.string.talk_call_state_outgoing_call), false);
-
 		}
 
 	}

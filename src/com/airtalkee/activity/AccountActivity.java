@@ -24,6 +24,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.ApnManager;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.application.MainApplication;
@@ -470,7 +471,12 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 	public void onMmiHeartbeatException(int result)
 	{
 		// TODO Auto-generated method stub
-
+		if (result == AirtalkeeAccount.ACCOUNT_RESULT_ERR_SINGLE)
+		{
+			// tv.setText(R.string.talk_account_other);
+			// showDialog(R.id.talk_dialog_login_single);
+			Toast.makeText1(this, getString(R.string.talk_account_other), Toast.LENGTH_LONG).show();
+		}
 	}
 	
 	@Override

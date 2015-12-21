@@ -173,13 +173,12 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 							}
 							for (int i = 0; i < list.size(); i++)
 							{
-								if (Bimp.bmp.size() < 9)
+								if (Bimp.bmp.size() <= 9)
 								{
 									try
 									{
 										Bitmap bm = Bimp.revitionImageSize(list.get(i));
 										Bimp.bmp.add(bm);
-
 									}
 									catch (IOException e)
 									{
@@ -205,6 +204,7 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 							String path = c.iterator().next();
 							data.putExtra(KEYSTR, path);
 							setResult(Activity.RESULT_OK, data);
+							
 							finish();
 						}
 						else
@@ -215,6 +215,7 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 						break;
 					}
 				}
+				adapter.map.clear();
 				break;
 			}
 			case R.id.menu_left_button:

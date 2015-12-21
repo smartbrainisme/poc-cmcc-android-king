@@ -146,7 +146,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 						{
 							tvMediaStatus.setText(R.string.talk_session_speak_idle);
 						}
-						ivMeidiaStatus.setImageResource(R.drawable.media_idle_green);
+						ivMeidiaStatus.setImageResource(R.drawable.media_idle_gray);
 						break;
 				}
 			}

@@ -21,14 +21,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.DensityUtil;
+import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
 import com.airtalkee.activity.home.widget.SessionAndChannelView;
 import com.airtalkee.activity.home.widget.SessionAndChannelView.ViewChangeListener;
 import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.config.Config;
+import com.airtalkee.control.AirAccountManager;
 import com.airtalkee.control.AirSessionControl;
+import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirSession;
@@ -47,6 +51,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 	private LinearLayout contaner;
 	private ImageView ivIMNew, ivIMPoint;
 	private MediaStatusBar mediaStatusBar;
+	private TextView networkTip;
 	private static HomeActivity mInstance;
 	protected final FragmentManager fm = getSupportFragmentManager();
 
@@ -77,6 +82,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		this.viewPager.setOffscreenPageLimit(TABS.length);
 		this.mPageIndicator = (PageIndicator) findViewById(R.id.indicator);
 		this.mPageIndicator.setViewPager(viewPager);
+		this.networkTip = (TextView) findViewById(R.id.network_tip);
 
 		DensityUtil.initScreen(this);
 		int height = DensityUtil.getHeight(this) - DensityUtil.getStatusHeight(this) - 150;
@@ -93,6 +99,14 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		{
 			checkNewIM(false);
 		}
+	}
+	
+	@Override
+	public void finish()
+	{
+		// TODO Auto-generated method stub
+		super.finish();
+		
 	}
 
 	// 滑动
@@ -346,5 +360,4 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 			e.printStackTrace();
 		}
 	}
-
 }

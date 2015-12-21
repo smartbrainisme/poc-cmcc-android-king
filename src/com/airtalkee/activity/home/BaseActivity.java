@@ -6,10 +6,17 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
+import com.airtalkee.R;
+import com.airtalkee.activity.home.widget.AlertDialog;
+import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.config.Config;
+import com.airtalkee.control.AirAccountManager;
+import com.airtalkee.listener.OnMmiAccountListener;
+import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.widget.PageIndicator;
 
-public class BaseActivity extends FragmentActivity
+public class BaseActivity extends FragmentActivity implements
+		OnMmiAccountListener
 {
 
 	public static final int PAGE_MEMBER = 0;
@@ -28,10 +35,9 @@ public class BaseActivity extends FragmentActivity
 
 	protected ViewPager viewPager;
 	protected PageIndicator mPageIndicator;
-	
+
 	protected int pageIndex = PAGE_PTT;
 	protected int actionType;
-	
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -39,6 +45,7 @@ public class BaseActivity extends FragmentActivity
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
 		setRequestedOrientation(Config.screenOrientation);
+		AirAccountManager.getInstance().setAccountListener(this);
 	}
 
 	public boolean isShouldHideInput(View v, MotionEvent event)
@@ -70,33 +77,89 @@ public class BaseActivity extends FragmentActivity
 		super.finish();
 	}
 
-	
+	@Override
+	public void onMmiHeartbeatLogin(int result)
+	{
+		if (result != 0)
+		{
+			if (result == AirtalkeeAccount.ACCOUNT_RESULT_ERR_SINGLE)
+			{
+				new AlertDialog(this, getString(R.string.talk_account_other), getString(R.string.talk_exit), new DialogListener()
+				{
+					@Override
+					public void onClickOk(int id, boolean isChecked)
+					{
+						// TODO Auto-generated method stub
+					}
+
+					@Override
+					public void onClickOk(int id, Object obj)
+					{
+						System.exit(0);
+					}
+
+					@Override
+					public void onClickCancel(int id)
+					{
+						System.exit(0);
+					}
+				}, false).show();
+			}
+			else
+			{
+				
+			}
+		}
+	}
+
+	@Override
+	public void onMmiHeartbeatLogout()
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onMmiHeartbeatException(int result)
+	{
+		if (result == AirtalkeeAccount.ACCOUNT_RESULT_ERR_SINGLE)
+		{
+			new AlertDialog(this, getString(R.string.talk_account_other), getString(R.string.talk_exit), new DialogListener()
+			{
+				@Override
+				public void onClickOk(int id, boolean isChecked)
+				{
+					// TODO Auto-generated method stub
+				}
+
+				@Override
+				public void onClickOk(int id, Object obj)
+				{
+					System.exit(0);
+				}
+
+				@Override
+				public void onClickCancel(int id)
+				{
+					System.exit(0);
+				}
+			}, false).show();
+		}
+	}
 
 	// 点击输入框外的地方隐藏输入法 目前不需要
 	/*
-	@Override
-	protect boolean dispatchTouchEvent(MotionEvent ev)
-	{
-		if (ev.getAction() == MotionEvent.ACTION_DOWN)
-		{
-			View v = mediaStatusBar.getBottomBarParent();
-			if (isShouldHideInput(v, ev))
-			{
-
-				InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				if (imm != null)
-				{
-					imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-				}
-			}
-			return super.dispatchTouchEvent(ev);
-		}
-
-		if (getWindow().superDispatchTouchEvent(ev))
-		{
-			return true;
-		}
-		return onTouchEvent(ev);
-	}*/
+	 * @Override protect boolean dispatchTouchEvent(MotionEvent ev) { if
+	 * (ev.getAction() == MotionEvent.ACTION_DOWN) { View v =
+	 * mediaStatusBar.getBottomBarParent(); if (isShouldHideInput(v, ev)) {
+	 * 
+	 * InputMethodManager imm = (InputMethodManager)
+	 * getSystemService(Context.INPUT_METHOD_SERVICE); if (imm != null) {
+	 * imm.hideSoftInputFromWindow(v.getWindowToken(), 0); } } return
+	 * super.dispatchTouchEvent(ev); }
+	 * 
+	 * if (getWindow().superDispatchTouchEvent(ev)) { return true; } return
+	 * onTouchEvent(ev); }
+	 */
 
 }

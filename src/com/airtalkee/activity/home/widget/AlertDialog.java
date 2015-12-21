@@ -1,11 +1,10 @@
 package com.airtalkee.activity.home.widget;
 
+import android.R.bool;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -33,6 +32,7 @@ public class AlertDialog extends Dialog implements
 	protected Object object;
 	protected int tvContentSize = 16;
 	protected boolean cbVisible = false;
+	protected boolean showCancle = true;
 	//
 	protected DialogListener listener;
 
@@ -118,6 +118,15 @@ public class AlertDialog extends Dialog implements
 		this.context = context;
 	}
 
+	public AlertDialog(Context context, String content, String textSure, DialogListener listener, boolean flag)
+	{
+		super(context, R.style.alert_dialog);
+		this.showCancle = flag;
+		this.content = content;
+		this.textSure = textSure;
+		this.listener = listener;
+	}
+
 	public AlertDialog(Context context, String title, String url, String content, String textcancle, String textSure, DialogListener listener, boolean cancelable, int id)
 	{
 		super(context, R.style.alert_dialog);
@@ -191,6 +200,10 @@ public class AlertDialog extends Dialog implements
 		{
 			if (!cbVisible)
 				cbRemember.setVisibility(View.GONE);
+		}
+		if (!showCancle)
+		{
+			cancle.setVisibility(View.GONE);
 		}
 	}
 

@@ -42,8 +42,7 @@ import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.MListView;
 import com.airtalkee.widget.MyRelativeLayout;
 
-public class MemberFragment extends BaseFragment implements OnClickListener,
-		OnItemClickListener, CheckedCallBack, MemberCheckListener
+public class MemberFragment extends BaseFragment implements OnClickListener, OnItemClickListener, CheckedCallBack, MemberCheckListener
 {
 	private static final int DIALOG_CALL = 99;
 	private TextView tabMemberSession, tabMemberAll;
