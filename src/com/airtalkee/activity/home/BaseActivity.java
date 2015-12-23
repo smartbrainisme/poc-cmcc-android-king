@@ -16,8 +16,7 @@ import com.airtalkee.listener.OnMmiAccountListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.widget.PageIndicator;
 
-public class BaseActivity extends FragmentActivity implements
-		OnMmiAccountListener
+public class BaseActivity extends FragmentActivity implements OnMmiAccountListener
 {
 
 	public static final int PAGE_MEMBER = 0;

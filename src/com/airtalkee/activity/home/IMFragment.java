@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLayoutChangeListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
@@ -31,7 +32,9 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimerListener;
@@ -62,11 +65,11 @@ import com.airtalkee.widget.PullToRefreshListView.OnPullToRefreshListener;
 public class IMFragment extends BaseFragment implements OnClickListener,
 		OnMessageListListener, OnLongClickListener, TextWatcher,
 		OnMmiMessageListener, OnPullToRefreshListener, OnItemClickListener,
-		AirMmiTimerListener, OnTouchListener
+		AirMmiTimerListener, OnTouchListener, OnLayoutChangeListener
 {
 	private static final int REQUEST_CODE_BROWSE_IMAGE = 111;
 
-	private View textVoicePannel, textPannel, voicePannel;
+	public View textVoicePannel, textPannel, voicePannel;
 	private ImageView btnVoice;
 	private PullToRefreshListView lvMessage;
 	private AdapterSessionMessage adapterMessage;
@@ -147,6 +150,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		super.onResume();
 		setSession(getSession());
 		AirMessageTransaction.getInstance().setOnMessageListener(this);
+		textPannel.addOnLayoutChangeListener(this);
 	}
 
 	@Override
@@ -775,9 +779,12 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 					text.setText(currentMessage.getRecordTimer() + "''");
 				}
 			}
-			// if (session.getMessagePlayback() != null && TextUtils.equals(session.getMessagePlayback().getImageUri(), currentMessage.getImageUri()))
+			// if (session.getMessagePlayback() != null &&
+			// TextUtils.equals(session.getMessagePlayback().getImageUri(),
+			// currentMessage.getImageUri()))
 			// {
-			//    recPlaybackSeconds.setText(currentMessage.getRecordTimer() +"''");
+			// recPlaybackSeconds.setText(currentMessage.getRecordTimer()
+			// +"''");
 			// }
 
 		}
@@ -942,19 +949,23 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 							for (int i = 0; i < pathList.size(); i++)
 							{
 								// Uri originalUri = data.getData();
-								// String[] proj = { MediaStore.Images.Media.DATA };
+								// String[] proj = {
+								// MediaStore.Images.Media.DATA };
 								// String path = null;
 								// @SuppressWarnings("deprecation")
-								// Cursor cursor = getActivity().managedQuery(originalUri, proj, null, null, null);
+								// Cursor cursor =
+								// getActivity().managedQuery(originalUri, proj,
+								// null, null, null);
 								// if (cursor != null)
 								// {
-								//	 int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-								//   cursor.moveToFirst();
-								//	 path = cursor.getString(column_index);
+								// int column_index =
+								// cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+								// cursor.moveToFirst();
+								// path = cursor.getString(column_index);
 								// }
 								// else
 								// {
-								//	 path = originalUri.getPath();
+								// path = originalUri.getPath();
 								// }
 								String path = pathList.get(i);
 								Bitmap tempBitmap = null;
@@ -1003,5 +1014,14 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		// TODO Auto-generated method stub
 
 	}
-	
+
+	@Override
+	public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom)
+	{
+//		FrameLayout layout = (FrameLayout) textVoicePannel;
+//		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(layout.getLayoutParams());
+//		lp.setMargins(0, 0, 0, bottom);
+//		layout.setLayoutParams(lp);
+	}
+
 }

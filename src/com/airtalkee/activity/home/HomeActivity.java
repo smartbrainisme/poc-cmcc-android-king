@@ -16,7 +16,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -27,15 +26,12 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.DensityUtil;
-import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
 import com.airtalkee.activity.home.widget.SessionAndChannelView;
 import com.airtalkee.activity.home.widget.SessionAndChannelView.ViewChangeListener;
 import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.config.Config;
-import com.airtalkee.control.AirAccountManager;
 import com.airtalkee.control.AirSessionControl;
-import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirSession;
@@ -44,8 +40,7 @@ import com.airtalkee.widget.SlidingUpPanelLayout;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelSlideListener;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelState;
 
-public class HomeActivity extends BaseActivity implements PanelSlideListener,
-		OnPageChangeListener, ViewChangeListener
+public class HomeActivity extends BaseActivity implements PanelSlideListener, OnPageChangeListener, ViewChangeListener
 {
 	private AirSession session;
 	private PageFragmentAdapter adapter;
