@@ -1,6 +1,7 @@
 package com.airtalkee.activity.home;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -33,7 +34,9 @@ import com.airtalkee.activity.home.widget.MemberAllView;
 import com.airtalkee.activity.home.widget.MemberAllView.MemberCheckListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
+import com.airtalkee.sdk.AirtalkeeContactPresence;
 import com.airtalkee.sdk.AirtalkeeMessage;
+import com.airtalkee.sdk.OnContactPresenceListener;
 import com.airtalkee.sdk.controller.SessionController;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
@@ -42,7 +45,7 @@ import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.MListView;
 import com.airtalkee.widget.MyRelativeLayout;
 
-public class MemberFragment extends BaseFragment implements OnClickListener, OnItemClickListener, CheckedCallBack, MemberCheckListener
+public class MemberFragment extends BaseFragment implements OnClickListener, OnItemClickListener, CheckedCallBack, MemberCheckListener, OnContactPresenceListener
 {
 	private static final int DIALOG_CALL = 99;
 	private TextView tabMemberSession, tabMemberAll;
@@ -89,9 +92,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 
 		if (mediaStatusBar != null)
 			mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, false);
-
 		setSession(getSession());
-
 		return v;
 	}
 
@@ -105,6 +106,16 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 
 		setSession(getSession());
 		refreshTab(R.id.tab_member_session);
+		AirtalkeeContactPresence.getInstance().setContactPresenceListener(this);
+	}
+	
+	@Override
+	public void onPause()
+	{
+		// TODO Auto-generated method stub
+		super.onPause();
+		AirtalkeeContactPresence.getInstance().setContactPresenceListener(null);
+		AirtalkeeContactPresence.getInstance().ContactPresenceUnsubscribe();
 	}
 
 	@Override
@@ -411,5 +422,27 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 				}
 			}
 		}, filter);
+	}
+
+	@Override
+	public void onContactPresence(boolean isSubscribed, HashMap<String, Integer> presenceMap)
+	{
+		if (getSession() != null && getSession().getType() == AirSession.TYPE_DIALOG)
+		{
+			getSession().MembersSort();
+		}
+		adapterMember.notifyDataSetChanged();
+		memberAllView.adapterMember.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onContactPresence(boolean isSubscribed, String uid, int state)
+	{
+		if (getSession() != null && getSession().getType() == AirSession.TYPE_DIALOG)
+		{
+			getSession().MembersSort();
+		}
+		adapterMember.notifyDataSetChanged();
+		memberAllView.adapterMember.notifyDataSetChanged();
 	}
 }

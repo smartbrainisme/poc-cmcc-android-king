@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.airtalkee" android:versionCode="46" android:versionName="V1.2 D20151217" >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.airtalkee" android:versionCode="46" android:versionName="V1.2 D20151222" >
 	<uses-sdk android:minSdkVersion="9" />
 	<application android:persistent="true" android:icon="@drawable/icon_cmcc" android:label="@string/app_name_cmcc" android:theme="@style/AppTheme_Dark"
-		android:debuggable="false" android:name=".application.MainApplication">
+		android:debuggable="true" android:name=".application.MainApplication">
 		<activity android:name=".activity.AccountActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter> 
 		</activity>
-		<activity android:name=".activity.home.SessionAddActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustPan|stateHidden"/>
-		<activity android:name=".activity.home.SessionNewActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustPan|stateHidden"/>
-		<activity android:name=".activity.home.SessionDialogActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustPan|stateHidden"/>
-		<activity android:name=".activity.home.MemberTempFragment" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustPan|stateHidden"/>
+		<activity android:name=".activity.home.SessionAddActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize|stateHidden"/>
+		<activity android:name=".activity.home.SessionNewActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize|stateHidden"/>
+		<activity android:name=".activity.home.SessionDialogActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize|stateHidden"/>
+		<activity android:name=".activity.home.MemberTempFragment" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize|stateHidden"/>
 		<activity android:name=".activity.home.AlbumChooseActivity" android:configChanges="orientation|keyboardHidden"/>
 		<activity android:name=".activity.home.AlbumEnterActivity" />
-		<activity android:name=".activity.home.HomeActivity" android:configChanges="orientation|keyboardHidden"/>
+		<activity android:name=".activity.home.HomeActivity" android:configChanges="orientation|keyboardHidden" />
 		<activity android:name=".activity.MainActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.UserAllActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name=".activity.MoreActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />

@@ -106,7 +106,6 @@ public class MemberTempFragment extends BaseFragment implements
 		super.onResume();
 		if (mediaStatusBar != null)
 			mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, false);
-
 		setSession(getSession());
 	}
 

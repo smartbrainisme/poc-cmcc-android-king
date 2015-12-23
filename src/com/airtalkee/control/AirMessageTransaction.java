@@ -141,9 +141,9 @@ public class AirMessageTransaction implements OnMessageListener,
 			}
 			else
 			{
-				intent.setClass(ct, TempSessionActivity.class);
+				intent.setClass(ct, SessionDialogActivity.class);
 				intent.putExtra("sessionCode", message.getSessionCode());
-				intent.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+				intent.putExtra("type", AirServices.TEMP_SESSION_TYPE_RESUME);
 			}
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			Util.showNotification(Util.NOTIFI_ID_MESSAGE, AirServices.getInstance(), intent, from, typeText, msg, null);

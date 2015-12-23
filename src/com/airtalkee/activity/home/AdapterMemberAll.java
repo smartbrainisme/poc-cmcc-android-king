@@ -24,8 +24,7 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactTiny;
 
 @SuppressLint("UseSparseArrays")
-public class AdapterMemberAll extends BaseAdapter implements
-		OnContactPresenceListener
+public class AdapterMemberAll extends BaseAdapter 
 {
 	private Context context = null;
 	private List<AirContact> memberList = new ArrayList<AirContact>();
@@ -178,7 +177,7 @@ public class AdapterMemberAll extends BaseAdapter implements
 						case AirContact.CONTACT_STATE_ONLINE:
 						case AirContact.CONTACT_STATE_ONLINE_BG:
 							holder.ivSPresence.setImageResource(R.drawable.user_state_online);
-							holder.tvName.setTextColor(context.getResources().getColor(R.color.color_hint_dark));
+							holder.tvName.setTextColor(context.getResources().getColor(R.color.white));
 							break;
 					}
 				}
@@ -245,17 +244,16 @@ public class AdapterMemberAll extends BaseAdapter implements
 		ImageView ivRole;
 	}
 
+	/*
 	@Override
 	public void onContactPresence(boolean isSubscribed, HashMap<String, Integer> presenceMap)
 	{
-		// TODO Auto-generated method stub
 		notifyDataSetChanged();
 	}
 
 	@Override
 	public void onContactPresence(boolean isSubscribed, String uid, int state)
 	{
-		// TODO Auto-generated method stub
 		notifyDataSetChanged();
-	}
+	}*/
 }

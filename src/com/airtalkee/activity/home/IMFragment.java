@@ -231,7 +231,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 				if (imm != null)
 				{
-					imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+					imm.hideSoftInputFromWindow(mediaStatusBar.getBottomBarParent().getWindowToken(), 0);
 				}
 				setTextPannelVisiblity(View.GONE);
 				etMsg.setText("");
@@ -343,8 +343,8 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				textPannel.setVisibility(View.VISIBLE);
 			if (mediaStatusBar != null)
 				mediaStatusBar.setMediaStatusBarVisibility(View.GONE);
+			etMsg.requestFocus();
 		}
-
 	}
 
 	private void setVoicePannelVisiblity(int visiblility)
@@ -1003,5 +1003,5 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		// TODO Auto-generated method stub
 
 	}
-
+	
 }

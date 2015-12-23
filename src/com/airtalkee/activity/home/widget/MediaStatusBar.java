@@ -20,21 +20,25 @@ import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.SessionBoxTalk;
 import com.airtalkee.activity.home.BaseFragment;
 import com.airtalkee.activity.home.IMFragment;
+import com.airtalkee.activity.home.MemberFragment;
 import com.airtalkee.activity.home.PTTFragment;
 import com.airtalkee.activity.home.widget.StatusBarBottom.OnBarItemClickListener;
 import com.airtalkee.control.AirMessageTransaction;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.listener.OnMmiSessionListener;
+import com.airtalkee.sdk.AirtalkeeContactPresence;
 import com.airtalkee.sdk.AirtalkeeMediaVisualizer;
 import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
+import com.airtalkee.sdk.OnContactPresenceListener;
 import com.airtalkee.sdk.OnMediaListener;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
 
 public class MediaStatusBar extends LinearLayout implements
-		OnBarItemClickListener, OnMmiSessionListener, OnMediaListener
+		OnBarItemClickListener, OnMmiSessionListener, OnMediaListener,
+		OnContactPresenceListener
 {
 	public static final int TYPE_ON_MEDIA_QUEUEOUT = 0;
 	public static final int TYPE_ON_MEDIA_QUEUEIN = 1;
@@ -186,8 +190,8 @@ public class MediaStatusBar extends LinearLayout implements
 	{
 		AirtalkeeSessionManager.getInstance().setOnMediaListener(null);
 		AirtalkeeMediaVisualizer.getInstance().setOnMediaAudioVisualizerListener(null);
+		AirtalkeeContactPresence.getInstance().setContactPresenceListener(null);
 		AirSessionControl.getInstance().setOnMmiSessionListener(null);
-		// AirtalkeeContactPresence.getInstance().setContactPresenceListener(null);
 		AirMessageTransaction.getInstance().setOnMessageListener(null);
 		AirtalkeeMessage.getInstance().setOnMessageListListener(null);
 	}
@@ -309,14 +313,13 @@ public class MediaStatusBar extends LinearLayout implements
 		}
 		barTitle.refreshMediaStatus();
 		talkBtn.refreshPttButton();
-		// AirMmiTimer.getInstance().TimerUnregister(getContext(), mSpeakingTimer);
+		// AirMmiTimer.getInstance().TimerUnregister(getContext(),
+		// mSpeakingTimer);
 		if (MainActivity.getInstance() != null && MainActivity.getInstance().viewControllerSlideView.isShowMenuLeft())
 		{
 			MainActivity.getInstance().viewLeft.refreshList();
 		}
 
-		
-		
 		int val = sessionSp.getInt(BaseFragment.SESSION_EVENT_KEY, 1);
 		sessionSp.edit().putInt(BaseFragment.SESSION_EVENT_KEY, val + 1).commit();
 		if (null != PTTFragment.getInstance())
@@ -414,6 +417,20 @@ public class MediaStatusBar extends LinearLayout implements
 		intent.putExtra(EXTRA_TYPE, type);
 
 		getContext().sendBroadcast(intent);
+	}
+
+	@Override
+	public void onContactPresence(boolean isSubscribed, HashMap<String, Integer> presenceMap)
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onContactPresence(boolean isSubscribed, String uid, int state)
+	{
+		// TODO Auto-generated method stub
+
 	}
 
 }

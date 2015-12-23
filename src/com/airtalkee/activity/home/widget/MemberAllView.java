@@ -21,11 +21,11 @@ import com.airtalkee.activity.home.AdapterMemberAll;
 import com.airtalkee.activity.home.AdapterMemberAll.CheckedCallBack;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
+import com.airtalkee.sdk.AirtalkeeContactPresence;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.widget.MListView;
 
-public class MemberAllView extends LinearLayout implements OnClickListener,
-		OnItemClickListener, TextWatcher, CheckedCallBack
+public class MemberAllView extends LinearLayout implements OnClickListener, OnItemClickListener, TextWatcher, CheckedCallBack
 {
 	public interface MemberCheckListener
 	{
@@ -40,7 +40,7 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 	List<AirContact> memberAll = AirtalkeeChannel.getInstance().getChannels().get(0).MembersGet();
 	List<AirContact> memberSearchResult = new ArrayList<AirContact>();
 	private MListView lvMemberAll;
-	private AdapterMemberAll adapterMember;
+	public AdapterMemberAll adapterMember;
 	CallAlertDialog alertDialog;
 	private Button btnSearch;
 	private EditText etSearch;
@@ -63,15 +63,13 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 		lvMemberAll.setAdapter(adapterMember);
 		lvMemberAll.setOnItemClickListener(this);
 		adapterMember.notifyMember(memberAll);
-
 	}
-
+	
 	@Override
 	protected void onFinishInflate()
 	{
 		// TODO Auto-generated method stub
 		super.onFinishInflate();
-
 	}
 
 	@Override

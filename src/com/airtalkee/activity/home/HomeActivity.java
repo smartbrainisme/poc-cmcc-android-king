@@ -16,7 +16,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -41,7 +44,8 @@ import com.airtalkee.widget.SlidingUpPanelLayout;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelSlideListener;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelState;
 
-public class HomeActivity extends BaseActivity implements PanelSlideListener, OnPageChangeListener, ViewChangeListener
+public class HomeActivity extends BaseActivity implements PanelSlideListener,
+		OnPageChangeListener, ViewChangeListener
 {
 	private AirSession session;
 	private PageFragmentAdapter adapter;
@@ -100,13 +104,13 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 			checkNewIM(false);
 		}
 	}
-	
+
 	@Override
 	public void finish()
 	{
 		// TODO Auto-generated method stub
 		super.finish();
-		
+
 	}
 
 	// 滑动
@@ -124,6 +128,14 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		contaner.setBackgroundColor(0xff222222);
 		slidingBack.setVisibility(View.VISIBLE);
 		channelView.resume();
+	}
+
+	@Override
+	protected void onPause()
+	{
+		// TODO Auto-generated method stub
+		super.onPause();
+
 	}
 
 	// 收起
@@ -148,7 +160,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		// 检测是否有新im消息
 		checkNewIM(false);
 	}
-	
+
 	@Override
 	protected void onResumeFragments()
 	{
@@ -183,6 +195,11 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 			checkNewIM(true);
 			SessionAndChannelView.getInstance().refreshChannelAndDialog();
 		}
+		else {
+		}
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (imm.isActive())
+			imm.hideSoftInputFromWindow(mediaStatusBar.getBottomBarParent().getWindowToken(), 0);
 	}
 
 	@Override
@@ -359,5 +376,30 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	// 点击输入框外的地方隐藏输入法 目前不需要
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev)
+	{
+		if (ev.getAction() == MotionEvent.ACTION_DOWN)
+		{
+			View v = mediaStatusBar.getBottomBarParent();
+			if (isShouldHideInput(v, ev))
+			{
+				InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+				if (imm != null && !imm.isActive())
+				{
+					imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+				}
+			}
+			return super.dispatchTouchEvent(ev);
+		}
+
+		if (getWindow().superDispatchTouchEvent(ev))
+		{
+			return true;
+		}
+		return onTouchEvent(ev);
 	}
 }

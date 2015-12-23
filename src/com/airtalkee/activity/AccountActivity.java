@@ -530,6 +530,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 					public void onClick(DialogInterface dialog, int whichButton)
 					{
 						dialog.cancel();
+						AirtalkeeAccount.getInstance().NetworkOpen();
 					}
 				});
 				builder.show();

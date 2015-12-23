@@ -27,8 +27,7 @@ import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
 
-public class SessionAndChannelView extends LinearLayout implements
-		OnClickListener, OnItemClickListener
+public class SessionAndChannelView extends LinearLayout implements OnClickListener, OnItemClickListener
 {
 	public interface ViewChangeListener
 	{
@@ -98,7 +97,7 @@ public class SessionAndChannelView extends LinearLayout implements
 		super.onFinishInflate();
 
 	}
-
+	
 	public void resume()
 	{
 		if (adapterChannel != null)

@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import com.airtalkee.R;
 import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
@@ -107,7 +108,7 @@ public class BaseActivity extends FragmentActivity implements
 			}
 			else
 			{
-				
+
 			}
 		}
 	}
@@ -147,19 +148,5 @@ public class BaseActivity extends FragmentActivity implements
 		}
 	}
 
-	// 点击输入框外的地方隐藏输入法 目前不需要
-	/*
-	 * @Override protect boolean dispatchTouchEvent(MotionEvent ev) { if
-	 * (ev.getAction() == MotionEvent.ACTION_DOWN) { View v =
-	 * mediaStatusBar.getBottomBarParent(); if (isShouldHideInput(v, ev)) {
-	 * 
-	 * InputMethodManager imm = (InputMethodManager)
-	 * getSystemService(Context.INPUT_METHOD_SERVICE); if (imm != null) {
-	 * imm.hideSoftInputFromWindow(v.getWindowToken(), 0); } } return
-	 * super.dispatchTouchEvent(ev); }
-	 * 
-	 * if (getWindow().superDispatchTouchEvent(ev)) { return true; } return
-	 * onTouchEvent(ev); }
-	 */
-
+	
 }
