@@ -22,6 +22,7 @@ public class BaseActivity extends FragmentActivity implements OnMmiAccountListen
 	public static final int PAGE_MEMBER = 0;
 	public static final int PAGE_PTT = 1;
 	public static final int PAGE_IM = 2;
+	protected final FragmentManager fm = getSupportFragmentManager();
 
 	protected static final Class<?>[] TABS = {
 	/* 0 */MemberFragment.class,
@@ -35,6 +36,12 @@ public class BaseActivity extends FragmentActivity implements OnMmiAccountListen
 
 	protected ViewPager viewPager;
 	protected PageIndicator mPageIndicator;
+	
+	private static BaseActivity mInstance;
+	public static BaseActivity getInstance()
+	{
+		return mInstance;
+	}
 
 	protected int pageIndex = PAGE_PTT;
 	protected int actionType;
@@ -46,6 +53,7 @@ public class BaseActivity extends FragmentActivity implements OnMmiAccountListen
 		super.onCreate(bundle);
 		setRequestedOrientation(Config.screenOrientation);
 		AirAccountManager.getInstance().setAccountListener(this);
+		mInstance = this;
 	}
 
 	public boolean isShouldHideInput(View v, MotionEvent event)
@@ -75,6 +83,7 @@ public class BaseActivity extends FragmentActivity implements OnMmiAccountListen
 	{
 		// TODO Auto-generated method stub
 		super.finish();
+		AirAccountManager.getInstance().setAccountListener(null);
 	}
 
 	@Override

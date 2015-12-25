@@ -11,6 +11,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import com.airtalkee.R;
 import com.airtalkee.activity.home.widget.AlertDialog;
@@ -28,21 +30,27 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.PageIndicator;
 
-public class SessionDialogActivity extends BaseActivity implements
-		OnPageChangeListener
+public class SessionDialogActivity extends BaseActivity implements OnPageChangeListener
 {
 	private AirSession session;
 	private PageFragmentAdapter adapter;
 	private ImageView ivIMNew, ivIMPoint;
 	private MediaStatusBar mediaStatusBar;
-	private final FragmentManager fm = getSupportFragmentManager();
+	
 	private boolean addFlag = false;
+	
+	private static SessionDialogActivity mInstance;
+	public static SessionDialogActivity getInstance()
+	{
+		return mInstance;
+	}
 
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
+		mInstance = this;
 		bundle = getIntent().getExtras();
 		if (null == bundle)
 		{
@@ -145,7 +153,16 @@ public class SessionDialogActivity extends BaseActivity implements
 		{
 			checkNewIM(true);
 			SessionAndChannelView.getInstance().refreshChannelAndDialog();
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		}
+		else 
+		{
+			
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+		}
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (imm.isActive())
+			imm.hideSoftInputFromWindow(mediaStatusBar.getBottomBarParent().getWindowToken(), 0);
 	}
 
 	@Override

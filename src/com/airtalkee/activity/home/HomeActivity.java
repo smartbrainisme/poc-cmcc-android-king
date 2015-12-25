@@ -18,6 +18,7 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -40,7 +41,8 @@ import com.airtalkee.widget.SlidingUpPanelLayout;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelSlideListener;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelState;
 
-public class HomeActivity extends BaseActivity implements PanelSlideListener, OnPageChangeListener, ViewChangeListener
+public class HomeActivity extends BaseActivity implements PanelSlideListener,
+		OnPageChangeListener, ViewChangeListener
 {
 	private AirSession session;
 	private PageFragmentAdapter adapter;
@@ -113,6 +115,8 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 	public void onPanelSlide(View panel, float slideOffset)
 	{
 		Log.i("HOME_ACTIVITY", "onPanelSlide, offset " + slideOffset);
+		if (channelView.getVisibility() == View.GONE)
+			channelView.setVisibility(View.VISIBLE);
 	}
 
 	// 展开
@@ -123,6 +127,10 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		contaner.setBackgroundColor(0xff222222);
 		slidingBack.setVisibility(View.VISIBLE);
 		channelView.resume();
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (imm.isActive())
+			imm.hideSoftInputFromWindow(mediaStatusBar.getBottomBarParent().getWindowToken(), 0);
+		IMFragment.getInstance().textPannel.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -130,7 +138,6 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 	{
 		// TODO Auto-generated method stub
 		super.onPause();
-
 	}
 
 	// 收起
@@ -189,8 +196,13 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		{
 			checkNewIM(true);
 			SessionAndChannelView.getInstance().refreshChannelAndDialog();
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+			channelView.setVisibility(View.GONE);
 		}
-		else {
+		else
+		{
+			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+
 		}
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		if (imm.isActive())

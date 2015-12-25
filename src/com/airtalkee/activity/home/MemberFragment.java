@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -93,6 +94,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 		if (mediaStatusBar != null)
 			mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, false);
 		setSession(getSession());
+		
 		return v;
 	}
 

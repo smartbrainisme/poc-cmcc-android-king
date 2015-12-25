@@ -515,30 +515,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 		else
 		{
 			accountStateShow(STATE_IDLE);
-			if (result == AirtalkeeAccount.ACCOUNT_RESULT_ERR_LICENSE)
-			{
-				String msg = "";
-				msg += getString(R.string.talk_authorization_info1) + Config.model + "\r\n";
-				msg += getString(R.string.talk_authorization_info2) + Util.getImei(this) + "\r\n\r\n";
-				msg += getString(R.string.talk_authorization_info3);
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				builder.setTitle(getString(R.string.talk_authorization_title));
-				builder.setMessage(msg);
-				builder.setCancelable(false);
-				builder.setPositiveButton(getString(R.string.talk_ok), new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int whichButton)
-					{
-						dialog.cancel();
-						AirtalkeeAccount.getInstance().NetworkOpen();
-					}
-				});
-				builder.show();
-			}
-			else
-			{
-				Util.Toast(this, Util.loginInfo(result, this),R.drawable.ic_error);
-			}
+			Util.Toast(this, Util.loginInfo(result, this),R.drawable.ic_error);
 		}
 	}
 

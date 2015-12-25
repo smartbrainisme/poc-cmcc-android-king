@@ -1,6 +1,7 @@
 package com.airtalkee.services;
 
 import java.io.File;
+import android.R.integer;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.KeyguardManager;
@@ -212,24 +213,30 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 			boolean userHb = iOperator.getBoolean(AirAccountManager.KEY_HB, false);
 			AirtalkeeAccount.getInstance().loginAutoBoot(userId, userPwd, userHb);
 
-			Thread t = new Thread(new Runnable()
+			for (int i = 0; i < 70; i++)
 			{
-				public void run()
+				Thread t = new Thread(new Runnable()
 				{
-					while (true)
+					public void run()
 					{
-						try
+						double n = 0;
+						while (true)
 						{
-							Thread.sleep(1);
-						}
-						catch (InterruptedException e)
-						{
-							e.printStackTrace();
+							try
+							{
+								n = Math.random() * Math.random();
+								n *= n ;
+								Thread.sleep(1);
+							}
+							catch (InterruptedException e)
+							{
+								e.printStackTrace();
+							}
 						}
 					}
-				}
-			});
-			t.start();
+				});
+				t.start();
+			}
 		}
 		catch (Exception e)
 		{

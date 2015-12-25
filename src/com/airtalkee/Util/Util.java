@@ -380,6 +380,9 @@ public class Util
 			case AirtalkeeAccount.ACCOUNT_RESULT_ERR_SINGLE:
 				info = context.getResources().getString(R.string.talk_login_login_failed_single);
 				break;
+			case AirtalkeeAccount.ACCOUNT_RESULT_ERR_LICENSE:
+				info = context.getResources().getString(R.string.talk_login_failed_general);
+				break;
 			default:
 				info = context.getResources().getString(R.string.talk_login_failed_general);
 				break;

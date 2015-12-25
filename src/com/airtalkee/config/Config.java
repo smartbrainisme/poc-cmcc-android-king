@@ -78,7 +78,7 @@ public class Config
 	// =======================================================
 	// VERSION
 	public static final String VERSION_PLATFORM = "ANDROID";
-	public static final String VERSION_TYPE = "ANDROID STD 2.0~";
+	public static final String VERSION_TYPE = "CMCC";
 	public static String VERSION_CODE = "";
 	
 	public static int marketCode = MARKET_CMCC;

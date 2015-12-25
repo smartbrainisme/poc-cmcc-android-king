@@ -95,7 +95,6 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 	{
 		// TODO Auto-generated method stub
 		super.onFinishInflate();
-
 	}
 	
 	public void resume()

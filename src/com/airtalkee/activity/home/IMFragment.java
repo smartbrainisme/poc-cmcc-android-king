@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLayoutChangeListener;
 import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
@@ -32,9 +31,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimerListener;
@@ -65,7 +62,7 @@ import com.airtalkee.widget.PullToRefreshListView.OnPullToRefreshListener;
 public class IMFragment extends BaseFragment implements OnClickListener,
 		OnMessageListListener, OnLongClickListener, TextWatcher,
 		OnMmiMessageListener, OnPullToRefreshListener, OnItemClickListener,
-		AirMmiTimerListener, OnTouchListener, OnLayoutChangeListener
+		AirMmiTimerListener, OnTouchListener
 {
 	private static final int REQUEST_CODE_BROWSE_IMAGE = 111;
 
@@ -123,6 +120,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 
 		mvRecording = (MacRecordingView) findViewById(R.id.mac_talking);
 		mvRecording.initChild();
+		
 		return v;
 	}
 
@@ -137,7 +135,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	public void onPause()
 	{
 		super.onPause();
-		if (HomeActivity.getInstance().pageIndex == HomeActivity.PAGE_IM)
+		if (BaseActivity.getInstance().pageIndex == BaseActivity.PAGE_IM)
 		{
 			setVoicePannelVisiblity(View.GONE);
 			setTextPannelVisiblity(View.GONE);
@@ -150,7 +148,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		super.onResume();
 		setSession(getSession());
 		AirMessageTransaction.getInstance().setOnMessageListener(this);
-		textPannel.addOnLayoutChangeListener(this);
 	}
 
 	@Override
@@ -1014,14 +1011,4 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom)
-	{
-//		FrameLayout layout = (FrameLayout) textVoicePannel;
-//		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(layout.getLayoutParams());
-//		lp.setMargins(0, 0, 0, bottom);
-//		layout.setLayoutParams(lp);
-	}
-
 }

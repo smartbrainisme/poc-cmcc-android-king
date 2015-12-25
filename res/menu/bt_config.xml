@@ -1,15 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" 	xmlns:bt="http://schemas.android.com/apk/res/com.airtalkee">
-	<item   bt:deviceName="RTKRSM0" 			bt:keyR="+PTT=R"  	bt:keyP="+PTT=P" />
-	<item   bt:deviceName="Savox BTR-155" 	bt:keyR="+PTT=R"  	bt:keyP="+PTT=P" />
-	<item   bt:deviceName="Savox BTH-101"  bt:keyR="+PTT=R"  	bt:keyP="+PTT=P" />
-	<item   bt:deviceName="BT Headset" 	bt:keyR="+PTT=R"  	bt:keyP="+PTT=P" />
-	<item   bt:deviceName="PTT-100" 	bt:keyR="AT+PTT=R"  	bt:keyP="AT+PTT=P" />
-	<item   bt:deviceName="MS-BT PTT" 	bt:keyR="AT+PTT=R"  	bt:keyP="AT+PTT=P" bt:onlyspp="true" />
-	<item   bt:deviceName="PTT-600" 	bt:keyR="AT+PTT=R"  	bt:keyP="AT+PTT=P" /> 
-	<item   bt:deviceName="I50E_ADK" 	bt:keyR="M_PTT_UP"  	bt:keyP="M_PTT_DN"  bt:ackSpeakTalk="P_GET_R"   bt:ackSpeakRelease="P_FREE_R" />
-	<item   bt:deviceName="DT100" 	bt:keyR="M_PTT_UP"  	bt:keyP="M_PTT_DN"  bt:ackSpeakTalk="P_GET_R"   bt:ackSpeakRelease="P_FREE_R" />
-	<item   bt:deviceName="DATANG DT-100-" 	bt:keyR="M_PTT_UP"  	bt:keyP="M_PTT_DN"  bt:ackSpeakTalk="P_GET_R"   bt:ackSpeakRelease="P_FREE_R" />
-	<item   bt:deviceName="ORand Walkie-Talkie" 	bt:keyR="1"  	bt:keyP="0"  bt:encrypt="true" bt:onlyspp="true"  />
-	<item   bt:deviceName="智迅易达智咪" 	bt:keyR="1"  	bt:keyP="0"    />  
+
 </menu>
