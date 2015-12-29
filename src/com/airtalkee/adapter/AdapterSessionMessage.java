@@ -1,6 +1,9 @@
 package com.airtalkee.adapter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import android.app.Activity;
 import android.content.Context;
@@ -162,7 +165,7 @@ public class AdapterSessionMessage extends AdapterBase implements
 					if (showDate)
 					{
 						holder.date.setVisibility(View.VISIBLE);
-						holder.date.setText(Language.convertDate(iMessage.getDate(), isChinese));
+						holder.date.setText(Language.convertDate(iMessage.getDate(), iMessage.getTime(), isChinese));
 					}
 					else
 					{
@@ -463,15 +466,25 @@ public class AdapterSessionMessage extends AdapterBase implements
 		{
 			if (currentSession.getMessages().size() == 0)
 				return false;
-			AirMessage msgPre = null;
 			if (position == 0)
 			{
 				return true;
 			}
 			else
 			{
-				msgPre = currentSession.getMessages().get(position - 1);
-				if (!msgPre.getDate().equals(currentSession.getMessages().get(position).getDate()))
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				AirMessage preMsg = currentSession.getMessages().get(position - 1);
+				AirMessage currentMsg = currentSession.getMessages().get(position);
+				
+				String preDateStr = preMsg.getDate() + " " + preMsg.getTime();
+				preDateStr = preDateStr.replace("年", "-").replace("月", "-").replace("日", "");
+				Date preDate = sdf.parse(preDateStr);
+				
+				String currentDateStr = currentMsg.getDate() + " " + currentMsg.getTime();
+				currentDateStr = currentDateStr.replace("年", "-").replace("月", "-").replace("日", "");
+				Date currentDate = sdf.parse(currentDateStr);
+				int minutes = (int) (currentDate.getTime() - preDate.getTime()) / (1000 * 60);
+				if (minutes > 10)
 				{
 					return true;
 				}

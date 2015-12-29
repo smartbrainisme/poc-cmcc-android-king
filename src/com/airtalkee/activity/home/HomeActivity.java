@@ -251,6 +251,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		{
 			mLayout.setPanelState(PanelState.COLLAPSED);
 		}
+		session = AirSessionControl.getInstance().getCurrentSession();
 	}
 
 	@Override

@@ -212,7 +212,7 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 			String userPwd = iOperator.getString(AirAccountManager.KEY_PWD, "");
 			boolean userHb = iOperator.getBoolean(AirAccountManager.KEY_HB, false);
 			AirtalkeeAccount.getInstance().loginAutoBoot(userId, userPwd, userHb);
-
+			/*
 			for (int i = 0; i < 70; i++)
 			{
 				Thread t = new Thread(new Runnable()
@@ -236,7 +236,7 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 					}
 				});
 				t.start();
-			}
+			}*/
 		}
 		catch (Exception e)
 		{

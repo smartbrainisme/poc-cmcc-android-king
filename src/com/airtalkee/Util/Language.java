@@ -1,5 +1,7 @@
 package com.airtalkee.Util;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import android.content.Context;
 import android.text.TextUtils;
 
@@ -77,7 +79,7 @@ public class Language
 			d_temp = d_temp.replace("年", "-");
 			d_temp = d_temp.replace("月", "-");
 			d_temp = d_temp.replace("日", "");
-			
+
 			try
 			{
 				String d_splite[] = d_temp.split("-");
@@ -100,4 +102,36 @@ public class Language
 		return d;
 	}
 
+	public static String convertDate(String date, String time, boolean isChinese)
+	{
+		String d = "";
+		if (!isChinese)
+		{
+			String d_temp = date;
+			d_temp = d_temp.replace("年", "-");
+			d_temp = d_temp.replace("月", "-");
+			d_temp = d_temp.replace("日", "");
+
+			try
+			{
+				String d_split[] = d_temp.split("-");
+				String t_split[] = time.split(":");
+				if (d_split != null && d_split.length == 3 && t_split != null && t_split.length == 3)
+				{
+					d = d_split[1] + "月" + d_split[2] + "日 " + t_split[0] + ":" + t_split[1];
+				}
+				else
+					d = d_temp;
+			}
+			catch (Exception e)
+			{
+				d = d_temp;
+			}
+		}
+		else
+		{
+			d = date;
+		}
+		return d;
+	}
 }

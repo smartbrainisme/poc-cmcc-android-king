@@ -184,10 +184,16 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 						AirSession s = (AirSession) adapterSession.getItem(position);
 						if (s != null)
 						{
+							AirtalkeeSessionManager.getInstance().getSessionByCode(s.getSessionCode());
+							if (listener != null)
+							{
+								listener.onViewChanged(s.getSessionCode());
+							}
+							/*
 							Intent it = new Intent(getContext(), SessionDialogActivity.class);
 							it.putExtra("sessionCode", s.getSessionCode());
 							it.putExtra("type", AirServices.TEMP_SESSION_TYPE_RESUME);
-							getContext().startActivity(it);
+							getContext().startActivity(it);*/
 						}
 					}
 					adapterSession.notifyDataSetChanged();

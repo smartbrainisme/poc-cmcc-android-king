@@ -3,4 +3,7 @@
     <issue id="NewApi" severity="ignore">
         <ignore path="src/com/airtalkee/activity/home/HomeActivity.java" />
     </issue>
+    <issue id="SimpleDateFormat" severity="ignore">
+        <ignore path="src/com/airtalkee/Util/Language.java" />
+    </issue>
 </lint>
