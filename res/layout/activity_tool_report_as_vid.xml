@@ -76,21 +76,6 @@
                                 android:clickable="true"
                                 android:visibility="gone" />
                         </LinearLayout>
-
-                        <TextView
-                            android:id="@+id/report_image_size"
-                            android:layout_width="wrap_content"
-                            android:layout_height="25dip"
-                            android:layout_alignParentBottom="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_margin="6dip"
-                            android:shadowColor="#000000"
-                            android:shadowDx="3"
-                            android:shadowDy="3"
-                            android:shadowRadius="0.6"
-                            android:text="45K"
-                            android:textColor="#ffffff"
-                            android:textSize="20dip" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -138,52 +123,59 @@
                     android:background="?theme_divider_h" >
                 </View>
 
-                <!-- 按钮 -->
-
                 <LinearLayout
-                    android:id="@+id/report_item_take"
+                    android:id="@+id/report_file_size_panel"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/report_item_divide"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
+                    android:layout_below="@id/report_item_detail"
+                    android:layout_marginTop="1dp"
+                    android:background="?theme_sider_title_bg"
+                    android:orientation="horizontal"
+                    android:padding="10dp" >
 
-                    <Button
-                        android:id="@+id/report_btn_take"
-                        android:layout_width="145dip"
-                        android:layout_height="40dip"
-                        android:layout_margin="5.0dip"
-                        android:background="?theme_button"
-                        android:clickable="true"
-                        android:drawableLeft="@drawable/ic_capture"
-                        android:gravity="center"
-                        android:paddingLeft="?theme_report_drawable_right_padding"
-                        android:text="@string/talk_report_upload_vid_capture"
-                        android:textColor="?theme_button_text_color"
-                        android:textSize="14dip"
-                        android:visibility="gone" />
+                    <RadioGroup
+                        android:id="@+id/report_file_rg"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" >
 
-                    <Button
-                        android:id="@+id/report_btn_native"
-                        android:layout_width="145dip"
-                        android:layout_height="40dip"
-                        android:layout_margin="5.0dip"
-                        android:background="?theme_button"
-                        android:clickable="true"
-                        android:drawableLeft="@drawable/ic_browser"
-                        android:gravity="center"
-                        android:paddingLeft="?theme_report_drawable_right_padding"
-                        android:text="@string/talk_report_upload_vid_browse"
-                        android:textColor="?theme_button_text_color"
-                        android:textSize="14dip"
-                        android:visibility="gone" />
+                        <RadioButton
+                            android:id="@+id/report_file_big"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:button="@drawable/selector_radio_report"
+                            android:paddingLeft="5dp"
+                            android:text="高清  12.5mb"
+                            android:textColor="#555555" />
+
+                        <RadioButton
+                            android:id="@+id/report_file_small"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="30dp"
+                            android:button="@drawable/selector_radio_report"
+                            android:checked="true"
+                            android:paddingLeft="5dp"
+                            android:text="压缩 3.5mb"
+                            android:textColor="#555555" />
+                    </RadioGroup>
                 </LinearLayout>
+
+                <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dip"
+                    android:layout_below="@id/report_file_size_panel"
+                    android:background="@drawable/dicider_line2" >
+                </View>
+                
+                <!-- 按钮 -->
 
                 <LinearLayout
                     android:id="@+id/report_item_post"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/report_item_take"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@id/report_file_size_panel"
                     android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:orientation="horizontal"

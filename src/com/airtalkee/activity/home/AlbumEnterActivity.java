@@ -204,7 +204,6 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 							String path = c.iterator().next();
 							data.putExtra(KEYSTR, path);
 							setResult(Activity.RESULT_OK, data);
-							
 							finish();
 						}
 						else

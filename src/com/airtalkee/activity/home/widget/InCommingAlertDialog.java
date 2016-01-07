@@ -58,7 +58,7 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 		{
 			TempSessionActivity.getInstance().setSession(temAirSession);
 		}
-		switchToSessionDialog();
+		switchToSessionDialog(temAirSession);
 		this.cancel();
 	}
 
@@ -99,12 +99,12 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 						TempSessionActivity.getInstance().setSession(temAirSession);
 					}
 
-					Intent it = new Intent(AirServices.getInstance(), SessionDialogActivity.class);
-					it.putExtra("sessionCode", temAirSession.getSessionCode());
-					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
-					it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);;
-					AirServices.getInstance().startActivity(it);
-					switchToSessionDialog();
+//					Intent it = new Intent(AirServices.getInstance(), SessionDialogActivity.class);
+//					it.putExtra("sessionCode", temAirSession.getSessionCode());
+//					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
+//					it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//					AirServices.getInstance().startActivity(it);
+					switchToSessionDialog(temAirSession);
 				}
 				catch (Exception e)
 				{
@@ -134,14 +134,20 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 		return super.onKeyDown(keyCode, event);
 	}
 
-	private void switchToSessionDialog()
+	private void switchToSessionDialog(AirSession session)
 	{
 		AirSessionControl.getInstance().setOnMmiSessionListener(null);
-		Intent it = new Intent(getContext(), SessionDialogActivity.class);
-		it.putExtra("sessionCode", temAirSession.getSessionCode());
-		it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
-		it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		getContext().startActivity(it);
+//		Intent it = new Intent(getContext(), SessionDialogActivity.class);
+//		it.putExtra("sessionCode", temAirSession.getSessionCode());
+//		it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
+//		it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//		getContext().startActivity(it);
+		if (session != null)
+		{
+			AirtalkeeSessionManager.getInstance().getSessionByCode(session.getSessionCode());
+			HomeActivity.getInstance().onViewChanged(session.getSessionCode());
+			HomeActivity.getInstance().panelCollapsed();
+		}
 		this.cancel();
 	}
 

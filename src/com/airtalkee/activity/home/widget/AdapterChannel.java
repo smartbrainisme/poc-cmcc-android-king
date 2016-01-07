@@ -2,6 +2,7 @@ package com.airtalkee.activity.home.widget;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.R.integer;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -100,13 +101,28 @@ public class AdapterChannel extends BaseAdapter
 					ivListener.setBackgroundResource(R.drawable.ic_listen);
 					tvUnread.setVisibility(View.GONE);
 				}
-				tvCount.setText(item.getOnlineNumber() + "/" + item.getCount());
+				
 				if (item.getSession() != null && item.getSession().getSessionState() == AirSession.SESSION_STATE_DIALOG)
 				{
+					int onlineNumber = 1;
+					List<AirContact> members = item.MembersGet();
+					if(members != null && members.size() > 0)
+					{
+						for (AirContact member : members)
+						{
+							int state = AirtalkeeContactPresence.getInstance().getContactStateById(member.getIpocId());
+							if(state != AirContact.CONTACT_STATE_NONE)
+							{
+								onlineNumber++;
+							}
+						}
+					}
+					tvCount.setText(onlineNumber + "/" + item.getCount());
 					ivListener.setVisibility(View.VISIBLE);
 				}
 				else
 				{
+					tvCount.setText(item.getCount() + "");
 					ivListener.setVisibility(View.GONE);
 				}
 				if (item.getSession() != null && item.getSession().isVoiceLocked())

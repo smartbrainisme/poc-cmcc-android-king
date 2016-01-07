@@ -6,4 +6,7 @@
     <issue id="SimpleDateFormat" severity="ignore">
         <ignore path="src/com/airtalkee/Util/Language.java" />
     </issue>
+    <issue id="UseSparseArrays">
+        <ignore path="src/com/airtalkee/activity/home/widget/MemberAllView.java" />
+    </issue>
 </lint>

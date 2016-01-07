@@ -137,6 +137,7 @@ public class AdapterSession extends BaseAdapter
 						public void onClick(View v)
 						{
 							AirtalkeeSessionManager.getInstance().SessionRemove(item.getSessionCode());
+							SessionAndChannelView.getInstance().resume();
 							adapterSession.notifyDataSetChanged();
 						}
 					});

@@ -17,6 +17,7 @@ import com.airtalkee.activity.home.widget.MemberAllView;
 import com.airtalkee.activity.home.widget.MemberAllView.MemberCheckListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeMessage;
+import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.controller.SessionController;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
@@ -105,10 +106,16 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 				}
 				else
 				{
-					Intent it = new Intent(this, SessionDialogActivity.class);
-					it.putExtra("sessionCode", s.getSessionCode());
-					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
-					startActivity(it);
+					if (s != null)
+					{
+						AirtalkeeSessionManager.getInstance().getSessionByCode(s.getSessionCode());
+						HomeActivity.getInstance().onViewChanged(s.getSessionCode());
+						HomeActivity.getInstance().panelCollapsed();
+					}
+//					Intent it = new Intent(this, SessionDialogActivity.class);
+//					it.putExtra("sessionCode", s.getSessionCode());
+//					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+//					startActivity(it);
 				}
 
 			}

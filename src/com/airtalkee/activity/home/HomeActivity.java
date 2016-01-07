@@ -16,7 +16,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -34,6 +33,8 @@ import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.sdk.AirtalkeeChannel;
+import com.airtalkee.sdk.AirtalkeeMessage;
+import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.widget.PageIndicator;
@@ -46,15 +47,16 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 {
 	private AirSession session;
 	private PageFragmentAdapter adapter;
-	private SlidingUpPanelLayout mLayout;
+	public SlidingUpPanelLayout mLayout;
 	private ImageView slidingBack;
 	private SessionAndChannelView channelView;
 	private LinearLayout contaner;
 	private ImageView ivIMNew, ivIMPoint;
 	private MediaStatusBar mediaStatusBar;
 	private TextView networkTip;
+	private boolean isChannel = true;
+
 	private static HomeActivity mInstance;
-	protected final FragmentManager fm = getSupportFragmentManager();
 
 	public static HomeActivity getInstance()
 	{
@@ -71,16 +73,16 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 
 		setRequestedOrientation(Config.screenOrientation);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
-
+		session = AirSessionControl.getInstance().getCurrentChannelSession();
 		mediaStatusBar = (MediaStatusBar) findViewById(R.id.media_status_function_bar);
-		mediaStatusBar.init((StatusBarTitle) findViewById(R.id.media_status_title_bar), AirSessionControl.getInstance().getCurrentChannelSession());
+		mediaStatusBar.init((StatusBarTitle) findViewById(R.id.media_status_title_bar), session);
 		ivIMNew = (ImageView) findViewById(R.id.iv_im_new);
 		this.ivIMPoint = (ImageView) findViewById(R.id.iv_im_point);
 		this.viewPager = (ViewPager) findViewById(R.id.home_activity_page_content);
 		this.adapter = new PageFragmentAdapter(this, fm);
 		this.viewPager.setAdapter(this.adapter);
 		this.viewPager.setOnPageChangeListener(this);
-		this.viewPager.setOffscreenPageLimit(TABS.length);
+		this.viewPager.setOffscreenPageLimit(3);
 		this.mPageIndicator = (PageIndicator) findViewById(R.id.indicator);
 		this.mPageIndicator.setViewPager(viewPager);
 		this.networkTip = (TextView) findViewById(R.id.network_tip);
@@ -95,7 +97,6 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		channelView = new SessionAndChannelView(this, this);
 		contaner.addView(channelView);
 		slidingBack = (ImageView) channelView.findViewById(R.id.sliding_back);
-		session = AirSessionControl.getInstance().getCurrentChannelSession();
 		if (null != session)
 		{
 			checkNewIM(false);
@@ -105,9 +106,15 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 	@Override
 	public void finish()
 	{
-		// TODO Auto-generated method stub
 		super.finish();
-
+		if (!isChannel)
+		{
+			if (session != null && session.getSessionState() != AirSession.SESSION_STATE_IDLE && session.getType() == AirSession.TYPE_DIALOG)
+			{
+				AirSessionControl.getInstance().SessionEndCall(session);
+			}
+			AirtalkeeMessage.getInstance().MessageListMoreClean(session);
+		}
 	}
 
 	// 滑动
@@ -152,15 +159,33 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		Log.i("HOME_ACTIVITY", "onPanelCollapsed");
 		contaner.setBackgroundColor(0x00000000);
 		slidingBack.setVisibility(View.GONE);
-		this.onPageSelected(pageIndex);
-		if (mediaStatusBar != null)
-			mediaStatusBar.setSession(AirSessionControl.getInstance().getCurrentChannelSession());
-		// 解决刷新频道成员
-		session = mediaStatusBar.getSession();
-		MemberFragment memberFragment = (MemberFragment) adapter.getItem(0);
-		memberFragment.refreshMembers(session, session.getChannel().MembersGet());
-		// 检测是否有新im消息
-		checkNewIM(false);
+		if (AirSessionControl.getInstance().getCurrentChannelSession() != null)
+		{
+			if (mediaStatusBar != null)
+				mediaStatusBar.setSession(session);
+			// 解决刷新频道成员
+			MemberFragment memberFragment = (MemberFragment) adapter.getItem(0);
+			if (isChannel)
+			{
+				memberFragment.refreshMembers(session, session.getChannel().MembersGet());
+			}
+			else
+			{
+				memberFragment.refreshMembers(session, session.getMemberAll());
+			}
+			PTTFragment.getInstance().refreshPlayback(session);
+			this.onPageSelected(pageIndex);
+			adapter.notifyDataSetChanged();
+			// 检测是否有新im消息
+			checkNewIM(false);
+		}
+		else
+		{
+			session = null;
+			mediaStatusBar.setSession(null);
+			PTTFragment.getInstance().refreshPlayback(null);
+			this.onPageSelected(pageIndex);
+		}
 	}
 
 	@Override
@@ -178,7 +203,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 			mediaStatusBar.onPageChanged(page);
 		if (mPageIndicator != null)
 			mPageIndicator.onPageChanged(page);
-		for (int i = 0; i < TABS.length; i++)
+		for (int i = 0; i < 3; i++)
 		{
 			if (null != adapter)
 				if (i == page)
@@ -202,7 +227,6 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		else
 		{
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-
 		}
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 		if (imm.isActive())
@@ -228,7 +252,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 	{
 		super.onResume();
 		if (mediaStatusBar != null)
-			mediaStatusBar.setSession(AirSessionControl.getInstance().getCurrentChannelSession());
+			mediaStatusBar.setSession(session);
 	}
 
 	@Override
@@ -246,12 +270,22 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 	@Override
 	public void onViewChanged(String sessionCode)
 	{
-		// TODO Auto-generated method stub
+		isChannel = sessionCode.startsWith("C");
+		if (isChannel)
+		{
+			session = AirSessionControl.getInstance().getCurrentChannelSession();
+		}
+		else
+		{
+			session = AirtalkeeSessionManager.getInstance().getSessionByCode(sessionCode);
+		}
+		// this.adapter = new PageFragmentAdapter(this, fm);
+		// this.viewPager.setAdapter(this.adapter);
+		// this.mPageIndicator.setViewPager(viewPager);
 		if (mLayout != null)
 		{
 			mLayout.setPanelState(PanelState.COLLAPSED);
 		}
-		session = AirSessionControl.getInstance().getCurrentSession();
 	}
 
 	@Override
@@ -313,9 +347,9 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		return new SimpleAdapter(this, data, layout, new String[] { "accountName" }, new int[] { id });
 	}
 
-	final class PageFragmentAdapter extends FragmentPagerAdapter
+	class PageFragmentAdapter extends FragmentPagerAdapter
 	{
-		private final List<BaseFragment> fragments = new ArrayList<BaseFragment>();
+		private List<BaseFragment> fragments = new ArrayList<BaseFragment>();
 
 		public PageFragmentAdapter(Context ctx, FragmentManager fm)
 		{
@@ -387,27 +421,16 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 	}
 
 	// 点击输入框外的地方隐藏输入法 目前不需要
-	@Override
-	public boolean dispatchTouchEvent(MotionEvent ev)
-	{
-		if (ev.getAction() == MotionEvent.ACTION_DOWN)
-		{
-			View v = mediaStatusBar.getBottomBarParent();
-			if (isShouldHideInput(v, ev))
-			{
-				InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-				if (imm != null && !imm.isActive())
-				{
-					imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-				}
-			}
-			return super.dispatchTouchEvent(ev);
-		}
-
-		if (getWindow().superDispatchTouchEvent(ev))
-		{
-			return true;
-		}
-		return onTouchEvent(ev);
-	}
+	/*
+	 * @Override public boolean dispatchTouchEvent(MotionEvent ev) { if
+	 * (ev.getAction() == MotionEvent.ACTION_DOWN) { View v =
+	 * mediaStatusBar.getBottomBarParent(); if (isShouldHideInput(v, ev)) {
+	 * InputMethodManager imm = (InputMethodManager)
+	 * getSystemService(INPUT_METHOD_SERVICE); if (imm != null &&
+	 * !imm.isActive()) { imm.hideSoftInputFromWindow(v.getWindowToken(), 0); }
+	 * } return super.dispatchTouchEvent(ev); }
+	 * 
+	 * if (getWindow().superDispatchTouchEvent(ev)) { return true; } return
+	 * onTouchEvent(ev); }
+	 */
 }

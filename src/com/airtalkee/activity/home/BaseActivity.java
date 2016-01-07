@@ -29,10 +29,10 @@ public class BaseActivity extends FragmentActivity implements OnMmiAccountListen
 	/* 1 */PTTFragment.class,
 	/* 2 */IMFragment.class, };
 
-	protected static final Class<?>[] TABS_ADD = {
-	/* 0 */MemberTempFragment.class,
-	/* 1 */PTTFragment.class,
-	/* 2 */IMFragment.class, };
+	//	protected static final Class<?>[] TABS_ADD = {
+	//	/* 0 */MemberTempFragment.class,
+	//	/* 1 */PTTFragment.class,
+	//	/* 2 */IMFragment.class, };
 
 	protected ViewPager viewPager;
 	protected PageIndicator mPageIndicator;

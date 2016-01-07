@@ -92,7 +92,10 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 				if (session.getType() == AirSession.TYPE_DIALOG)
 				{
 					btnLeft.setVisibility(View.INVISIBLE);
-					tvTitle.setCompoundDrawables(null, null, null, null);
+				}
+				else
+				{
+					btnLeft.setVisibility(View.VISIBLE);
 				}
 				if (session.isVoiceLocked())
 				{
@@ -103,6 +106,8 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 					ivBtnLeft.setImageResource(R.drawable.ic_unlock);
 				}
 				tvTitle.setText(session.getDisplayName());
+				// tvTitle.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_drag_down),
+				// null, null, null);
 				switch (session.getSessionState())
 				{
 					case AirSession.SESSION_STATE_CALLING:
@@ -122,7 +127,6 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 							{
 								ivMeidiaStatus.setImageResource(R.drawable.media_talk);
 								tvMediaStatus.setText(R.string.talk_speak_me);
-
 								break;
 							}
 							case AirSession.MEDIA_STATE_LISTEN:
@@ -154,6 +158,10 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 			{
 				// TODO: handle exception
 			}
+		}
+		else
+		{
+			tvTitle.setText(getContext().getString(R.string.talk_group_no_connect));
 		}
 	}
 
@@ -189,20 +197,23 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 
 	public void refreshNewMsg()
 	{
-		int count = 0;
-
-		List<AirChannel> channels = AirtalkeeChannel.getInstance().getChannels();
-		for (int i = 0; i < channels.size(); i++)
+		if (session != null)
 		{
-			AirChannel c = (AirChannel) channels.get(i);
-			if (c != null)
+			int count = 0;
+
+			List<AirChannel> channels = AirtalkeeChannel.getInstance().getChannels();
+			for (int i = 0; i < channels.size(); i++)
 			{
-				if (c.getMsgUnReadCount() > 0)
-					count++;
+				AirChannel c = (AirChannel) channels.get(i);
+				if (c != null)
+				{
+					if (c.getMsgUnReadCount() > 0)
+						count++;
+				}
 			}
+			count += MessageController.checkUnReadMessage();
+			ivUnReadDot.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 		}
-		count += MessageController.checkUnReadMessage();
-		ivUnReadDot.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
 	}
 
 }

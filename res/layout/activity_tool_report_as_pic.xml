@@ -61,17 +61,6 @@
                                 android:clickable="true"
                                 android:src="@drawable/report_default_pic" />
                         </LinearLayout>
-
-                        <Button
-                            android:id="@+id/report_image_clean"
-                            android:layout_width="30dip"
-                            android:layout_height="30dip"
-                            android:layout_alignParentRight="true"
-                            android:background="@drawable/del"
-                            android:clickable="true"
-                            android:gravity="center"
-                            android:textColor="#ffffff"
-                            android:visibility="gone" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -164,15 +153,6 @@
                     android:background="@drawable/dicider_line2" >
                 </View>
                 <!-- 按钮 -->
-
-                <LinearLayout
-                    android:id="@+id/report_item_take"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/report_item_divide"
-                    android:gravity="center"
-                    android:orientation="horizontal" >
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/report_item_post"

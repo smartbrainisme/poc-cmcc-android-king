@@ -486,6 +486,8 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 						if (session != null)
 						{
 							// showRemoveAllDialog(session.getSessionCode());
+							AirtalkeeMessage.getInstance().MessageRemoveAll(session.getSessionCode());
+							adapterMessage.notifyDataSetChanged();
 						}
 						break;
 					}
@@ -514,7 +516,8 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 					{
 						if (session != null)
 						{
-							// showRemoveAllDialog(session.getSessionCode());
+							AirtalkeeMessage.getInstance().MessageRemoveAll(session.getSessionCode());
+							adapterMessage.notifyDataSetChanged();
 						}
 						break;
 					}
@@ -945,25 +948,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 						{
 							for (int i = 0; i < pathList.size(); i++)
 							{
-								// Uri originalUri = data.getData();
-								// String[] proj = {
-								// MediaStore.Images.Media.DATA };
-								// String path = null;
-								// @SuppressWarnings("deprecation")
-								// Cursor cursor =
-								// getActivity().managedQuery(originalUri, proj,
-								// null, null, null);
-								// if (cursor != null)
-								// {
-								// int column_index =
-								// cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-								// cursor.moveToFirst();
-								// path = cursor.getString(column_index);
-								// }
-								// else
-								// {
-								// path = originalUri.getPath();
-								// }
 								String path = pathList.get(i);
 								Bitmap tempBitmap = null;
 								try

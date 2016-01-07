@@ -22,7 +22,7 @@ public abstract class AdapterBase extends BaseAdapter
 
 	protected interface OnImageLoadCompletedListener
 	{
-		public void onImageLoadCompleted(int orientation, View v);
+		public void onImageLoadCompleted(int orientation, View v, int width, int height);
 	}
 
 	DisplayImageOptions options;
@@ -82,7 +82,7 @@ public abstract class AdapterBase extends BaseAdapter
 						}
 
 						Log.i(AdapterBase.class, "onLoadingComplete width" + loadedImage.getWidth() + "height" + loadedImage.getHeight());
-						listener.onImageLoadCompleted(orientation, view);
+						listener.onImageLoadCompleted(orientation, view, width, height);
 					}
 				}
 

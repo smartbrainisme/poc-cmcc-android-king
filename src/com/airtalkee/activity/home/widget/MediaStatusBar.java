@@ -100,9 +100,10 @@ public class MediaStatusBar extends LinearLayout implements
 		this.session = s;
 		if (null != this.session)
 		{
-			barTitle.setSession(this.session);
-			talkBtn.setSession(this.session);
+			
 		}
+		barTitle.setSession(this.session);
+		talkBtn.setSession(this.session);
 		sessionRefresh();
 	}
 
@@ -331,7 +332,6 @@ public class MediaStatusBar extends LinearLayout implements
 	@Override
 	public void onMediaStateListen(AirSession session, AirContact speaker)
 	{
-		// TODO Auto-generated method stub
 		if (this.session != null)
 		{
 			if (TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
@@ -349,7 +349,6 @@ public class MediaStatusBar extends LinearLayout implements
 	@Override
 	public void onMediaStateListenEnd(AirSession session)
 	{
-		// TODO Auto-generated method stub
 		if (this.session != null)
 		{
 			if (TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))

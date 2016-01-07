@@ -46,7 +46,9 @@ import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.MListView;
 import com.airtalkee.widget.MyRelativeLayout;
 
-public class MemberFragment extends BaseFragment implements OnClickListener, OnItemClickListener, CheckedCallBack, MemberCheckListener, OnContactPresenceListener
+public class MemberFragment extends BaseFragment implements OnClickListener,
+		OnItemClickListener, CheckedCallBack, MemberCheckListener,
+		OnContactPresenceListener
 {
 	private static final int DIALOG_CALL = 99;
 	private TextView tabMemberSession, tabMemberAll;
@@ -56,7 +58,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 	private MListView lvMember;
 	private AdapterMember adapterMember;
 	private CallAlertDialog alertDialog;
-	private LinearLayout memAllContainer;
+	private LinearLayout memAllContainer, addMemberPanel;
 	private int currentSelectPage = R.id.tab_member_all;
 	private MemberAllView memberAllView;
 	private boolean memberSessionChecked = false;
@@ -68,7 +70,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		registerViewReSize();
+		// registerViewReSize();
 	}
 
 	@Override
@@ -79,6 +81,9 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 
 		memAllContainer = (LinearLayout) findViewById(R.id.mem_container);
 		memAllContainer.addView(memberAllView = new MemberAllView(getActivity(), this));
+
+		addMemberPanel = (LinearLayout) findViewById(R.id.add_member_panel);
+		addMemberPanel.setOnClickListener(this);
 
 		lvMember = (MListView) findViewById(R.id.talk_lv_member);
 		lvMember.setAdapter(adapterMember = new AdapterMember(getActivity(), null, null, true, true, this));
@@ -94,7 +99,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 		if (mediaStatusBar != null)
 			mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, false);
 		setSession(getSession());
-		
+
 		return v;
 	}
 
@@ -105,12 +110,24 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 		super.onResume();
 		if (mediaStatusBar != null)
 			mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, false);
-
 		setSession(getSession());
-		refreshTab(R.id.tab_member_session);
-		AirtalkeeContactPresence.getInstance().setContactPresenceListener(this);
+		if (getSession() != null)
+		{
+			refreshTab(R.id.tab_member_session);
+			AirtalkeeContactPresence.getInstance().setContactPresenceListener(this);
+			if (getSession().getType() == AirSession.TYPE_CHANNEL)
+			{
+				addMemberPanel.setVisibility(View.GONE);
+				lvMember.setHeaderDividersEnabled(false);
+			}
+			else
+			{
+				addMemberPanel.setVisibility(View.VISIBLE);
+				lvMember.setHeaderDividersEnabled(true);
+			}
+		}
 	}
-	
+
 	@Override
 	public void onPause()
 	{
@@ -160,18 +177,23 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 			v.setOnClickListener(this);
 			v.setSelected(i == id);
 		}
-
-		if (id == R.id.tab_member_session)
+		try
 		{
-			lvMember.setVisibility(View.VISIBLE);
-			memAllContainer.setVisibility(View.GONE);
+			if (id == R.id.tab_member_session)
+			{
+				lvMember.setVisibility(View.VISIBLE);
+				memAllContainer.setVisibility(View.GONE);
+			}
+			else
+			{
+				lvMember.setVisibility(View.GONE);
+				memAllContainer.setVisibility(View.VISIBLE);
+			}
 		}
-		else
+		catch (Exception e)
 		{
-			lvMember.setVisibility(View.GONE);
-			memAllContainer.setVisibility(View.VISIBLE);
+			// TODO: handle exception
 		}
-
 	}
 
 	@Override
@@ -185,12 +207,19 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 				currentSelectPage = v.getId();
 				refreshTab(v.getId());
 				break;
+			case R.id.add_member_panel:
+			{
+				Intent it = new Intent(getActivity(), SessionAddActivity.class);
+				it.putExtra("sessionCode", getSession().getSessionCode());
+				it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+				getActivity().startActivity(it);
+				break;
+			}
 		}
 	}
 
 	public void setSession(AirSession s)
 	{
-
 		if (s != null)
 		{
 			switch (s.getType())
@@ -225,10 +254,16 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 	{
 		// this.session = session;
 		// sessionBox.sessionBoxTalk.refreshRole(false);
-		adapterMember.notifyMember(session, members);
-		adapterMember.notifyDataSetChanged();
-		// refreshManageButtons(sessionBox.tabIndex() ==
-		// SessionBox.PAGE_MEMBER);
+		try
+		{
+			adapterMember.notifyMember(session, members);
+			adapterMember.notifyDataSetChanged();
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
 	}
 
 	public void refreshMembers()
@@ -420,7 +455,10 @@ public class MemberFragment extends BaseFragment implements OnClickListener, OnI
 				if (intent.getAction().equals(MyRelativeLayout.ACTION_ON_VIEW_RESIZE))
 				{
 					boolean isShow = intent.getBooleanExtra(MyRelativeLayout.EXTRA_IS_SOFTKEYBOARD_SHOWN, false);
-					mediaStatusBar.setMediaStatusBarVisibility(isShow ? View.GONE : View.VISIBLE);
+					if (currentSelectPage != HomeActivity.PAGE_IM)
+					{
+						mediaStatusBar.setMediaStatusBarVisibility(isShow ? View.GONE : View.VISIBLE);
+					}
 				}
 			}
 		}, filter);

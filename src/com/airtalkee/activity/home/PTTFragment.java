@@ -296,6 +296,48 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 			recPlaybackNew.setVisibility(View.GONE);
 		}
 	}
+	
+	public void refreshPlayback(AirSession session)
+	{
+		if (session != null && session.getMessagePlayback() != null)
+		{
+			AirMessage msg = session.getMessagePlayback();
+			if (msg.isRecordPlaying())
+			{
+				recPlaybackIcon.setImageResource(R.drawable.msg_audio_stop);
+			}
+			else
+			{
+				recPlaybackIcon.setImageResource(R.drawable.msg_audio_play);
+			}
+			if (TextUtils.equals(msg.getIpocidFrom(), AirtalkeeAccount.getInstance().getUserId()))
+				recPlaybackUser.setText(getString(R.string.talk_me));
+			else
+				recPlaybackUser.setText(msg.getInameFrom());
+			recPlaybackSeconds.setText(msg.getImageLength() + "''");
+			recPlaybackTime.setText(msg.getTime());
+			recPlayback.setVisibility(View.VISIBLE);
+			recPlaybackNone.setVisibility(View.GONE);
+			if (msg.getState() == AirMessage.STATE_NEW)
+			{
+				recPlaybackNew.setVisibility(View.VISIBLE);
+			}
+			else
+			{
+				recPlaybackNew.setVisibility(View.GONE);
+			}
+		}
+		else
+		{
+			recPlaybackIcon.setImageResource(R.drawable.msg_audio_play);
+			recPlaybackUser.setText("");
+			recPlaybackSeconds.setText("");
+			recPlaybackTime.setText("");
+			recPlayback.setVisibility(View.GONE);
+			recPlaybackNone.setVisibility(View.VISIBLE);
+			recPlaybackNew.setVisibility(View.GONE);
+		}
+	}
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)

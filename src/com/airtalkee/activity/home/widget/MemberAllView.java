@@ -1,7 +1,16 @@
 package com.airtalkee.activity.home.widget;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.TreeSet;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -21,11 +30,12 @@ import com.airtalkee.activity.home.AdapterMemberAll;
 import com.airtalkee.activity.home.AdapterMemberAll.CheckedCallBack;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
-import com.airtalkee.sdk.AirtalkeeContactPresence;
+import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.widget.MListView;
 
-public class MemberAllView extends LinearLayout implements OnClickListener, OnItemClickListener, TextWatcher, CheckedCallBack
+public class MemberAllView extends LinearLayout implements OnClickListener,
+		OnItemClickListener, TextWatcher, CheckedCallBack
 {
 	public interface MemberCheckListener
 	{
@@ -37,7 +47,7 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 		public void onEditTextViewFocusListener();
 	}
 
-	List<AirContact> memberAll = AirtalkeeChannel.getInstance().getChannels().get(0).MembersGet();
+	List<AirContact> memberAll = new ArrayList<AirContact>();
 	List<AirContact> memberSearchResult = new ArrayList<AirContact>();
 	private MListView lvMemberAll;
 	public AdapterMemberAll adapterMember;
@@ -58,13 +68,49 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 		lvMemberAll = (MListView) findViewById(R.id.talk_lv_member_all);
 		btnSearch.setOnClickListener(this);
 		etSearch.addTextChangedListener(this);
-
+		getAllAirContacts();
 		adapterMember = new AdapterMemberAll(getContext(), this);
 		lvMemberAll.setAdapter(adapterMember);
 		lvMemberAll.setOnItemClickListener(this);
 		adapterMember.notifyMember(memberAll);
 	}
-	
+
+	private void getAllAirContacts()
+	{
+		Map<String, AirContact> allMembers = new HashMap<String, AirContact>();
+		List<AirChannel> channels = AirtalkeeChannel.getInstance().getChannels();
+		if (channels != null && channels.size() > 0)
+		{
+			for (AirChannel channel : channels)
+			{
+				List<AirContact> members = channel.MembersGet();
+				for (AirContact member : members)
+				{
+					allMembers.put(member.getIpocId(), member);
+				}
+			}
+		}
+		Iterator<Entry<String, AirContact>> iter = allMembers.entrySet().iterator();
+		while (iter.hasNext())
+		{
+			Map.Entry<String, AirContact> entry = iter.next();
+			memberAll.add(entry.getValue());
+		}
+		Collections.sort(memberAll, new Comparator<AirContact>()
+		{
+			@Override
+			public int compare(AirContact member1, AirContact member2)
+			{
+				int result = 0;
+				if (member1.chatSortSeed > member2.chatSortSeed)
+					result = -1;
+				else if (member1.chatSortSeed < member2.chatSortSeed)
+					result = 1;
+				return result;
+			}
+		});
+	}
+
 	@Override
 	protected void onFinishInflate()
 	{

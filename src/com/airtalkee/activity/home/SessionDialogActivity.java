@@ -97,7 +97,7 @@ public class SessionDialogActivity extends BaseActivity implements OnPageChangeL
 		this.adapter = new PageFragmentAdapter(this, fm);
 		this.viewPager.setAdapter(this.adapter);
 		this.viewPager.setOnPageChangeListener(this);
-		this.viewPager.setOffscreenPageLimit(TABS_ADD.length);
+		this.viewPager.setOffscreenPageLimit(TABS.length);
 		this.mPageIndicator = (PageIndicator) findViewById(R.id.indicator);
 		this.mPageIndicator.setViewPager(viewPager);
 		HomeActivity.getInstance().finish();
@@ -128,14 +128,12 @@ public class SessionDialogActivity extends BaseActivity implements OnPageChangeL
 	@Override
 	public void onPageSelected(int page)
 	{
-		// TODO Auto-generated method stub
-
 		if (mediaStatusBar != null)
 			mediaStatusBar.onPageChanged(page);
 		if (mPageIndicator != null)
 			mPageIndicator.onPageChanged(page);
 
-		for (int i = 0; i < TABS_ADD.length; i++)
+		for (int i = 0; i < TABS.length; i++)
 		{
 			if (null != adapter)
 				if (i == page)
@@ -157,7 +155,6 @@ public class SessionDialogActivity extends BaseActivity implements OnPageChangeL
 		}
 		else 
 		{
-			
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		}
 		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -179,9 +176,9 @@ public class SessionDialogActivity extends BaseActivity implements OnPageChangeL
 		public PageFragmentAdapter(Context ctx, FragmentManager fm)
 		{
 			super(fm);
-			for (int i = 0; i < TABS_ADD.length; i++)
+			for (int i = 0; i < TABS.length; i++)
 			{
-				this.fragments.add(BaseFragment.newInstantiate(ctx, TABS_ADD[i].getName(), mediaStatusBar));
+				this.fragments.add(BaseFragment.newInstantiate(ctx, TABS[i].getName(), mediaStatusBar));
 			}
 		}
 

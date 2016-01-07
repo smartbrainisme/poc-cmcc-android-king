@@ -31,7 +31,8 @@ import com.airtalkee.entity.ImageBucket;
 import com.airtalkee.widget.PhotoCamera;
 
 // 相册选择
-public class AlbumChooseActivity extends Activity implements OnItemClickListener, OnClickListener
+public class AlbumChooseActivity extends Activity implements
+		OnItemClickListener, OnClickListener
 {
 	public static final String EXTRA_IMAGE_LIST = "imagelist";
 	public static final int TYPE_REPORT = 1;
@@ -140,7 +141,7 @@ public class AlbumChooseActivity extends Activity implements OnItemClickListener
 			}
 		}
 	}
-	
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
@@ -149,25 +150,26 @@ public class AlbumChooseActivity extends Activity implements OnItemClickListener
 		{
 			return;
 		}
+		else 
+		{
+			setResult(Activity.RESULT_OK, data);
+			finish();
+		}
+		/*
 		switch (requestCode)
 		{
 			// 自定义相册
 			case Const.image_select.REQUEST_CODE_BROWSE_IMAGE:
-			{
-				setResult(Activity.RESULT_OK, data);
-				finish();
-				break;
-			}
 			// 自定义相机
 			case Const.image_select.REQUEST_CODE_CREATE_IMAGE:
 			{
-//				ArrayList<String> pathList = new ArrayList<String>();
-//				pathList.add(picPathTemp);
-//				data.putExtra("picPath", pathList);
+				// ArrayList<String> pathList = new ArrayList<String>();
+				// pathList.add(picPathTemp);
+				// data.putExtra("picPath", pathList);
 				setResult(Activity.RESULT_OK, data);
 				finish();
 				break;
 			}
-		}
+		}*/
 	}
 }

@@ -313,4 +313,11 @@ public class MenuReportActivity extends ActivityBase implements
 		adapterReport.setCheckedAll(isChecked);
 		refreshListOrEmpty();
 	}
+
+	@Override
+	public void onMmiReportProgress(int progress)
+	{
+		// TODO Auto-generated method stub
+		
+	}
 }

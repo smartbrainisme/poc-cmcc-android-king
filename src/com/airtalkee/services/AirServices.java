@@ -30,6 +30,7 @@ import com.airtalkee.activity.DialogVersionUpdate;
 import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.SessionBoxTalk;
 import com.airtalkee.activity.TempSessionActivity;
+import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.widget.InCommingAlertDialog;
 import com.airtalkee.application.MainApplication;
@@ -212,6 +213,9 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 			String userPwd = iOperator.getString(AirAccountManager.KEY_PWD, "");
 			boolean userHb = iOperator.getBoolean(AirAccountManager.KEY_HB, false);
 			AirtalkeeAccount.getInstance().loginAutoBoot(userId, userPwd, userHb);
+			AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+			am.setMode(AudioManager.MODE_NORMAL);
+			am.setSpeakerphoneOn(true);
 			/*
 			for (int i = 0; i < 70; i++)
 			{
@@ -356,12 +360,17 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 					{
 						TempSessionActivity.getInstance().setSession(temAirSession);
 					}
-
-					Intent it = new Intent(AirServices.getInstance(), SessionDialogActivity.class);
-					it.putExtra("sessionCode", session.getSessionCode());
-					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
-					it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-					AirServices.getInstance().startActivity(it);
+					if (temAirSession != null)
+					{
+						AirtalkeeSessionManager.getInstance().getSessionByCode(temAirSession.getSessionCode());
+						HomeActivity.getInstance().onViewChanged(session.getSessionCode());
+						HomeActivity.getInstance().panelCollapsed();
+					}
+//					Intent it = new Intent(AirServices.getInstance(), SessionDialogActivity.class);
+//					it.putExtra("sessionCode", session.getSessionCode());
+//					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
+//					it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//					AirServices.getInstance().startActivity(it);
 
 					// switchToSessionTemp(temAirSession.getSessionCode(),
 					// TEMP_SESSION_TYPE_INCOMING, AirServices.getInstance());

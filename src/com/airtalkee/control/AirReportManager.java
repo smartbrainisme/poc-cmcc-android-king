@@ -294,6 +294,7 @@ public class AirReportManager implements OnReportListener
 			if (reportListener != null)
 			{
 				reportListener.onMmiReportResourceListRefresh();
+				reportListener.onMmiReportProgress(progress);
 			}
 		}
 	}
@@ -402,7 +403,6 @@ public class AirReportManager implements OnReportListener
 			{
 				reportDoing = null;
 			}
-
 			if (reportListener != null)
 			{
 				reportListener.onMmiReportResourceListRefresh();
@@ -445,6 +445,7 @@ public class AirReportManager implements OnReportListener
 	{
 		// TODO Auto-generated method stub
 		reportActionProgress(progress);
+		
 	}
 
 	@Override

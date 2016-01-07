@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import com.airtalkee.R;
 import com.airtalkee.activity.TempSessionActivity;
+import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.control.AirSessionControl;
@@ -20,8 +21,7 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.services.AirServices;
 
-public class CallAlertDialog extends AlertDialog implements
-		android.view.View.OnClickListener, DialogListener, OnMmiSessionListener
+public class CallAlertDialog extends AlertDialog implements android.view.View.OnClickListener, DialogListener, OnMmiSessionListener
 {
 	private String sessionCode;
 	private AirSession session;
@@ -131,10 +131,16 @@ public class CallAlertDialog extends AlertDialog implements
 	{
 		// TODO Auto-generated method stub
 		AirSessionControl.getInstance().setOnMmiSessionListener(null);
-		Intent it = new Intent(getContext(), SessionDialogActivity.class);
-		it.putExtra("sessionCode", session.getSessionCode());
-		it.putExtra("type", AirServices.TEMP_SESSION_TYPE_OUTGOING);
-		getContext().startActivity(it);
+		if (session != null)
+		{
+			AirtalkeeSessionManager.getInstance().getSessionByCode(session.getSessionCode());
+			HomeActivity.getInstance().onViewChanged(session.getSessionCode());
+			HomeActivity.getInstance().panelCollapsed();
+		}
+//		Intent it = new Intent(getContext(), SessionDialogActivity.class);
+//		it.putExtra("sessionCode", session.getSessionCode());
+//		it.putExtra("type", AirServices.TEMP_SESSION_TYPE_OUTGOING);
+//		getContext().startActivity(it);
 		this.cancel();
 	}
 

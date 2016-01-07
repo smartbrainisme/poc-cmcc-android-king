@@ -57,7 +57,7 @@
                         android:layout_width="@dimen/msg_pic_widht"
                         android:layout_height="@dimen/msg_pic_height"
                         android:layout_centerVertical="true"
-                        android:scaleType="centerCrop"
+                        android:scaleType="center"
                         android:src="@drawable/msg_image" />
 
                     <TextView

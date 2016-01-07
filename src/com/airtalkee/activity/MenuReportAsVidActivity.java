@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -24,9 +25,12 @@ import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.UriUtil;
 import com.airtalkee.Util.Util;
+import com.airtalkee.activity.home.widget.AlertDialog;
+import com.airtalkee.activity.home.widget.ReportProgressAlertDialog;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirReportManager;
 import com.airtalkee.listener.OnMmiLocationListener;
+import com.airtalkee.listener.OnMmiReportListener;
 import com.airtalkee.location.AirLocation;
 import com.airtalkee.sdk.AirtalkeeReport;
 import com.airtalkee.sdk.util.Log;
@@ -35,7 +39,7 @@ import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.VideoCamera;
 
 public class MenuReportAsVidActivity extends ActivityBase implements
-		OnClickListener, OnMmiLocationListener
+		OnClickListener, OnMmiLocationListener, OnMmiReportListener
 {
 
 	private final int VIDEO_MAX_SIZE = 100 * 1024 * 1024;
@@ -43,8 +47,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 	private EditText report_detail;
 	private VideoView mVideoView;
 	private MediaController mVideoController;
-	private TextView report_image_size;
-	private Button btn_take, btn_native, btn_post;
+	private Button btn_post;
 	private boolean isUploading = false;
 	private int videoSize = 0;
 	private Uri videoUri = null;
@@ -54,9 +57,13 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 	private String taskId = null;
 	private String taskName = null;
 	private String type = null;
+	private RadioButton rbBig, rbSmall;
 
 	private android.widget.Toast myToast;
+	ReportProgressAlertDialog reportDialog;
+
 	private static MenuReportAsVidActivity mInstance;
+
 	public static MenuReportAsVidActivity getInstance()
 	{
 		return mInstance;
@@ -81,6 +88,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		refreshUI();
 		loadAlbum(type);
 		mInstance = this;
+		AirReportManager.getInstance().setReportListener(this);
 	}
 
 	private void loadAlbum(String type)
@@ -119,23 +127,23 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 
 		// mVideoView.setOnClickListener(this);
 		report_detail = (EditText) findViewById(R.id.report_detail);
-		report_image_size = (TextView) findViewById(R.id.report_image_size);
-		btn_take = (Button) findViewById(R.id.report_btn_take);
-		btn_native = (Button) findViewById(R.id.report_btn_native);
 		btn_post = (Button) findViewById(R.id.report_btn_post);
-		btn_take.setOnClickListener(this);
-		btn_native.setOnClickListener(this);
 		btn_post.setOnClickListener(this);
 
 		mVideoController = new MediaController(this);
 		mVideoView.setMediaController(mVideoController);
 
+		rbBig = (RadioButton) findViewById(R.id.report_file_big);
+		rbSmall = (RadioButton) findViewById(R.id.report_file_small);
+
 		if (!TextUtils.isEmpty(videoPath))
 		{
 			mVideoView.setVideoPath(videoPath);
 			videoSize = AirServices.iOperator.getFileSize("", videoPath, true);
-			report_image_size.setText(MenuReportActivity.sizeMKB(videoSize) + " (" + AirServices.iOperator.getFileExtension(videoPath) + ")");
-			report_image_size.setVisibility(View.VISIBLE);
+			String format = AirServices.iOperator.getFileExtension(videoPath);
+			rbBig.setText(MenuReportActivity.sizeMKB(videoSize) + " (" + format + ")");
+			float smallSize = videoSize * 0.8F;
+			rbSmall.setText(MenuReportActivity.sizeMKB((int) smallSize) + " (" + format + ")");
 		}
 	}
 
@@ -144,27 +152,28 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		if (isUploading)
 		{
 			report_detail.setEnabled(false);
-			btn_take.setEnabled(false);
-			btn_native.setEnabled(false);
-			report_image_size.setText(MenuReportActivity.sizeMKB(videoSize) + " (" + AirServices.iOperator.getFileExtension(videoPath) + ")");
 		}
 		else
 		{
 			report_detail.setEnabled(true);
-			btn_take.setEnabled(true);
-			btn_native.setEnabled(true);
 			if (!TextUtils.isEmpty(videoPath))
 			{
 				mVideoView.setVisibility(View.VISIBLE);
-				report_image_size.setText(MenuReportActivity.sizeMKB(videoSize) + " (" + AirServices.iOperator.getFileExtension(videoPath) + ")");
-				report_image_size.setVisibility(View.VISIBLE);
 			}
 			else
 			{
 				mVideoView.setVisibility(View.GONE);
-				report_image_size.setVisibility(View.INVISIBLE);
 			}
 		}
+	}
+
+	@Override
+	public void finish()
+	{
+		// TODO Auto-generated method stub
+		super.finish();
+		AirReportManager.getInstance().setReportListener(null);
+		reportDialog.cancel();
 	}
 
 	@Override
@@ -183,39 +192,6 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 				break;
 			}
 			case R.id.report_image:
-			case R.id.report_btn_take:
-			{
-				// Intent i = new
-				// Intent(android.provider.MediaStore.ACTION_VIDEO_CAPTURE);
-				// gUri = getOutputMediaFile();
-				// if(gUri != null)
-				// i.putExtra(MediaStore.EXTRA_OUTPUT, gUri);
-				// i.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 0);
-				// i.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 60);
-				// startActivityForResult(i,
-				// Const.image_select.REQUEST_CODE_CREATE_VIDEO);
-
-				// TODO Auto-generated method stub
-				// Intent serverIntent = new
-				// Intent(MenuReportAsVidActivity.this, VideoCamera.class);
-				// startActivityForResult(serverIntent,
-				// Const.image_select.REQUEST_CODE_CREATE_VIDEO);
-				break;
-			}
-			case R.id.report_btn_native:
-			{
-				String status = Environment.getExternalStorageState();
-				if (!status.equals(Environment.MEDIA_MOUNTED))
-				{
-					Util.Toast(this, getString(R.string.talk_insert_sd_card));
-					return;
-				}
-				Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null);
-				localIntent.setType("video/*");
-				startActivityForResult(localIntent, Const.image_select.REQUEST_CODE_BROWSE_VIDEO);
-				break;
-			}
-
 			case R.id.report_video:
 			{
 				break;
@@ -257,12 +233,10 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		Util.hideSoftInput(this);
 		refreshUI();
 		myToast = Toast.makeText1(this, true, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
-		myToast.setDuration(3600);
 		myToast.show();
-		// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
 		AirLocation.getInstance(this).onceGet(this, 30);
 	}
-	
+
 	Uri gUri;
 
 	public Uri getOutputMediaFile()
@@ -374,7 +348,11 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 	{
 		if (isUploading && id == AirLocation.AIR_LOCATION_ID_ONCE)
 		{
+			myToast.cancel();
 			String detail = report_detail.getText().toString();
+			int size = rbBig.isChecked() ? videoSize : (int) (videoSize * 0.8f);
+			reportDialog = new ReportProgressAlertDialog(this, MenuReportActivity.sizeMKB(size));
+			reportDialog.show();
 			File file = new File(videoPath);
 			try
 			{
@@ -402,12 +380,26 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 			Log.i(MenuReportAsVidActivity.class, "VideoPicture: TASK[" + taskId + "][" + taskName + "] text=[" + report_detail.getText().toString() + "] x=[" + latitude + "] y=[" + longitude + "]");
 			AirReportManager.getInstance().Report(taskId, taskName, AirtalkeeReport.RESOURCE_TYPE_VIDEO, resTypeExtension, videoUri, videoPath, detail, videoSize, latitude, longitude);
 			isUploading = false;
-			myToast = Toast.makeText1(this, R.drawable.ic_success, getString(R.string.talk_tools_report_success), Toast.LENGTH_LONG);
-			// Util.Toast(this, getString(R.string.talk_tools_report_success),
-			// R.drawable.ic_success);
-			myToast.show();
-			finish();
-
 		}
+	}
+
+	@Override
+	public void onMmiReportResourceListRefresh()
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onMmiReportDel()
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onMmiReportProgress(int progress)
+	{
+		reportDialog.setFileProgress(progress);
 	}
 }

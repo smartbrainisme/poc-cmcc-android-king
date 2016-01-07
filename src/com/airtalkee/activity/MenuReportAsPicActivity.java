@@ -24,19 +24,18 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
-import com.airtalkee.R.string;
 import com.airtalkee.Util.BitmapUtil;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.AlbumChooseActivity;
-import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
+import com.airtalkee.activity.home.widget.ReportProgressAlertDialog;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirReportManager;
-import com.airtalkee.entity.AirReport;
 import com.airtalkee.listener.OnMmiLocationListener;
+import com.airtalkee.listener.OnMmiReportListener;
 import com.airtalkee.location.AirLocation;
 import com.airtalkee.sdk.AirtalkeeReport;
 import com.airtalkee.sdk.util.Log;
@@ -49,7 +48,7 @@ import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
 public class MenuReportAsPicActivity extends ActivityBase implements
 		OnClickListener, OnMmiLocationListener, OnCheckedChangeListener,
-		DialogListener
+		DialogListener, OnMmiReportListener
 {
 
 	private EditText report_detail;
@@ -73,7 +72,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 	private String taskName = null;
 	private String type = null;
 	private String reportCode;
-	AlertDialog dialog;
+	ReportProgressAlertDialog reportDialog;
 	private static MenuReportAsPicActivity mInstance;
 
 	public static MenuReportAsPicActivity getInstance()
@@ -106,6 +105,7 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		}
 		loadCamera(type);
 		mInstance = this;
+		AirReportManager.getInstance().setReportListener(this);
 	}
 
 	private void loadCamera(String type)
@@ -200,6 +200,21 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 	}
 
 	@Override
+	public void finish()
+	{
+		super.finish();
+		try
+		{
+			AirReportManager.getInstance().setReportListener(null);
+			reportDialog.cancel();
+		}
+		catch (Exception e)
+		{
+		}
+		
+	}
+
+	@Override
 	public void onClick(View v)
 	{
 		// TODO Auto-generated method stub
@@ -214,8 +229,6 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 				reportPost();
 				break;
 			}
-			case R.id.report_btn_take:
-			case R.id.report_btn_native:
 			case R.id.report_image:
 			{
 				// pictureQualitySelect(v.getId());
@@ -228,17 +241,6 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 			case R.id.report_item_panel:
 			{
 				Util.hideSoftInput(this);
-				break;
-			}
-			case R.id.report_image_clean:
-			{
-				if (isUploading)
-				{
-					Util.Toast(this, getString(R.string.talk_report_uploading));
-					break;
-				}
-				picUri = null;
-				refreshUI();
 				break;
 			}
 		}
@@ -262,7 +264,6 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		// Util.Toast(this,
 		// getString(R.string.talk_report_upload_getting_gps), 60, -1);
 		myToast = Toast.makeText1(this, true, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
-		myToast.setDuration(3600);
 		myToast.show();
 		// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
 		AirLocation.getInstance(this).onceGet(this, 30);
@@ -372,8 +373,12 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		// TODO Auto-generated method stub
 		if (isUploading && id == AirLocation.AIR_LOCATION_ID_ONCE)
 		{
+			myToast.cancel();
 			String detail = report_detail.getText().toString();
 			String path = isHighQuality ? picPathTemp : picPath;
+			String size = isHighQuality ? MenuReportActivity.sizeMKB(picSizeTemp) + "" : MenuReportActivity.sizeMKB(picSize) + "";
+			reportDialog = new ReportProgressAlertDialog(this, size);
+			reportDialog.show();
 			File file = new File(path);
 			Uri uri = Uri.fromFile(file);
 			try
@@ -395,21 +400,8 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 			}
 
 			Log.i(MenuReportAsPicActivity.class, "ReportPicture: TASK[" + taskId + "][" + taskName + "] text=[" + report_detail.getText().toString() + "] x=[" + latitude + "] y=[" + longitude + "]");
-			AirReportManager.getInstance().Report(taskId, taskName, AirtalkeeReport.RESOURCE_TYPE_PICTURE, "jpg", uri, picPath, detail, picSize, latitude, longitude);
+			AirReportManager.getInstance().Report(taskId, taskName, AirtalkeeReport.RESOURCE_TYPE_PICTURE, "jpg", uri, path, detail, isHighQuality ? picSizeTemp : picSize, latitude, longitude);
 			isUploading = false;
-//			AirReport report = AirReportManager.getInstance().getReports().get(AirReportManager.getInstance().getReports().size() - 1);
-//			reportCode = report.getCode();
-//			if (report.getState() == AirReport.STATE_RESULT_OK)
-//			{
-//				myToast = Toast.makeText1(this, R.drawable.ic_success, getString(R.string.talk_tools_report_success), Toast.LENGTH_LONG);
-//				myToast.show();
-//				finish();
-//			}
-//			else
-//			{
-//				dialog = new AlertDialog(this, getString(R.string.talk_tools_report_fail), getString(R.string.talk_tools_report_fail_tip), getString(R.string.talk_tools_report_continue), getString(R.string.talk_ok_2), this, -1);
-//				dialog.show();
-//			}
 		}
 	}
 
@@ -456,6 +448,26 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 	public void onClickCancel(int id)
 	{
 		AirReportManager.getInstance().ReportRetry(reportCode);
+	}
+
+	@Override
+	public void onMmiReportResourceListRefresh()
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onMmiReportDel()
+	{
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onMmiReportProgress(int progress)
+	{
+		reportDialog.setFileProgress(progress);
 	}
 
 }

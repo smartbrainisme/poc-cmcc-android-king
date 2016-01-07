@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MoreActivity;
+import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.SessionNewActivity;
 import com.airtalkee.activity.home.widget.AdapterSession.HodlerView;
@@ -26,8 +27,10 @@ import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
+import com.airtalkee.widget.SlidingUpPanelLayout.PanelState;
 
-public class SessionAndChannelView extends LinearLayout implements OnClickListener, OnItemClickListener
+public class SessionAndChannelView extends LinearLayout implements
+		OnClickListener, OnItemClickListener
 {
 	public interface ViewChangeListener
 	{
@@ -41,8 +44,9 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 	private TextView tvChannelTitle, tvSessionTitle, tvSettingCancel;
 	private CharSequence channelTitle, sessionTitle;
 	private ViewChangeListener listener;
-	private ImageView ivUnread, ivSetting;
+	private ImageView ivUnread, ivSetting, ivSlidingBack;
 	private static SessionAndChannelView mInstance;
+
 	public static SessionAndChannelView getInstance()
 	{
 		return mInstance;
@@ -85,7 +89,15 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 		{
 			ivUnread.setVisibility(View.GONE);
 		}
-
+		ivSlidingBack = (ImageView) findViewById(R.id.sliding_back);
+		ivSlidingBack.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				HomeActivity.getInstance().mLayout.setPanelState(PanelState.COLLAPSED);
+			}
+		});
 		registerSessionUpdateListener();
 		mInstance = this;
 	}
@@ -96,7 +108,7 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 		// TODO Auto-generated method stub
 		super.onFinishInflate();
 	}
-	
+
 	public void resume()
 	{
 		if (adapterChannel != null)
@@ -107,7 +119,15 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 		if (adapterSession != null)
 		{
 			adapterSession.notifyDataSetChanged();
-			tvSessionTitle.setText(sessionTitle + "(" + (adapterSession.getCount() - 1) + ")");
+			int count = adapterSession.getCount();
+			if (adapterSession.isEditing())
+			{
+				tvSessionTitle.setText(sessionTitle + "(" + count + ")");
+			}
+			else
+			{
+				tvSessionTitle.setText(sessionTitle + "(" + (count - 1) + ")");
+			}
 		}
 	}
 
@@ -190,10 +210,13 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 								listener.onViewChanged(s.getSessionCode());
 							}
 							/*
-							Intent it = new Intent(getContext(), SessionDialogActivity.class);
-							it.putExtra("sessionCode", s.getSessionCode());
-							it.putExtra("type", AirServices.TEMP_SESSION_TYPE_RESUME);
-							getContext().startActivity(it);*/
+							 * Intent it = new Intent(getContext(),
+							 * SessionDialogActivity.class);
+							 * it.putExtra("sessionCode", s.getSessionCode());
+							 * it.putExtra("type",
+							 * AirServices.TEMP_SESSION_TYPE_RESUME);
+							 * getContext().startActivity(it);
+							 */
 						}
 					}
 					adapterSession.notifyDataSetChanged();
@@ -230,7 +253,7 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 			}
 		}, filter);
 	}
-	
+
 	public void refreshChannelAndDialog()
 	{
 		adapterChannel.notifyDataSetChanged();

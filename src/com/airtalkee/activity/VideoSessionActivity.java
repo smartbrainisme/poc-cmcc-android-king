@@ -65,7 +65,7 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 	// private FrameLayout videoSettingsLayout;
 	private RelativeLayout videoPanel, topPanel;
 	private TextView videoStatusText, videoRate;
-	private static String videoRateStr;
+	private static String videoRateStr = VIDEO_QUALITY_NORMAL;
 	private ImageView btnTalkVideo, icVideoStatus;
 	private Animation animVideoFull, animVideoSmall;
 	private boolean isVideoRecording = false;
@@ -178,8 +178,8 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		}
 		else
 		{
-			videoRate.setText(VIDEO_QUALITY_HIGH);
-			videoRateStr = VIDEO_QUALITY_HIGH;
+			videoRate.setText(VIDEO_QUALITY_NORMAL);
+			videoRateStr = VIDEO_QUALITY_NORMAL;
 			RadioButton rb = (RadioButton) videoSettingRadio.findViewById(R.id.radio_high);
 			rb.setChecked(true);
 		}

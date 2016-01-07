@@ -623,7 +623,7 @@ public class SlidingUpPanelLayout extends ViewGroup
 						setPanelState(PanelState.COLLAPSED);
 					}
 				}
-			});;
+			});
 		}
 	}
 

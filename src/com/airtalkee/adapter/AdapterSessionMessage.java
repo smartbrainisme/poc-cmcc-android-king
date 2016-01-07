@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.BitmapFactory;
@@ -76,7 +77,6 @@ public class AdapterSessionMessage extends AdapterBase implements
 		{
 			size = currentSession.getMessages().size();
 		}
-
 		return size;
 	}
 
@@ -475,11 +475,11 @@ public class AdapterSessionMessage extends AdapterBase implements
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				AirMessage preMsg = currentSession.getMessages().get(position - 1);
 				AirMessage currentMsg = currentSession.getMessages().get(position);
-				
+
 				String preDateStr = preMsg.getDate() + " " + preMsg.getTime();
 				preDateStr = preDateStr.replace("年", "-").replace("月", "-").replace("日", "");
 				Date preDate = sdf.parse(preDateStr);
-				
+
 				String currentDateStr = currentMsg.getDate() + " " + currentMsg.getTime();
 				currentDateStr = currentDateStr.replace("年", "-").replace("月", "-").replace("日", "");
 				Date currentDate = sdf.parse(currentDateStr);
@@ -548,22 +548,25 @@ public class AdapterSessionMessage extends AdapterBase implements
 	}
 
 	@Override
-	public void onImageLoadCompleted(int orientation, View v)
+	public void onImageLoadCompleted(int orientation, View v, int width, int height)
 	{
 		LayoutParams params = (LayoutParams) v.getLayoutParams();
+		int pwidth = params.width;
+		int pheight = params.height;
 		switch (orientation)
 		{
 			case AdapterSessionMessage.ORIENTATION_HORIZONTAL:
-				params.width = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_widht));
-				params.height = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_height));
-				break;
+//				params.width = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_widht) * ((float) (width) / (float) (height)) * 2);
+//				params.height = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_height) * ((float) (width) / (float) (height)) * 2);
 			case AdapterSessionMessage.ORIENTATION_VERTICAL:
-				params.width = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_height) * 2);
-				params.height = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_widht) * 2);
+//				params.width = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_height) * ((float) (height) / (float) (width)) * 2);
+//				params.height = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_widht) * ((float) (height) / (float) (width)) * 2);
+				params.width = width;
+				params.height = height;
 				break;
 			case AdapterSessionMessage.ORIENTATION_SQUARE:
-				params.width = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_height_width) * 2);
-				params.height = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_height_width) * 2);
+				params.width = height;
+				params.height = height;
 				break;
 		}
 		v.setLayoutParams(params);

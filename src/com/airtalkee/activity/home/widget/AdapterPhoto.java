@@ -166,12 +166,12 @@ public class AdapterPhoto extends BaseAdapter
 	private void imageClick(final int position, final Holder holder, final ImageItem item)
 	{
 		String path = dataList.get(position).imagePath;
-		item.isSelected = !item.isSelected;
 		if (type == TYPE_IM)
 		{
 			// 若果是IM消息，则可以多选图片，最多9张。
-			if ((Bimp.bmp.size() + selectTotal) < 9)
+			if ((selectTotal) < 9)
 			{
+				item.isSelected = !item.isSelected;
 				if (item.isSelected)
 				{
 					holder.cbSelected.setChecked(true);
@@ -179,9 +179,8 @@ public class AdapterPhoto extends BaseAdapter
 					if (textcallback != null)
 						textcallback.onTextListen(selectTotal);
 					map.put(path, path);
-
 				}
-				else if (!item.isSelected)
+				else
 				{
 					holder.cbSelected.setChecked(false);
 					selectTotal--;
@@ -190,14 +189,16 @@ public class AdapterPhoto extends BaseAdapter
 					map.remove(path);
 				}
 			}
-			else if ((Bimp.bmp.size() + selectTotal) >= 9)
+			else if ((selectTotal) >= 9)
 			{
-				if (item.isSelected == true)
+				if (item.isSelected)
 				{
 					item.isSelected = !item.isSelected;
+					holder.cbSelected.setChecked(false);
 					selectTotal--;
+					if (textcallback != null)
+						textcallback.onTextListen(selectTotal);
 					map.remove(path);
-
 				}
 				else
 				{
@@ -208,6 +209,7 @@ public class AdapterPhoto extends BaseAdapter
 		}
 		else if (type == TYPE_REPORT)
 		{
+			item.isSelected = !item.isSelected;
 			if (item.isSelected) // 当前为选中状态
 			{
 				if (lastImagePosition != -1)
