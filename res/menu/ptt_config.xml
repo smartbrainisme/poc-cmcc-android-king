@@ -9,6 +9,7 @@
 		model:pttEarphoneKeycode="226"
 		model:pttEarphonePlug="true"
 		model:audioAmplifierEnabled="true" />
+    
 	<item model:model="DATANG T96" 
 		model:pttButtonActionUp="android.intent.action.PTT.up"
 		model:pttButtonActionDown="android.intent.action.PTT.down" 
@@ -16,4 +17,5 @@
 		model:pttEarphoneKeycode="226"
 		model:pttEarphonePlug="true"
 		model:audioAmplifierEnabled="true" />
+	
 </menu>

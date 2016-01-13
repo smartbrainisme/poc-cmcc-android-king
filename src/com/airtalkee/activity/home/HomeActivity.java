@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -26,12 +27,16 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.DensityUtil;
+import com.airtalkee.Util.Util;
+import com.airtalkee.activity.MainActivity;
+import com.airtalkee.activity.SessionBox;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
 import com.airtalkee.activity.home.widget.SessionAndChannelView;
 import com.airtalkee.activity.home.widget.SessionAndChannelView.ViewChangeListener;
 import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirSessionControl;
+import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
@@ -73,8 +78,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 				HomeActivity.getInstance().finish();
 			}
 			catch (Exception e)
-			{
-			}
+			{}
 		}
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
@@ -124,10 +128,10 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 			}
 			AirtalkeeMessage.getInstance().MessageListMoreClean(session);
 		}
-//		if (channelView != null)
-//		{
-//			channelView.unRegisterReceiver();
-//		}
+		// if (channelView != null)
+		// {
+		// channelView.unRegisterReceiver();
+		// }
 	}
 
 	// 滑动
@@ -432,6 +436,28 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public boolean dispatchKeyEvent(KeyEvent event)
+	{
+		if (event.getKeyCode() == Config.pttButtonKeycode || (Config.pttVolumeKeySupport && (event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_UP || event.getKeyCode() == KeyEvent.KEYCODE_VOLUME_DOWN)))
+		{
+			if (AirtalkeeAccount.getInstance().isEngineRunning() && AirSessionControl.getInstance().getCurrentChannelSession() != null && AirSessionControl.getInstance().getCurrentChannelSession().getChannel() != null)
+			{
+				if (event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0)
+				{
+					AirtalkeeSessionManager.getInstance().TalkRequest(AirSessionControl.getInstance().getCurrentChannelSession(), AirSessionControl.getInstance().getCurrentChannelSession().getChannel().isRoleAppling());
+				}
+				else if (event.getAction() == KeyEvent.ACTION_UP)
+				{
+					AirtalkeeSessionManager.getInstance().TalkRelease(AirSessionControl.getInstance().getCurrentChannelSession());
+				}
+			}
+			return true;
+		}
+
+		return super.dispatchKeyEvent(event);
 	}
 
 	// 点击输入框外的地方隐藏输入法 目前不需要

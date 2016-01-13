@@ -223,7 +223,6 @@ public class MainActivity extends ActivityBase implements OnMmiAccountListener, 
 		}
 		else
 		{
-
 			switch (event.getKeyCode())
 			{
 				case KeyEvent.KEYCODE_HOME:

@@ -24,8 +24,7 @@ public class MenuSettingPttActivity extends ActivityBase implements
 		OnClickListener, OnCheckedChangeListener
 {
 
-	private CheckBox mVoiceAmplifier, mPttClick, mPttVolume, mPttAnswer,
-			mPttIsb;
+	private CheckBox mVoiceAmplifier, mPttClick, mPttVolume, mPttAnswer, mPttIsb;
 	View pttAnswerLayout;
 	private TextView mFrequenceText;
 	private int[] mFrequenceValue = { Config.ENGINE_MEDIA_HB_SECOND_HIGH, Config.ENGINE_MEDIA_HB_SECOND_FAST, Config.ENGINE_MEDIA_HB_SECOND_MEDIUM, Config.ENGINE_MEDIA_HB_SECOND_SLOW };
