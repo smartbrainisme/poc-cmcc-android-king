@@ -13,15 +13,20 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.inputmethod.InputMethodManager;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
@@ -37,32 +42,38 @@ import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeContactPresence;
 import com.airtalkee.sdk.AirtalkeeMessage;
+import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.OnContactPresenceListener;
 import com.airtalkee.sdk.controller.SessionController;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.sdk.util.Log;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.MListView;
 import com.airtalkee.widget.MyRelativeLayout;
 
 public class MemberFragment extends BaseFragment implements OnClickListener,
 		OnItemClickListener, CheckedCallBack, MemberCheckListener,
-		OnContactPresenceListener
+		OnContactPresenceListener, TextWatcher
 {
 	private static final int DIALOG_CALL = 99;
 	private TextView tabMemberSession, tabMemberAll;
+	private ImageView ivSerachIcon;
 	private List<AirContact> tempCallMembers = null;
 	Map<String, AirContact> tempCallMembersCache = new TreeMap<String, AirContact>();
 	private LinkedHashMap<Integer, TextView> ids = new LinkedHashMap<Integer, TextView>();
 	private MListView lvMember;
 	private AdapterMember adapterMember;
 	private CallAlertDialog alertDialog;
-	private LinearLayout memAllContainer, addMemberPanel;
-	private int currentSelectPage = R.id.tab_member_all;
+	private LinearLayout memAllContainer, addMemberPanel, searchPannelChannel, searchPannelAll;
+	private EditText searchEditChannel, searchEditAll;
+	private Button btnSearch;
+	private int currentSelectPage = R.id.tab_member_session;
 	private MemberAllView memberAllView;
 	private boolean memberSessionChecked = false;
 	private boolean memberAllChecked = false;
+	List<AirContact> memberSearchResult = new ArrayList<AirContact>();
 	AlertDialog dialog;
 
 	@Override
@@ -79,22 +90,37 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		// TODO Auto-generated method stub
 		v = inflater.inflate(getLayout(), container, false);
 
-		memAllContainer = (LinearLayout) findViewById(R.id.mem_container);
-		memAllContainer.addView(memberAllView = new MemberAllView(getActivity(), this));
-
 		addMemberPanel = (LinearLayout) findViewById(R.id.add_member_panel);
 		addMemberPanel.setOnClickListener(this);
 
+		btnSearch = (Button) findViewById(R.id.btn_search);
+		btnSearch.setOnClickListener(this);
+		
 		lvMember = (MListView) findViewById(R.id.talk_lv_member);
 		lvMember.setAdapter(adapterMember = new AdapterMember(getActivity(), null, null, true, true, this));
 		lvMember.setOnItemClickListener(this);
 		tabMemberSession = (TextView) findViewById(R.id.tab_member_session);
 		tabMemberAll = (TextView) findViewById(R.id.tab_member_all);
 
+		ivSerachIcon = (ImageView) findViewById(R.id.iv_search_icon);
+		ivSerachIcon.setOnClickListener(this);
+
+		memAllContainer = (LinearLayout) findViewById(R.id.mem_container);
+		memberAllView = new MemberAllView(getActivity(), this);
+		memAllContainer.addView(memberAllView);
+
+		searchPannelChannel = (LinearLayout) findViewById(R.id.serach_pannel);
+		searchPannelAll = (LinearLayout) memberAllView.findViewById(R.id.serach_pannel);
+
+		searchEditChannel = (EditText) findViewById(R.id.et_search);
+		searchEditAll = (EditText) memberAllView.findViewById(R.id.et_search);
+		
+		searchEditChannel.addTextChangedListener(this);
+
 		ids.put(R.id.tab_member_session, tabMemberSession);
 		ids.put(R.id.tab_member_all, tabMemberAll);
 
-		refreshTab(R.id.tab_member_session);
+		// refreshTab(R.id.tab_member_session);
 
 		if (mediaStatusBar != null)
 			mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, false);
@@ -118,13 +144,12 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 			if (getSession().getType() == AirSession.TYPE_CHANNEL)
 			{
 				addMemberPanel.setVisibility(View.GONE);
-				lvMember.setHeaderDividersEnabled(false);
 			}
 			else
 			{
 				addMemberPanel.setVisibility(View.VISIBLE);
-				lvMember.setHeaderDividersEnabled(true);
 			}
+			
 		}
 	}
 
@@ -169,6 +194,10 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 
 	public void refreshTab(int id)
 	{
+		searchPannelAll.setVisibility(View.GONE);
+		searchPannelChannel.setVisibility(View.GONE);
+		ivSerachIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_white));
+		Util.hideSoftInput(getActivity());
 		Iterator<Integer> iter = ids.keySet().iterator();
 		while (iter.hasNext())
 		{
@@ -179,15 +208,84 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		}
 		try
 		{
-			if (id == R.id.tab_member_session)
+			if (id == R.id.tab_member_session) // 频道成员
 			{
 				lvMember.setVisibility(View.VISIBLE);
 				memAllContainer.setVisibility(View.GONE);
+				if(memberSearchResult.size() > 0)
+				{
+					setSession(getSession());
+				}
+				tabMemberSession.setEnabled(false);
+				tabMemberAll.setEnabled(true);
 			}
-			else
+			else // 全部成员
 			{
+				if (memberAllView == null || memberAllView.memberAll.size() < 1)
+				{
+					memberAllView = new MemberAllView(getActivity(), this);
+					memberAllView.adapterMember.notifyDataSetChanged();
+					memAllContainer.addView(memberAllView);
+				}
+				memberAllView.adapterMember.notifyMember(memberAllView.memberAll);
 				lvMember.setVisibility(View.GONE);
 				memAllContainer.setVisibility(View.VISIBLE);
+				tabMemberSession.setEnabled(true);
+				tabMemberAll.setEnabled(false);
+			}
+		}
+		catch (Exception e)
+		{
+			// TODO: handle exception
+		}
+	}
+
+	private void refreshSearch(int id)
+	{
+		Iterator<Integer> iter = ids.keySet().iterator();
+		while (iter.hasNext())
+		{
+			Integer i = iter.next();
+			TextView v = ids.get(i);
+			v.setOnClickListener(this);
+			v.setSelected(i == id);
+		}
+		try
+		{
+			if (id == R.id.tab_member_session) // 频道成员
+			{
+				if (searchPannelChannel.getVisibility() == View.GONE)
+				{
+					ivSerachIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_orange));
+					searchPannelChannel.setVisibility(View.VISIBLE);
+					searchEditChannel.requestFocus();
+					Util.showSoftInput(getActivity());
+				}
+				else
+				{
+					ivSerachIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_white));
+					searchPannelChannel.setVisibility(View.GONE);
+					searchEditChannel.clearFocus();
+					Util.hideSoftInput(getActivity());
+				}
+			}
+			else
+			// 全部成员
+			{
+				if (searchPannelAll.getVisibility() == View.GONE)
+				{
+					ivSerachIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_orange));
+					searchPannelAll.setVisibility(View.VISIBLE);
+					searchEditAll.requestFocus();
+					Util.showSoftInput(getActivity());
+				}
+				else
+				{
+					ivSerachIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_white));
+					searchPannelAll.setVisibility(View.GONE);
+					searchEditAll.clearFocus();
+					Util.hideSoftInput(getActivity());
+				}
 			}
 		}
 		catch (Exception e)
@@ -204,15 +302,38 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		{
 			case R.id.tab_member_session:
 			case R.id.tab_member_all:
+			{
 				currentSelectPage = v.getId();
-				refreshTab(v.getId());
+				refreshTab(currentSelectPage);
 				break;
+			}
 			case R.id.add_member_panel:
 			{
 				Intent it = new Intent(getActivity(), SessionAddActivity.class);
 				it.putExtra("sessionCode", getSession().getSessionCode());
 				it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
 				getActivity().startActivity(it);
+				break;
+			}
+			case R.id.iv_search_icon:
+			{
+				refreshSearch(currentSelectPage);
+				break;
+			}
+			case R.id.btn_search:
+			{
+				String key = searchEditChannel.getText().toString();
+				memberSearchResult.clear();
+				setSession(getSession());
+				for (int i = 0; i < adapterMember.getCount(); i++)
+				{
+					AirContact contact = (AirContact) adapterMember.getItem(i);
+					if (contact.getDisplayName().equalsIgnoreCase(key) || contact.getIpocId().equals(key) || contact.getDisplayName().contains(key) || contact.getIpocId().contains(key))
+					{
+						memberSearchResult.add(contact);
+					}
+				}
+				refreshMembers(getSession(), memberSearchResult);
 				break;
 			}
 		}
@@ -252,8 +373,6 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 
 	public void refreshMembers(AirSession session, List<AirContact> members)
 	{
-		// this.session = session;
-		// sessionBox.sessionBoxTalk.refreshRole(false);
 		try
 		{
 			adapterMember.notifyMember(session, members);
@@ -360,10 +479,14 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 					}
 					else
 					{
-						Intent it = new Intent(getActivity(), SessionDialogActivity.class);
-						it.putExtra("sessionCode", s.getSessionCode());
-						it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
-						getActivity().startActivity(it);
+						AirtalkeeSessionManager.getInstance().getSessionByCode(s.getSessionCode());
+						HomeActivity.getInstance().pageIndex = BaseActivity.PAGE_IM;
+						HomeActivity.getInstance().onViewChanged(s.getSessionCode());
+						HomeActivity.getInstance().panelCollapsed();
+//						Intent it = new Intent(getActivity(), SessionDialogActivity.class);
+//						it.putExtra("sessionCode", s.getSessionCode());
+//						it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+//						getActivity().startActivity(it);
 					}
 
 				}
@@ -484,5 +607,27 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		}
 		adapterMember.notifyDataSetChanged();
 		memberAllView.adapterMember.notifyDataSetChanged();
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count, int after)
+	{
+		
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count)
+	{
+		btnSearch.setEnabled(!TextUtils.isEmpty(searchEditChannel.getText()));
+		if (TextUtils.isEmpty(searchEditChannel.getText()))
+		{
+			setSession(getSession());
+		}
+	}
+
+	@Override
+	public void afterTextChanged(Editable s)
+	{
+		
 	}
 }

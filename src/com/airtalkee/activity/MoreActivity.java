@@ -250,6 +250,11 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		}
 
 		ivUnread = (ImageView) findViewById(R.id.iv_Unread);
+		checkBrodcast();
+	}
+	
+	public void checkBrodcast()
+	{
 		if (Config.funcBroadcast && AirtalkeeAccount.getInstance().SystemBroadcastNumberGet() > 0)
 		{
 			ivUnread.setVisibility(View.VISIBLE);
@@ -281,6 +286,7 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		// TODO Auto-generated method stub
 		super.onResume();
 		AirtalkeeUserInfo.getInstance().setOnUserInfoListener(this);
+		checkBrodcast();
 	}
 
 	@Override

@@ -17,6 +17,7 @@ import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.sdk.util.Log;
 import com.airtalkee.services.AirServices;
 
 public class InCommingAlertDialog extends AlertDialog implements DialogListener
@@ -50,7 +51,7 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 	@Override
 	public void onClickOk(int id,Object obj)
 	{
-		// TODO Auto-generated method stub
+		Log.i(InCommingAlertDialog.class, "InCommingAlertDialog click ok!");
 		Sound.stopSound(Sound.PLAYER_INCOMING_RING);
 		AirtalkeeSessionManager.getInstance().SessionIncomingAccept(temAirSession);
 		AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, getContext().getString(R.string.talk_call_state_incoming_call), false);

@@ -333,17 +333,17 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 		if (session != null)
 		{
 			final AirSession temAirSession = session;
-			try
-			{
-				if (MainActivity.getInstance() != null && MainActivity.getInstance().viewLeft != null)
-				{
-					MainActivity.getInstance().viewLeft.refreshList();
-				}
-			}
-			catch (Exception e)
-			{
-				// TODO: handle exception
-			}
+//			try
+//			{
+//				if (MainActivity.getInstance() != null && MainActivity.getInstance().viewLeft != null)
+//				{
+//					MainActivity.getInstance().viewLeft.refreshList();
+//				}
+//			}
+//			catch (Exception e)
+//			{
+//				// TODO: handle exception
+//			}
 
 			if (Setting.getPttIsb())
 			{

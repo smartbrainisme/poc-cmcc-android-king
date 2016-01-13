@@ -66,11 +66,20 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
+		if (HomeActivity.getInstance() != null)
+		{
+			try
+			{
+				HomeActivity.getInstance().finish();
+			}
+			catch (Exception e)
+			{
+			}
+		}
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
 		mInstance = this;
 		setContentView(R.layout.activity_home);
-
 		setRequestedOrientation(Config.screenOrientation);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
 		session = AirSessionControl.getInstance().getCurrentChannelSession();
@@ -115,6 +124,10 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 			}
 			AirtalkeeMessage.getInstance().MessageListMoreClean(session);
 		}
+//		if (channelView != null)
+//		{
+//			channelView.unRegisterReceiver();
+//		}
 	}
 
 	// 滑动
@@ -253,6 +266,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		super.onResume();
 		if (mediaStatusBar != null)
 			mediaStatusBar.setSession(session);
+		StatusBarTitle.getInstance().checkBrodcast();
 	}
 
 	@Override

@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -31,11 +30,10 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import com.airtalkee.R;
-import com.airtalkee.R.string;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.activity.MenuReportAsPicActivity;
 import com.airtalkee.activity.home.AlbumChooseActivity;
-import com.airtalkee.activity.home.IMFragment;
+import com.airtalkee.sdk.util.Log;
 
 public class PhotoCamera extends Activity implements OnClickListener, Callback
 {
@@ -122,16 +120,23 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 					{
 						if (success)
 						{
-							Parameters params = camera.getParameters();
-							// 自动闪光
-							params.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
-							params.setPictureFormat(ImageFormat.JPEG);// 图片格式
-							List<Size> sizes = params.getSupportedPreviewSizes();
-							Size size = sizes.get(0);
-							params.setPreviewSize(size.width, size.height);
-							params.setJpegQuality(100);
-							params.setPictureSize(size.width, size.height);
-							camera.setParameters(params);// 将参数设置到我的camera
+							try
+							{
+								Parameters params = camera.getParameters();
+								// 自动闪光
+								params.setFlashMode(Camera.Parameters.FLASH_MODE_ON);
+								params.setPictureFormat(ImageFormat.JPEG);// 图片格式
+								List<Size> sizes = params.getSupportedPreviewSizes();
+								Size size = sizes.get(0);
+								params.setPreviewSize(size.width, size.height);
+								params.setJpegQuality(100);
+								params.setPictureSize(size.width, size.height);
+								camera.setParameters(params);// 将参数设置到我的camera
+							}
+							catch (Exception e)
+							{
+								Log.e(PhotoCamera.class, "PhotoCamera take photo and set params error");
+							}
 							camera.takePicture(null, null, jpeg);
 						}
 					}

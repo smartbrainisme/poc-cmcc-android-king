@@ -17,6 +17,7 @@ import com.airtalkee.activity.TempSessionActivity;
 import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
+import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
@@ -299,6 +300,7 @@ public class AirMessageTransaction implements OnMessageListener,
 			{
 				dialog = new AlertDialog(ct, ct.getString(R.string.talk_tools_notice), title, ct.getString(R.string.talk_tools_know), ct.getString(R.string.talk_session_call), this, DIALOG_CALL);
 				dialog.show();
+				StatusBarTitle.getInstance().checkBrodcast();
 			}
 			catch (Exception e)
 			{

@@ -146,30 +146,23 @@ public class AlbumChooseActivity extends Activity implements
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data);
-		if (resultCode != Activity.RESULT_OK)
-		{
-			return;
-		}
-		else 
+		if (resultCode == Activity.RESULT_OK)
 		{
 			setResult(Activity.RESULT_OK, data);
 			finish();
 		}
-		/*
-		switch (requestCode)
+		else
 		{
-			// 自定义相册
-			case Const.image_select.REQUEST_CODE_BROWSE_IMAGE:
-			// 自定义相机
-			case Const.image_select.REQUEST_CODE_CREATE_IMAGE:
-			{
-				// ArrayList<String> pathList = new ArrayList<String>();
-				// pathList.add(picPathTemp);
-				// data.putExtra("picPath", pathList);
-				setResult(Activity.RESULT_OK, data);
-				finish();
-				break;
-			}
-		}*/
+			return;
+		}
+
+		/*
+		 * switch (requestCode) { // 自定义相册 case
+		 * Const.image_select.REQUEST_CODE_BROWSE_IMAGE: // 自定义相机 case
+		 * Const.image_select.REQUEST_CODE_CREATE_IMAGE: { // ArrayList<String>
+		 * pathList = new ArrayList<String>(); // pathList.add(picPathTemp); //
+		 * data.putExtra("picPath", pathList); setResult(Activity.RESULT_OK,
+		 * data); finish(); break; } }
+		 */
 	}
 }

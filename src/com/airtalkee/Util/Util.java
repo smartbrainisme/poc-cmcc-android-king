@@ -513,7 +513,7 @@ public class Util
 			// Log.e(Util.class, "hideSoftInput-->error");
 		}
 	}
-
+	
 	public static boolean isSoftKeybordOpen(Context context)
 	{
 		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);

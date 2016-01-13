@@ -81,14 +81,7 @@ public class SessionAndChannelView extends LinearLayout implements
 		tvSettingCancel.setOnClickListener(this);
 
 		ivUnread = (ImageView) findViewById(R.id.iv_Unread);
-		if (Config.funcBroadcast && AirtalkeeAccount.getInstance().SystemBroadcastNumberGet() > 0)
-		{
-			ivUnread.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			ivUnread.setVisibility(View.GONE);
-		}
+		checkBrodcast();
 		ivSlidingBack = (ImageView) findViewById(R.id.sliding_back);
 		ivSlidingBack.setOnClickListener(new OnClickListener()
 		{
@@ -100,6 +93,18 @@ public class SessionAndChannelView extends LinearLayout implements
 		});
 		registerSessionUpdateListener();
 		mInstance = this;
+	}
+	
+	public void checkBrodcast()
+	{
+		if (Config.funcBroadcast && AirtalkeeAccount.getInstance().SystemBroadcastNumberGet() > 0)
+		{
+			ivUnread.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			ivUnread.setVisibility(View.GONE);
+		}
 	}
 
 	@Override
@@ -129,6 +134,7 @@ public class SessionAndChannelView extends LinearLayout implements
 				tvSessionTitle.setText(sessionTitle + "(" + (count - 1) + ")");
 			}
 		}
+		checkBrodcast();
 	}
 
 	@Override
@@ -230,30 +236,37 @@ public class SessionAndChannelView extends LinearLayout implements
 		final IntentFilter filter = new IntentFilter();
 		filter.addAction(MediaStatusBar.ACTION_ON_SESSION_UPDATE);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
-		getContext().registerReceiver(new BroadcastReceiver()
-		{
-			@Override
-			public void onReceive(Context context, Intent intent)
-			{
-				// TODO Auto-generated method stub
-				if (intent.getAction().equals(MediaStatusBar.ACTION_ON_SESSION_UPDATE))
-				{
-
-					int type = intent.getIntExtra(MediaStatusBar.EXTRA_TYPE, 0);
-					switch (type)
-					{
-						case MediaStatusBar.TYPE_ON_SESSION_ESTABLISHED:
-						case MediaStatusBar.TYPE_ON_SESSION_PRESENCE:
-							if (adapterChannel != null)
-								adapterChannel.notifyDataSetChanged();
-							break;
-					}
-
-				}
-			}
-		}, filter);
+		getContext().registerReceiver(receiver, filter);
 	}
+	
+	BroadcastReceiver receiver = new BroadcastReceiver()
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			// TODO Auto-generated method stub
+			if (intent.getAction().equals(MediaStatusBar.ACTION_ON_SESSION_UPDATE))
+			{
 
+				int type = intent.getIntExtra(MediaStatusBar.EXTRA_TYPE, 0);
+				switch (type)
+				{
+					case MediaStatusBar.TYPE_ON_SESSION_ESTABLISHED:
+					case MediaStatusBar.TYPE_ON_SESSION_PRESENCE:
+						if (adapterChannel != null)
+							adapterChannel.notifyDataSetChanged();
+						break;
+				}
+
+			}
+		}
+	};
+	
+	public void unRegisterReceiver()
+	{
+		getContext().unregisterReceiver(receiver);
+	}
+	
 	public void refreshChannelAndDialog()
 	{
 		adapterChannel.notifyDataSetChanged();

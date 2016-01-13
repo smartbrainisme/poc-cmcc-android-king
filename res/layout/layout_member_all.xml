@@ -2,18 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginRight="20dp"
     android:orientation="vertical" >
 
     <LinearLayout
+        android:id="@+id/serach_pannel"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        android:layout_marginTop="10dp"
+        android:visibility="gone">
 
         <FrameLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:clickable="false" >
@@ -52,10 +54,11 @@
         android:id="@+id/talk_lv_member_all"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_marginTop="10dp"
         android:cacheColorHint="#00000000"
         android:descendantFocusability="afterDescendants"
+        android:headerDividersEnabled="false"
         android:divider="@drawable/divider_line"
-        android:dividerHeight="0.5dp" />
+        android:dividerHeight="0.5dp" 
+        android:scrollbars="none"/>
 
 </LinearLayout>

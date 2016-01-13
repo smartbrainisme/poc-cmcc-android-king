@@ -26,6 +26,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import com.airtalkee.R;
+import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.AdapterMemberAll;
 import com.airtalkee.activity.home.AdapterMemberAll.CheckedCallBack;
 import com.airtalkee.sdk.AirtalkeeAccount;
@@ -34,8 +35,7 @@ import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.widget.MListView;
 
-public class MemberAllView extends LinearLayout implements OnClickListener,
-		OnItemClickListener, TextWatcher, CheckedCallBack
+public class MemberAllView extends LinearLayout implements OnClickListener, OnItemClickListener, TextWatcher, CheckedCallBack
 {
 	public interface MemberCheckListener
 	{
@@ -47,7 +47,7 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 		public void onEditTextViewFocusListener();
 	}
 
-	List<AirContact> memberAll = new ArrayList<AirContact>();
+	public List<AirContact> memberAll = new ArrayList<AirContact>();
 	List<AirContact> memberSearchResult = new ArrayList<AirContact>();
 	private MListView lvMemberAll;
 	public AdapterMemberAll adapterMember;
@@ -61,7 +61,7 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 		super(context);
 		this.listener = l;
 		// TODO Auto-generated constructor stub
-		LayoutInflater.from(this.getContext()).inflate(R.layout.layout_member_all, this);
+		LayoutInflater.from(context).inflate(R.layout.layout_member_all, this);
 		this.listener = l;
 		btnSearch = (Button) findViewById(R.id.btn_search);
 		etSearch = (EditText) findViewById(R.id.et_search);
@@ -69,13 +69,13 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 		btnSearch.setOnClickListener(this);
 		etSearch.addTextChangedListener(this);
 		getAllAirContacts();
-		adapterMember = new AdapterMemberAll(getContext(), this);
+		adapterMember = new AdapterMemberAll(context, this);
 		lvMemberAll.setAdapter(adapterMember);
 		lvMemberAll.setOnItemClickListener(this);
 		adapterMember.notifyMember(memberAll);
 	}
 
-	private void getAllAirContacts()
+	public void getAllAirContacts()
 	{
 		Map<String, AirContact> allMembers = new HashMap<String, AirContact>();
 		List<AirChannel> channels = AirtalkeeChannel.getInstance().getChannels();
@@ -126,11 +126,7 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 		{
 			case R.id.btn_search:
 			{
-				InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-				if (imm != null)
-				{
-					imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-				}
+				Util.hideSoftInput(getContext());
 				String key = etSearch.getText().toString();
 				memberSearchResult.clear();
 				if (TextUtils.isEmpty(key))
@@ -142,7 +138,7 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 					for (int i = 0; i < memberAll.size(); i++)
 					{
 						AirContact contact = memberAll.get(i);
-						if (contact.getDisplayName().equalsIgnoreCase(key) || contact.getIpocId().equals(key))
+						if (contact.getDisplayName().equalsIgnoreCase(key) || contact.getIpocId().equals(key) || contact.getDisplayName().contains(key) || contact.getIpocId().contains(key))
 						{
 							memberSearchResult.add(contact);
 						}
@@ -181,14 +177,12 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count, int after)
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onTextChanged(CharSequence s, int start, int before, int count)
 	{
-		// TODO Auto-generated method stub
 		btnSearch.setEnabled(!TextUtils.isEmpty(etSearch.getText()));
 		if (TextUtils.isEmpty(etSearch.getText()))
 		{
@@ -199,7 +193,6 @@ public class MemberAllView extends LinearLayout implements OnClickListener,
 	@Override
 	public void afterTextChanged(Editable s)
 	{
-		// TODO Auto-generated method stub
 
 	}
 

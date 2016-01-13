@@ -33,6 +33,12 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 	private View btnLeft, btnRight;
 	private ImageView ivBtnLeft, ivUnReadDot, ivNoticeUnread;
 	private AirSession session = null;
+	
+	private static StatusBarTitle mInstance;
+	public static StatusBarTitle getInstance()
+	{
+		return mInstance;
+	}
 
 	public StatusBarTitle(Context context, AttributeSet attrs)
 	{
@@ -46,6 +52,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		// TODO Auto-generated method stub
 		super.onFinishInflate();
 		initFindView();
+		mInstance = this;
 	}
 
 	private void initFindView()
@@ -61,6 +68,11 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		// findViewById(R.id.title_drag).setOnClickListener(this);
 		btnLeft.setOnClickListener(this);
 		btnRight.setOnClickListener(this);
+		checkBrodcast();
+	}
+	
+	public void checkBrodcast()
+	{
 		if (Config.funcBroadcast && AirtalkeeAccount.getInstance().SystemBroadcastNumberGet() > 0)
 		{
 			ivNoticeUnread.setVisibility(View.VISIBLE);
