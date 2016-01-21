@@ -48,7 +48,7 @@
 	<string name="talk_tools_report">現場上傳</string>
 	<string name="talk_tools_report_pic">圖像上傳</string>
 	<string name="talk_tools_report_vid">視頻上傳</string>
-	<string name="talk_tools_call_center">呼叫中心</string>
+	<string name="talk_tools_call_center">呼叫调度管理中心</string>
 	<string name="talk_tools_session">會話管理</string>
 	<string name="talk_tools_channel">頻道管理</string>
 	<string name="talk_tools_setting">設置</string>

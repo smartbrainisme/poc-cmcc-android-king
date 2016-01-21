@@ -47,8 +47,7 @@ import com.airtalkee.widget.SlidingUpPanelLayout;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelSlideListener;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelState;
 
-public class HomeActivity extends BaseActivity implements PanelSlideListener,
-		OnPageChangeListener, ViewChangeListener
+public class HomeActivity extends BaseActivity implements PanelSlideListener, OnPageChangeListener, ViewChangeListener
 {
 	private AirSession session;
 	private PageFragmentAdapter adapter;

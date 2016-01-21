@@ -28,6 +28,7 @@ import com.airtalkee.config.Config;
 import com.airtalkee.control.AirReportManager;
 import com.airtalkee.entity.AirReport;
 import com.airtalkee.listener.OnMmiReportListener;
+import com.airtalkee.sdk.util.Log;
 import com.airtalkee.widget.MListView;
 
 public class MenuReportActivity extends ActivityBase implements
@@ -35,7 +36,7 @@ public class MenuReportActivity extends ActivityBase implements
 		onReportCheckedListener, OnCheckedChangeListener
 {
 
-	private AdapterReport adapterReport;
+	public AdapterReport adapterReport;
 	private MListView lvReportList;
 	private View talk_report_list_panel, talk_report_empty;
 	private ImageView ivRight;
@@ -44,9 +45,14 @@ public class MenuReportActivity extends ActivityBase implements
 	private TextView tvReportTip;
 	private CheckBox cbSelectAll;
 	private Map<String, AirReport> isSelected = new HashMap<String, AirReport>();
-
+	private static MenuReportActivity mInstance;
+	
 	private boolean isEditing = false;
 
+	public static MenuReportActivity getInstance()
+	{
+		return mInstance;
+	}
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
@@ -140,9 +146,10 @@ public class MenuReportActivity extends ActivityBase implements
 		cbSelectAll.setOnCheckedChangeListener(this);
 		adapterReport.notifyDataSetChanged();
 		// lvReportList.setOnItemLongClickListener(this);
+		mInstance = this;
 	}
 
-	private void refreshListOrEmpty()
+	public void refreshListOrEmpty()
 	{
 		if (AirReportManager.getInstance().getReports().size() == 0)
 		{
@@ -153,7 +160,7 @@ public class MenuReportActivity extends ActivityBase implements
 		{
 			talk_report_list_panel.setVisibility(View.VISIBLE);
 			talk_report_empty.setVisibility(View.GONE);
-			AirReport currentReport = AirReportManager.getInstance().getCurrentReportDoing();
+			/*AirReport currentReport = AirReportManager.getInstance().getCurrentReportDoing();
 			if (currentReport != null)
 			{
 				if (currentReport.getState() != AirReport.STATE_UPLOADING)
@@ -161,6 +168,20 @@ public class MenuReportActivity extends ActivityBase implements
 			}
 			else
 				adapterReport.notifyDataSetChanged();
+			List<AirReport> reports = AirReportManager.getInstance().getReports();
+			if(reports != null && reports.size() > 0)
+			{
+				for (int i = 0; i < reports.size(); i++)
+				{
+					if(reports.get(i).getState() == AirReport.STATE_WAITING)
+					{
+						Log.i(MenuReportActivity.class, "report retry start");
+						AirReportManager.getInstance().ReportRetry(reports.get(i).getCode());
+						break;
+					}
+				}
+			}*/
+			adapterReport.notifyDataSetChanged();
 		}
 	}
 
@@ -241,7 +262,8 @@ public class MenuReportActivity extends ActivityBase implements
 				adapterReport.setEditing(false);
 				lvReportList.setClickable(true);
 				cbSelectAll.setChecked(false);
-//				refreshListOrEmpty();
+				// refreshListOrEmpty();
+				isEditing = false;
 				break;
 			}
 		}

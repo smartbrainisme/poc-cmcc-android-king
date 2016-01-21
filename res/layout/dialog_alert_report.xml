@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
-                android:text="进度 68%"
+                android:text="进度 0%"
                 android:textColor="#555555"
                 android:textSize="16dp" />
         </LinearLayout>

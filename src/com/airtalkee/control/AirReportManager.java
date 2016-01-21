@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import org.json.JSONObject;
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -36,7 +35,6 @@ public class AirReportManager implements OnReportListener
 	private List<AirReport> reports = new ArrayList<AirReport>();
 	private AirReport reportDoing = null;
 	private boolean isReportLoaded = false;
-	
 
 	public static AirReportManager getInstance()
 	{
@@ -47,6 +45,11 @@ public class AirReportManager implements OnReportListener
 			AirtalkeeReport.getInstance().setReportListener(mInstance);
 		}
 		return mInstance;
+	}
+	
+	public void setReportDoing(AirReport report)
+	{
+		reportDoing = report;
 	}
 
 	public void setReportListener(OnMmiReportListener listener)
@@ -303,6 +306,8 @@ public class AirReportManager implements OnReportListener
 	{
 		if (reportDoing != null)
 		{
+			reportDoing.setState(statusCode == AirtalkeeReport.RESOURCE_STATUS_CODE_OK ? AirReport.STATE_RESULT_OK : AirReport.STATE_RESULT_FAIL);
+			Log.i(AirReportManager.class, "reportActionResult status code=" + statusCode + ",resId=" + resId);
 			if (statusCode == AirtalkeeReport.RESOURCE_STATUS_CODE_OK)
 			{
 				mDbProxy.DbReportResultOk(reportDoing.getCode());
@@ -326,62 +331,71 @@ public class AirReportManager implements OnReportListener
 			{
 				if (reportDoing.getType() == AirtalkeeReport.RESOURCE_TYPE_PICTURE)
 				{
-					MenuReportAsPicActivity context = MenuReportAsPicActivity.getInstance();
-					AlertDialog dialog = new AlertDialog(context, context.getString(R.string.talk_tools_report_fail), context.getString(R.string.talk_tools_report_fail_tip), context.getString(R.string.talk_tools_report_continue), context.getString(R.string.talk_ok_2), new DialogListener()
+					final MenuReportAsPicActivity context = MenuReportAsPicActivity.getInstance();
+					Log.i(AirReportManager.class, "context is " + (context == null ? "null" : "not null"));
+					if (context != null)
 					{
-						@Override
-						public void onClickOk(int id, boolean isChecked)
+						AlertDialog dialog = new AlertDialog(context, context.getString(R.string.talk_tools_report_fail), context.getString(R.string.talk_tools_report_fail_tip), context.getString(R.string.talk_tools_report_continue), context.getString(R.string.talk_ok_2), new DialogListener()
 						{
-							
-						}
+							@Override
+							public void onClickOk(int id, boolean isChecked)
+							{
 
-						@Override
-						public void onClickOk(int id, Object obj)
-						{
-							MenuReportAsPicActivity.getInstance().finish();
-						}
+							}
 
-						@Override
-						public void onClickCancel(int id)
-						{
-							// TODO Auto-generated method stub
-							MenuReportAsPicActivity.getInstance().reportPost();
-						}
-					}, -1);
-					dialog.show();
-					// Util.Toast(AirServices.getInstance(),
-					// AirServices.getInstance().getString(R.string.talk_report_upload_pic_err),
-					// R.drawable.ic_error);
+							@Override
+							public void onClickOk(int id, Object obj)
+							{
+								context.finish();
+							}
+
+							@Override
+							public void onClickCancel(int id)
+							{
+								// TODO Auto-generated method stub
+								context.reportPost();
+							}
+						}, -1);
+						dialog.show();
+					}
+					else
+					{
+						Util.Toast(AirServices.getInstance(), AirServices.getInstance().getString(R.string.talk_report_upload_pic_err), R.drawable.ic_error);
+					}
 				}
 				else
 				{
 					MenuReportAsVidActivity context = MenuReportAsVidActivity.getInstance();
-					AlertDialog dialog = new AlertDialog(context, context.getString(R.string.talk_tools_report_fail), context.getString(R.string.talk_tools_report_fail_tip), context.getString(R.string.talk_tools_report_continue), context.getString(R.string.talk_ok_2), new DialogListener()
+					if (context != null)
 					{
-						@Override
-						public void onClickOk(int id, boolean isChecked)
+						AlertDialog dialog = new AlertDialog(context, context.getString(R.string.talk_tools_report_fail), context.getString(R.string.talk_tools_report_fail_tip), context.getString(R.string.talk_tools_report_continue), context.getString(R.string.talk_ok_2), new DialogListener()
 						{
-						}
+							@Override
+							public void onClickOk(int id, boolean isChecked)
+							{
+							}
 
-						@Override
-						public void onClickOk(int id, Object obj)
-						{
-							MenuReportAsVidActivity.getInstance().finish();
-						}
+							@Override
+							public void onClickOk(int id, Object obj)
+							{
+								MenuReportAsVidActivity.getInstance().finish();
+							}
 
-						@Override
-						public void onClickCancel(int id)
-						{
-							MenuReportAsVidActivity.getInstance().reportPost();
-						}
-					}, -1);
-					dialog.show();
-					// Util.Toast(AirServices.getInstance(),
-					// AirServices.getInstance().getString(R.string.talk_report_upload_vid_err),
-					// R.drawable.ic_error);
+							@Override
+							public void onClickCancel(int id)
+							{
+								MenuReportAsVidActivity.getInstance().reportPost();
+							}
+						}, -1);
+						dialog.show();
+					}
+					else
+					{
+						Util.Toast(AirServices.getInstance(), AirServices.getInstance().getString(R.string.talk_report_upload_vid_err), R.drawable.ic_error);
+					}
 				}
 			}
-			reportDoing.setState(statusCode == AirtalkeeReport.RESOURCE_STATUS_CODE_OK ? AirReport.STATE_RESULT_OK : AirReport.STATE_RESULT_FAIL);
+
 			reportDoing.setProgress(0);
 			broadCastReportState();
 
@@ -405,7 +419,12 @@ public class AirReportManager implements OnReportListener
 			}
 			if (reportListener != null)
 			{
+				Log.i(AirReport.class, "reportListener is not null");
 				reportListener.onMmiReportResourceListRefresh();
+			}
+			else 
+			{
+				Log.i(AirReport.class, "reportListener is null");
 			}
 		}
 	}
@@ -445,7 +464,7 @@ public class AirReportManager implements OnReportListener
 	{
 		// TODO Auto-generated method stub
 		reportActionProgress(progress);
-		
+
 	}
 
 	@Override

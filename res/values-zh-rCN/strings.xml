@@ -66,8 +66,8 @@
 	<string name="talk_tools_report_fail">上传失败</string>
 	<string name="talk_tools_report_fail_tip">已经保存到本地，建议稍后去更多-上报记录页继续上传</string>
 	<string name="talk_tools_report_success">上传成功，可在更多界面查看</string>
-	<string name="talk_tools_call_center">呼叫中心</string>
-	<string name="talk_tools_call_center_confirm">确定呼叫中心?</string>
+	<string name="talk_tools_call_center">呼叫调度管理中心</string>
+	<string name="talk_tools_call_center_confirm">确定呼叫调度管理中心?</string>
 	<string name="talk_tools_session">会话管理</string>
 	<string name="talk_tools_channel">频道管理</string>
 	<string name="talk_tools_setting">设置</string>

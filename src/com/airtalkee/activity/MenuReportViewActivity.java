@@ -22,8 +22,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
-public class MenuReportViewActivity extends ActivityBase implements
-		OnClickListener
+public class MenuReportViewActivity extends ActivityBase implements OnClickListener
 {
 
 	private MediaController mVideoController;
@@ -135,9 +134,8 @@ public class MenuReportViewActivity extends ActivityBase implements
 			case R.id.report_resend:
 				if (report != null)
 				{
-					AirReportManager.getInstance().ReportRetry((String) v.getTag());
-//					AirReportManager.getInstance().ReportResend(report);
-//					finish();
+					AirReportManager.getInstance().ReportResend(report);
+					finish();
 				}
 				break;
 		}

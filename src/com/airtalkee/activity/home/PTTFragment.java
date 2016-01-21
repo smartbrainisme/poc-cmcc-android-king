@@ -1,5 +1,7 @@
 package com.airtalkee.activity.home;
 
+import java.util.Date;
+import java.util.Locale;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -7,7 +9,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Const;
+import com.airtalkee.Util.DateUtils;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MenuReportAsPicActivity;
 import com.airtalkee.activity.VideoSessionActivity;
@@ -273,7 +275,8 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 			else
 				recPlaybackUser.setText(msg.getInameFrom());
 			recPlaybackSeconds.setText(msg.getImageLength() + "''");
-			recPlaybackTime.setText(msg.getTime());
+			String datetime = msg.getDate().replace("年", "-").replace("月", "-").replace("日", "") + " " + msg.getTime();
+			recPlaybackTime.setText(DateUtils.getTimestampString(DateUtils.StringToDate(datetime, "yyyy-MM-dd HH:mm:ss"), Locale.getDefault()));
 			recPlayback.setVisibility(View.VISIBLE);
 			recPlaybackNone.setVisibility(View.GONE);
 			if (msg.getState() == AirMessage.STATE_NEW)

@@ -19,12 +19,14 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.activity.MenuReportActivity;
 import com.airtalkee.control.AirReportManager;
 import com.airtalkee.entity.AirReport;
 import com.airtalkee.listener.OnMmiLocationListener;
 import com.airtalkee.sdk.AirtalkeeReport;
 import com.airtalkee.sdk.entity.AirContact;
+import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -177,7 +179,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 			{
 				holder.detail.setText(context.getString(R.string.talk_tools_report_description) + "：" + context.getString(R.string.talk_report_upload_no_content) + System.getProperty("line.separator", "/n"));
 			}
-
+			Log.i(AdapterReport.class, "report state="+report.getState());
 			switch (report.getState())
 			{
 				case AirReport.STATE_WAITING:
@@ -225,7 +227,9 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 					holder.stateRetry.setOnClickListener(this);
 					holder.stateRetry.setTag(report.getCode());
 					holder.failText.setVisibility(View.VISIBLE);
+					holder.uploadStep.setText(context.getString(R.string.talk_tools_report_click));
 					holder.uploadStep.setVisibility(View.VISIBLE);
+					holder.progressBar.setVisibility(View.GONE);
 					break;
 				}
 			}
@@ -287,9 +291,21 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 		{
 			case R.id.talk_report_retry:
 			{
+				List<AirReport> reports = AirReportManager.getInstance().getReports();
+				if(reports != null && reports.size() > 0)
+				{
+					for (int i = 0; i < reports.size(); i++)
+					{
+						if(reports.get(i).getState() == AirReport.STATE_UPLOADING)
+						{
+							Toast.makeText1(context, "当前有文件正在上报中，请完成后再继续", Toast.LENGTH_LONG).show();
+							return;
+						}
+					}
+				}
+				AirReportManager.getInstance().setReportDoing(null);
 				AirReportManager.getInstance().ReportRetry((String) v.getTag());
 				notifyDataSetChanged();
-				// AirLocation.getInstance(context).onceGet(this, 30);
 				break;
 			}
 
