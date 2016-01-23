@@ -12,27 +12,21 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.airtalkee.R;
-import com.airtalkee.Util.Setting;
 import com.airtalkee.Util.Util;
-import com.airtalkee.adapter.AdapterMenuLeft;
 import com.airtalkee.adapter.GroupBean;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirAccountManager;
 import com.airtalkee.control.AirMessageTransaction;
-import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.listener.OnMmiChannelListener;
 import com.airtalkee.listener.OnMmiNoticeListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
-import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.OnChannelPersonalListener;
-import com.airtalkee.sdk.controller.AccountController;
 import com.airtalkee.sdk.controller.MessageController;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactTiny;
 import com.airtalkee.sdk.entity.AirSession;
-import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.ViewControllerManager;
 import com.airtalkee.widget.ViewControllerSlideView;
 
@@ -43,7 +37,6 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 	private ImageView ivNotice, ivUserIsb;
 	private TextView ivUserName, ivUserId;
 	public ExpandableListView lvGroup;
-	public AdapterMenuLeft adapter;
 
 	public MainPageView(MainActivity context, ViewControllerSlideView sliderView, ViewControllerManager navigation)
 	{
@@ -69,10 +62,6 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 		return null;
 	}
 
-	public void refreshList()
-	{
-		adapter.notifyDataSetChanged();
-	}
 
 	public void refreshNotice()
 	{
@@ -86,25 +75,12 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 		}
 	}
 	
-	public void refreshSpeaker(AirSession session)
-	{
-		if (contextMain.viewControllerSlideView.isShowMenuLeft())
-		{
-			adapter.notifyDataSetChanged();
-		}
-	}
 	
 	public void refreshUser()
 	{
 		ivUserName.setText(AirtalkeeAccount.getInstance().getUserName());
 	}
 
-	public int countGroupNewMsg()
-	{
-		GroupBean group = (GroupBean) adapter.getGroup(AdapterMenuLeft.GROUP_POSITION);
-		List<AirChannel> channels = group.channelList;
-		return channels.size();
-	}
 
 	public int countSessionNewMsg()
 	{
@@ -137,20 +113,6 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 	public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id)
 	{
 		// TODO Auto-generated method stub
-		Object group = adapter.getChild(groupPosition, childPosition);
-		if (group == null)
-			return false;
-		if (AirtalkeeAccount.getInstance().isEngineRunning())
-		{
-			if (contextMain != null)
-			{
-				contextMain.viewControllerSlideView.resetShow();
-			}
-		}
-		else
-		{
-			Util.Toast(contextMain, contextMain.getString(R.string.talk_network_warning));
-		}
 		return false;
 	}
 	
@@ -260,7 +222,6 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 		contextMain.removeDialog(R.id.talk_dialog_group_get_wait);
 		if (isOk)
 		{
-			adapter.notifyDataSetChanged();
 		}
 		else
 		{

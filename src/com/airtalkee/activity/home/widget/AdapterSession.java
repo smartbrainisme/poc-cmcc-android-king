@@ -155,13 +155,12 @@ public class AdapterSession extends BaseAdapter
 
 				String new_Message = (item.getMessageLast() != null) ? item.getMessageLast().getBody() : baseView.getResources().getString(R.string.main_default_message);
 
-				Spannable spannable = Util.buildPlainMessageSpannable(mContext, new_Message.getBytes());
-				if (mContext.getString(R.string.talk_call_state_missed_call).equals(spannable.toString()))
+				if (mContext.getString(R.string.talk_call_state_missed_call).equals(new_Message))
 				{
 					tvMissed.setText(mContext.getString(R.string.talk_call_state_missed_call_short));
 					missedPanel.setVisibility(View.VISIBLE);
 				}
-				else if (mContext.getString(R.string.talk_call_state_rejected_call).equals(spannable.toString()))
+				else if (mContext.getString(R.string.talk_call_state_rejected_call).equals(new_Message))
 				{
 					tvMissed.setText(mContext.getString(R.string.talk_call_state_rejected_call_short));
 					missedPanel.setVisibility(View.VISIBLE);

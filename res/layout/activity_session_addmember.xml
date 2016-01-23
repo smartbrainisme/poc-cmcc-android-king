@@ -54,10 +54,9 @@
             android:id="@+id/iv_add_member"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/app_name_cmcc"
             android:scaleType="center"
             android:src="@drawable/btn_add_black" />
-
     </LinearLayout>
 
 </LinearLayout>

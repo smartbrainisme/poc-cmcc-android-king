@@ -44,7 +44,7 @@
                     android:layout_height="45dp"
                     android:layout_marginLeft="10dp"
                     android:background="@drawable/shape_black_bg"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_name_cmcc"
                     android:scaleType="center"
                     android:src="@drawable/ic_input_close" />
 
@@ -100,7 +100,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="30dp"
                     android:background="@drawable/ic_voice_idle"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_name_cmcc"
                     android:scaleType="center" />
 
                 <ImageView
@@ -109,7 +109,7 @@
                     android:layout_height="45dp"
                     android:layout_gravity="bottom"
                     android:layout_marginLeft="40dp"
-                    android:contentDescription="@string/app_name"
+                    android:contentDescription="@string/app_name_cmcc"
                     android:scaleType="center"
                     android:src="@drawable/ic_close1" />
             </FrameLayout>

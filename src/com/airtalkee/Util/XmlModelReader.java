@@ -141,13 +141,9 @@ public class XmlModelReader
 			Config.pttButtonActionDown = a.getString(R.styleable.PttConfig_pttButtonActionDown);
 			Config.pttButtonKeycode = a.getInteger(R.styleable.PttConfig_pttButtonKeycode, 0);
 			Config.pttButtonVisibility = a.getBoolean(R.styleable.PttConfig_pttVisible, true) ? View.VISIBLE : View.GONE;
-			Config.pttEarphoneLongPress = a.getBoolean(R.styleable.PttConfig_pttEarphoneLongPress, false);
-			Config.pttEarphoneKeycode = a.getInteger(R.styleable.PttConfig_pttEarphoneKeycode, KeyEvent.KEYCODE_HEADSETHOOK);
-			Config.pttEarphonePlug = a.getBoolean(R.styleable.PttConfig_pttEarphonePlug, false);
 			Config.screenOrientation = a.getInteger(R.styleable.PttConfig_screenOrientation, ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 			Config.screenAlwaysPtt = a.getBoolean(R.styleable.PttConfig_screenAlwaysPtt, false);
 			Config.audioAmplifierEnabled = a.getBoolean(R.styleable.PttConfig_audioAmplifierEnabled, false);
-			Config.funcTTS =a.getBoolean(R.styleable.PttConfig_tts, false);
 			Config.funcBootLaunch = a.getBoolean(R.styleable.PttConfig_bootLaunch, false);
 			Config.funcAllowFirstLaunch = a.getBoolean(R.styleable.PttConfig_allowFirstLaunch, true);
 		}

@@ -329,10 +329,7 @@ public class SessionBoxTalk extends View implements OnClickListener,
 				}
 				break;
 			case AirSession.MEDIA_BUTTON_STATE_TALKING:
-				if (Config.marketCode == Config.MARKET_CHINA_TELECOM || Config.marketCode == Config.MARKET_CHINA_35)
-					btnTalk.setImageResource(R.drawable.btn_talk_speak_red);
-				else
-					btnTalk.setImageResource(ThemeUtil.getResourceId(R.attr.theme_talk_speak, contextMain));
+				btnTalk.setImageResource(ThemeUtil.getResourceId(R.attr.theme_talk_speak, contextMain));
 				break;
 			case AirSession.MEDIA_BUTTON_STATE_QUEUE:
 				btnTalk.setImageResource(ThemeUtil.getResourceId(R.attr.theme_talk_press, contextMain));

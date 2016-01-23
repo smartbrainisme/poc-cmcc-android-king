@@ -115,17 +115,9 @@ public class AirAccountManager implements OnAccountListener, OnChannelListener,
 			{
 				Config.funcBroadcast = (setting.broadcast == AirFunctionSetting.SETTING_ENABLE);
 			}
-			if (setting.userRegistration != AirFunctionSetting.SETTING_IGNORE)
-			{
-				Config.funcUserRegistration = (setting.userRegistration == AirFunctionSetting.SETTING_ENABLE);
-			}
 			if (setting.userAll != AirFunctionSetting.SETTING_IGNORE)
 			{
 				Config.funcUserAll = (setting.userAll != AirFunctionSetting.SETTING_DISABLE);
-			}
-			if (setting.channelManage != AirFunctionSetting.SETTING_IGNORE)
-			{
-				Config.funcChannelManage = (setting.channelManage == AirFunctionSetting.SETTING_ENABLE);
 			}
 			if (setting.video != AirFunctionSetting.SETTING_IGNORE)
 			{
@@ -169,21 +161,14 @@ public class AirAccountManager implements OnAccountListener, OnChannelListener,
 
 		if (result == AirtalkeeAccount.ACCOUNT_RESULT_OK)
 		{
-			AirSessionMediaSound.toggleLedStatus(1, 0);
+//			AirSessionMediaSound.toggleLedStatus(1, 0);
 			AirtalkeeMediaVideoControl.getInstance().VideoAddr();
 
 			AirServices.iOperator.putString(KEY_ID, AirtalkeeAccount.getInstance().getUserId());
 			AirServices.iOperator.putString(KEY_PWD, AirtalkeeAccount.getInstance().getUserKey());
 			if (!AirtalkeeChannel.getInstance().isChannelListLoaded())
 			{
-				if (Config.marketCode == Config.MARKET_FIRE_BJ)
-				{
-					AirtalkeeChannel.getInstance().ChannelListGet(AirtalkeeChannel.CHANNEL_TYPE_ALL);
-				}
-				else
-				{
-					AirtalkeeChannel.getInstance().ChannelListGet(AirtalkeeChannel.CHANNEL_TYPE_SECRET);
-				}
+				AirtalkeeChannel.getInstance().ChannelListGet(AirtalkeeChannel.CHANNEL_TYPE_SECRET);
 			}
 			AirtalkeeUserInfo.getInstance().onUserInfoGetEvent(AirtalkeeUserInfo.getInstance().getUserInfo());
 			AirLocation.getInstance(AirServices.getInstance()).loopCheck();

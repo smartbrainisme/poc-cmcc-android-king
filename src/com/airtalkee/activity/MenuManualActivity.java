@@ -49,24 +49,6 @@ public class MenuManualActivity extends ActivityBase implements OnClickListener
 	{
 		// TODO Auto-generated method stub
 		super.onStart();
-
-		if (Config.marketCode == Config.MARKET_BPER_MTT)
-		{
-			String lang = Language.getLocalLanguage(this);
-			if (lang.equals(Language.LAND_FR))
-			{
-				// manual_url =
-				// "http://www.geotalker.com/smartmax/notice_fr.html";
-				manual_url = "file:///android_asset/manual/MARKET_RUGGEAR_MTT/lang-fr.html";
-			}
-			else
-			{
-				// manual_url =
-				// "http://www.geotalker.com/smartmax/notice_en.html";
-				manual_url = "file:///android_asset/manual/MARKET_RUGGEAR_MTT/lang-en.html";
-			}
-		}
-
 		webLoad();
 	}
 

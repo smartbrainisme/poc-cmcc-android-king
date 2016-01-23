@@ -130,29 +130,21 @@ public class Sound
 				case PLAYER_NEWINFO:
 				case PLAYER_INCOMING_RING:
 				{
-					if (playerId == PLAYER_INCOMING_RING
-						&& (Config.marketCode == Config.MARKET_BPER || Config.marketCode == Config.MARKET_BPER_GERMANY || Config.marketCode == Config.MARKET_BPER_SINGAPORE || Config.marketCode == Config.MARKET_BPER_MTT))
+					if (context != null)
 					{
-						defaultPlayerId = true;
-					}
-					else
-					{
-						if (context != null)
+						String name = (playerId == PLAYER_INCOMING_RING) ? Settings.System.RINGTONE : Settings.System.NOTIFICATION_SOUND;
+						String systemMuc = Settings.System.getString(context.getContentResolver(), name);
+						if (mediaPlayer[playerId] == null || !systemMuc.equals(currentSystemMusic))
 						{
-							String name = (playerId == PLAYER_INCOMING_RING) ? Settings.System.RINGTONE : Settings.System.NOTIFICATION_SOUND;
-							String systemMuc = Settings.System.getString(context.getContentResolver(), name);
-							if (mediaPlayer[playerId] == null || !systemMuc.equals(currentSystemMusic))
-							{
-								currentSystemMusic = systemMuc;
-								mediaPlayer[playerId] = new MediaPlayer();
-								mediaPlayer[playerId].setDataSource(systemMuc);
-								mediaPlayer[playerId].prepare();
-							}
-							if (mediaPlayer[playerId] != null)
-							{
-								mediaPlayer[playerId].start();
-								mediaPlayer[playerId].setLooping(isLooping);
-							}
+							currentSystemMusic = systemMuc;
+							mediaPlayer[playerId] = new MediaPlayer();
+							mediaPlayer[playerId].setDataSource(systemMuc);
+							mediaPlayer[playerId].prepare();
+						}
+						if (mediaPlayer[playerId] != null)
+						{
+							mediaPlayer[playerId].start();
+							mediaPlayer[playerId].setLooping(isLooping);
 						}
 					}
 					break;

@@ -55,7 +55,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/app_name_cmcc"
             android:scaleType="center"
             android:src="@drawable/ic_fun_call_dis" />
 
@@ -64,7 +64,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/app_name_cmcc"
             android:scaleType="center"
             android:src="@drawable/ic_fun_msg_dis" />
 
@@ -73,7 +73,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/app_name_cmcc"
             android:scaleType="center"
             android:src="@drawable/ic_fun_cancel_dis" />
     </LinearLayout>

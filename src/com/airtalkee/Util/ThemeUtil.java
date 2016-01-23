@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.widget.SearchView;
 import android.widget.TextView;
-import com.airtalkee.R;
 import com.airtalkee.config.Config;
 import com.airtalkee.sdk.util.IOoperate;
 
@@ -34,14 +33,7 @@ public class ThemeUtil
 
 	public static void changeTheme(Activity ac)
 	{
-		if (currentTheme != Config.defaultTheme)
-		{
-			currentTheme = Config.defaultTheme;
-		}
-		else
-		{
-			currentTheme = R.style.AppTheme_Light;
-		}
+		currentTheme = Config.defaultTheme;
 		io.putInt(key_theme, currentTheme);
 
 		if (ac != null)

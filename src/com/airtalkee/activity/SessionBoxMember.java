@@ -95,15 +95,6 @@ public class SessionBoxMember extends View implements OnClickListener, OnItemCli
 				layoutBtnCallCenter.setVisibility(View.GONE);
 			}
 
-			if (Config.funcChannelCallIn)
-			{
-				layoutBtnAlertChannel.setVisibility(View.VISIBLE);
-				parentView.findViewById(R.id.talk_lv_session_call).setOnClickListener(this);
-			}
-			else
-			{
-				layoutBtnAlertChannel.setVisibility(View.GONE);
-			}
 
 			if (layoutBtnCallCenter.getVisibility() == View.GONE && layoutBtnAlertChannel.getVisibility() == View.GONE)
 				layoutBtns.setVisibility(View.GONE);
@@ -127,14 +118,6 @@ public class SessionBoxMember extends View implements OnClickListener, OnItemCli
 	public void refreshManageButtons(boolean showIcons)
 	{
 		boolean toShowManageButton = false;
-		if (Config.funcChannelManage && session != null && session.getType() == AirSession.TYPE_CHANNEL)
-		{
-			AirChannel channel = AirtalkeeChannel.getInstance().ChannelGetByCode(session.getSessionCode());
-			if (channel != null)
-			{
-				toShowManageButton = TextUtils.equals(AirtalkeeAccount.getInstance().getUserId(), channel.getCreatorId());
-			}
-		}
 
 		if (toShowManageButton)
 		{

@@ -156,7 +156,7 @@
             android:layout_width="fill_parent"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/app_name_cmcc"
             android:scaleType="center"
             android:src="@drawable/ic_close_cicle" />
 
@@ -165,7 +165,7 @@
             android:layout_width="fill_parent"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/app_name_cmcc"
             android:scaleType="center"
             android:src="@drawable/ic_image" />
 
@@ -174,7 +174,7 @@
             android:layout_width="fill_parent"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/app_name_cmcc"
             android:scaleType="center"
             android:src="@drawable/ic_camera" />
 
@@ -183,7 +183,7 @@
             android:layout_width="fill_parent"
             android:layout_height="45dp"
             android:layout_weight="1"
-            android:contentDescription="@string/app_name"
+            android:contentDescription="@string/app_name_cmcc"
             android:scaleType="center"
             android:src="@drawable/ic_video" />
     </LinearLayout>

@@ -1,12 +1,9 @@
 package com.airtalkee.receiver;
 
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import com.airtalkee.activity.AccountActivity;
 import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.TempSessionActivity;
@@ -15,7 +12,6 @@ import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
-import com.airtalkee.sdk.engine.AirPower;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
@@ -24,11 +20,6 @@ import com.airtalkee.services.AirServices;
 
 public class ReceiverMediaButton extends BroadcastReceiver
 {
-	private static final String HEADSET_PLUG = "HEADSET_PLUG";
-	
-	private static int ACTION_EARPHONE_DOWN = 0;
-	private static int ACTION_EARPHONE_UP = 1;
-
 	public static boolean isPttPressed = false;
 	public static boolean isChannelToogle = false;
 
@@ -38,95 +29,7 @@ public class ReceiverMediaButton extends BroadcastReceiver
 		String intentAction = intent.getAction();
 		android.util.Log.d("m","ReceiverMediaButton");
 		Log.d(ReceiverMediaButton.class, "ReceiverMediaButton " + intentAction + " MODEL=" + Config.model + " pttAction=" + Config.pttButtonAction);
-		if (Intent.ACTION_HEADSET_PLUG.equals(intentAction))
-		{
-			if (intent.hasExtra("state"))
-			{
-				if (intent.getIntExtra("state", 0) == 0)
-				{
-					HeadsetRemoved();
-				}
-				else if (intent.getIntExtra("state", 0) == 1)
-				{
-					HeadsetPlugin(context);
-				}
-			}
-		}
-		else if (Intent.ACTION_MEDIA_BUTTON.equals(intentAction))
-		{
-			KeyEvent keyEvent = (KeyEvent) intent.getParcelableExtra(Intent.EXTRA_KEY_EVENT);
-			int keyCode = keyEvent.getKeyCode();
-			int keyAction = keyEvent.getAction();
-			Log.d(ReceiverMediaButton.class, "ReceiverMediaButton  case1 keyCode=" + keyCode + " keyAction=" + keyAction);
-			boolean isBtKeyCode = Config.pttBtKeycode == keyCode || keyCode == 88;
-			if(isBtKeyCode)
-			{
-				if(keyCode == 87 && keyAction ==0 )
-				{
-					if(!isPttPressed)
-					{
-						AirtalkeeSessionManager.getInstance().TalkRequest(AirSessionControl.getInstance().getCurrentSession(), AirSessionControl.getInstance().getCurrentSessionGrap());
-						isPttPressed = true;
-					}
-				}
-				else if(keyCode == 88 && keyAction == 1)
-				{
-					isPttPressed = false;
-					AirtalkeeSessionManager.getInstance().TalkRelease(AirSessionControl.getInstance().getCurrentSession());
-				}
-				abortBroadcast();
-				return;
-			}
-			if (Config.pttEarphoneKeycode == keyCode)
-			{
-				if (keyAction == ACTION_EARPHONE_DOWN || (Config.pttEarphoneLongPress ? keyAction == ACTION_EARPHONE_UP : false))
-				{
-					if (AirSessionControl.getInstance().getCurrentSession() != null && !ReceiverPhoneState.isPhoneCalling(context))
-					{
-						try
-						{
-							int code = Config.pttEarphoneLongPress ? keyCode : 2;
-							if (code != 1)
-							{
-								if (code == 2)
-								{
-									AirtalkeeSessionManager.getInstance().TalkButtonClick(AirSessionControl.getInstance().getCurrentSession(), AirSessionControl.getInstance().getCurrentSessionGrap());
-								}
-								else
-								{
-									switch (keyAction)
-									{
-										case KeyEvent.ACTION_DOWN:
-											if(!isPttPressed)
-											{
-												AirtalkeeSessionManager.getInstance().TalkRequest(AirSessionControl.getInstance().getCurrentSession(), AirSessionControl.getInstance().getCurrentSessionGrap());
-												isPttPressed = true;
-											}
-											break;
-										case KeyEvent.ACTION_UP:
-											isPttPressed = false;
-											AirtalkeeSessionManager.getInstance().TalkRelease(AirSessionControl.getInstance().getCurrentSession());
-											break;
-									}
-								}
-							}
-							else
-							{
-								AirtalkeeSessionManager.getInstance().TalkButtonClick(AirSessionControl.getInstance().getCurrentSession(), AirSessionControl.getInstance().getCurrentSessionGrap());
-							}
-							Log.d(ReceiverMediaButton.class, "ReceiverMediaButton case1 handled!!");
-							abortBroadcast();
-						}
-						catch (Exception e)
-						{
-							// TODO: handle exception
-							Log.d(ReceiverMediaButton.class, "ReceiverMediaButton case1 error=" + e.toString());
-						}
-					}
-				}
-			}
-		}
-		else if (TextUtils.equals(Config.pttButtonAction, intentAction))
+		if (TextUtils.equals(Config.pttButtonAction, intentAction))
 		{
 			Log.d(ReceiverMediaButton.class, "ReceiverMediaButton case2 pttAction=" + intentAction + " pttActionUpDownCode=" + Config.pttButtonActionUpDownCode);
 			boolean enable = true;
@@ -267,47 +170,5 @@ public class ReceiverMediaButton extends BroadcastReceiver
 		
 		//Intent intent = new Intent(AirServices.SERVICE_PATH);
 		//context.startService(intent);	
-	}
-	
-	public static void HeadsetPlugin(Context context)
-	{
-		if (Config.pttEarphonePlug)
-		{    
-			Log.d(ReceiverMediaButton.class, "ReceiverMediaButton HeadsetPlugin");
-			AudioManager mAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-			ComponentName comp = new ComponentName(context.getPackageName(), ReceiverMediaButton.class.getName());
-			try
-			{
-				mAudioManager.registerMediaButtonEventReceiver(comp);
-			}
-			catch (NoSuchMethodError e)
-			{
-				
-			}
-			mAudioManager.requestAudioFocus(null, AudioManager.STREAM_MUSIC,  AudioManager.AUDIOFOCUS_GAIN);
-			AirPower.PowerManagerWakeup(HEADSET_PLUG);
-		}
-	}
-	
-	@SuppressWarnings("deprecation")
-	public static void HeadsetPluginCheck(Context context)
-	{
-		if (Config.pttEarphonePlug)
-		{
-			AudioManager localAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);  
-			if (localAudioManager.isWiredHeadsetOn())
-				AirPower.PowerManagerWakeup(HEADSET_PLUG);
-			else
-				AirPower.PowerManagerSleep(HEADSET_PLUG);
-		}
-	}
-
-	public static void HeadsetRemoved()
-	{
-		if (Config.pttEarphonePlug)
-		{
-			Log.d(ReceiverMediaButton.class, "ReceiverMediaButton HeadsetRemoved");
-			AirPower.PowerManagerSleep(HEADSET_PLUG);
-		}
 	}
 }

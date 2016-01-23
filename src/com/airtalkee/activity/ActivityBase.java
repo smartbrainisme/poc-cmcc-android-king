@@ -3,9 +3,6 @@ package com.airtalkee.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import com.airtalkee.Util.ThemeUtil;
-import com.airtalkee.application.MainApplication;
-import com.airtalkee.config.Config;
-import com.umeng.analytics.MobclickAgent;
 
 public class ActivityBase extends Activity
 {
@@ -23,8 +20,6 @@ public class ActivityBase extends Activity
 	{
 		// TODO Auto-generated method stub
 		super.onPause();
-		if (Config.funcStatisticUmeng && !MainApplication.isFisrtLaunch())
-			MobclickAgent.onPause(this);
 	}
 	
 	@Override
@@ -32,8 +27,6 @@ public class ActivityBase extends Activity
 	{
 		// TODO Auto-generated method stub
 		super.onResume();
-		if (Config.funcStatisticUmeng && !MainApplication.isFisrtLaunch())
-			MobclickAgent.onResume(this);
 	}
 
 }

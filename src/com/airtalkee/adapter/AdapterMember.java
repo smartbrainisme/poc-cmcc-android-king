@@ -196,15 +196,7 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 						case AirContact.CONTACT_STATE_ONLINE_BG:
 							holder.ivSPresence.setImageResource(ThemeUtil.getResourceId(R.attr.theme_user_icon_online_bg, context));
 							holder.tvPresence.setText(R.string.talk_presence_online);
-							if (Config.marketCode == Config.MARKET_BPER || Config.marketCode == Config.MARKET_BPER_GERMANY
-								|| Config.marketCode == Config.MARKET_BPER_SINGAPORE || Config.marketCode == Config.MARKET_BPER_MTT)
-							{
-								holder.ivPresence.setImageResource(R.drawable.user_state_online);
-							}
-							else
-							{
-								holder.ivPresence.setImageResource(R.drawable.user_state_online_bg);
-							}
+							holder.ivPresence.setImageResource(R.drawable.user_state_online_bg);
 							break;
 					}
 				}
@@ -259,12 +251,6 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 				holder.checkBox.setVisibility(View.VISIBLE);
 				holder.checkBox.setClickable(true);
 			}
-			if (Config.marketCode == Config.MARKET_BPER || Config.marketCode == Config.MARKET_BPER_GERMANY
-				|| Config.marketCode == Config.MARKET_BPER_SINGAPORE || Config.marketCode == Config.MARKET_BPER_MTT)
-			{
-				holder.ivPresence.setVisibility(View.GONE);
-			}
-
 			holder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
 			{
 				public void onCheckedChanged(CompoundButton arg0, boolean isCheck)

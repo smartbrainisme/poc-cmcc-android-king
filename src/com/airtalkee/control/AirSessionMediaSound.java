@@ -10,6 +10,7 @@ import com.airtalkee.Util.SoundPlayer;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.AccountActivity;
 import com.airtalkee.activity.MainActivity;
+import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.bluetooth.BluetoothManager;
 import com.airtalkee.config.Config;
 import com.airtalkee.receiver.ReceiverPhoneState;
@@ -18,7 +19,6 @@ import com.airtalkee.sdk.controller.SessionMediaController;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
-import com.airtalkee.tts.TTSManager;
 
 public class AirSessionMediaSound implements OnMediaSoundListener
 {
@@ -46,15 +46,27 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 			Sound.vibrate(30, context);
 		}
 
-		if (session != null && session.getType() == AirSession.TYPE_CHANNEL && !Utils.isEmpty(content))
-		{
-			boolean show = false;
-			Intent intent = null;
-			if (show)
-			{
-				Util.showNotification(Util.NOTIFI_ID_VOICE_LISTEN, context, intent, content, content + " " + context.getString(R.string.talk_speaking), context.getString(R.string.talk_speaking), null);
-			}
-		}
+//		if (session != null && session.getType() == AirSession.TYPE_CHANNEL && !Utils.isEmpty(content))
+//		{
+//			boolean show = false;
+//			Intent intent = null;
+//			if (HomeActivity.getInstance() == null)
+//			{
+//				intent = new Intent();
+//				intent.setClass(context, AccountActivity.class);
+//				show = true;
+//			}
+//			else if (!HomeActivity.getInstance().isShowing)
+//			{
+//				intent = new Intent();
+//				intent.setClass(context, MainActivity.class);
+//				show = true;
+//			}
+//			if (show)
+//			{
+//				Util.showNotification(Util.NOTIFI_ID_VOICE_LISTEN, context, intent, content, content + " " + context.getString(R.string.talk_speaking), context.getString(R.string.talk_speaking), null);
+//			}
+//		}
 	}
 
 	@Override
@@ -192,7 +204,7 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 			}
 			toggleLight(on, color, context);
 			changeAudioFocus(on, context);
-			toggleLedStatus(color == 0xFFFF0000 ? 0 : 1, on ? 1 : 0);
+//			toggleLedStatus(color == 0xFFFF0000 ? 0 : 1, on ? 1 : 0);
 			com.airtalkee.sdk.util.Log.d(AirSessionMediaSound.class, "pttLightStateRefresh end");
 		}
 		catch (Exception e)
@@ -244,37 +256,8 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		toggleLight(false, 0xFF00FF00, context);
 		toggleLight(false, 0xFFFF0000, context);
 		changeAudioFocus(false, context);
-		toggleLedStatus(0, 0);
-		toggleLedStatus(1, 0);
-	}
-
-	/**
-	 * 切换无屏机 灯的状态
-	 * 
-	 * @param led
-	 *            0,红灯，1 绿灯
-	 * @param status
-	 *            0 关闭灯 1 开灯
-	 */
-	public static void toggleLedStatus(int led, int status)
-	{
-		if (!Config.funcTTS)
-			return;
-		try
-		{
-			if (led == 0)
-			{
-				setRedLedStatusNative(status);
-			}
-			else
-			{
-				setGreenLedStatusNative(status);
-			}
-		}
-		catch (Exception e)
-		{
-			com.airtalkee.sdk.util.Log.e(TTSManager.class, "toggleLedStatus error=" + e.toString());
-		}
+//		toggleLedStatus(0, 0);
+//		toggleLedStatus(1, 0);
 	}
 
 	private static native void setGreenLedStatusNative(int status);// status: 0

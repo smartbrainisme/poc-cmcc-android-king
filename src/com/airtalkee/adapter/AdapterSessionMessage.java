@@ -2,14 +2,10 @@ package com.airtalkee.adapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import android.R.integer;
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.BitmapFactory;
-import android.text.Spannable;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,7 +18,6 @@ import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Language;
 import com.airtalkee.Util.ThemeUtil;
-import com.airtalkee.Util.Util;
 import com.airtalkee.adapter.AdapterBase.OnImageLoadCompletedListener;
 import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeUserInfo;
@@ -135,7 +130,6 @@ public class AdapterSessionMessage extends AdapterBase implements
 					String msg_body = "";
 					if (!TextUtils.isEmpty(iMessage.getBody()))
 						msg_body = iMessage.getBody().replaceAll("\r", "");
-					Spannable spannable = Util.buildPlainMessageSpannable(mContext, msg_body.getBytes());
 					switch (iMessage.getType())
 					{
 						case AirMessage.TYPE_SYSTEM:
@@ -146,10 +140,9 @@ public class AdapterSessionMessage extends AdapterBase implements
 							{
 								msg_body += " (" + iMessage.getInameFrom() + ")";
 							}
-							spannable = Util.buildPlainMessageSpannable(mContext, msg_body.getBytes());
 							holder.bodyLayout.setVisibility(View.GONE);
 							holder.tvSystem.setVisibility(View.VISIBLE);
-							holder.tvSystem.setText(spannable);
+							holder.tvSystem.setText(msg_body);
 							break;
 						}
 
@@ -157,7 +150,7 @@ public class AdapterSessionMessage extends AdapterBase implements
 						{
 							holder.bodyLayout.setVisibility(View.VISIBLE);
 							holder.tvSystem.setVisibility(View.GONE);
-							holder.body.setText(spannable);
+							holder.body.setText(msg_body);
 							break;
 						}
 					}

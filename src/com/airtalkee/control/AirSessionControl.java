@@ -7,7 +7,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.airtalkee.Util.Sound;
-import com.airtalkee.bluetooth.BluetoothManager;
 import com.airtalkee.listener.OnMmiSessionListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
@@ -18,7 +17,6 @@ import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
-import com.airtalkee.tts.TTSManager;
 
 
 public class AirSessionControl implements OnSessionListener
@@ -402,7 +400,6 @@ public class AirSessionControl implements OnSessionListener
 	{
 		if(ch != null)
 		{
-			TTSManager.getInstance().synth("进入，"+ch.getDisplayName());
 			List<AirChannel> channels = ChannelController.dataChannelsGet();
 			if(channels != null && channels.size() > 0)
 			{
@@ -445,18 +442,15 @@ public class AirSessionControl implements OnSessionListener
 			{
 				//TTS 
 				currentSelectChannel = channel;
-				TTSManager.getInstance().synth(channel.getDisplayName());
 			}
 			else
 			{
 				//tip channel is null
-				TTSManager.getInstance().synth("频道错误");
 			}
 		}
 		else
 		{
 			//tip channel list is null
-			TTSManager.getInstance().synth("无频道信息");
 		}
 	}
 }

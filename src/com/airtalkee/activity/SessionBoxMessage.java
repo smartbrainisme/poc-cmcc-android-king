@@ -47,13 +47,11 @@ import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.AirMmiTimerListener;
-import com.airtalkee.Util.Smilify;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.adapter.AdapterSessionMessage;
 import com.airtalkee.adapter.AdapterTools;
-import com.airtalkee.adapter.SmileyGridAdapter;
 import com.airtalkee.listener.OnMmiMessageListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
@@ -96,7 +94,6 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 	private LinearLayout lLayoutEmotion;
 	private float startY = 0;
 	private Animation animBotomIn;
-	private SmileyGridAdapter adapterSmiley;
 	private GridView gvSmiley, gvTools;
 	private AdapterTools adapterTools;
 	private PopupWindow pwTools = null, pwImage = null;
@@ -139,8 +136,6 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 		animRefresh = AnimationUtils.loadAnimation(contextMain, R.anim.refresh);
 		gvSmiley = (GridView) parentView.findViewById(R.id.gridview);
 		gvSmiley.setOnItemClickListener(this);
-		adapterSmiley = new SmileyGridAdapter(contextMain);
-		gvSmiley.setAdapter(adapterSmiley);
 		talkPannel = (LinearLayout) parentView.findViewById(R.id.talk_pannel);
 		adapterMessage = new AdapterSessionMessage(contextMain, this, this);
 		lvMessage = (PullToRefreshListView) parentView.findViewById(R.id.lv_message);
@@ -174,11 +169,6 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 		}
 		this.session = s;
 		Log.d(SessionBoxMessage.class, "SessionBoxMessage - setSession");
-		if (s != null && s.getMessageTextDraft() != null)
-		{
-			Spannable spannable = Util.buildPlainMessageSpannable(contextMain, s.getMessageTextDraft().getBytes());
-			etMsg.setText(spannable);
-		}
 		adapterMessage.setSession(s);
 
 	}
@@ -286,7 +276,6 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 			String msg = etMsg.getText().toString();
 			if (msg != null && !msg.trim().equals(""))
 			{
-				AirtalkeeMessage.getInstance().MessageSend(session, Smilify.smilifFilter(msg), false, true);
 				etMsg.setText("");
 				adapterMessage.notifyDataSetChanged();
 			}
@@ -702,9 +691,6 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 			case R.id.gridview:
 			{
 				int cursor = etMsg.getSelectionStart();
-				String msgBody = adapterSmiley.getSmiley(position).replaceAll("\r", "");
-				Spannable spannable = Util.buildPlainMessageSpannable(contextMain, msgBody.getBytes());
-				etMsg.getText().insert(cursor, spannable);
 				break;
 			}
 			case R.id.tools_gridview:
@@ -965,10 +951,6 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 								{
 									AirtalkeeMessage.getInstance().MessageRecordResend(session, currentMessage.getMessageCode(), currentMessage.getImageUri(),
 										currentMessage.getImageLength(), true);
-								}
-								else
-								{
-									AirtalkeeMessage.getInstance().MessageSend(session, Smilify.smilifFilter(currentMessage.getBody()), false, true);
 								}
 								adapterMessage.notifyDataSetChanged();
 							}

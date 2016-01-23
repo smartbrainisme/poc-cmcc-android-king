@@ -10,7 +10,6 @@ import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,7 +32,6 @@ import com.airtalkee.control.AirAccountManager;
 import com.airtalkee.listener.OnMmiAccountListener;
 import com.airtalkee.listener.OnMmiChannelListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
-import com.airtalkee.sdk.AirtalkeeAccountMgr;
 import com.airtalkee.sdk.AirtalkeeUserInfo;
 import com.airtalkee.sdk.OnUserInfoListener;
 import com.airtalkee.sdk.entity.AirChannel;
@@ -48,7 +46,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 {
 	private EditText etIpocid;
 	private EditText etPwd;
-//	private TextView tvRegister;
+	// private TextView tvRegister;
 	private View btnLogin;
 	private LinearLayout layoutInput, layoutWaiting;
 	private TextView tvInfo;
@@ -89,7 +87,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 		// TODO Auto-generated method stub
 		super.onStart();
 		Log.i(AccountActivity.class, "AccountActivity onStart");
-		if(MainApplication.isFisrtLaunch()  && !Config.funcBootLaunch)
+		if (MainApplication.isFisrtLaunch() && !Config.funcBootLaunch)
 		{
 			showDialog(R.id.talk_dialog_ascess_network);
 			Log.i(AccountActivity.class, "MainApplication.isFisrtLaunch()  && !Config.funcLaunch");
@@ -116,12 +114,6 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 			{
 				toLogin = true;
 			}
-			else if(Config.funcTTS)
-			{
-				Util.Toast(this, getString(R.string.talk_account_checking));
-				AirtalkeeAccountMgr.getInstance().AccountMgrGetIDByIMEI(this, this);
-			}
-
 			if (toLogin)
 			{
 				etIpocid.setText(userId);
@@ -167,13 +159,14 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 
 	private class Task extends AsyncTask<Void, Void, String[]>
 	{
-		int times=0;
+		int times = 0;
+
 		protected String[] doInBackground(Void... params)
 		{
-		
+
 			while (!AirServices.appRunning)
 			{
-				if(times == 0)
+				if (times == 0)
 				{
 					Log.i(AccountActivity.class, "Task execute start services");
 					Intent intent = new Intent(AirServices.SERVICE_PATH);
@@ -181,7 +174,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 				}
 				try
 				{
-					Log.i(AccountActivity.class, "Task looping ... times=["+times+"]");
+					Log.i(AccountActivity.class, "Task looping ... times=[" + times + "]");
 					Thread.sleep(100);
 				}
 				catch (InterruptedException e)
@@ -190,7 +183,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 					e.printStackTrace();
 				}
 				times++;
-				if(times > 30)
+				if (times > 30)
 				{
 					Log.i(AccountActivity.class, "Task reset state");
 					times = 0;
@@ -213,24 +206,13 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 		etIpocid = (EditText) findViewById(R.id.talk_et_ipocid);
 		etPwd = (EditText) findViewById(R.id.talk_et_ipocpwd);
 		btnLogin = findViewById(R.id.talk_btn_login);
-//		tvRegister = (TextView) findViewById(R.id.talk_tv_to_register);
 
 		layoutInput = (LinearLayout) findViewById(R.id.talk_account_input);
 		layoutWaiting = (LinearLayout) findViewById(R.id.talk_account_waiting);
 		tvInfo = (TextView) findViewById(R.id.talk_account_info);
 
 		etIpocid.setOnTouchListener(this);
-		if (!Config.funcUserIdAndPwdIsNumber)
-		{
-			etIpocid.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-			etPwd.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-		}
 		etPwd.setOnTouchListener(this);
-		if (Config.funcUserRegistration)
-		{
-//			tvRegister.setText(R.string.talk_register);
-//			tvRegister.setOnClickListener(this);
-		}
 		btnLogin.setOnClickListener(this);
 
 		TextView logo = (TextView) findViewById(R.id.logo);
@@ -240,9 +222,9 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 		{
 			TextView logoText = (TextView) findViewById(R.id.talk_copyright_text);
 			ImageView logoImage = (ImageView) findViewById(R.id.talk_copyright_logo);
-			if(Config.funcShowCustomLogoStringId1 != 0)
+			if (Config.funcShowCustomLogoStringId1 != 0)
 				logoText.setText(getString(Config.funcShowCustomLogoStringId1));
-			if(Config.funcShowCustomLogoIconId != 0)
+			if (Config.funcShowCustomLogoIconId != 0)
 				logoImage.setImageResource(Config.funcShowCustomLogoIconId);
 		}
 	}
@@ -299,7 +281,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 			});
 			return builder.create();
 		}
-		else if(id == R.id.talk_dialog_ascess_network)
+		else if (id == R.id.talk_dialog_ascess_network)
 		{
 			AlertDialog.Builder builder = new AlertDialog.Builder(this);
 			builder.setMessage(getString(R.string.talk_protocol));
@@ -345,29 +327,24 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 					{
 						if (pwd.length() < 6)
 						{
-							Util.Toast(this, getString(R.string.talk_pwd_error),R.drawable.ic_error);
+							Util.Toast(this, getString(R.string.talk_pwd_error), R.drawable.ic_error);
 							return;
 						}
 
-						if (Config.funcUserPhone)
-							AirtalkeeAccount.getInstance().Login(ipocId, pwd);
+						if (Util.IsUserName(ipocId))
+						{
+							AirtalkeeUserInfo.getInstance().UserInfoGetIdByUserId(ipocId, pwd);
+						}
 						else
 						{
-							if (Util.IsUserName(ipocId))
-							{
-								AirtalkeeUserInfo.getInstance().UserInfoGetIdByUserId(ipocId, pwd);
-							}
-							else
-							{
-								AirtalkeeAccount.getInstance().Login(ipocId, pwd);
-							}
+							AirtalkeeAccount.getInstance().Login(ipocId, pwd);
 						}
 
 						accountStateShow(STATE_LOGIN);
 					}
 					else
 					{
-						Util.Toast(this, getString(R.string.talk_account_isnotnull),R.drawable.ic_error);
+						Util.Toast(this, getString(R.string.talk_account_isnotnull), R.drawable.ic_error);
 					}
 				}
 				// else
@@ -376,12 +353,12 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 				// }
 				break;
 			}
-//			case R.id.talk_tv_to_register:
-//			{
-//				Intent it = new Intent(this, UserRegisterPrepareActivity.class);
-//				startActivity(it);
-//				break;
-//			}
+			// case R.id.talk_tv_to_register:
+			// {
+			// Intent it = new Intent(this, UserRegisterPrepareActivity.class);
+			// startActivity(it);
+			// break;
+			// }
 			default:
 				break;
 		}
@@ -407,7 +384,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 		else
 		{
 			accountStateShow(STATE_IDLE);
-			Util.Toast(this, getString(R.string.talk_login_login_failed_user_or_password),R.drawable.ic_error);
+			Util.Toast(this, getString(R.string.talk_login_login_failed_user_or_password), R.drawable.ic_error);
 		}
 	}
 
@@ -478,27 +455,27 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 			Toast.makeText1(this, getString(R.string.talk_account_other), Toast.LENGTH_LONG).show();
 		}
 	}
-	
+
 	@Override
 	public void onUserIdGetByImei(int state, String uid, String pwd)
 	{
 		// TODO Auto-generated method stub
-		if(state == 0)
+		if (state == 0)
 		{
 			etIpocid.setText(uid);
 			etPwd.setText(pwd);
 			Util.Toast(this, getString(R.string.talk_logining));
-			AirtalkeeAccount.getInstance().Login(uid,pwd);
+			AirtalkeeAccount.getInstance().Login(uid, pwd);
 			accountStateShow(STATE_LOGIN);
 		}
-		else if(state == 1)
+		else if (state == 1)
 		{
-			Util.Toast(this, getString(R.string.talk_account_bind_error),R.drawable.ic_error);
-			Util.Toast(this, getString(R.string.talk_account_get_error),R.drawable.ic_error);
+			Util.Toast(this, getString(R.string.talk_account_bind_error), R.drawable.ic_error);
+			Util.Toast(this, getString(R.string.talk_account_get_error), R.drawable.ic_error);
 		}
 		else
 		{
-			Util.Toast(this, getString(R.string.talk_account_get_error),R.drawable.ic_error);
+			Util.Toast(this, getString(R.string.talk_account_get_error), R.drawable.ic_error);
 		}
 	}
 
@@ -506,16 +483,16 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 	public void onMmiHeartbeatLogin(int result)
 	{
 		// TODO Auto-generated method stub
-		//	removeDialog(R.id.talk_dialog_login_waiting);
+		// removeDialog(R.id.talk_dialog_login_waiting);
 		if (result == AirtalkeeAccount.ACCOUNT_RESULT_OK)
 		{
 			accountStateShow(STATE_LOADING);
-			//AirServices.iOperator.putBoolean(AirAccountManager.KEY_HB, true);
+			// AirServices.iOperator.putBoolean(AirAccountManager.KEY_HB, true);
 		}
 		else
 		{
 			accountStateShow(STATE_IDLE);
-			Util.Toast(this, Util.loginInfo(result, this),R.drawable.ic_error);
+			Util.Toast(this, Util.loginInfo(result, this), R.drawable.ic_error);
 		}
 	}
 
@@ -546,7 +523,7 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 		{
 			Log.i(AccountActivity.class, "AccountActivity onChannelListGet Fail!");
 			accountStateShow(STATE_IDLE);
-			Util.Toast(this, getString(R.string.talk_channel_list_getfail),R.drawable.ic_error);
+			Util.Toast(this, getString(R.string.talk_channel_list_getfail), R.drawable.ic_error);
 		}
 	}
 

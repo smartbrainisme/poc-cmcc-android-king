@@ -1,7 +1,6 @@
 package com.airtalkee.activity;
 
 import java.util.List;
-import android.R.integer;
 import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
@@ -135,95 +134,9 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		findViewById(R.id.talk_lv_tool_help).setOnClickListener(this);// 使用和帮助
 		findViewById(R.id.talk_tv_notice).setOnClickListener(this);// 广播
 		findViewById(R.id.talk_lv_tool_about).setOnClickListener(this);// 关于
-		// Report item
-		// if (Config.funcCenterReport)
-		// {
-		// findViewById(R.id.talk_lv_tool_report).setOnClickListener(this);
-		// findViewById(R.id.talk_lv_tool_report).setVisibility(View.VISIBLE);
-		// findViewById(R.id.talk_lv_tool_report_divider).setVisibility(View.VISIBLE);
-		// }
-		// else
-		// {
-		// findViewById(R.id.talk_lv_tool_report).setVisibility(View.GONE);
-		// findViewById(R.id.talk_lv_tool_report_divider).setVisibility(View.GONE);
-		// }
 
-		// Call center item
-		// if (Config.funcCenterCall == AirFunctionSetting.SETTING_DISABLE) {
-		// findViewById(R.id.talk_lv_tool_call).setVisibility(View.GONE);
-		// findViewById(R.id.talk_lv_tool_call_divider).setVisibility(
-		// View.GONE);
-		// } else {
-		// if (Config.funcCenterCallMenuShow) {
-		// findViewById(R.id.talk_lv_tool_call).setOnClickListener(this);
-		// findViewById(R.id.talk_lv_tool_call)
-		// .setVisibility(View.VISIBLE);
-		// findViewById(R.id.talk_lv_tool_call_divider).setVisibility(
-		// View.VISIBLE);
-		// } else {
-		// findViewById(R.id.talk_lv_tool_call).setVisibility(View.GONE);
-		// findViewById(R.id.talk_lv_tool_call_divider).setVisibility(
-		// View.GONE);
-		// }
-		// }
-
-		// Manual item
-		/*
-		 * if (Config.funcManual) {
-		 * findViewById(R.id.talk_lv_tool_manual).setOnClickListener(this);
-		 * findViewById(R.id.talk_lv_tool_manual).setVisibility(View.VISIBLE);
-		 * findViewById
-		 * (R.id.talk_lv_tool_manual_divider).setVisibility(View.VISIBLE); }
-		 * else {
-		 * findViewById(R.id.talk_lv_tool_manual).setVisibility(View.GONE);
-		 * findViewById
-		 * (R.id.talk_lv_tool_manual_divider).setVisibility(View.GONE); }
-		 * 
-		 * // Defect report if (Config.funcfeedback) {
-		 * findViewById(R.id.talk_lv_tool_defect).setOnClickListener(this);
-		 * findViewById(R.id.talk_lv_tool_defect).setVisibility(View.VISIBLE);
-		 * findViewById
-		 * (R.id.talk_lv_tool_defect_divider).setVisibility(View.VISIBLE); }
-		 * else {
-		 * findViewById(R.id.talk_lv_tool_defect).setVisibility(View.GONE);
-		 * findViewById
-		 * (R.id.talk_lv_tool_defect_divider).setVisibility(View.GONE); } //
-		 * Sysinfo item if (!Utils.isEmpty(Config.serverUrlInfosys)) {
-		 * findViewById(R.id.talk_lv_tool_infosys).setOnClickListener(this);
-		 * findViewById(R.id.talk_lv_tool_infosys).setVisibility(View.VISIBLE);
-		 * findViewById
-		 * (R.id.talk_lv_tool_infosys_divider).setVisibility(View.VISIBLE); }
-		 * else {
-		 * findViewById(R.id.talk_lv_tool_infosys).setVisibility(View.GONE);
-		 * findViewById
-		 * (R.id.talk_lv_tool_infosys_divider).setVisibility(View.GONE); }
-		 */
-
-		if (Config.funcThemeChange)
-		{
-			findViewById(R.id.talk_change_theme).setOnClickListener(this);
-		}
-		else
-		{
-			findViewById(R.id.talk_change_theme).setVisibility(View.GONE);
-			findViewById(R.id.talk_change_theme_divider).setVisibility(View.GONE);
-		}
-
-		// TaskDspatch
-		if (Config.funcTaskDispatch)
-		{
-			findViewById(R.id.talk_lv_tools_task).setVisibility(View.VISIBLE);
-			findViewById(R.id.talk_lv_tool_task_divider).setVisibility(View.VISIBLE);
-			findViewById(R.id.talk_lv_tools_task).setOnClickListener(this);
-		}
-
-		// Attendance
-		if (Config.funcAttendance)
-		{
-			findViewById(R.id.talk_lv_tools_attend).setVisibility(View.VISIBLE);
-			findViewById(R.id.talk_lv_tool_attend_divider).setVisibility(View.VISIBLE);
-			findViewById(R.id.talk_lv_tools_attend).setOnClickListener(this);
-		}
+		findViewById(R.id.talk_change_theme).setVisibility(View.GONE);
+		findViewById(R.id.talk_change_theme_divider).setVisibility(View.GONE);
 
 		// Others
 		findViewById(R.id.talk_lv_tool_exit).setOnClickListener(this);
@@ -236,18 +149,6 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		tvUserIpocid.setText(AirtalkeeAccount.getInstance().getUserId());
 		tvVersion = (TextView) findViewById(R.id.talk_tv_version);
 		tvVersion.setText(getString(R.string.talk_version) + Config.VERSION_CODE);
-		if (Config.funcShowCustomLogo)
-		{
-			TextView logoText = (TextView) findViewById(R.id.talk_copyright_text);
-			logoText.setVisibility(View.VISIBLE);
-			logoText.setText(Config.funcShowCustomLogoStringId2);
-		}
-
-		if (Config.marketCode == Config.MARKET_UNI_STRONG)
-		{
-			findViewById(R.id.talk_lv_tool_exit).setVisibility(View.GONE);
-			findViewById(R.id.talk_exit_divider).setVisibility(View.GONE);
-		}
 
 		ivUnread = (ImageView) findViewById(R.id.iv_Unread);
 		checkBrodcast();
@@ -344,65 +245,9 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 				startActivity(it);
 				break;
 			}
-			/*
-			 * case R.id.talk_lv_tool_exit: { if (MainActivity.getInstance() !=
-			 * null) { Builder builder =
-			 * MainActivity.getInstance().BuildExitDialog(this); builder.show();
-			 * } break; } case R.id.talk_change_theme: {
-			 * ThemeUtil.changeTheme(this); break; } case
-			 * R.id.talk_lv_tool_update: { Intent it = new Intent(this,
-			 * MenuSettingActivity.class); startActivity(it); break; } case
-			 * R.id.talk_lv_tool_manual: { Intent it = new Intent(this,
-			 * MenuManualActivity.class); startActivity(it); break; } case
-			 * R.id.talk_lv_tool_defect: { Intent it = new Intent(this,
-			 * MenuDefectReportActivity.class); startActivity(it); break; } case
-			 * R.id.talk_lv_tool_infosys: { Intent LaunchIntent =
-			 * getPackageManager().getLaunchIntentForPackage("com.wf.info"); if
-			 * (LaunchIntent != null) { startActivity(LaunchIntent); } else {
-			 * Util.Toast(this, getString(R.string.talk_tools_infosys_null));
-			 * Uri uri = Uri.parse(Config.serverUrlInfosys); Intent web = new
-			 * Intent(Intent.ACTION_VIEW, uri); startActivity(web); } break; }
-			 */
 			case R.id.talk_tv_user_name_panel:
 			{
-				/*
-				 * final Context context = this; final EditText input = new
-				 * EditText(this); input.setSingleLine();
-				 * input.setHint(AirtalkeeUserInfo
-				 * .getInstance().getUserInfo().getDisplayName()); new
-				 * AlertDialog.Builder(this).setTitle(getString(R.string.
-				 * talk_user_info_update_name
-				 * )).setView(input).setPositiveButton(
-				 * getString(R.string.talk_ok), new
-				 * DialogInterface.OnClickListener() {
-				 * 
-				 * public void onClick(DialogInterface dialog, int which) {
-				 * String value = input.getText().toString(); if
-				 * (!Utils.isEmpty(value)) { if (value.length() >
-				 * MenuSettingActivity.SETTING_DISPLAYNAME_LEN) {
-				 * Util.Toast(context,
-				 * getString(R.string.talk_user_info_update_name_error)); } else
-				 * {
-				 * AirtalkeeUserInfo.getInstance().UserInfoUpdate(value.trim());
-				 * Util.Toast(context,
-				 * getString(R.string.talk_user_info_update_name_doing)); } } }
-				 * 
-				 * }).setNegativeButton(getString(R.string.talk_no),
-				 * null).show();
-				 */
 				Intent it = new Intent(this, MenuAccountActivity.class);
-				startActivity(it);
-				break;
-			}
-			case R.id.talk_lv_tools_task:
-			{
-				Intent it = new Intent(this, MenuTaskActivity.class);
-				startActivity(it);
-				break;
-			}
-			case R.id.talk_lv_tools_attend:
-			{
-				Intent it = new Intent(this, MenuAttendanceActivity.class);
 				startActivity(it);
 				break;
 			}

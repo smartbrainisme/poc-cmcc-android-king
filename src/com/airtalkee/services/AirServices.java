@@ -1,7 +1,5 @@
 package com.airtalkee.services;
 
-import java.io.File;
-import android.R.integer;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.KeyguardManager;
@@ -27,11 +25,9 @@ import com.airtalkee.Util.Sound;
 import com.airtalkee.Util.SoundPlayer;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.DialogVersionUpdate;
-import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.SessionBoxTalk;
 import com.airtalkee.activity.TempSessionActivity;
 import com.airtalkee.activity.home.HomeActivity;
-import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.widget.InCommingAlertDialog;
 import com.airtalkee.application.MainApplication;
 import com.airtalkee.bluetooth.BluetoothManager;
@@ -59,14 +55,12 @@ import com.airtalkee.sdk.OnChannelAlertListener;
 import com.airtalkee.sdk.OnSessionIncomingListener;
 import com.airtalkee.sdk.OnVersionUpdateListener;
 import com.airtalkee.sdk.controller.AccountController;
-import com.airtalkee.sdk.engine.AirEngine;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.entity.DBProxy;
 import com.airtalkee.sdk.util.IOoperate;
 import com.airtalkee.sdk.util.Log;
-import com.airtalkee.tts.TTSManager;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
@@ -165,7 +159,6 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 			Setting.getPttClickSupport();
 			Setting.getPttVolumeSupport();
 
-			TTSManager.getInstance().init(this);// getBaseContext().getFilesDir().getAbsolutePath().replace("files", "lib")
 			db_proxy = new DBHelp(this);
 			db_proxy.DbActionRun();
 			AirtalkeeAccount.getInstance();
@@ -757,29 +750,6 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 
 	private boolean isSecretValid = false;
 
-	private void secretConfig()
-	{
-		if (Config.funcEncryption)
-		{
-			if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()))
-			{
-				String path = Environment.getExternalStorageDirectory() + "/SANSECIO.CARD";
-				File file = new File(path);
-				if (file.exists())
-				{
-					isSecretValid = true;
-				}
-			}
-			if (!isSecretValid)
-				Util.Toast(this, getString(R.string.talk_secret_nocard));
-
-			// set Encryption flag
-			AirEngine.serviceSecretSettingType(AirEngine.SECRET_TYPE_SOFT);
-			AirEngine.serviceSecretSettingValid(isSecretValid);
-			AirEngine.serviceSecretSettingValidEncrypt(Setting.getPttEncrypt());
-		}
-	}
-
 	public boolean secretValid()
 	{
 		return isSecretValid;
@@ -794,15 +764,6 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 			if (AirServices.getInstance() != null)
 				AirServices.getInstance().sendBroadcast(intent);
 			Log.i(AirServices.class, "broadcast  " + action + "  send!!!");
-		}
-	}
-
-	public static void setVoxStatus(boolean status)
-	{
-		if (Config.funcVoxSetting)
-		{
-			AudioManager vox = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-			vox.setParameters(status ? "dmo_state=vox_switch_on" : "dmo_state=vox_switch_off"); // 设置VOX开关。
 		}
 	}
 }

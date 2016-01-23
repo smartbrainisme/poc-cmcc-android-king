@@ -11,7 +11,6 @@ import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.AccountActivity;
 import com.airtalkee.activity.MenuNoticeActivity;
-import com.airtalkee.activity.MenuTaskActivity;
 import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
@@ -333,29 +332,6 @@ public class AirMessageTransaction implements OnMessageListener,
 		}
 	}
 
-	/**********************************
-	 * 
-	 * Task Dispatch
-	 * 
-	 **********************************/
-
-	@Override
-	public void onTaskDispatch(String taskId, String taskName)
-	{
-		if (Config.funcTaskDispatch)
-		{
-			Context ct = AirServices.getInstance();
-			if (ct != null)
-			{
-				Intent intent = new Intent();
-				intent.setClass(ct, MenuTaskActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				Util.showNotification(Util.NOTIFI_ID_TASK_DISPATCH, ct, intent, ct.getString(R.string.talk_task_dispatch_title), ct.getString(R.string.talk_task_dispatch_title), taskName, null);
-				Sound.playSound(Sound.PLAYER_NEWINFO, false, ct);
-			}
-		}
-	}
-
 	@Override
 	public void onClickOk(int id, Object obj)
 	{
@@ -436,6 +412,13 @@ public class AirMessageTransaction implements OnMessageListener,
 			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Config.funcCenterCallNumber));
 			context.startActivity(intent);
 		}
+	}
+
+	@Override
+	public void onTaskDispatch(String taskId, String taskName)
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

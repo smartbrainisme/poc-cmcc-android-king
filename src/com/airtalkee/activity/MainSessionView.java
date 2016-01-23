@@ -63,7 +63,6 @@ public class MainSessionView extends ViewController implements OnClickListener, 
 		{
 			case R.id.menu_left_button:
 			{
-				contextMain.viewLeft.refreshList();
 				contextMain.viewControllerSlideView.transLeftShow();
 				break;
 			}
@@ -85,28 +84,6 @@ public class MainSessionView extends ViewController implements OnClickListener, 
 		}
 	}
 
-	public boolean refreshNewMsg()
-	{
-		boolean hasNew = false;
-		int count = contextMain.viewLeft.countGroupNewMsg() + contextMain.viewLeft.countSessionNewMsg();
-		hasNew = (count > 0);
-		if (hasNew)
-		{
-			if (AirSessionControl.getInstance().getCurrentChannelSession() != null
-				&& AirSessionControl.getInstance().getCurrentChannelSession().getChannel() != null
-				&& count == AirSessionControl.getInstance().getCurrentChannelSession().getChannel().getMsgUnReadCount())
-				tvNew.setVisibility(View.GONE);
-			else
-				tvNew.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-			tvNew.setVisibility(View.GONE);
-		}
-		contextMain.viewLeft.refreshList();
-		return hasNew;
-	}
-
 	public boolean onKeyEvent(KeyEvent event)
 	{
 		boolean isHandled = false;
@@ -126,14 +103,12 @@ public class MainSessionView extends ViewController implements OnClickListener, 
 	{
 		// TODO Auto-generated method stub
 		refreshNetState();
-		contextMain.viewLeft.refreshList();
 	}
 
 	@Override
 	public void onMmiSessionReleased(AirSession session)
 	{
 		// TODO Auto-generated method stub
-		contextMain.viewLeft.refreshList();
 	}
 
 }

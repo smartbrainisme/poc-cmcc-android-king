@@ -179,11 +179,6 @@ public class SessionBox extends View implements OnClickListener, OnScrollListene
 					if (c != null)
 					{
 						c.msgUnReadCountClean();
-						MainActivity mainActivity = (MainActivity) contextMain;
-						if (mainActivity != null)
-						{
-							mainActivity.viewMiddle.refreshNewMsg();
-						}
 					}
 				}
 				sessionBoxMessage.refreshMessageNewCount(false);

@@ -25,8 +25,6 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
-import android.text.Spannable;
-import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.format.Time;
 import android.view.inputmethod.InputMethodManager;
@@ -36,7 +34,6 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.services.AirServices;
-import com.airtalkee.tts.TTSManager;
 
 public class Util
 {
@@ -520,57 +517,6 @@ public class Util
 		return imm.isFullscreenMode();
 	}
 
-	public static Spannable getSpannable(Context context, String text)
-	{
-		Spannable name = null;
-		if (context != null && !Utils.isEmpty(text))
-			name = Util.buildPlainMessageSpannable(context, text.replaceAll("\r", "").getBytes());
-		return name;
-	}
-
-	/**
-	 * 
-	 * @param context
-	 * @param content
-	 * @return
-	 */
-	public static Spannable buildPlainMessageSpannable(Context context, byte[] content)
-	{
-		return buildPlainMessageSpannable(context, content, false);
-	}
-
-	public static Spannable buildPlainMessageSpannable(Context context, byte[] content, boolean isfontheight)
-	{
-		try
-		{
-			String msg = "";
-			if (content != null)
-			{
-				try
-				{
-					msg = new String(content, "UTF-8");
-				}
-				catch (UnsupportedEncodingException e)
-				{}
-			}
-			// create spannable string
-			SpannableString spannable = new SpannableString(msg);
-			// spannable.setSpan(new SuperTextSpan(), 1, 4,
-			// spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-			// add link for URL
-			// Linkify.addLinks(spannable,
-			// Linkify.ALL);//ȥ�������ӣ�Ŀǰ�޷��������Ự��Ŀ�ϣ�����������»��ߣ�ûɶ�ã�
-			// add smiley
-			Smilify.getInstance(context).addSmiley(spannable, isfontheight);
-			return spannable;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			return null;
-		}
-	}
 
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
@@ -643,7 +589,6 @@ public class Util
 		try
 		{
 			Toast.makeText1(context, content, Toast.LENGTH_LONG).show();
-			TTSManager.getInstance().synth(content);
 		}
 		catch (Exception e)
 		{
@@ -656,7 +601,6 @@ public class Util
 		try
 		{
 			Toast.makeText1(context, icon, content, Toast.LENGTH_LONG).show();
-			TTSManager.getInstance().synth(content);
 		}
 		catch (Exception e)
 		{
@@ -669,7 +613,6 @@ public class Util
 		try
 		{
 			Toast.makeText1(context, content, seconds).show();
-			TTSManager.getInstance().synth(content);
 		}
 		catch (Exception e)
 		{

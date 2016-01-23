@@ -35,7 +35,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimerListener;
-import com.airtalkee.Util.Smilify;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
@@ -120,7 +119,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 
 		mvRecording = (MacRecordingView) findViewById(R.id.mac_talking);
 		mvRecording.initChild();
-		
+
 		return v;
 	}
 
@@ -384,8 +383,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		Log.d(SessionBoxMessage.class, "SessionBoxMessage - setSession");
 		if (s != null && s.getMessageTextDraft() != null)
 		{
-			Spannable spannable = Util.buildPlainMessageSpannable(getActivity(), s.getMessageTextDraft().getBytes());
-			etMsg.setText(spannable);
+			etMsg.setText(s.getMessageTextDraft());
 		}
 		adapterMessage.setSession(s);
 
@@ -422,7 +420,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 			String msg = etMsg.getText().toString();
 			if (msg != null && !msg.trim().equals(""))
 			{
-				AirtalkeeMessage.getInstance().MessageSend(session, Smilify.smilifFilter(msg), false, true);
+				AirtalkeeMessage.getInstance().MessageSend(session, msg, false, true);
 				etMsg.setText("");
 				adapterMessage.notifyDataSetChanged();
 			}
@@ -551,7 +549,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 								}
 								else
 								{
-									AirtalkeeMessage.getInstance().MessageSend(session, Smilify.smilifFilter(currentMessage.getBody()), false, true);
+									AirtalkeeMessage.getInstance().MessageSend(session, currentMessage.getBody(), false, true);
 								}
 								adapterMessage.notifyDataSetChanged();
 							}

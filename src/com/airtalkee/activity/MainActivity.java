@@ -61,15 +61,12 @@ public class MainActivity extends ActivityBase implements OnMmiAccountListener, 
 		super.onResume();
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN, WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
 		Log.e(MainActivity.class, "MainActivity - onResume");
-		ReceiverMediaButton.HeadsetPluginCheck(this);
 
 		viewLeft.setListener();
 		viewMiddle.refreshNetState();
 
-		viewLeft.refreshList();
 		viewLeft.refreshNotice();
 		viewLeft.refreshUser();
-		viewMiddle.refreshNewMsg();
 
 		Util.closeNotification(Util.NOTIFI_ID_MESSAGE);
 		Util.closeNotification(Util.NOTIFI_ID_VOICE_RECORD);
