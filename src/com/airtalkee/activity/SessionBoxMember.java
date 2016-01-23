@@ -66,7 +66,6 @@ public class SessionBoxMember extends View implements OnClickListener, OnItemCli
 	{
 		this.parent = parentView;
 		
-		tvMemberCount = (TextView) parentView.findViewById(R.id.talk_label_member);
 		layoutBottom = parentView.findViewById(R.id.talk_layout_session_m_bottom);
 		layoutIcons = parentView.findViewById(R.id.talk_layout_meida_icon);
 		layoutIconsDel = layoutBottom.findViewById(R.id.talk_layout_session_delete);

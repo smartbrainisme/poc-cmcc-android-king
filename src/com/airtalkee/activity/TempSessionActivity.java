@@ -78,8 +78,6 @@ public class TempSessionActivity extends ActivityBase implements
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
 		mInstance = this;
 
-		parentView = View.inflate(this, R.layout.activity_talk, null);
-		setContentView(parentView);
 
 		tvTitle = (TextView) findViewById(R.id.tv_main_title);
 		ivHuang = (ImageView) findViewById(R.id.bottom_left_icon);

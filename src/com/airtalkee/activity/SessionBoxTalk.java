@@ -129,7 +129,6 @@ public class SessionBoxTalk extends View implements OnClickListener,
 	{
 		this.parentView = parentView;
 		btnTalk = (ImageView) parentView.findViewById(R.id.talk_btn_session);
-		btnTalk.setImageResource(R.drawable.btn_talk_none);
 		btnTalk.setOnTouchListener(this);
 		btnTalkCall = (ImageView) parentView.findViewById(R.id.talk_btn_session_call_icon);
 		btnTalkCall.setVisibility(View.GONE);
@@ -173,8 +172,6 @@ public class SessionBoxTalk extends View implements OnClickListener,
 		lvQueue = (ListView) parentView.findViewById(R.id.talk_lv_session_queue);
 		lvQueue.setAdapter(adapterQueue);
 
-		parentView.findViewById(R.id.talk_tool_setting).setOnClickListener(this);
-		toolManager = (ImageView) parentView.findViewById(R.id.talk_tool_manager);
 		if (sessionBox.getSessionType() == AirSession.TYPE_CHANNEL)
 		{
 			toolManager.setVisibility(View.VISIBLE);
@@ -184,7 +181,6 @@ public class SessionBoxTalk extends View implements OnClickListener,
 		{
 			toolManager.setVisibility(View.INVISIBLE);
 		}
-		toolPlayMode = (ImageView) parentView.findViewById(R.id.talk_tool_play_mode);
 		toolPlayMode.setOnClickListener(this);
 
 		mSessionSpeakPanel = (LinearLayout) parentView.findViewById(R.id.main_speak_panel);
@@ -611,30 +607,6 @@ public class SessionBoxTalk extends View implements OnClickListener,
 				mainActivity.viewControllerSlideView.transLeftShow();
 				break;
 			}
-			case R.id.talk_tool_setting:
-			{
-				Intent it = new Intent(contextMain, MenuSettingPttActivity.class);
-				contextMain.startActivity(it);
-				break;
-			}
-			case R.id.talk_tool_manager:
-			{
-				boolean isAppling = refreshRole(true);
-				if (isAppling)
-				{
-					Util.Toast(contextMain, contextMain.getString(R.string.talk_channel_manager_grab_enable));
-				}
-				else
-				{
-					Util.Toast(contextMain, contextMain.getString(R.string.talk_channel_manager_grab_disable));
-				}
-				break;
-			}
-			case R.id.talk_tool_play_mode:
-			{
-				showToolsPw();
-				break;
-			}
 			case R.id.talk_btn_video_open:
 			{
 				if (session != null)
@@ -697,8 +669,6 @@ public class SessionBoxTalk extends View implements OnClickListener,
 		pwPlayMode.setFocusable(true);
 		pwPlayMode.setBackgroundDrawable(new BitmapDrawable());
 
-		View v = parentView.findViewById(R.id.layout_bottom);
-		pwPlayMode.showAsDropDown(parentView.findViewById(R.id.layout_tool), 0, -v.getHeight() * 2);
 	}
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data)

@@ -16,7 +16,6 @@
     <style name="AppTheme_Dark" parent="@android:style/Theme">
         <item name="android:windowBackground">@drawable/main_bg_dark</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="theme_logo_icon">@drawable/logo_icon</item>
         <item name="theme_color_title">@color/color_orange_dark</item>
         <item name="theme_main_bg">@color/color_main_bg_dark</item>
         <item name="theme_sider_bg">@color/color_main_bg_dark</item>
@@ -48,22 +47,11 @@
         <item name="theme_menu_right_icon">@drawable/info</item>
         <item name="theme_button_album">@drawable/selector_button_album</item>
         <item name="theme_menu_bg">@drawable/selector_btn_nav</item>
-        <item name="theme_label_right">@drawable/selector_label_ptt_right</item>
-        <item name="theme_label_left">@drawable/selector_label_ptt_left</item>
-        <item name="theme_label_msg">@drawable/selector_label_msg</item>
-        <item name="theme_label_msg_new">@drawable/selector_label_msg_new</item>
-        <item name="theme_label_member">@drawable/selector_label_member</item>
         <item name="theme_divider_h">@drawable/dicider_line2</item>
         <item name="theme_divider_v">@drawable/v_divider_line</item>
         <item name="theme_divider_title">@drawable/left_divider_line</item>
         <item name="theme_msg_audio_play">@drawable/msg_audio_play</item>
         <item name="theme_msg_audio_stop">@drawable/msg_audio_stop_new</item>
-        <item name="theme_talk_call_idle">@drawable/btn_talk_call_idle</item>
-        <item name="theme_talk_call_ing">@drawable/btn_talk_call_ing</item>
-        <item name="theme_talk_idle">@drawable/btn_talk_idle</item>
-        <item name="theme_talk_none">@drawable/btn_talk_none</item>
-        <item name="theme_talk_press">@drawable/btn_talk_press</item>
-        <item name="theme_talk_speak">@drawable/btn_talk_speak</item>
         <item name="theme_media_setting">@drawable/media_setting</item>
         <item name="theme_media_manager">@drawable/media_manager</item>
         <item name="theme_user_icon_offline">@drawable/user_icon_offline</item>

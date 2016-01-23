@@ -26,16 +26,11 @@ public class MainSessionView extends ViewController implements OnClickListener, 
 	public SessionBox sessionBox;
 	private MainActivity contextMain;
 
-	private TextView tvNew;
-	private TextView tvSessionName;
 	public View layoutNetWorkTip;
 
 	@Override
 	public void onCreate()
 	{
-		View parentView = setContentView(R.layout.activity_talk);
-		contextMain = (MainActivity) mContext;
-		sessionBox = new SessionBox(contextMain, parentView, this, AirSession.TYPE_CHANNEL);
 		doInitView();
 	}
 
@@ -47,8 +42,6 @@ public class MainSessionView extends ViewController implements OnClickListener, 
 
 	private void doInitView()
 	{
-		tvNew = (TextView) findViewById(R.id.tv_new);
-		
 		ImageView ivRight = (ImageView) findViewById(R.id.bottom_right_icon);
 		ivRight.setImageResource(R.drawable.ic_topbar_lock_open);
 		

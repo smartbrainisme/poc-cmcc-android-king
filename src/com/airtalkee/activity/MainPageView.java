@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
-import com.airtalkee.adapter.GroupBean;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirAccountManager;
 import com.airtalkee.control.AirMessageTransaction;
@@ -26,7 +25,6 @@ import com.airtalkee.sdk.controller.MessageController;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactTiny;
-import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.widget.ViewControllerManager;
 import com.airtalkee.widget.ViewControllerSlideView;
 
@@ -34,15 +32,14 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 {
 	private MainActivity contextMain;
 	private View convertView;
-	private ImageView ivNotice, ivUserIsb;
-	private TextView ivUserName, ivUserId;
+	private ImageView ivNotice;
+	private TextView ivUserName;
 	public ExpandableListView lvGroup;
 
 	public MainPageView(MainActivity context, ViewControllerSlideView sliderView, ViewControllerManager navigation)
 	{
 		this.contextMain = context;
 
-		convertView = View.inflate(contextMain, R.layout.include_main_page, null);
 		lvGroup = (ExpandableListView) findViewWithId(R.id.exp_listview_group);
 	}
 
@@ -97,11 +94,6 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 			{
 				Intent it = new Intent(contextMain, UserAllActivity.class);
 				contextMain.startActivity(it);
-				break;
-			}
-			case R.id.talk_tv_session:
-			{
-				contextMain.viewControllerSlideView.resetShow();
 				break;
 			}
 			default:

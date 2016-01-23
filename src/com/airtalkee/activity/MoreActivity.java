@@ -32,7 +32,6 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 
 	public TextView tvUserName;
 	public TextView tvUserIpocid;
-	private TextView tvVersion;
 
 	private SeekBar mVoiceVolumeSeekBar;
 	private CheckBox mVoiceMode;
@@ -147,8 +146,6 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		tvUserName.setText(AirtalkeeAccount.getInstance().getUserName());
 		tvUserIpocid = (TextView) findViewById(R.id.talk_tv_user_ipocid);
 		tvUserIpocid.setText(AirtalkeeAccount.getInstance().getUserId());
-		tvVersion = (TextView) findViewById(R.id.talk_tv_version);
-		tvVersion.setText(getString(R.string.talk_version) + Config.VERSION_CODE);
 
 		ivUnread = (ImageView) findViewById(R.id.iv_Unread);
 		checkBrodcast();

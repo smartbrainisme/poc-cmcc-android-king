@@ -3,7 +3,6 @@
 
     <attr name="theme_main_bg" format="reference" />
     <attr name="theme_color_title" format="reference" />
-    <attr name="theme_logo_icon" format="reference" />
     <attr name="theme_sider_bg" format="reference" />
     <attr name="theme_bg_input" format="reference" />
     <attr name="theme_bg_title" format="reference" />

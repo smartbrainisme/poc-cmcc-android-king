@@ -142,7 +142,6 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 		lvMessage.setOnRefreshListener(this);
 		lvMessage.setOnItemClickListener(this);
 		lvMessage.setAdapter(adapterMessage);
-		tvMessageNewCount = (TextView) parentView.findViewById(R.id.talk_label_msg);
 
 		parentView.findViewById(R.id.talk_playback).setOnClickListener(this);
 		recPlayback = (LinearLayout) parentView.findViewById(R.id.talk_playback_panel);

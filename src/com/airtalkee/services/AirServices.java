@@ -173,7 +173,6 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 			AirSessionControl.getInstance();
 			AirAccountManager.getInstance();
 			AirReportManager.getInstance();
-			AirLocation.getInstance(this).locationRun();
 
 			// AirtalkeeMediaAudioControl.getInstance().setMediaAudioCodecAmrMode(AirtalkeeMediaAudioControl.AUDIO_CODEC_AMR_MODE_7);
 			AirtalkeeMediaVisualizer.getInstance().setMediaAudioVisualizerValid(true, true);

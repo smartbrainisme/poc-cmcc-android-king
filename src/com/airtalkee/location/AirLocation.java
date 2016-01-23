@@ -40,7 +40,6 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 
 	private AirLocationImp locationOnce = new AirLocationImp();
 	private AirLocationImp locationLoop = new AirLocationImp();
-	private AirLocationImpNavigate locationNavigate = new AirLocationImpNavigate();
 
 	public static AirLocation getInstance(Context context)
 	{
@@ -54,11 +53,6 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 	public AirLocation(Context context)
 	{
 		this.context = context;
-	}
-
-	public void locationRun()
-	{
-		locationNavigate.navigateRun(context);
 	}
 
 	public boolean getSettingState()
@@ -92,15 +86,7 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 		this.listener = listener;
 		if (listener != null && id == AIR_LOCATION_ID_LOOP)
 		{
-			if (locationLoopTime == AIR_LOCATION_FRE_NAVIGATE && locationNavigate.getLocLatitude() != 0 && locationNavigate.getLocLongitude() != 0)
-			{
-				listener.onLocationChanged(true, AIR_LOCATION_ID_LOOP, AirLocationImp.LOCATION_TYPE_GPS, locationNavigate.getLocLatitude(), locationNavigate.getLocLongitude(), locationNavigate.getLocAltitude(),
-					locationNavigate.getLocSpeed(), Util.getCurrentDate());
-			}
-			else if (locationLoop.getLocLatitude() != 0 && locationLoop.getLocLongitude() != 0)
-			{
-				listener.onLocationChanged(true, AIR_LOCATION_ID_LOOP, locationLoop.getLocType(), locationLoop.getLocLatitude(), locationLoop.getLocLongitude(), locationLoop.getLocAltitude(), locationLoop.getLocSpeed(), locationLoop.getLocTime());
-			}
+			listener.onLocationChanged(true, AIR_LOCATION_ID_LOOP, locationLoop.getLocType(), locationLoop.getLocLatitude(), locationLoop.getLocLongitude(), locationLoop.getLocAltitude(), locationLoop.getLocSpeed(), locationLoop.getLocTime());
 		}
 	}
 
@@ -183,13 +169,10 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 			this.locationLoopTime = seconds;
 			if (seconds == AIR_LOCATION_FRE_NAVIGATE)
 			{
-				locationNavigate.navigateStart(this);
+				seconds = 20;
 			}
-			else
-			{
-				AirMmiTimer.getInstance().TimerRegister(context, this, true, false, seconds * 1000, true, null);
-				locationLoop.LocationGet(context, this, AIR_LOCATION_ID_LOOP, seconds - AIR_LOCATION_CELL_TRY_TIME);
-			}
+			AirMmiTimer.getInstance().TimerRegister(context, this, true, false, seconds * 1000, true, null);
+			locationLoop.LocationGet(context, this, AIR_LOCATION_ID_LOOP, seconds - AIR_LOCATION_CELL_TRY_TIME);
 			isRunning = true;
 		}
 	}
@@ -198,15 +181,8 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 	{
 		if (isRunning)
 		{
-			if (locationLoopTime == AIR_LOCATION_FRE_NAVIGATE)
-			{
-				locationNavigate.navigateStop();
-			}
-			else
-			{
-				locationLoop.LocationTerminate(context);
-				AirMmiTimer.getInstance().TimerUnregister(context, this);
-			}
+			locationLoop.LocationTerminate(context);
+			AirMmiTimer.getInstance().TimerUnregister(context, this);
 			AirServices.iOperator.putBoolean(AIR_GPS_STATE, false);
 			locationLoopTime = 0;
 			isRunning = false;
@@ -227,14 +203,7 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 	public void onceGet(OnMmiLocationListener listener, int timeoutSeconds)
 	{
 		this.listener = listener;
-		if (locationLoopTime == AIR_LOCATION_FRE_NAVIGATE)
-		{
-			locationNavigate.navigateOnce(this);
-		}
-		else
-		{
-			locationOnce.LocationGet(context, this, AIR_LOCATION_ID_ONCE, timeoutSeconds);
-		}
+		locationOnce.LocationGet(context, this, AIR_LOCATION_ID_ONCE, timeoutSeconds);
 	}
 
 	// =================================

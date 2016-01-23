@@ -96,12 +96,6 @@ public class SessionBox extends View implements OnClickListener, OnScrollListene
 
 		switch (v.getId())
 		{
-			case R.id.talk_label_member:
-				tabSnapeToPage(PAGE_MEMBER);
-				break;
-			case R.id.talk_label_msg:
-				tabSnapeToPage(PAGE_MSG);
-				break;
 			case R.id.talk_label_ptt_left:
 				tabSnapeToPage(PAGE_PTT);
 				break;
