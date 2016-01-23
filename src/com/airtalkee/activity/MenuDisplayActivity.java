@@ -135,8 +135,6 @@ public class MenuDisplayActivity extends ActivityBase implements
 		if (user != null)
 		{
 			tvUserName.setText(user.getDisplayName());
-			if (MainActivity.getInstance() != null)
-				MainActivity.getInstance().viewMiddle.refreshName();
 		}
 	}
 

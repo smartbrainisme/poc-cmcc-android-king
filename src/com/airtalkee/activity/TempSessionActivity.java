@@ -137,7 +137,6 @@ public class TempSessionActivity extends ActivityBase implements
 			tvTitle.setText(session.getDisplayName());
 			AirtalkeeSessionManager.getInstance().SessionLock(session, true);
 		}
-		sessionBox.listenerEnable();
 		sessionBox.setSession(session);
 		isShowing = true;
 	}
@@ -149,7 +148,6 @@ public class TempSessionActivity extends ActivityBase implements
 		super.onPause();
 		if (session != null)
 			AirtalkeeSessionManager.getInstance().SessionLock(session, false);
-		sessionBox.listenerDisable();
 		isShowing = false;
 	}
 

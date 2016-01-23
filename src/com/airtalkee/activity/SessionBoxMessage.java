@@ -484,7 +484,6 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 	{
 		if (sessionBox.isMenuShowing())
 		{
-			sessionBox.resetMenu();
 			return;
 		}
 
@@ -587,7 +586,6 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 	{
 		if (sessionBox.isMenuShowing())
 		{
-			sessionBox.resetMenu();
 			return false;
 		}
 		else
@@ -691,7 +689,6 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 	{
 		if (sessionBox.isMenuShowing())
 		{
-			sessionBox.resetMenu();
 			return;
 		}
 
@@ -753,7 +750,6 @@ public class SessionBoxMessage extends View implements OnClickListener, OnTouchL
 		// TODO Auto-generated method stub
 		if (sessionBox.isMenuShowing())
 		{
-			sessionBox.resetMenu();
 			return false;
 		}
 		if (v.getId() == R.id.body_content)

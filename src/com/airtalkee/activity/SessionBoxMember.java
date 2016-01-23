@@ -316,7 +316,6 @@ public class SessionBoxMember extends View implements OnClickListener, OnItemCli
 	{
 		if (sessionBox.isMenuShowing())
 		{
-			sessionBox.resetMenu();
 			return;
 		}
 
@@ -413,7 +412,6 @@ public class SessionBoxMember extends View implements OnClickListener, OnItemCli
 	{
 		if (sessionBox.isMenuShowing())
 		{
-			sessionBox.resetMenu();
 			return;
 		}
 

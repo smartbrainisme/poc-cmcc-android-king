@@ -200,10 +200,6 @@ public class ReceiverMediaButton extends BroadcastReceiver
 					if (AirSessionControl.getInstance().getCurrentSession() != null)
 					{
 						boolean isSwitch = false;
-						if (MainActivity.getInstance() == null)
-							isSwitch = true;
-						else if (!MainActivity.getInstance().isShowing)
-							isSwitch = true;
 						if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().isShowing)
 							isSwitch = false;
 						Log.d(ReceiverMediaButton.class, "ReceiverMediaButton case2 isSwitch=" + isSwitch);

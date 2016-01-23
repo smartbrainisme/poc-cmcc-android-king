@@ -29,8 +29,7 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelState;
 
-public class SessionAndChannelView extends LinearLayout implements
-		OnClickListener, OnItemClickListener
+public class SessionAndChannelView extends LinearLayout implements OnClickListener, OnItemClickListener
 {
 	public interface ViewChangeListener
 	{

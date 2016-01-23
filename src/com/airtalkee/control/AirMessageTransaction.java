@@ -10,17 +10,15 @@ import com.airtalkee.Util.Sound;
 import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.AccountActivity;
-import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.MenuNoticeActivity;
 import com.airtalkee.activity.MenuTaskActivity;
-import com.airtalkee.activity.TempSessionActivity;
 import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
-import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
+import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.config.Config;
 import com.airtalkee.listener.OnMmiMessageListener;
 import com.airtalkee.listener.OnMmiNoticeListener;
@@ -243,7 +241,7 @@ public class AirMessageTransaction implements OnMessageListener,
 	public void onMessagePttRecord(AirSession session, AirMessage message, String msgCode, String resId)
 	{
 		// TODO Auto-generated method stub
-		if (session != null && message != null && AirSession.sessionType(message.getSessionCode()) == AirSession.TYPE_CHANNEL && !TextUtils.equals(message.getIpocidFrom(), AirtalkeeAccount.getInstance().getUserId()) && AirServices.getInstance() != null && !Util.isScreenOn(AirServices.getInstance()) && (MainActivity.getInstance() != null && !MainActivity.getInstance().isShowing))
+		if (session != null && message != null && AirSession.sessionType(message.getSessionCode()) == AirSession.TYPE_CHANNEL && !TextUtils.equals(message.getIpocidFrom(), AirtalkeeAccount.getInstance().getUserId()) && AirServices.getInstance() != null && !Util.isScreenOn(AirServices.getInstance()) && HomeActivity.getInstance() != null)
 		{
 			AirChannel channel = AirtalkeeChannel.getInstance().ChannelGetByCode(message.getSessionCode());
 			if (channel != null)

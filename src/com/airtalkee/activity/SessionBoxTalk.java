@@ -563,7 +563,6 @@ public class SessionBoxTalk extends View implements OnClickListener,
 		// TODO Auto-generated method stub
 		if (sessionBox.isMenuShowing())
 		{
-			sessionBox.resetMenu();
 			return;
 		}
 
@@ -674,11 +673,6 @@ public class SessionBoxTalk extends View implements OnClickListener,
 				case AdapterTools.MENU_RECEIVER:
 					BluetoothManager.getInstance().doChangeVoiceCall();
 					break;
-				case AdapterTools.MENU_BLUETOOTH:
-				{
-					BluetoothManager.getInstance().doChangeBluetooth();
-					break;
-				}
 			}
 		}
 	}
@@ -723,7 +717,6 @@ public class SessionBoxTalk extends View implements OnClickListener,
 	{
 		if (sessionBox.isMenuShowing())
 		{
-			sessionBox.resetMenu();
 			return false;
 		}
 		else
@@ -964,10 +957,6 @@ public class SessionBoxTalk extends View implements OnClickListener,
 			tvSpeakerTime.setText("00:00");
 			mSpeakingTimeStamp = System.currentTimeMillis();
 			AirMmiTimer.getInstance().TimerRegister(contextMain, mSpeakingTimer, false, false, 1000, true, null);
-			if (MainActivity.getInstance() != null && MainActivity.getInstance().viewControllerSlideView.isShowMenuLeft())
-			{
-				MainActivity.getInstance().viewLeft.refreshList();
-			}
 		}
 	}
 
@@ -1004,10 +993,6 @@ public class SessionBoxTalk extends View implements OnClickListener,
 			refreshPttButton();
 
 			AirMmiTimer.getInstance().TimerUnregister(contextMain, mSpeakingTimer);
-			if (MainActivity.getInstance() != null && MainActivity.getInstance().viewControllerSlideView.isShowMenuLeft())
-			{
-				MainActivity.getInstance().viewLeft.refreshList();
-			}
 		}
 	}
 

@@ -18,6 +18,7 @@ import com.airtalkee.Util.AirMmiTimerListener;
 import com.airtalkee.Util.Language;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
+import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.config.Config;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeVersionUpdate;
@@ -245,7 +246,7 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 					try
 					{
 						dialog.cancel();
-						DialogVersionUpdate update = new DialogVersionUpdate(MainActivity.getInstance(), url);
+						DialogVersionUpdate update = new DialogVersionUpdate(HomeActivity.getInstance(), url);
 						update.show();
 					}
 					catch (Exception e)

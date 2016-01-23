@@ -53,13 +53,11 @@ public class ReceiverPhoneState extends BroadcastReceiver implements AirMmiTimer
 				case TelephonyManager.CALL_STATE_OFFHOOK:
 					Log.i(ReceiverPhoneState.class, "TELE>>>>>>>>>CALL_STATE_OFFHOOK");
 					isCalling = true;
-					BluetoothManager.getInstance().callStart();
 					break;
 
 				case TelephonyManager.CALL_STATE_IDLE:
 					Log.i(ReceiverPhoneState.class, "TELE>>>>>>>>>CALL_STATE_IDLE");
 					isCalling = false;
-					BluetoothManager.getInstance().callStop();
 					break;
 				default:
 					Log.i(ReceiverPhoneState.class, "TELE>>>>>>>>>CALL_STATE_DEFAULT");

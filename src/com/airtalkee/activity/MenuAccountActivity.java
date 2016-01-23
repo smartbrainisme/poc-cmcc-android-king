@@ -118,8 +118,6 @@ public class MenuAccountActivity extends ActivityBase implements
 		if (user != null)
 		{
 			tvUserName.setText(user.getDisplayName());
-			if (MainActivity.getInstance() != null)
-				MainActivity.getInstance().viewMiddle.refreshName();
 		}
 	}
 
@@ -130,11 +128,6 @@ public class MenuAccountActivity extends ActivityBase implements
 		{
 			tvUserName.setText(user.getDisplayName());
 			Util.Toast(this, getString(R.string.talk_user_info_update_name_ok));
-			if (MainActivity.getInstance() != null)
-			{
-				MainActivity.getInstance().viewMiddle.refreshSessionMember();
-				MainActivity.getInstance().viewMiddle.refreshName();
-			}
 		}
 		else
 		{
@@ -192,7 +185,6 @@ public class MenuAccountActivity extends ActivityBase implements
 			AirServices.iOperator.putString(AirAccountManager.KEY_PWD, "");
 		}
 		AirServices.iOperator.putBoolean(AirAccountManager.KEY_HB, false);
-		BluetoothManager.getInstance().btStop();
 		AirtalkeeAccount.getInstance().Logout();
 		finish();
 		if (MoreActivity.getInstance() != null)

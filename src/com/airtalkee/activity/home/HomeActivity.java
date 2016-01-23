@@ -127,10 +127,10 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 			}
 			AirtalkeeMessage.getInstance().MessageListMoreClean(session);
 		}
-		// if (channelView != null)
-		// {
-		// channelView.unRegisterReceiver();
-		// }
+		 if (channelView != null)
+		 {
+			 channelView.unRegisterReceiver();
+		 }
 	}
 
 	// 滑动
@@ -194,6 +194,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 			adapter.notifyDataSetChanged();
 			// 检测是否有新im消息
 			checkNewIM(false);
+			mediaStatusBar.setMediaStatusBarVisibility(View.VISIBLE);
 		}
 		else
 		{

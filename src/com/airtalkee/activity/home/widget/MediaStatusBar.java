@@ -314,12 +314,6 @@ public class MediaStatusBar extends LinearLayout implements
 		}
 		barTitle.refreshMediaStatus();
 		talkBtn.refreshPttButton();
-		// AirMmiTimer.getInstance().TimerUnregister(getContext(),
-		// mSpeakingTimer);
-		if (MainActivity.getInstance() != null && MainActivity.getInstance().viewControllerSlideView.isShowMenuLeft())
-		{
-			MainActivity.getInstance().viewLeft.refreshList();
-		}
 
 		int val = sessionSp.getInt(BaseFragment.SESSION_EVENT_KEY, 1);
 		sessionSp.edit().putInt(BaseFragment.SESSION_EVENT_KEY, val + 1).commit();

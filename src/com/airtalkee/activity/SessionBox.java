@@ -56,73 +56,17 @@ public class SessionBox extends View implements OnClickListener, OnScrollListene
 		pager = (PagerHorizontal) parentView.findViewById(R.id.pager);
 		pager.setCurrentPage(PAGE_PTT);
 		pager.addOnScrollListener(this);
-		parentView.findViewById(R.id.talk_label_member).setOnClickListener(this);
-		parentView.findViewById(R.id.talk_label_msg).setOnClickListener(this);
-		parentView.findViewById(R.id.talk_label_ptt_left).setOnClickListener(this);
-		parentView.findViewById(R.id.talk_label_ptt_right).setOnClickListener(this);
 	}
 
 	public void setSession(AirSession s)
 	{
 		Log.i(MainSessionView.class, "setSession");
 		session = s;
-		sessionBoxTalk.setSession(s);
-		sessionBoxMessage.setSession(s);
-		sessionBoxMessage.refreshMessageNewCount(false);
-		sessionBoxMessage.refreshPlayback();
-		if (s != null)
-		{
-			switch (s.getType())
-			{
-				case AirSession.TYPE_CHANNEL:
-				{
-					AirChannel c = AirtalkeeChannel.getInstance().ChannelGetByCode(s.getSessionCode());
-					if (c != null)
-					{
-						c.MembersSort();
-						sessionBoxMember.refreshMembers(s, c.MembersGet());
-					}
-					break;
-				}
-				case AirSession.TYPE_DIALOG:
-				{
-					s.MembersSort();
-					sessionBoxMember.refreshMembers(s, s.getMemberAll());
-					break;
-				}
-			}
-			sessionBoxMember.refreshMemberOnline(s.SessionPresenceList());
-		}
-		else
-		{
-			sessionBoxMember.refreshMembers(null, null);
-			sessionBoxMember.refreshMemberOnline(null);
-		}
 	}
 
 	public int getSessionType()
 	{
 		return sessionType;
-	}
-
-	public void listenerEnable()
-	{
-		AirtalkeeSessionManager.getInstance().setOnMediaListener(sessionBoxTalk);
-		AirtalkeeMediaVisualizer.getInstance().setOnMediaAudioVisualizerListener(sessionBoxTalk);
-		AirSessionControl.getInstance().setOnMmiSessionListener(sessionBoxTalk);
-		AirtalkeeContactPresence.getInstance().setContactPresenceListener(sessionBoxMember.adapterMember);
-		AirMessageTransaction.getInstance().setOnMessageListener(sessionBoxMessage);
-		AirtalkeeMessage.getInstance().setOnMessageListListener(sessionBoxMessage);
-	}
-
-	public void listenerDisable()
-	{
-		AirtalkeeSessionManager.getInstance().setOnMediaListener(null);
-		AirtalkeeMediaVisualizer.getInstance().setOnMediaAudioVisualizerListener(null);
-		AirSessionControl.getInstance().setOnMmiSessionListener(null);
-		AirtalkeeContactPresence.getInstance().setContactPresenceListener(null);
-		AirMessageTransaction.getInstance().setOnMessageListener(null);
-		AirtalkeeMessage.getInstance().setOnMessageListListener(null);
 	}
 
 	public void setMenuShowing(boolean isMenuShowing)
@@ -141,21 +85,12 @@ public class SessionBox extends View implements OnClickListener, OnScrollListene
 		return showing;
 	}
 
-	public void resetMenu()
-	{
-		if (MainActivity.getInstance() != null)
-		{
-			MainActivity.getInstance().viewControllerSlideView.resetShow();
-		}
-	}
-
 	@Override
 	public void onClick(View v)
 	{
 		// TODO Auto-generated method stub
 		if (isMenuShowing())
 		{
-			resetMenu();
 			return;
 		}
 

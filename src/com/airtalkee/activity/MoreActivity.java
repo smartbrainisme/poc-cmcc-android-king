@@ -418,8 +418,6 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		if (user != null)
 		{
 			tvUserName.setText(user.getDisplayName());
-			if (MainActivity.getInstance() != null)
-				MainActivity.getInstance().viewMiddle.refreshName();
 		}
 	}
 
@@ -431,11 +429,6 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		{
 			tvUserName.setText(user.getDisplayName());
 			Util.Toast(this, getString(R.string.talk_user_info_update_name_ok));
-			if (MainActivity.getInstance() != null)
-			{
-				MainActivity.getInstance().viewMiddle.refreshSessionMember();
-				MainActivity.getInstance().viewMiddle.refreshName();
-			}
 		}
 		else
 		{

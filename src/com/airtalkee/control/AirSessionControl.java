@@ -245,7 +245,6 @@ public class AirSessionControl implements OnSessionListener
 					//AirtalkeeSessionManager.getInstance().SessionLock(session, true);
 				}
 			}
-			BluetoothManager.getInstance().btStateRecoveryDelayed();
 		}
 		if (sessionListener != null)
 		{

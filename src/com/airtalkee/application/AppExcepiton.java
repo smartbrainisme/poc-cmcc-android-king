@@ -35,7 +35,6 @@ public class AppExcepiton implements UncaughtExceptionHandler
 	public void uncaughtException(Thread thread, Throwable ex)
 	{
 		// TODO Auto-generated method stub
-		BluetoothManager.getInstance().btStop();
 		try
 		{
 			StackTraceElement[] stack = ex.getStackTrace();// ex.getCause().getStackTrace();

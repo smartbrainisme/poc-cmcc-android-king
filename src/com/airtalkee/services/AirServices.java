@@ -165,8 +165,7 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 			Setting.getPttClickSupport();
 			Setting.getPttVolumeSupport();
 
-			TTSManager.getInstance().init(this);// getBaseContext().getFilesDir().getAbsolutePath().replace("files",
-												// "lib")
+			TTSManager.getInstance().init(this);// getBaseContext().getFilesDir().getAbsolutePath().replace("files", "lib")
 			db_proxy = new DBHelp(this);
 			db_proxy.DbActionRun();
 			AirtalkeeAccount.getInstance();
@@ -563,17 +562,6 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 		if (session != null && !session.isCallHandled())
 		{
 			AirtalkeeMessage.getInstance().MessageSystemGenerate(session, session.getCaller(), getString(R.string.talk_call_state_missed_call), true);
-			try
-			{
-				if (MainActivity.getInstance() != null && MainActivity.getInstance().viewLeft != null)
-				{
-					MainActivity.getInstance().viewLeft.refreshList();
-				}
-			}
-			catch (Exception e)
-			{
-				// TODO: handle exception
-			}
 		}
 		if (incomingDialog != null)
 		{
@@ -622,7 +610,7 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 				try
 				{
 					dialog.cancel();
-					DialogVersionUpdate update = new DialogVersionUpdate(MainActivity.getInstance(), url);
+					DialogVersionUpdate update = new DialogVersionUpdate(HomeActivity.getInstance(), url);
 					update.show();
 				}
 				catch (Exception e)
@@ -683,16 +671,6 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 				AirSessionControl.getInstance().SessionChannelIn(channel.getId());
 				AirtalkeeChannel.getInstance().ChannelAlertIncomingClose(true);
 				Util.Toast(this, getString(R.string.talk_incoming_channel_alert_owner_tip));
-				if (MainActivity.getInstance() != null)
-				{
-					if (MainActivity.getInstance().viewLeft != null)
-						MainActivity.getInstance().viewLeft.refreshList();
-					if (MainActivity.getInstance().viewMiddle != null)
-					{
-						MainActivity.getInstance().viewMiddle.refreshSession();
-						MainActivity.getInstance().viewMiddle.refreshSessionMember();
-					}
-				}
 			}
 			else
 			{
@@ -715,14 +693,6 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 							Sound.stopSound(Sound.PLAYER_INCOMING_RING);
 							AirSessionControl.getInstance().SessionChannelIn(channelId);
 							AirtalkeeChannel.getInstance().ChannelAlertIncomingClose(true);
-							if (MainActivity.getInstance() != null)
-							{
-								if (MainActivity.getInstance().viewMiddle != null)
-								{
-									MainActivity.getInstance().viewMiddle.refreshSession();
-									MainActivity.getInstance().viewMiddle.refreshSessionMember();
-								}
-							}
 						}
 						catch (Exception e)
 						{

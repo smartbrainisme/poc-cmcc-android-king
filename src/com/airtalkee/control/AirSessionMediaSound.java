@@ -50,18 +50,6 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		{
 			boolean show = false;
 			Intent intent = null;
-			if (MainActivity.getInstance() == null)
-			{
-				intent = new Intent();
-				intent.setClass(context, AccountActivity.class);
-				show = true;
-			}
-			else if (!MainActivity.getInstance().isShowing)
-			{
-				intent = new Intent();
-				intent.setClass(context, MainActivity.class);
-				show = true;
-			}
 			if (show)
 			{
 				Util.showNotification(Util.NOTIFI_ID_VOICE_LISTEN, context, intent, content, content + " " + context.getString(R.string.talk_speaking), context.getString(R.string.talk_speaking), null);
@@ -204,8 +192,6 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 			}
 			toggleLight(on, color, context);
 			changeAudioFocus(on, context);
-			if (0xFFFF0000 == color)
-				BluetoothManager.getInstance().ackSpeakState(on);
 			toggleLedStatus(color == 0xFFFF0000 ? 0 : 1, on ? 1 : 0);
 			com.airtalkee.sdk.util.Log.d(AirSessionMediaSound.class, "pttLightStateRefresh end");
 		}
@@ -258,7 +244,6 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		toggleLight(false, 0xFF00FF00, context);
 		toggleLight(false, 0xFFFF0000, context);
 		changeAudioFocus(false, context);
-		BluetoothManager.getInstance().ackSpeakState(false);
 		toggleLedStatus(0, 0);
 		toggleLedStatus(1, 0);
 	}

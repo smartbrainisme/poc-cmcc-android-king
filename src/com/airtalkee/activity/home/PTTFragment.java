@@ -369,10 +369,11 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 				if (obj != null)
 				{
 					String sessionCode = obj.toString();
-					Intent it = new Intent(getActivity(), SessionDialogActivity.class);
-					it.putExtra("sessionCode", sessionCode);
-					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
-					getActivity().startActivity(it);
+					AirtalkeeMessage.getInstance().MessageRecordPlayStop();
+					AirtalkeeSessionManager.getInstance().getSessionByCode(sessionCode);
+					HomeActivity.getInstance().pageIndex = BaseActivity.PAGE_IM;
+					HomeActivity.getInstance().onViewChanged(sessionCode);
+					HomeActivity.getInstance().panelCollapsed();
 				}
 				break;
 		}

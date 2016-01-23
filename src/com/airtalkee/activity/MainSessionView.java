@@ -39,26 +39,16 @@ public class MainSessionView extends ViewController implements OnClickListener, 
 		doInitView();
 	}
 
-	public void onResume()
-	{
-		sessionBox.listenerEnable();
-	}
 
 	public void onPause()
 	{
-		sessionBox.listenerDisable();
 		AirMessageTransaction.getInstance().setOnNoticeListener(null);
 	}
 
 	private void doInitView()
 	{
 		tvNew = (TextView) findViewById(R.id.tv_new);
-		tvSessionName = (TextView) findViewById(R.id.tv_main_title);
-		tvSessionName.setText(R.string.talk_group_no_connect);
-		layoutNetWorkTip = findViewById(R.id.network_tip);
 		
-		ImageView ivLeft = (ImageView) findViewById(R.id.bottom_left_icon);
-		ivLeft.setImageResource(R.drawable.ic_topbar_home);
 		ImageView ivRight = (ImageView) findViewById(R.id.bottom_right_icon);
 		ivRight.setImageResource(R.drawable.ic_topbar_lock_open);
 		
@@ -82,36 +72,6 @@ public class MainSessionView extends ViewController implements OnClickListener, 
 		}
 	}
 
-	public void refreshSession()
-	{
-		refreshName();
-		sessionBox.setSession(AirSessionControl.getInstance().getCurrentChannelSession());
-	}
-
-	public void refreshSessionMember()
-	{
-		sessionBox.sessionBoxMember.refreshMembers();
-		sessionBox.sessionBoxMember.refreshMemberOnline();
-	}
-
-	public void refreshName()
-	{
-		if (Config.marketCode == Config.MARKET_BPER || Config.marketCode == Config.MARKET_BPER_GERMANY || Config.marketCode == Config.MARKET_BPER_SINGAPORE || Config.marketCode == Config.MARKET_BPER_MTT)
-		{
-			tvSessionName.setText(AirtalkeeUserInfo.getInstance().getUserInfo().getDisplayName());
-		}
-		else
-		{
-			if (AirSessionControl.getInstance().getCurrentChannelSession() != null)
-			{
-				tvSessionName.setText(AirSessionControl.getInstance().getCurrentChannelSession().getDisplayName());
-			}
-			else
-			{
-				tvSessionName.setText(R.string.talk_group_no_connect);
-			}
-		}
-	}
 
 	public void refreshNetState()
 	{

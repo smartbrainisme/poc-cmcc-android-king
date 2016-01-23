@@ -51,38 +51,6 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 
 		convertView = View.inflate(contextMain, R.layout.include_main_page, null);
 		lvGroup = (ExpandableListView) findViewWithId(R.id.exp_listview_group);
-		sliderView.getLeftMenu().addView(convertView);
-		
-		ivNotice = (ImageView) findViewWithId(R.id.talk_tv_notice);
-		findViewWithId(R.id.talk_tv_session).setOnClickListener(this);
-		findViewWithId(R.id.talk_tv_tools).setOnClickListener(this);
-		if (Config.funcUserAll)
-		{
-			findViewWithId(R.id.talk_tv_user_all).setOnClickListener(this);
-		}
-		else
-		{
-			findViewWithId(R.id.talk_tv_user_all).setVisibility(View.GONE);
-		}
-		if (Config.funcBroadcast)
-		{
-			ivNotice.setOnClickListener(this);
-		}
-		else
-		{
-			ivNotice.setVisibility(View.GONE);
-		}
-
-		ivUserName = (TextView) findViewWithId(R.id.talk_tv_user_name);
-		ivUserId = (TextView) findViewWithId(R.id.talk_tv_user_id);
-		ivUserIsb = (ImageView) findViewWithId(R.id.talk_user_isb);
-
-		adapter = new AdapterMenuLeft(this.contextMain);
-		lvGroup.setAdapter(adapter);
-		lvGroup.setOnChildClickListener(this);
-		lvGroup.setOnItemLongClickListener(this);
-		lvGroup.expandGroup(0);
-		lvGroup.expandGroup(1);
 	}
 
 	public void setListener()
@@ -129,25 +97,13 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 	public void refreshUser()
 	{
 		ivUserName.setText(AirtalkeeAccount.getInstance().getUserName());
-		ivUserId.setText(AirtalkeeAccount.getInstance().getUserId());
-		ivUserIsb.setVisibility(Setting.getPttIsb() ? View.VISIBLE : View.GONE);
 	}
 
 	public int countGroupNewMsg()
 	{
-		int count = 0;
 		GroupBean group = (GroupBean) adapter.getGroup(AdapterMenuLeft.GROUP_POSITION);
 		List<AirChannel> channels = group.channelList;
-		for (int i = 0; i < channels.size(); i++)
-		{
-			AirChannel c = (AirChannel) channels.get(i);
-			if (c != null)
-			{
-				if (c.getMsgUnReadCount() > 0)
-					count++;
-			}
-		}
-		return count;
+		return channels.size();
 	}
 
 	public int countSessionNewMsg()
@@ -167,24 +123,9 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 				contextMain.startActivity(it);
 				break;
 			}
-			case R.id.talk_tv_notice:
-			{
-				Intent it = new Intent(contextMain, MenuNoticeActivity.class);
-				it.putExtra("url", AccountController.getDmWebNoticeUrl());
-				contextMain.startActivity(it);
-				break;
-			}
-			case R.id.talk_tv_tools:
-			{
-				Intent it = new Intent(contextMain, MoreActivity.class);
-				contextMain.startActivity(it);
-				break;
-			}
 			case R.id.talk_tv_session:
 			{
 				contextMain.viewControllerSlideView.resetShow();
-				contextMain.viewMiddle.refreshSession();
-				contextMain.viewMiddle.refreshSessionMember();
 				break;
 			}
 			default:
@@ -199,43 +140,16 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 		Object group = adapter.getChild(groupPosition, childPosition);
 		if (group == null)
 			return false;
-		if(AirSessionControl.getInstance().getCurrentSession() != null && AirSessionControl.getInstance().getCurrentSession().getType() == AirSession.TYPE_DIALOG)
+		if (AirtalkeeAccount.getInstance().isEngineRunning())
 		{
-			AirtalkeeMessage.getInstance().MessageCleanBySession(AirSessionControl.getInstance().getCurrentSession());
-		}
-		if (group instanceof AirSession)
-		{
-			try
+			if (contextMain != null)
 			{
-				AirSession session = (AirSession) group;
-				if (session != null)
-				{
-					AirtalkeeMessage.getInstance().MessageRecordPlayStop();
-					AirServices.getInstance().switchToSessionTemp(session.getSessionCode(), AirServices.TEMP_SESSION_TYPE_MESSAGE, contextMain);
-				}
-			}
-			catch (Exception e)
-			{
-				//
+				contextMain.viewControllerSlideView.resetShow();
 			}
 		}
-		else if (group instanceof AirChannel)
+		else
 		{
-			if (AirtalkeeAccount.getInstance().isEngineRunning())
-			{
-				AirChannel channel = (AirChannel) group;
-				AirSessionControl.getInstance().SessionChannelIn(channel.getId());
-				if (contextMain != null)
-				{
-					contextMain.viewControllerSlideView.resetShow();
-					contextMain.viewMiddle.refreshSession();
-					contextMain.viewMiddle.refreshSessionMember();
-				}
-			}
-			else
-			{
-				Util.Toast(contextMain, contextMain.getString(R.string.talk_network_warning));
-			}
+			Util.Toast(contextMain, contextMain.getString(R.string.talk_network_warning));
 		}
 		return false;
 	}
@@ -248,20 +162,6 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 		if (position >= 1 && position <= size)
 		{
 			AirChannel channel = AirtalkeeChannel.getInstance().getChannels().get(position - 1);
-			if (AirtalkeeAccount.getInstance().isEngineRunning())
-			{
-				AirSessionControl.getInstance().SessionChannelIn(channel.getId());
-				if (contextMain != null)
-				{
-					contextMain.viewMiddle.refreshSession();
-					contextMain.viewMiddle.refreshSessionMember();
-				}
-				refreshList();
-			}
-			else
-			{
-				Util.Toast(contextMain, contextMain.getString(R.string.talk_network_warning));
-			}
 		}
 		return true;
 	}
@@ -277,10 +177,6 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 	public void onChannelMemberListGet(String channelId, final List<AirContact> members)
 	{
 		// TODO Auto-generated method stub
-		if (members != null && members.size() > 0)
-		{
-			contextMain.viewMiddle.refreshSessionMember();
-		}
 	}
 
 	@Override
