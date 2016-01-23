@@ -207,31 +207,6 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 			AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 			am.setMode(AudioManager.MODE_NORMAL);
 			am.setSpeakerphoneOn(true);
-			/*
-			for (int i = 0; i < 70; i++)
-			{
-				Thread t = new Thread(new Runnable()
-				{
-					public void run()
-					{
-						double n = 0;
-						while (true)
-						{
-							try
-							{
-								n = Math.random() * Math.random();
-								n *= n ;
-								Thread.sleep(1);
-							}
-							catch (InterruptedException e)
-							{
-								e.printStackTrace();
-							}
-						}
-					}
-				});
-				t.start();
-			}*/
 		}
 		catch (Exception e)
 		{

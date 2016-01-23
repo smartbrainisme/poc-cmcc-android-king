@@ -333,30 +333,6 @@ public class SessionBoxMember extends View implements OnClickListener, OnItemCli
 				contextMain.showDialog(R.id.talk_dialog_member_delete);
 				break;
 			}
-			case R.id.talk_layout_meida_icon_add:
-			{
-				if (session != null)
-				{
-					Intent it = new Intent(contextMain, UserAllActivity.class);
-					it.putExtra("type", UserAllActivity.TYPE_ADD);
-					it.putExtra("name", session.getSessionCode());
-					contextMain.startActivity(it);
-
-				}
-				break;
-			}
-			case R.id.talk_layout_meida_icon_edit:
-			{
-				if (session != null)
-				{
-					Intent it = new Intent(contextMain, ChannelManageActivity.class);
-					it.putExtra("type", ChannelManageActivity.TYPE_EDIT);
-					it.putExtra("roomId", session.getSessionCode());
-					it.putExtra("roomName", session.getDisplayName());
-					contextMain.startActivity(it);
-				}
-				break;
-			}
 			case R.id.talk_lv_session_call:
 			{
 				if (session != null)

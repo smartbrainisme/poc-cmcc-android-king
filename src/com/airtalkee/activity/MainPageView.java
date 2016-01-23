@@ -91,11 +91,6 @@ public class MainPageView implements OnMmiChannelListener, OnMmiNoticeListener, 
 		switch (v.getId())
 		{
 			case R.id.talk_tv_user_all:
-			{
-				Intent it = new Intent(contextMain, UserAllActivity.class);
-				contextMain.startActivity(it);
-				break;
-			}
 			default:
 				break;
 		}

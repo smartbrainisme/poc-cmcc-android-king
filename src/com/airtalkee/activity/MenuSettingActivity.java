@@ -153,12 +153,6 @@ public class MenuSettingActivity extends ActivityBase implements OnClickListener
 					}).setNegativeButton(getString(R.string.talk_no), null).show();
 				break;
 			}
-			case R.id.talk_setting_pwd:
-			{
-				Intent it = new Intent(this, UserChangePasswordActivity.class);
-				startActivity(it);
-				break;
-			}
 			case R.id.talk_setting_answer:
 			{
 				mCheckBoxAnswer.setChecked(!mCheckBoxAnswer.isChecked());
