@@ -65,7 +65,6 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 		bgTalkFront = (ImageView) findViewById(R.id.media_ptt_talk_press_bg_front);
 		tvBold = (TextView) findViewById(R.id.media_ptt_talk_text1);
 		tvNormal = (TextView) findViewById(R.id.media_ptt_talk_text2);
-
 		btnTalk.setOnTouchListener(this);
 	}
 
@@ -73,6 +72,7 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 	{
 		if (session == null)
 			return;
+		Log.d(StatusBarTitle.class, "session button state = " + session.getMediaButtonState());
 		switch (session.getMediaButtonState())
 		{
 			case AirSession.MEDIA_BUTTON_STATE_IDLE:
@@ -128,6 +128,7 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 				bgTalkFront.setImageResource(R.drawable.btn_talk_empy);
 				tvBold.setVisibility(View.VISIBLE);
 				tvNormal.setVisibility(View.VISIBLE);
+				Log.d(StatusBarTitle.class, "queues size = " + session.usersQueues().size());
 				tvBold.setText(session.usersQueues().size()+"");
 				tvNormal.setText("排队中");
 				break;

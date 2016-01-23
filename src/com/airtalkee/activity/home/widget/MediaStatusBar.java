@@ -173,7 +173,7 @@ public class MediaStatusBar extends LinearLayout implements
 	{
 		this.setVisibility(visibility);
 	}
-
+	
 	@Override
 	public void onBarItemClick(int itemId, int page)
 	{
@@ -379,7 +379,7 @@ public class MediaStatusBar extends LinearLayout implements
 		{
 			Log.i(SessionBoxTalk.class, "onMediaStateListen");
 			talkBtn.refreshPttButton();
-			Util.Toast(getContext(), getContext().getString(R.string.talk_channel_tip_media_queue_in));
+			// Util.Toast(getContext(), getContext().getString(R.string.talk_channel_tip_media_queue_in));
 		}
 	}
 
@@ -389,7 +389,7 @@ public class MediaStatusBar extends LinearLayout implements
 		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
-			Log.i(SessionBoxTalk.class, "onMediaStateListen");
+			Log.i(SessionBoxTalk.class, "onMediaStateInListen");
 			talkBtn.refreshPttButton();
 			Util.Toast(getContext(), getContext().getString(R.string.talk_channel_tip_media_queue_in));
 		}

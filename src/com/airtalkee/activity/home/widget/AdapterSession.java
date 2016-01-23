@@ -1,5 +1,6 @@
 package com.airtalkee.activity.home.widget;
 
+import java.util.List;
 import android.content.Context;
 import android.text.Spannable;
 import android.view.LayoutInflater;
@@ -12,8 +13,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
+import com.airtalkee.sdk.AirtalkeeContactPresence;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
+import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.sdk.util.Log;
 
 public class AdapterSession extends BaseAdapter
 {
@@ -118,7 +122,9 @@ public class AdapterSession extends BaseAdapter
 			{
 				String display = item.getDisplayName();
 				tvName.setText(display.toString());
-				tvCount.setText(item.getMemberAll().size() + "");
+				Log.d(AdapterSession.class, "AdapterSession fill state=" + item.getSessionState() + ",online=" + item.getSessionMemberOnlineCount());
+				List<AirContact> members = item.SessionPresenceList();
+				tvCount.setText(members.size() + "/" + item.getMemberAll().size());
 				if (item.getMessageUnreadCount() > 0)
 				{
 					tvUnread.setVisibility(View.VISIBLE);
