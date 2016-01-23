@@ -48,8 +48,6 @@
     <attr name="theme_talk_none" format="reference" />
     <attr name="theme_talk_press" format="reference" />
     <attr name="theme_talk_speak" format="reference" />
-    <attr name="theme_audio_bluetooth" format="reference" />
-    <attr name="theme_audio_bluetooth_light" format="reference" />
     <attr name="theme_audio_phone" format="reference" />
     <attr name="theme_audio_speaker" format="reference" />
     <attr name="theme_media_setting" format="reference" />

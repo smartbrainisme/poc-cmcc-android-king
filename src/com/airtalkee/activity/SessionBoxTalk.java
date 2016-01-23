@@ -686,7 +686,6 @@ public class SessionBoxTalk extends View implements OnClickListener,
 			pwPlayMode = new PopupWindow(actionView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 			gvTools = (GridView) actionView.findViewById(R.id.tools_gridview);
 			gvTools.setOnItemClickListener(this);
-			adapterTools = new AdapterTools(contextMain, R.array.play_mode_icon_array);
 			gvTools.setAdapter(adapterTools);
 		}
 		RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);

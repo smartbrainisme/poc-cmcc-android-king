@@ -18,11 +18,6 @@
 		<item>中等</item>
 		<item>正常模式</item>
 	</string-array>
-	<array name="tools_icon_array">
-		<item>@drawable/emotion_over</item>
-		<item>@drawable/menu_camera_select</item>
-		<item>@drawable/menu_pic_select</item>
-	</array>
 	<string-array name="handle_session_operation">
 		<item>删除此对话</item>
 	</string-array>
@@ -50,11 +45,6 @@
 		<item>查看</item>
 		<item>删除</item>
 	</string-array>
-	<array name="play_mode_icon_array">
-		<item>@drawable/actionbar_button_audio_speaker_dark</item>
-		<item>@drawable/actionbar_button_audio_phone_dark</item>
-		<item>@drawable/actionbar_button_audio_bluetooth_dark</item>
-	</array>
 	<string-array name="play_mode">
 		<item>@string/talk_tools_setting_voice_mode_earphone</item>
 		<item>@string/talk_tools_setting_voice_mode_speaker</item>

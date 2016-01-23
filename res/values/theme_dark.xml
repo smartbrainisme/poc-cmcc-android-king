@@ -64,10 +64,6 @@
         <item name="theme_talk_none">@drawable/btn_talk_none</item>
         <item name="theme_talk_press">@drawable/btn_talk_press</item>
         <item name="theme_talk_speak">@drawable/btn_talk_speak</item>
-        <item name="theme_audio_bluetooth">@drawable/actionbar_button_audio_bluetooth_dark</item>
-        <item name="theme_audio_bluetooth_light">@drawable/actionbar_button_audio_bluetooth_light</item>
-        <item name="theme_audio_phone">@drawable/actionbar_button_audio_phone_dark</item>
-        <item name="theme_audio_speaker">@drawable/actionbar_button_audio_speaker_dark</item>
         <item name="theme_media_setting">@drawable/media_setting</item>
         <item name="theme_media_manager">@drawable/media_manager</item>
         <item name="theme_user_icon_offline">@drawable/user_icon_offline</item>
