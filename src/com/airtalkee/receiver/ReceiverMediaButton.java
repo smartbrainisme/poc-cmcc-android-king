@@ -5,8 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 import com.airtalkee.activity.AccountActivity;
-import com.airtalkee.activity.MainActivity;
-import com.airtalkee.activity.TempSessionActivity;
+import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.sdk.AirtalkeeAccount;
@@ -68,7 +67,7 @@ public class ReceiverMediaButton extends BroadcastReceiver
 						{
 							if (intent.getIntExtra(udKey, 0) == udKeyDown)
 							{
-								Log.d(MainActivity.class, "ReceiverMediaButton case2 PTT-DOWN");
+								Log.d(HomeActivity.class, "ReceiverMediaButton case2 PTT-DOWN");
 								boolean toGrap = false;
 								if (session.getType() == AirSession.TYPE_CHANNEL)
 								{
@@ -82,7 +81,7 @@ public class ReceiverMediaButton extends BroadcastReceiver
 							}
 							else if (intent.getIntExtra(udKey, 0) == udKeyUp)
 							{
-								Log.d(MainActivity.class, "ReceiverMediaButton case2 PTT-UP");
+								Log.d(HomeActivity.class, "ReceiverMediaButton case2 PTT-UP");
 								AirtalkeeSessionManager.getInstance().TalkRelease(session);
 							}
 							isAppShow = false;
@@ -103,12 +102,12 @@ public class ReceiverMediaButton extends BroadcastReceiver
 					if (AirSessionControl.getInstance().getCurrentSession() != null)
 					{
 						boolean isSwitch = false;
-						if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().isShowing)
+						if (HomeActivity.getInstance() != null)
 							isSwitch = false;
 						Log.d(ReceiverMediaButton.class, "ReceiverMediaButton case2 isSwitch=" + isSwitch);
 						if (isSwitch)
 						{
-							Intent it = new Intent(context, MainActivity.class);
+							Intent it = new Intent(context, HomeActivity.class);
 							it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 							context.startActivity(it);
 						}

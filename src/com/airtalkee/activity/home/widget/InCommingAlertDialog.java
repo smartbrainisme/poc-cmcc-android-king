@@ -52,13 +52,18 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 	public void onClickOk(int id,Object obj)
 	{
 		Log.i(InCommingAlertDialog.class, "InCommingAlertDialog click ok!");
+		if (HomeActivity.getInstance() == null)
+		{
+			Intent home = new Intent(AirServices.getInstance(), HomeActivity.class);
+			AirServices.getInstance().startActivity(home);
+		}
 		Sound.stopSound(Sound.PLAYER_INCOMING_RING);
 		AirtalkeeSessionManager.getInstance().SessionIncomingAccept(temAirSession);
 		AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, getContext().getString(R.string.talk_call_state_incoming_call), false);
-		if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().getSession() != null && !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), temAirSession.getSessionCode()))
-		{
-			TempSessionActivity.getInstance().setSession(temAirSession);
-		}
+//		if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().getSession() != null && !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), temAirSession.getSessionCode()))
+//		{
+//			TempSessionActivity.getInstance().setSession(temAirSession);
+//		}
 		switchToSessionDialog(temAirSession);
 		this.cancel();
 	}
@@ -95,16 +100,6 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 				AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, getContext().getString(R.string.talk_call_state_incoming_call), false);
 				try
 				{
-					if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().getSession() != null && !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), temAirSession.getSessionCode()))
-					{
-						TempSessionActivity.getInstance().setSession(temAirSession);
-					}
-
-//					Intent it = new Intent(AirServices.getInstance(), SessionDialogActivity.class);
-//					it.putExtra("sessionCode", temAirSession.getSessionCode());
-//					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
-//					it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//					AirServices.getInstance().startActivity(it);
 					switchToSessionDialog(temAirSession);
 				}
 				catch (Exception e)
@@ -138,16 +133,14 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 	private void switchToSessionDialog(AirSession session)
 	{
 		AirSessionControl.getInstance().setOnMmiSessionListener(null);
-//		Intent it = new Intent(getContext(), SessionDialogActivity.class);
-//		it.putExtra("sessionCode", temAirSession.getSessionCode());
-//		it.putExtra("type", AirServices.TEMP_SESSION_TYPE_INCOMING);
-//		it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//		getContext().startActivity(it);
 		if (session != null)
 		{
 			AirtalkeeSessionManager.getInstance().getSessionByCode(session.getSessionCode());
-			HomeActivity.getInstance().onViewChanged(session.getSessionCode());
-			HomeActivity.getInstance().panelCollapsed();
+			if(HomeActivity.getInstance() != null)
+			{
+				HomeActivity.getInstance().onViewChanged(session.getSessionCode());
+				HomeActivity.getInstance().panelCollapsed();
+			}
 		}
 		this.cancel();
 	}

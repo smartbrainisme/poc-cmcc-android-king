@@ -69,6 +69,11 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	{
 		return mInstance;
 	}
+	
+	public View getVideoPannel()
+	{
+		return videoPannel;
+	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)

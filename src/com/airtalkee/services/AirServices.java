@@ -550,7 +550,7 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		ct.startActivity(intent);
 	}
-
+	
 	/***********************************
 	 * 
 	 * 

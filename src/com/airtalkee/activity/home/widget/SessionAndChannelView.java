@@ -17,6 +17,7 @@ import com.airtalkee.R;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MoreActivity;
 import com.airtalkee.activity.home.HomeActivity;
+import com.airtalkee.activity.home.PTTFragment;
 import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.SessionNewActivity;
 import com.airtalkee.activity.home.widget.AdapterSession.HodlerView;
@@ -195,6 +196,7 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 					}
 				}
 				adapterChannel.notifyDataSetChanged();
+				PTTFragment.getInstance().getVideoPannel().setVisibility(View.GONE);
 				break;
 			case R.id.gv_session:
 				if (!adapterSession.isEditing())
@@ -226,6 +228,7 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 					}
 					adapterSession.notifyDataSetChanged();
 				}
+				PTTFragment.getInstance().getVideoPannel().setVisibility(View.GONE);
 				break;
 		}
 	}

@@ -30,6 +30,7 @@ import com.airtalkee.Util.DensityUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MainActivity;
 import com.airtalkee.activity.SessionBox;
+import com.airtalkee.activity.TempSessionActivity;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
 import com.airtalkee.activity.home.widget.SessionAndChannelView;
 import com.airtalkee.activity.home.widget.SessionAndChannelView.ViewChangeListener;
@@ -42,12 +43,14 @@ import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.PageIndicator;
 import com.airtalkee.widget.SlidingUpPanelLayout;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelSlideListener;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelState;
 
-public class HomeActivity extends BaseActivity implements PanelSlideListener, OnPageChangeListener, ViewChangeListener
+public class HomeActivity extends BaseActivity implements PanelSlideListener,
+		OnPageChangeListener, ViewChangeListener
 {
 	private AirSession session;
 	private PageFragmentAdapter adapter;
@@ -70,22 +73,29 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
-		if (HomeActivity.getInstance() != null)
+		com.airtalkee.sdk.util.Log.i(HomeActivity.class, "HomeActivity onCreate");
+		// TODO Auto-generated method stub
+		super.onCreate(bundle);
+		session = AirSessionControl.getInstance().getCurrentSession();
+		if (mInstance != null)
 		{
 			try
 			{
-				HomeActivity.getInstance().finish();
+				mInstance.finish();
 			}
 			catch (Exception e)
 			{}
 		}
-		// TODO Auto-generated method stub
-		super.onCreate(bundle);
 		mInstance = this;
+		if (AirServices.getInstance() != null && AirSessionControl.getInstance().getCurrentSession() != null && AirSessionControl.getInstance().getCurrentSession().getType() == AirSession.TYPE_DIALOG)
+		{
+			AirtalkeeSessionManager.getInstance().getSessionByCode(session.getSessionCode());
+			HomeActivity.getInstance().onViewChanged(session.getSessionCode());
+			HomeActivity.getInstance().panelCollapsed();
+		}
 		setContentView(R.layout.activity_home);
 		setRequestedOrientation(Config.screenOrientation);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
-		session = AirSessionControl.getInstance().getCurrentChannelSession();
 		mediaStatusBar = (MediaStatusBar) findViewById(R.id.media_status_function_bar);
 		mediaStatusBar.init((StatusBarTitle) findViewById(R.id.media_status_title_bar), session);
 		ivIMNew = (ImageView) findViewById(R.id.iv_im_new);
@@ -113,6 +123,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		{
 			checkNewIM(false);
 		}
+
 	}
 
 	@Override
@@ -127,10 +138,10 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 			}
 			AirtalkeeMessage.getInstance().MessageListMoreClean(session);
 		}
-		 if (channelView != null)
-		 {
-			 channelView.unRegisterReceiver();
-		 }
+		if (channelView != null)
+		{
+			channelView.unRegisterReceiver();
+		}
 	}
 
 	// 滑动

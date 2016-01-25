@@ -123,8 +123,14 @@ public class AdapterSession extends BaseAdapter
 				String display = item.getDisplayName();
 				tvName.setText(display.toString());
 				Log.d(AdapterSession.class, "AdapterSession fill state=" + item.getSessionState() + ",online=" + item.getSessionMemberOnlineCount());
-				List<AirContact> members = item.SessionPresenceList();
-				tvCount.setText(members.size() + "/" + item.getMemberAll().size());
+				if (item.getSessionState() == AirSession.SESSION_STATE_DIALOG)
+				{
+					tvCount.setText((item.SessionPresenceList().size() - 1) + "/" + item.getMemberAll().size());
+				}
+				else
+				{
+					tvCount.setText(item.getMemberAll().size() + "");
+				}
 				if (item.getMessageUnreadCount() > 0)
 				{
 					tvUnread.setVisibility(View.VISIBLE);
