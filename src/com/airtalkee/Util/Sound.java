@@ -20,7 +20,7 @@ import com.airtalkee.sdk.util.Log;
 public class Sound
 {
 
-	public static final int PLAYER_IDS_MAX = 20;
+	public static final int PLAYER_IDS_MAX = 21;
 
 	private static final int[] PLAYER_SOUNDS = { R.raw.sound_media_me_on, // PLAYER_MEDIA_ME_ON
 		R.raw.sound_media_me_off, // PLAYER_MEDIA_ME_OFF
@@ -126,7 +126,6 @@ public class Sound
 			Log.i(Sound.class, "startSound");
 			switch (playerId)
 			{
-				// ����ϵͳ��ʾ��
 				case PLAYER_NEWINFO:
 				case PLAYER_INCOMING_RING:
 				{

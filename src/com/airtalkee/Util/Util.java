@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.List;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.KeyguardManager;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -282,24 +284,14 @@ public class Util
 	{
 		long gap = 0;
 		/*
-		try
-		{
-			SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-			Date date = dFormat.parse(time);
-			long c = date.getTime() / 1000;
-			long now = AirtalkeeAccount.getInstance().AirBaseSeconds();
-			Log.i(Util.class, "getTimeGap = " + now);
-			if (now > 0)
-				gap = c - now;
-			else
-				gap = 0;
-		}
-		catch (ParseException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		*/
+		 * try { SimpleDateFormat dFormat = new
+		 * SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); Date date =
+		 * dFormat.parse(time); long c = date.getTime() / 1000; long now =
+		 * AirtalkeeAccount.getInstance().AirBaseSeconds(); Log.i(Util.class,
+		 * "getTimeGap = " + now); if (now > 0) gap = c - now; else gap = 0; }
+		 * catch (ParseException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 */
 		return gap;
 	}
 
@@ -521,7 +513,7 @@ public class Util
 			// Log.e(Util.class, "hideSoftInput-->error");
 		}
 	}
-	
+
 	public static boolean isSoftKeybordOpen(Context context)
 	{
 		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -559,8 +551,7 @@ public class Util
 					msg = new String(content, "UTF-8");
 				}
 				catch (UnsupportedEncodingException e)
-				{
-				}
+				{}
 			}
 			// create spannable string
 			SpannableString spannable = new SpannableString(msg);
@@ -726,5 +717,26 @@ public class Util
 		String ret = "http://113.11.197.108:1880/airtalkeemobile/mobile/fdownload.action?ipocid=" + id + "&password=" + pwd + "&resid=" + photoid + "&restype=1&dimension=480-480";
 
 		return ret;
+	}
+
+	public static boolean isBackground(Context context)
+	{
+		ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+		List<RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+		for (RunningAppProcessInfo appProcess : appProcesses)
+		{
+			if (appProcess.processName.equals(context.getPackageName()))
+			{
+				if (appProcess.importance == RunningAppProcessInfo.IMPORTANCE_BACKGROUND)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		}
+		return false;
 	}
 }

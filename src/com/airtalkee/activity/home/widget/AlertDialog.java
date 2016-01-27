@@ -198,7 +198,14 @@ public class AlertDialog extends Dialog implements
 		if (null != cbRemember)
 		{
 			if (!cbVisible)
+			{
 				cbRemember.setVisibility(View.GONE);
+			}
+			else
+			{
+				tvContent.setVisibility(View.GONE);
+				cbRemember.setText(content);
+			}
 		}
 		if (!showCancle)
 		{

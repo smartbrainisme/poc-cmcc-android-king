@@ -40,7 +40,6 @@
             android:button="@drawable/selector_btn_check"
             android:checked="true"
             android:paddingLeft="10dp"
-            android:text="@string/talk_auto_login"
             android:textColor="@color/black" />
     </LinearLayout>
 

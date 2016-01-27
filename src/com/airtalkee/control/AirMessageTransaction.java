@@ -35,6 +35,7 @@ import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirFunctionSetting;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.services.AirServices;
 
@@ -93,6 +94,7 @@ public class AirMessageTransaction implements OnMessageListener,
 	public void onMessageIncomingRecv(boolean isCustom, AirMessage message)
 	{
 		// TODO Auto-generated method stub
+		Log.i(AirMessageTransaction.class, "AirMessageTransaction onMessageIncomingRecv");
 		Context ct = AirServices.getInstance();
 		String from = "";
 		String typeText = "";

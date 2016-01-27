@@ -1,6 +1,5 @@
 package com.airtalkee.activity.home;
 
-import java.util.Date;
 import java.util.Locale;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,11 +7,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Const;
@@ -26,22 +27,20 @@ import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.airtalkee.config.Config;
 import com.airtalkee.sdk.AirtalkeeAccount;
-import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeMediaVisualizer;
 import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.OnMediaAudioVisualizerListener;
 import com.airtalkee.sdk.controller.SessionController;
-import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirFunctionSetting;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Utils;
-import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.AudioVisualizerView;
 import com.airtalkee.widget.VideoCamera;
 
-public class PTTFragment extends BaseFragment implements OnClickListener, DialogListener, OnMediaAudioVisualizerListener
+public class PTTFragment extends BaseFragment implements OnClickListener,
+		DialogListener, OnMediaAudioVisualizerListener
 {
 
 	private static final int DIALOG_CALL_CENTER_CONFIRM = 100;
@@ -60,6 +59,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	private AlertDialog alertDialog;
 	public static final int mVisualizerSpectrumNum = 18;
 	private AudioVisualizerView mVisualizerView;
+	private RelativeLayout ivSpetrum;
 
 	AlertDialog dialog;
 
@@ -69,7 +69,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	{
 		return mInstance;
 	}
-	
+
 	public View getVideoPannel()
 	{
 		return videoPannel;
@@ -122,8 +122,14 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 		recPlaybackNew = (ImageView) findViewById(R.id.talk_playback_user_unread);
 		mVisualizerView = (AudioVisualizerView) findViewById(R.id.talk_audio_visualizer_new);
 		mVisualizerView.setSpectrumNum(mVisualizerSpectrumNum);
+		ivSpetrum = (RelativeLayout) findViewById(R.id.iv_spetrum_lay);
 		refreshPlayback();
 		return v;
+	}
+	
+	public RelativeLayout getIvSpetrum()
+	{
+		return ivSpetrum;
 	}
 
 	@Override
@@ -234,7 +240,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 						if (currentMessage.getState() == AirMessage.STATE_NEW)
 						{
 							session.setMessageUnreadCount(session.getMessageUnreadCount() - 1);
-//							checkNewIM(false);
+							// checkNewIM(false);
 						}
 					}
 				}
@@ -304,7 +310,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 			recPlaybackNew.setVisibility(View.GONE);
 		}
 	}
-	
+
 	public void refreshPlayback(AirSession session)
 	{
 		if (session != null && session.getMessagePlayback() != null)
@@ -415,34 +421,6 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 		}
 	}
 
-	public void pictureQualitySelect(final int id)
-	{
-		/*
-		 * new android.app.AlertDialog.Builder(this).setTitle(R.string.
-		 * talk_quality_select).setItems(R.array.picture_quality, new
-		 * DialogInterface.OnClickListener() {
-		 * 
-		 * @Override public void onClick(DialogInterface dialog, int which) {
-		 * isHighQuality = which == 0; switch (id) { case R.id.report_image:
-		 * case R.id.report_btn_take: { picPathTemp =
-		 * Util.getImageTempFileName(); picUriTemp = Uri.fromFile(new
-		 * File(picPathTemp)); Intent i = new
-		 * Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-		 * i.putExtra(MediaStore.EXTRA_OUTPUT, picUriTemp);
-		 * startActivityForResult(i,
-		 * Const.image_select.REQUEST_CODE_CREATE_IMAGE); break; } case
-		 * R.id.report_btn_native: { String status =
-		 * Environment.getExternalStorageState(); if
-		 * (!status.equals(Environment.MEDIA_MOUNTED)) {
-		 * Util.Toast(MenuReportAsPicActivity.this,
-		 * getString(R.string.talk_insert_sd_card)); return; } Intent
-		 * localIntent = new Intent("android.intent.action.GET_CONTENT", null);
-		 * localIntent.setType("image/*"); startActivityForResult(localIntent,
-		 * Const.image_select.REQUEST_CODE_BROWSE_IMAGE); break; } } }
-		 * }).show();
-		 */
-	}
-
 	@Override
 	public void onListItemLongClick(int id, int selectedItem)
 	{
@@ -456,40 +434,4 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 		mVisualizerView.updateVisualizer(values);
 	}
 
-	private void checkNewIM(boolean toClean)
-	{
-		int count = 0;
-		if (session != null)
-		{
-			int type = session.getType();
-			if (type == AirSession.TYPE_CHANNEL)
-			{
-				AirChannel channel = AirtalkeeChannel.getInstance().ChannelGetByCode(session.getSessionCode());
-				if (channel != null)
-				{
-					if (toClean)
-					{
-						channel.msgUnReadCountClean();
-					}
-					count = channel.getMsgUnReadCount();
-				}
-			}
-			else if (type == AirSession.TYPE_DIALOG)
-			{
-				if (toClean)
-				{
-					session.setMessageUnreadCount(0);
-				}
-				count = session.getMessageUnreadCount();
-			}
-		}
-		if (count > 0)
-		{
-//			ivIMNew.setVisibility(View.VISIBLE);
-		}
-		else
-		{
-//			ivIMNew.setVisibility(View.GONE);
-		}
-	}
 }

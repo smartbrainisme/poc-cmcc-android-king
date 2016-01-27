@@ -442,4 +442,6 @@
     <string name="talk_album">相册</string>
     <string name="talk_channel_unlock_tip">取消锁定频道</string>
     <string name="talk_channel_lock_tip">锁定频道\r\n默认只收听当前频道的对讲信息</string>
+    <string name="talk_in_temp_session_tip">进入该会话，当前会话将会挂断</string>
+    <string name="talk_no_tip">不再提示</string>
 </resources>

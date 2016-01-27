@@ -44,18 +44,6 @@ public class AdapterSession extends BaseAdapter
 		HodlerView hodler = null;
 		if (!isEditing) // 非编辑状态
 		{
-			/*
-			 * if (convertView == null) { if (position == 0) { convertView =
-			 * LayoutInflater
-			 * .from(mContext).inflate(R.layout.session_header_item, null); }
-			 * else { convertView =
-			 * LayoutInflater.from(mContext).inflate(R.layout.session_listitem,
-			 * null); } hodler = new HodlerView(convertView);
-			 * convertView.setTag(hodler); } else { if(position==0) {
-			 * convertView =
-			 * LayoutInflater.from(mContext).inflate(R.layout.session_header_item
-			 * , null); } hodler = (HodlerView) convertView.getTag(); }
-			 */
 			if (position == 0)
 			{
 				convertView = LayoutInflater.from(mContext).inflate(R.layout.session_header_item, null);
@@ -70,7 +58,6 @@ public class AdapterSession extends BaseAdapter
 		}
 		else
 		{
-
 			if (position == 0)
 			{
 				convertView = LayoutInflater.from(mContext).inflate(R.layout.session_listitem, null);

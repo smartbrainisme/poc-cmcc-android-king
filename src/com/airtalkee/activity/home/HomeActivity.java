@@ -17,12 +17,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import com.airtalkee.R;
@@ -77,9 +80,9 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
 		session = AirSessionControl.getInstance().getCurrentSession();
-		
+
 		mInstance = this;
-		
+
 		setContentView(R.layout.activity_home);
 		setRequestedOrientation(Config.screenOrientation);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -110,7 +113,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		{
 			checkNewIM(false);
 		}
-		if(session.getType() == AirSession.TYPE_CHANNEL)
+		if (session.getType() == AirSession.TYPE_CHANNEL)
 		{
 			AirChannel channel = session.getChannel();
 			channel.setRoleAppling(true);
@@ -123,10 +126,11 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		super.finish();
 		if (!isChannel)
 		{
+			/*
 			if (session != null && session.getSessionState() != AirSession.SESSION_STATE_IDLE && session.getType() == AirSession.TYPE_DIALOG)
 			{
 				AirSessionControl.getInstance().SessionEndCall(session);
-			}
+			}*/
 			AirtalkeeMessage.getInstance().MessageListMoreClean(session);
 		}
 		if (channelView != null)
@@ -462,17 +466,30 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		return super.dispatchKeyEvent(event);
 	}
 
-	// 点击输入框外的地方隐藏输入法 目前不需要
-	/*
-	 * @Override public boolean dispatchTouchEvent(MotionEvent ev) { if
-	 * (ev.getAction() == MotionEvent.ACTION_DOWN) { View v =
-	 * mediaStatusBar.getBottomBarParent(); if (isShouldHideInput(v, ev)) {
-	 * InputMethodManager imm = (InputMethodManager)
-	 * getSystemService(INPUT_METHOD_SERVICE); if (imm != null &&
-	 * !imm.isActive()) { imm.hideSoftInputFromWindow(v.getWindowToken(), 0); }
-	 * } return super.dispatchTouchEvent(ev); }
-	 * 
-	 * if (getWindow().superDispatchTouchEvent(ev)) { return true; } return
-	 * onTouchEvent(ev); }
-	 */
+//	@Override
+//	public boolean dispatchTouchEvent(MotionEvent ev)
+//	{
+//		if (ev.getAction() == MotionEvent.ACTION_DOWN)
+//		{
+//			if(Config.model.contains("MT7"))
+//			{
+//				View v = mediaStatusBar.getBottomBarParent();
+//				if (isShouldHideInput(v, ev))
+//				{
+////					RelativeLayout ivSpetrum = PTTFragment.getInstance().getIvSpetrum();
+////					LayoutParams p = (LayoutParams) ivSpetrum.getLayoutParams();
+////					p.setMargins(0, 14, 0, 0);
+////					ivSpetrum.setLayoutParams(p);
+//				}
+//			}
+//			return super.dispatchTouchEvent(ev);
+//		}
+//
+//		if (getWindow().superDispatchTouchEvent(ev))
+//		{
+//			return true;
+//		}
+//		return onTouchEvent(ev);
+//	}
+
 }

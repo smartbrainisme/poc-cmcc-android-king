@@ -42,19 +42,16 @@ public class AppExcepiton implements UncaughtExceptionHandler
 			if (defaultExceptionHandler != null)
 			{
 				String state = Environment.getExternalStorageState();
-				// �ж�SdCard�Ƿ���ڲ����ǿ��õ�
 				if (Environment.MEDIA_MOUNTED.equals(state))
 				{
 					path = Environment.getExternalStorageDirectory().getPath();
 				}
-				// ����һ��logcatĿ¼
 				path = path + "/AirTalkee/log";
 				File file = new File(path);
 				if (!file.exists())
 				{
 					file.mkdir();
 				}
-				// ɾ������ļ�
 				deleteOldFile(path);
 				String time = getCurrentTime();
 				String fileName = time.substring(0, 9);
@@ -73,7 +70,6 @@ public class AppExcepiton implements UncaughtExceptionHandler
 				fos.close();
 
 			}
-			// ���쳣�׳�����Ӧ�ûᵯ���쳣�Ի���.������ע�͵�
 			Log.e("m", "exception" + ex.toString());
 		}
 		catch (Exception e)
@@ -126,7 +122,6 @@ public class AppExcepiton implements UncaughtExceptionHandler
 				File file = new File(path + "/" + filename);
 				Long ago = file.lastModified();
 				Long now = System.currentTimeMillis();
-				// ������һ���޸�ʱ�䳬��һ�꣺3153600��
 				if ((now - ago) > 31536000)
 				{
 					file.delete();

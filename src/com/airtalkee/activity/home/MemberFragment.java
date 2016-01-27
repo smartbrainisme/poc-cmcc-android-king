@@ -68,6 +68,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	private CallAlertDialog alertDialog;
 	private LinearLayout memAllContainer, addMemberPanel, searchPannelChannel, searchPannelAll;
 	private EditText searchEditChannel, searchEditAll;
+	private ImageView ivSearch;
 	private Button btnSearch;
 	private int currentSelectPage = R.id.tab_member_session;
 	private MemberAllView memberAllView;
@@ -116,7 +117,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		searchEditAll = (EditText) memberAllView.findViewById(R.id.et_search);
 		
 		searchEditChannel.addTextChangedListener(this);
-
+		ivSearch = (ImageView) findViewById(R.id.iv_search);
 		ids.put(R.id.tab_member_session, tabMemberSession);
 		ids.put(R.id.tab_member_all, tabMemberAll);
 
@@ -322,21 +323,26 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 			}
 			case R.id.btn_search:
 			{
-				String key = searchEditChannel.getText().toString();
-				memberSearchResult.clear();
-				setSession(getSession());
-				for (int i = 0; i < adapterMember.getCount(); i++)
-				{
-					AirContact contact = (AirContact) adapterMember.getItem(i);
-					if (contact.getDisplayName().equalsIgnoreCase(key) || contact.getIpocId().equals(key) || contact.getDisplayName().contains(key) || contact.getIpocId().contains(key))
-					{
-						memberSearchResult.add(contact);
-					}
-				}
-				refreshMembers(getSession(), memberSearchResult);
+				searchByKey();
 				break;
 			}
 		}
+	}
+
+	private void searchByKey()
+	{
+		String key = searchEditChannel.getText().toString();
+		memberSearchResult.clear();
+		setSession(getSession());
+		for (int i = 0; i < adapterMember.getCount(); i++)
+		{
+			AirContact contact = (AirContact) adapterMember.getItem(i);
+			if (contact.getDisplayName().equalsIgnoreCase(key) || contact.getIpocId().equals(key) || contact.getDisplayName().contains(key) || contact.getIpocId().contains(key))
+			{
+				memberSearchResult.add(contact);
+			}
+		}
+		refreshMembers(getSession(), memberSearchResult);
 	}
 
 	public void setSession(AirSession s)
@@ -622,6 +628,22 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		if (TextUtils.isEmpty(searchEditChannel.getText()))
 		{
 			setSession(getSession());
+			ivSearch.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_member_search));
+			ivSearch.setOnClickListener(null);
+		}
+		else
+		{
+			searchByKey();
+			ivSearch.setImageDrawable(getActivity().getResources().getDrawable(R.drawable.ic_close_cicle));
+			ivSearch.setOnClickListener(new OnClickListener()
+			{
+				@Override
+				public void onClick(View v)
+				{
+					// TODO Auto-generated method stub
+					searchEditChannel.setText("");
+				}
+			});
 		}
 	}
 

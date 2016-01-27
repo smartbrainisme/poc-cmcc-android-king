@@ -113,9 +113,9 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		etMsg.addTextChangedListener(this);
 		
 		lvMessage = (PullToRefreshListView) findViewById(R.id.lv_message);
+		lvMessage.setAdapter(adapterMessage = new AdapterSessionMessage(getActivity(), this, this));
 		lvMessage.setOnRefreshListener(this);
 		lvMessage.setOnItemClickListener(this);
-		lvMessage.setAdapter(adapterMessage = new AdapterSessionMessage(getActivity(), this, this));
 		
 
 		animRefresh = AnimationUtils.loadAnimation(getActivity(), R.anim.refresh);
@@ -608,18 +608,18 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	public boolean onMessageIncomingRecv(boolean isCustom, AirMessage message)
 	{
 		boolean isHandled = false;
-		if (!isCustom && message != null && session != null && TextUtils.equals(session.getSessionCode(), message.getSessionCode()))
+		boolean toClean = false;
+		if (HomeActivity.getInstance().pageIndex == HomeActivity.getInstance().PAGE_IM)
 		{
-			boolean toClean = false;
-			if (HomeActivity.getInstance().pageIndex == HomeActivity.getInstance().PAGE_IM)
+			toClean = true;
+			if (!isCustom && message != null && session != null && TextUtils.equals(session.getSessionCode(), message.getSessionCode()))
 			{
-				toClean = true;
+				adapterMessage.notifyDataSetChanged();
+				// refreshMessageNewCount(toClean);
+				HomeActivity.getInstance().checkNewIM(toClean);
+				SessionAndChannelView.getInstance().refreshChannelAndDialog();
+				isHandled = true;
 			}
-			adapterMessage.notifyDataSetChanged();
-			// refreshMessageNewCount(toClean);
-			HomeActivity.getInstance().checkNewIM(toClean);
-			SessionAndChannelView.getInstance().refreshChannelAndDialog();
-			isHandled = true;
 		}
 		return isHandled;
 	}

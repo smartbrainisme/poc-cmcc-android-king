@@ -1,5 +1,6 @@
 package com.airtalkee.activity.home.widget;
 
+import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.WindowManager;
 import com.airtalkee.R;
 import com.airtalkee.Util.Sound;
+import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.control.AirSessionControl;
@@ -49,19 +51,17 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 	public void onClickOk(int id,Object obj)
 	{
 		Log.i(InCommingAlertDialog.class, "InCommingAlertDialog click ok!");
-		if (HomeActivity.getInstance() == null)
-		{
-			Intent home = new Intent(AirServices.getInstance(), HomeActivity.class);
-			AirServices.getInstance().startActivity(home);
-		}
+		
 		Sound.stopSound(Sound.PLAYER_INCOMING_RING);
 		AirtalkeeSessionManager.getInstance().SessionIncomingAccept(temAirSession);
 		AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, getContext().getString(R.string.talk_call_state_incoming_call), false);
-//		if (TempSessionActivity.getInstance() != null && TempSessionActivity.getInstance().getSession() != null && !TextUtils.equals(TempSessionActivity.getInstance().getSession().getSessionCode(), temAirSession.getSessionCode()))
-//		{
-//			TempSessionActivity.getInstance().setSession(temAirSession);
-//		}
 		switchToSessionDialog(temAirSession);
+		if (Util.isBackground(AirServices.getInstance()))
+		{
+			Intent home = new Intent(AirServices.getInstance(), HomeActivity.class);
+			home.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			AirServices.getInstance().startActivity(home);
+		}
 		this.cancel();
 	}
 

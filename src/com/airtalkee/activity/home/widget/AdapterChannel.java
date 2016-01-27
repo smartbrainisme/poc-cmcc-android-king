@@ -68,11 +68,11 @@ public class AdapterChannel extends BaseAdapter
 
 		public void fill(final AirChannel item)
 		{
-			AirSession sessionCurrent = AirSessionControl.getInstance().getCurrentChannelSession();
+			AirSession currentChannel = AirSessionControl.getInstance().getCurrentChannelSession();
 			if (item != null)
 			{
 				tvName.setText(item.getDisplayName());
-				if (sessionCurrent != null && sessionCurrent.getSessionCode().equals(item.getId()))
+				if (currentChannel != null && currentChannel.getSessionCode().equals(item.getId()))
 				{
 					baseView.setBackgroundResource(R.drawable.selector_listitem_channel_1);
 					ivListener.setBackgroundResource(R.drawable.ic_listen_high);
@@ -85,7 +85,7 @@ public class AdapterChannel extends BaseAdapter
 							notifyDataSetChanged();
 						}
 					});
-					tvUnread.setText(sessionCurrent.getMessageUnreadCount() + "");
+					tvUnread.setText(currentChannel.getMessageUnreadCount() + "");
 					if (item.getMsgUnReadCount() > 0)
 					{
 						tvUnread.setVisibility(View.VISIBLE);
@@ -131,6 +131,21 @@ public class AdapterChannel extends BaseAdapter
 				else
 				{
 					ivVoiceLocked.setVisibility(View.GONE);
+				}
+				
+				AirSession currentSession = AirSessionControl.getInstance().getCurrentSession();
+				if (currentSession != null)
+				{
+					if (currentSession.getSessionCode().equals(item.getSession().getSessionCode()))
+					{
+						baseView.setBackgroundResource(R.drawable.selector_listitem_channel_1);
+						ivListener.setBackgroundResource(R.drawable.ic_listen_high);
+					}
+					else
+					{
+						baseView.setBackgroundResource(R.drawable.selector_listitem_channel);
+						ivListener.setBackgroundResource(R.drawable.ic_listen);
+					}
 				}
 			}
 		}

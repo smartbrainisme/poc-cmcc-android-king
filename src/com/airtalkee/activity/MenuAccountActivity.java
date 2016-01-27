@@ -23,8 +23,7 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactGroup;
 import com.airtalkee.services.AirServices;
 
-public class MenuAccountActivity extends ActivityBase implements
-		OnClickListener, OnUserInfoListener, DialogListener
+public class MenuAccountActivity extends ActivityBase implements OnClickListener, OnUserInfoListener, DialogListener
 {
 	public TextView tvUserName;
 	public TextView tvUserIpocid;
@@ -102,7 +101,7 @@ public class MenuAccountActivity extends ActivityBase implements
 			}
 			case R.id.talk_lv_tool_exit:
 			{
-				dialog = new AlertDialog(this, getString(R.string.talk_exit_tip), null, getString(R.string.talk_exit), true, this, 0);
+				dialog = new AlertDialog(this, getString(R.string.talk_exit_tip), getString(R.string.talk_auto_login), getString(R.string.talk_exit), true, this, 0);
 				dialog.show();
 				break;
 			}
