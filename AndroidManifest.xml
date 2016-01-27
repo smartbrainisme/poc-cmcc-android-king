@@ -81,7 +81,7 @@
 			</intent-filter>
 		</receiver>
 		
-		<meta-data android:value="5332a62856240b280a022cdc" android:name="UMENG_APPKEY" />
+		<meta-data android:value="53da15fd56240b75c500041d" android:name="UMENG_APPKEY" />
 		<meta-data android:value="Umeng" android:name="UMENG_CHANNEL"/>
 	</application>
 	

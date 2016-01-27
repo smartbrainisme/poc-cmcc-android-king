@@ -640,7 +640,6 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 				@Override
 				public void onClick(View v)
 				{
-					// TODO Auto-generated method stub
 					searchEditChannel.setText("");
 				}
 			});

@@ -19,8 +19,7 @@ import com.airtalkee.sdk.controller.SessionController;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 
-public class SessionAddActivity extends Activity implements OnClickListener,
-		MemberCheckListener
+public class SessionAddActivity extends Activity implements OnClickListener, MemberCheckListener
 {
 
 	private LinearLayout containner;
@@ -40,6 +39,7 @@ public class SessionAddActivity extends Activity implements OnClickListener,
 		findViewById(R.id.btn_close).setOnClickListener(this);
 		containner = (LinearLayout) findViewById(R.id.containner);
 		containner.addView(memAllView);
+		memAllView.getSearchPannel().setVisibility(View.VISIBLE);
 		ivAddMember = (ImageView) findViewById(R.id.iv_add_member);
 		ivAddMember.setOnClickListener(this);
 		bundle = getIntent().getExtras();

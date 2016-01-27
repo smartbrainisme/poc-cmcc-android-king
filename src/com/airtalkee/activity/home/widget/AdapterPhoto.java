@@ -240,6 +240,8 @@ public class AdapterPhoto extends BaseAdapter
 				lastImageHolder = null;
 				lastImagePosition = -1;
 			}
+			if (textcallback != null)
+				textcallback.onTextListen(selectTotal);
 		}
 	}
 

@@ -1,6 +1,5 @@
 package com.airtalkee.activity.home;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -9,7 +8,7 @@ import java.util.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -25,7 +24,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.airtalkee.R;
-import com.airtalkee.R.string;
 import com.airtalkee.Util.AlbumHelper;
 import com.airtalkee.Util.Bimp;
 import com.airtalkee.Util.Const;
@@ -92,7 +90,7 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 		}
 		else if (type == TYPE_REPORT)
 		{
-			btSend.setText(getString(R.string.talk_ok));
+			btSend.setText(getString(R.string.talk_photo_unselected_tip));
 		}
 	}
 
@@ -117,6 +115,7 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 		gridView.setAdapter(adapter);
 		adapter.setTextCallback(new TextCallback()
 		{
+			@SuppressWarnings("deprecation")
 			@Override
 			public void onTextListen(int count)
 			{
@@ -124,12 +123,31 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 				{
 					case TYPE_IM:
 					{
-						btSend.setText(getString(R.string.talk_photo_selected_tip) + "(" + count + ")");
+						if(count > 0)
+						{
+							btSend.setText(getString(R.string.talk_photo_selected_tip) + "(" + count + ")");
+							btSend.setBackground(getResources().getDrawable(R.drawable.selector_button_album));
+						}
+						else
+						{
+							btSend.setText("未选择");
+							btSend.setBackground(getResources().getDrawable(R.drawable.bg_album_gray));
+						}
+						
 						break;
 					}
 					case TYPE_REPORT:
 					{
-						btSend.setText("确认");
+						if (count > 0)
+						{
+							btSend.setText("确认");
+							btSend.setBackground(getResources().getDrawable(R.drawable.selector_button_album));
+						}
+						else
+						{
+							btSend.setText("未选择");
+							btSend.setBackground(getResources().getDrawable(R.drawable.bg_album_gray));
+						}
 						break;
 					}
 				}
@@ -192,7 +210,7 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 						}
 						else
 						{
-							com.airtalkee.Util.Toast.makeText1(this, "请至少选择一张图片", Toast.LENGTH_LONG);
+							com.airtalkee.Util.Toast.makeText1(this, "请至少选择一张图片", Toast.LENGTH_LONG).show();
 							return;
 						}
 						break;
@@ -208,7 +226,7 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 						}
 						else
 						{
-							com.airtalkee.Util.Toast.makeText1(this, "请至少选择一张图片", Toast.LENGTH_LONG);
+							com.airtalkee.Util.Toast.makeText1(this, "请至少选择一张图片", Toast.LENGTH_LONG).show();
 							return;
 						}
 						break;

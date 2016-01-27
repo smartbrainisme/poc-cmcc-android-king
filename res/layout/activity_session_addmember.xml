@@ -31,10 +31,11 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:text="添加成员"
+                android:textSize="22sp"
                 android:textColor="#ffffff" />
         </RelativeLayout>
     </LinearLayout>
-
+    
     <LinearLayout
         android:id="@+id/containner"
         android:layout_width="fill_parent"

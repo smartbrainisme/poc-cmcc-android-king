@@ -31,6 +31,7 @@
                 android:layout_centerHorizontal="true"
                 android:gravity="center"
                 android:text="新建会话"
+                android:textSize="22sp"
                 android:textColor="#ffffff" />
         </RelativeLayout>
     </LinearLayout>

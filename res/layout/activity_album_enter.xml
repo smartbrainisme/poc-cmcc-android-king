@@ -40,10 +40,8 @@
                 android:id="@+id/bt_photo_confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="true"
                 android:layout_marginTop="2dp"
-                
-                android:background="?theme_button_album"
+                android:background="@drawable/bg_album_gray"
                 android:textColor="@color/white" />
         </LinearLayout>
     </LinearLayout>

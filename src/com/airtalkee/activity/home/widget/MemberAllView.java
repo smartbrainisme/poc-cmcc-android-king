@@ -1,7 +1,6 @@
 package com.airtalkee.activity.home.widget;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -9,8 +8,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.TreeSet;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -18,12 +15,12 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
@@ -47,13 +44,15 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 		public void onEditTextViewFocusListener();
 	}
 
-	public List<AirContact> memberAll = new ArrayList<AirContact>();
+	public List<AirContact> memberAll;
 	List<AirContact> memberSearchResult = new ArrayList<AirContact>();
 	private MListView lvMemberAll;
 	public AdapterMemberAll adapterMember;
 	CallAlertDialog alertDialog;
+	private LinearLayout searchPannel;
 	private Button btnSearch;
 	private EditText etSearch;
+	private ImageView ivSearch;
 	private MemberCheckListener listener;
 
 	public MemberAllView(Context context, MemberCheckListener l)
@@ -67,16 +66,24 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 		etSearch = (EditText) findViewById(R.id.et_search);
 		btnSearch.setOnClickListener(this);
 		etSearch.addTextChangedListener(this);
-		getAllAirContacts();
+		memberAll = getAllAirContacts();
 		lvMemberAll = (MListView) findViewById(R.id.talk_lv_member_all);
 		adapterMember = new AdapterMemberAll(context, this);
 		lvMemberAll.setOnItemClickListener(this);
 		adapterMember.notifyMember(memberAll);
 		lvMemberAll.setAdapter(adapterMember);
+		searchPannel = (LinearLayout) findViewById(R.id.serach_pannel);
+		ivSearch = (ImageView) findViewById(R.id.iv_search);
+	}
+	
+	public LinearLayout getSearchPannel()
+	{
+		return searchPannel;
 	}
 
-	public void getAllAirContacts()
+	public List<AirContact> getAllAirContacts()
 	{
+		List<AirContact> contacts = new ArrayList<AirContact>();
 		Map<String, AirContact> allMembers = new HashMap<String, AirContact>();
 		List<AirChannel> channels = AirtalkeeChannel.getInstance().getChannels();
 		if (channels != null && channels.size() > 0)
@@ -94,9 +101,9 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 		while (iter.hasNext())
 		{
 			Map.Entry<String, AirContact> entry = iter.next();
-			memberAll.add(entry.getValue());
+			contacts.add(entry.getValue());
 		}
-		Collections.sort(memberAll, new Comparator<AirContact>()
+		Collections.sort(contacts, new Comparator<AirContact>()
 		{
 			@Override
 			public int compare(AirContact member1, AirContact member2)
@@ -109,6 +116,7 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 				return result;
 			}
 		});
+		return contacts;
 	}
 
 	@Override
@@ -127,26 +135,36 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 			case R.id.btn_search:
 			{
 				Util.hideSoftInput(getContext());
-				String key = etSearch.getText().toString();
-				memberSearchResult.clear();
-				if (TextUtils.isEmpty(key))
-				{
-					adapterMember.notifyMember(memberAll);
-				}
-				else
-				{
-					for (int i = 0; i < memberAll.size(); i++)
-					{
-						AirContact contact = memberAll.get(i);
-						if (contact.getDisplayName().equalsIgnoreCase(key) || contact.getIpocId().equals(key) || contact.getDisplayName().contains(key) || contact.getIpocId().contains(key))
-						{
-							memberSearchResult.add(contact);
-						}
-					}
-					adapterMember.notifyMember(memberSearchResult);
-				}
+				searchByKey();
 				break;
 			}
+			case R.id.iv_search:
+			{
+				etSearch.setText("");
+				break;
+			}
+		}
+	}
+
+	private void searchByKey()
+	{
+		String key = etSearch.getText().toString();
+		memberSearchResult.clear();
+		if (TextUtils.isEmpty(key))
+		{
+			adapterMember.notifyMember(memberAll);
+		}
+		else
+		{
+			for (int i = 0; i < memberAll.size(); i++)
+			{
+				AirContact contact = memberAll.get(i);
+				if (contact.getDisplayName().equalsIgnoreCase(key) || contact.getIpocId().equals(key) || contact.getDisplayName().contains(key) || contact.getIpocId().contains(key))
+				{
+					memberSearchResult.add(contact);
+				}
+			}
+			adapterMember.notifyMember(memberSearchResult);
 		}
 	}
 
@@ -187,6 +205,14 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 		if (TextUtils.isEmpty(etSearch.getText()))
 		{
 			adapterMember.notifyMember(memberAll);
+			ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ic_member_search));
+			ivSearch.setOnClickListener(null);
+		}
+		else
+		{
+			searchByKey();
+			ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ic_close_cicle));
+			ivSearch.setOnClickListener(this);
 		}
 	}
 

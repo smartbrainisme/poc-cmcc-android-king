@@ -3,12 +3,16 @@ package com.airtalkee.activity.home;
 import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
@@ -21,9 +25,8 @@ import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.controller.SessionController;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
-import com.airtalkee.services.AirServices;
 
-public class SessionNewActivity extends Activity implements OnClickListener, MemberCheckListener
+public class SessionNewActivity extends Activity implements OnClickListener, MemberCheckListener, TextWatcher
 {
 
 	private LinearLayout containner;
@@ -32,6 +35,12 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 	private List<AirContact> tempCallMembers = null;
 	private CallAlertDialog alertDialog;
 	private int DIALOG_CALL = 111;
+
+	// search
+//	private EditText etSearch;
+//	private ImageView ivSearch;
+//	private Button btnSearch;
+//	List<AirContact> memberSearchResult = new ArrayList<AirContact>();
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -44,32 +53,46 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 		findViewById(R.id.btn_close).setOnClickListener(this);
 		containner = (LinearLayout) findViewById(R.id.containner);
 		containner.addView(memAllView);
+		memAllView.getSearchPannel().setVisibility(View.VISIBLE);
 		findViewById(R.id.bar_left).setOnClickListener(this);
 		findViewById(R.id.bar_mid).setOnClickListener(this);
 		findViewById(R.id.bar_right).setOnClickListener(this);
+
+//		etSearch = (EditText) findViewById(R.id.et_search);
+//		etSearch.addTextChangedListener(this);
+//		ivSearch = (ImageView) findViewById(R.id.iv_search);
+//
+//		btnSearch = (Button) findViewById(R.id.btn_search);
+//		btnSearch.setOnClickListener(this);
+
 	}
 
 	@Override
 	public void onClick(View v)
 	{
-		// TODO Auto-generated method stub
-		if (v.getId() == R.id.btn_close)
+		switch (v.getId())
 		{
-			this.finish();
-		}
-		else if (v.getId() == R.id.bar_left)
-		{
-			callSelectMember(true);
-		}
-		else if (v.getId() == R.id.bar_mid)
-		{
-			AirtalkeeMessage.getInstance().MessageRecordPlayStop();
-			callSelectMember(false);
-			callSelectClean();
-		}
-		else if (v.getId() == R.id.bar_right)
-		{
-			callSelectClean();
+			case R.id.btn_close:
+				this.finish();
+				break;
+			case R.id.bar_left:
+				callSelectMember(true);
+				break;
+			case R.id.bar_mid:
+				AirtalkeeMessage.getInstance().MessageRecordPlayStop();
+				callSelectMember(false);
+				callSelectClean();
+				this.finish();
+				break;
+			case R.id.bar_right:
+				callSelectClean();
+				break;
+//			case R.id.iv_search:
+//				etSearch.setText("");
+//				break;
+//			case R.id.btn_search:
+//				searchByKey();
+//				break;
 		}
 	}
 
@@ -112,10 +135,12 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 						HomeActivity.getInstance().onViewChanged(s.getSessionCode());
 						HomeActivity.getInstance().panelCollapsed();
 					}
-//					Intent it = new Intent(this, SessionDialogActivity.class);
-//					it.putExtra("sessionCode", s.getSessionCode());
-//					it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
-//					startActivity(it);
+					// Intent it = new Intent(this,
+					// SessionDialogActivity.class);
+					// it.putExtra("sessionCode", s.getSessionCode());
+					// it.putExtra("type",
+					// AirServices.TEMP_SESSION_TYPE_MESSAGE);
+					// startActivity(it);
 				}
 
 			}
@@ -129,6 +154,22 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 			Util.Toast(this, getString(R.string.talk_tip_session_call));
 		}
 
+	}
+	
+	private void searchByKey()
+	{
+//		String key = etSearch.getText().toString();
+//		memberSearchResult.clear();
+//		setSession(getSession());
+//		for (int i = 0; i < adapterMember.getCount(); i++)
+//		{
+//			AirContact contact = (AirContact) adapterMember.getItem(i);
+//			if (contact.getDisplayName().equalsIgnoreCase(key) || contact.getIpocId().equals(key) || contact.getDisplayName().contains(key) || contact.getIpocId().contains(key))
+//			{
+//				memberSearchResult.add(contact);
+//			}
+//		}
+//		refreshMembers(getSession(), memberSearchResult);
 	}
 
 	@Override
@@ -145,5 +186,34 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 			View child = bottom.getChildAt(i);
 			child.setEnabled(isChecked);
 		}
+	}
+
+	@Override
+	public void beforeTextChanged(CharSequence s, int start, int count, int after)
+	{
+
+	}
+
+	@Override
+	public void onTextChanged(CharSequence s, int start, int before, int count)
+	{
+//		btnSearch.setEnabled(!TextUtils.isEmpty(etSearch.getText()));
+//		if (TextUtils.isEmpty(etSearch.getText()))
+//		{
+//			ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ic_member_search));
+//			ivSearch.setOnClickListener(null);
+//		}
+//		else
+//		{
+//			searchByKey();
+//			ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ic_close_cicle));
+//			ivSearch.setOnClickListener(this);
+//		}
+	}
+
+	@Override
+	public void afterTextChanged(Editable s)
+	{
+
 	}
 }
