@@ -18,8 +18,9 @@ import com.airtalkee.sdk.entity.AirSession;
 
 public abstract class BaseFragment extends Fragment implements OnSharedPreferenceChangeListener
 {
-	
-	public static final String SESSION_EVENT_KEY ="session_event_key";
+
+	public static final String SESSION_EVENT_KEY = "session_event_key";
+
 	public abstract int getLayout();
 
 	public abstract void dispatchBarClickEvent(int page, int id);
@@ -27,25 +28,22 @@ public abstract class BaseFragment extends Fragment implements OnSharedPreferenc
 	protected View v;
 
 	protected static MediaStatusBar mediaStatusBar;
-	
-	protected    SharedPreferences sessionSp;
+
+	protected SharedPreferences sessionSp;
 
 	public static BaseFragment newInstantiate(Context context, String name, MediaStatusBar view)
 	{
 		mediaStatusBar = view;
-		
 		return (BaseFragment) Fragment.instantiate(context, name);
-		
 	}
 
 	protected AirSession getSession()
 	{
 		if (null == mediaStatusBar)
 			return null;
-		
 		return mediaStatusBar.getSession();
 	}
-	
+
 	protected StatusBarTitle getStatusBarTitle()
 	{
 		return mediaStatusBar.getStatusBarTitle();
@@ -56,10 +54,10 @@ public abstract class BaseFragment extends Fragment implements OnSharedPreferenc
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		
+
 		registerOnBarClickReceiver();
 	}
-	
+
 	@Override
 	public void onAttach(Activity activity)
 	{
@@ -68,49 +66,63 @@ public abstract class BaseFragment extends Fragment implements OnSharedPreferenc
 		this.sessionSp = activity.getSharedPreferences(SESSION_EVENT_KEY, 0);
 		this.sessionSp.registerOnSharedPreferenceChangeListener(this);
 	}
-	
+
 	@Override
 	public void onDetach()
 	{
 		// TODO Auto-generated method stub
 		super.onDetach();
-//		this.sessionSp.unregisterOnSharedPreferenceChangeListener(this);
+		// this.sessionSp.unregisterOnSharedPreferenceChangeListener(this);
 	}
 	
+	@Override
+	public void onDestroy()
+	{
+		// TODO Auto-generated method stub
+		super.onDestroy();
+		unRegisterOnBarClickReceiver();
+	}
+
 	@Override
 	public void onResume()
 	{
 		// TODO Auto-generated method stub
 		super.onResume();
 	}
-	
+
 	public View findViewById(int id)
 	{
 		return v.findViewById(id);
 	}
-	
+
 	protected void registerOnBarClickReceiver()
 	{
 		final IntentFilter filter = new IntentFilter();
 		filter.addAction(StatusBarBottom.ACTION_BAR_ITEMCLICK);
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
-
-		getActivity().registerReceiver(new BroadcastReceiver()
-		{
-			@Override
-			public void onReceive(Context context, Intent intent)
-			{
-				// TODO Auto-generated method stub
-				if (intent.getAction().equals(StatusBarBottom.ACTION_BAR_ITEMCLICK))
-				{
-					int id = intent.getIntExtra(StatusBarBottom.EXTRA_ID, 0);
-					int page = intent.getIntExtra(StatusBarBottom.EXTRA_PAGE, 0);
-					dispatchBarClickEvent(page, id);
-				}
-			}
-		}, filter);
+		getActivity().registerReceiver(receiver, filter);
 	}
-	
-	public abstract void onListItemLongClick(int id, int selectedItem) ;
+
+	BroadcastReceiver receiver = new BroadcastReceiver()
+	{
+		@Override
+		public void onReceive(Context context, Intent intent)
+		{
+			// TODO Auto-generated method stub
+			if (intent.getAction().equals(StatusBarBottom.ACTION_BAR_ITEMCLICK))
+			{
+				int id = intent.getIntExtra(StatusBarBottom.EXTRA_ID, 0);
+				int page = intent.getIntExtra(StatusBarBottom.EXTRA_PAGE, 0);
+				dispatchBarClickEvent(page, id);
+			}
+		}
+	};
+
+	public void unRegisterOnBarClickReceiver()
+	{
+		getActivity().unregisterReceiver(receiver);
+	}
+
+	public abstract void onListItemLongClick(int id, int selectedItem);
 
 }

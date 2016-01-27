@@ -105,24 +105,5 @@ public class Setting
 		Config.engineMediaSettingHbSeconds = seconds;
 	}
 
-	public static boolean getPttEncrypt()
-	{
-		return AirServices.iOperator.getBoolean(SETTING_PTT_ENCRYPT, true);
-	}
-
-	public static void setPttEncrypt(boolean valid)
-	{
-		AirServices.iOperator.putBoolean(SETTING_PTT_ENCRYPT, valid);
-		AirEngine.serviceSecretSettingValidEncrypt(valid);
-	}
-	public static boolean getPttVox()
-	{
-		return AirServices.iOperator.getBoolean(SETTING_PTT_VOX, false);
-	}
-	
-	public static void setPttVox(boolean enable)
-	{
-		AirServices.iOperator.putBoolean(SETTING_PTT_VOX, enable);
-	}
 
 }

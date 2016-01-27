@@ -3,14 +3,11 @@ package com.airtalkee.activity.home.widget;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import com.airtalkee.R;
 import com.airtalkee.Util.Sound;
-import com.airtalkee.activity.TempSessionActivity;
 import com.airtalkee.activity.home.HomeActivity;
-import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.sdk.AirtalkeeMessage;
@@ -136,10 +133,12 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 		if (session != null)
 		{
 			AirtalkeeSessionManager.getInstance().getSessionByCode(session.getSessionCode());
-			if(HomeActivity.getInstance() != null)
+			final HomeActivity mInstance = HomeActivity.getInstance();
+			if(mInstance != null)
 			{
-				HomeActivity.getInstance().onViewChanged(session.getSessionCode());
-				HomeActivity.getInstance().panelCollapsed();
+				mInstance.onViewChanged(session.getSessionCode());
+				mInstance.pageIndex = HomeActivity.PAGE_PTT;
+				mInstance.panelCollapsed();
 			}
 		}
 		this.cancel();

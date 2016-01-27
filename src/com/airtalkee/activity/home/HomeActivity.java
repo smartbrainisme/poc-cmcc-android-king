@@ -77,22 +77,9 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
 		session = AirSessionControl.getInstance().getCurrentSession();
-		if (mInstance != null)
-		{
-			try
-			{
-				mInstance.finish();
-			}
-			catch (Exception e)
-			{}
-		}
+		
 		mInstance = this;
-		if (AirServices.getInstance() != null && AirSessionControl.getInstance().getCurrentSession() != null && AirSessionControl.getInstance().getCurrentSession().getType() == AirSession.TYPE_DIALOG)
-		{
-			AirtalkeeSessionManager.getInstance().getSessionByCode(session.getSessionCode());
-			HomeActivity.getInstance().onViewChanged(session.getSessionCode());
-			HomeActivity.getInstance().panelCollapsed();
-		}
+		
 		setContentView(R.layout.activity_home);
 		setRequestedOrientation(Config.screenOrientation);
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
@@ -123,7 +110,11 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		{
 			checkNewIM(false);
 		}
-
+		if(session.getType() == AirSession.TYPE_CHANNEL)
+		{
+			AirChannel channel = session.getChannel();
+			channel.setRoleAppling(true);
+		}
 	}
 
 	@Override

@@ -134,13 +134,14 @@ public class CallAlertDialog extends AlertDialog implements android.view.View.On
 		if (session != null)
 		{
 			AirtalkeeSessionManager.getInstance().getSessionByCode(session.getSessionCode());
-			HomeActivity.getInstance().onViewChanged(session.getSessionCode());
-			HomeActivity.getInstance().panelCollapsed();
+			final HomeActivity mInstance = HomeActivity.getInstance();
+			if(mInstance != null)
+			{
+				mInstance.onViewChanged(session.getSessionCode());
+				mInstance.pageIndex = HomeActivity.PAGE_PTT;
+				mInstance.panelCollapsed();
+			}
 		}
-//		Intent it = new Intent(getContext(), SessionDialogActivity.class);
-//		it.putExtra("sessionCode", session.getSessionCode());
-//		it.putExtra("type", AirServices.TEMP_SESSION_TYPE_OUTGOING);
-//		getContext().startActivity(it);
 		this.cancel();
 	}
 

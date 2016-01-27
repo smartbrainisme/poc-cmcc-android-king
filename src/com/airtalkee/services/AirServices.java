@@ -38,7 +38,6 @@ import com.airtalkee.control.AirReportManager;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.control.AirSessionMediaSound;
 import com.airtalkee.dao.DBHelp;
-import com.airtalkee.location.AirLocation;
 import com.airtalkee.receiver.ReceiverConnectionChange;
 import com.airtalkee.receiver.ReceiverPhoneState;
 import com.airtalkee.receiver.ReceiverScreenOff;
@@ -51,11 +50,9 @@ import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.AirtalkeeUserInfo;
 import com.airtalkee.sdk.AirtalkeeUserRegister;
 import com.airtalkee.sdk.AirtalkeeVersionUpdate;
-import com.airtalkee.sdk.OnChannelAlertListener;
 import com.airtalkee.sdk.OnSessionIncomingListener;
 import com.airtalkee.sdk.OnVersionUpdateListener;
 import com.airtalkee.sdk.controller.AccountController;
-import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.entity.DBProxy;
@@ -67,8 +64,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.umeng.analytics.MobclickAgent;
 
-public class AirServices extends Service implements OnSessionIncomingListener,
-		OnChannelAlertListener, OnVersionUpdateListener
+public class AirServices extends Service implements OnSessionIncomingListener, OnVersionUpdateListener
 {
 	@SuppressWarnings("deprecation")
 	private KeyguardManager.KeyguardLock mKeyguardLock;
@@ -174,11 +170,8 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 			AirAccountManager.getInstance();
 			AirReportManager.getInstance();
 
-			// AirtalkeeMediaAudioControl.getInstance().setMediaAudioCodecAmrMode(AirtalkeeMediaAudioControl.AUDIO_CODEC_AMR_MODE_7);
 			AirtalkeeMediaVisualizer.getInstance().setMediaAudioVisualizerValid(true, true);
 			AirtalkeeMediaVisualizer.getInstance().setMediaAudioVisualizerSpectrumNumber(SessionBoxTalk.mVisualizerSpectrumNum);
-			AirtalkeeAccount.getInstance().AirTalkeePowerManagerRun(this);
-			// AirtalkeeAccount.getInstance().AirTalkeeTimerApiRun(this);
 			AirtalkeeAccount.getInstance().AirTalkeeConfig(this, Config.serverAddress, 4001);
 			AirtalkeeAccount.getInstance().AirTalkeeConfigMarketCode(Config.marketCode);
 			if (Config.SUB_PLATFORM_VALID)
@@ -189,7 +182,6 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 			AirtalkeeSessionManager.getInstance().setSessionDialogSetAnswerMode(Setting.getPttAnswerMode() ? AirSession.INCOMING_MODE_AUTO : AirSession.INCOMING_MODE_MANUALLY);
 			AirtalkeeSessionManager.getInstance().setSessionDialogSetIsbMode(Setting.getPttIsb());
 			AirtalkeeSessionManager.getInstance().setOnMediaSoundListener(new AirSessionMediaSound(this));
-			AirtalkeeChannel.getInstance().setOnChannelAlertListener(this);
 			AccountController.setAccountInfoAutoLoad(true);
 			AccountController.setAccountInfoOfflineMsgLoad(true);
 
@@ -279,9 +271,9 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 		// TODO Auto-generated method stub
 		Log.i(AirServices.class, "onSessionIncomingAlertStart");
 
-		if (ReceiverPhoneState.isPhoneCalling(this) || isCalling || isAlerting)
+		if (ReceiverPhoneState.isPhoneCalling(this) || isCalling)
 		{
-			Log.i(AirServices.class, "onSessionIncomingAlertStart - SessionIncomingBusy (isCalling=" + isCalling + ") (isAlerting=" + isAlerting + ")");
+			Log.i(AirServices.class, "onSessionIncomingAlertStart - SessionIncomingBusy (isCalling=" + isCalling + ") ");
 			AirtalkeeSessionManager.getInstance().SessionIncomingBusy(session);
 			AirtalkeeMessage.getInstance().MessageSystemGenerate(session, session.getCaller(), getString(R.string.talk_call_state_missed_call), true);
 			return;
@@ -610,109 +602,6 @@ public class AirServices extends Service implements OnSessionIncomingListener,
 		Dialog d = builder.create();
 		d.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
 		d.show();
-	}
-
-	/***********************************
-	 * 
-	 * Ƶ��������ʾ
-	 * 
-	 ***********************************/
-
-	private Dialog alertDialog;
-	private boolean isAlerting = false;
-
-	@Override
-	public void onChannelAlertIncomingStart(AirChannel channel, AirContact caller, boolean isAcceptCall)
-	{
-		// TODO Auto-generated method stub
-		if (isCalling || ReceiverPhoneState.isPhoneCalling(this))
-		{
-			AirtalkeeChannel.getInstance().ChannelAlertIncomingClose(false);
-		}
-		else
-		{
-			lightScreen();
-			unlockScreen();
-			if (isAcceptCall)
-			{
-				AirSessionControl.getInstance().SessionChannelIn(channel.getId());
-				AirtalkeeChannel.getInstance().ChannelAlertIncomingClose(true);
-				Util.Toast(this, getString(R.string.talk_incoming_channel_alert_owner_tip));
-			}
-			else
-			{
-				final String channelId = channel.getId();
-				isAlerting = true;
-				Sound.playSound(Sound.PLAYER_INCOMING_RING, true, context);
-				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-				String tip = caller.getDisplayName() + String.format(getString(R.string.talk_incoming_channel_alert_tip), channel.getDisplayName());
-				builder.setMessage(tip);
-				builder.setCancelable(false);
-
-				builder.setPositiveButton(getString(R.string.talk_incoming_channel_alert_accept), new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int whichButton)
-					{
-						try
-						{
-							dialog.cancel();
-							Sound.stopSound(Sound.PLAYER_INCOMING_RING);
-							AirSessionControl.getInstance().SessionChannelIn(channelId);
-							AirtalkeeChannel.getInstance().ChannelAlertIncomingClose(true);
-						}
-						catch (Exception e)
-						{
-							// TODO: handle exception
-						}
-						isAlerting = false;
-					}
-				});
-
-				builder.setNegativeButton(getString(R.string.talk_incoming_channel_alert_reject), new DialogInterface.OnClickListener()
-				{
-					public void onClick(DialogInterface dialog, int whichButton)
-					{
-						try
-						{
-							dialog.cancel();
-							Sound.stopSound(Sound.PLAYER_INCOMING_RING);
-							AirtalkeeChannel.getInstance().ChannelAlertIncomingClose(false);
-						}
-						catch (Exception e)
-						{
-							// TODO: handle exception
-						}
-						isAlerting = false;
-					}
-				});
-				alertDialog = builder.create();
-				alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-				alertDialog.show();
-			}
-		}
-	}
-
-	@Override
-	public void onChannelAlertIncomingStop()
-	{
-		// TODO Auto-generated method stub
-		Sound.stopSound(Sound.PLAYER_INCOMING_RING);
-		isAlerting = false;
-		if (alertDialog != null)
-		{
-			alertDialog.cancel();
-		}
-	}
-
-	@Override
-	public void onChannelAlertSent(boolean isOk)
-	{
-		// TODO Auto-generated method stub
-		if (isOk)
-			Util.Toast(this, getString(R.string.talk_incoming_channel_alert_sent_tip_ok));
-		else
-			Util.Toast(this, getString(R.string.talk_incoming_channel_alert_sent_tip_err));
 	}
 
 	private void initImageLoader()

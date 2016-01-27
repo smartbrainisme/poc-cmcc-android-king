@@ -65,14 +65,14 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 		this.listener = l;
 		btnSearch = (Button) findViewById(R.id.btn_search);
 		etSearch = (EditText) findViewById(R.id.et_search);
-		lvMemberAll = (MListView) findViewById(R.id.talk_lv_member_all);
 		btnSearch.setOnClickListener(this);
 		etSearch.addTextChangedListener(this);
 		getAllAirContacts();
+		lvMemberAll = (MListView) findViewById(R.id.talk_lv_member_all);
 		adapterMember = new AdapterMemberAll(context, this);
-		lvMemberAll.setAdapter(adapterMember);
 		lvMemberAll.setOnItemClickListener(this);
 		adapterMember.notifyMember(memberAll);
+		lvMemberAll.setAdapter(adapterMember);
 	}
 
 	public void getAllAirContacts()

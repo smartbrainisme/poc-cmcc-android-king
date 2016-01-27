@@ -375,10 +375,7 @@ public class SessionBoxTalk extends View implements OnClickListener,
 							ivSpeaker.setImageResource(ThemeUtil.getResourceId(R.attr.theme_media_talk, contextMain));
 							// tvSpeaker.setText(contextMain.getString(R.string.talk_speak_me));
 							tvSpeaker.setText("");
-							if (AirServices.getInstance().secretValid() && Setting.getPttEncrypt())
-								tvSpeakerIcon.setImageResource(R.drawable.talk_mic_secret);
-							else
-								tvSpeakerIcon.setImageResource(R.drawable.talk_mic_none);
+							tvSpeakerIcon.setImageResource(R.drawable.talk_mic_none);
 							tvSpeakerIcon.setVisibility(View.VISIBLE);
 							tvSpeakerTime.setVisibility(View.VISIBLE);
 							break;

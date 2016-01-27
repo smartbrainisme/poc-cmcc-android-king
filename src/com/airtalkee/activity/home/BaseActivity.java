@@ -43,7 +43,7 @@ public class BaseActivity extends FragmentActivity implements OnMmiAccountListen
 		return mInstance;
 	}
 
-	protected int pageIndex = PAGE_PTT;
+	public int pageIndex = PAGE_PTT;
 	protected int actionType;
 
 	@Override

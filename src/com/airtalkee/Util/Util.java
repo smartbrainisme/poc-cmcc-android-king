@@ -25,6 +25,8 @@ import android.media.AudioManager;
 import android.os.Build;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
 import android.text.format.Time;
 import android.view.inputmethod.InputMethodManager;
@@ -169,7 +171,6 @@ public class Util
 		try
 		{
 			AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-
 			am.setStreamVolume(AudioManager.STREAM_MUSIC, streamVolume, AudioManager.FLAG_PLAY_SOUND);
 		}
 		catch (Exception e)
@@ -281,14 +282,24 @@ public class Util
 	{
 		long gap = 0;
 		/*
-		 * try { SimpleDateFormat dFormat = new
-		 * SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); Date date =
-		 * dFormat.parse(time); long c = date.getTime() / 1000; long now =
-		 * AirtalkeeAccount.getInstance().AirBaseSeconds(); Log.i(Util.class,
-		 * "getTimeGap = " + now); if (now > 0) gap = c - now; else gap = 0; }
-		 * catch (ParseException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
+		try
+		{
+			SimpleDateFormat dFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date date = dFormat.parse(time);
+			long c = date.getTime() / 1000;
+			long now = AirtalkeeAccount.getInstance().AirBaseSeconds();
+			Log.i(Util.class, "getTimeGap = " + now);
+			if (now > 0)
+				gap = c - now;
+			else
+				gap = 0;
+		}
+		catch (ParseException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
 		return gap;
 	}
 
@@ -517,8 +528,59 @@ public class Util
 		return imm.isFullscreenMode();
 	}
 
+	public static Spannable getSpannable(Context context, String text)
+	{
+		Spannable name = null;
+		if (context != null && !Utils.isEmpty(text))
+			name = Util.buildPlainMessageSpannable(context, text.replaceAll("\r", "").getBytes());
+		return name;
+	}
 
-	@SuppressLint("NewApi")
+	/**
+	 * 
+	 * @param context
+	 * @param content
+	 * @return
+	 */
+	public static Spannable buildPlainMessageSpannable(Context context, byte[] content)
+	{
+		return buildPlainMessageSpannable(context, content, false);
+	}
+
+	public static Spannable buildPlainMessageSpannable(Context context, byte[] content, boolean isfontheight)
+	{
+		try
+		{
+			String msg = "";
+			if (content != null)
+			{
+				try
+				{
+					msg = new String(content, "UTF-8");
+				}
+				catch (UnsupportedEncodingException e)
+				{
+				}
+			}
+			// create spannable string
+			SpannableString spannable = new SpannableString(msg);
+			// spannable.setSpan(new SuperTextSpan(), 1, 4,
+			// spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+			// add link for URL
+			// Linkify.addLinks(spannable,
+			// Linkify.ALL);//ȥ�������ӣ�Ŀǰ�޷��������Ự��Ŀ�ϣ�����������»��ߣ�ûɶ�ã�
+			// add smiley
+			Smilify.getInstance(context).addSmiley(spannable, isfontheight);
+			return spannable;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+
 	@SuppressWarnings("deprecation")
 	public static void textClip(Context context, String clipStr)
 	{

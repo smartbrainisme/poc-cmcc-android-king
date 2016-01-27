@@ -77,7 +77,6 @@ public class PullToRefreshListView extends ListView implements OnScrollListener
 		Log.v("size", "width:" + headContentWidth + " height:" + headContentHeight);
 		addHeaderView(headView, null, false);
 		setOnScrollListener(this);
-
 		state = DONE;
 	}
 
@@ -292,6 +291,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener
 	public void setAdapter(BaseAdapter adapter)
 	{
 		super.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
 	}
 
 }

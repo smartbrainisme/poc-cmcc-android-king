@@ -1,8 +1,6 @@
 package com.airtalkee.activity.home.widget;
 
-import java.util.List;
 import android.content.Context;
-import android.text.Spannable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,10 +10,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
-import com.airtalkee.Util.Util;
-import com.airtalkee.sdk.AirtalkeeContactPresence;
+import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
-import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
 
@@ -103,17 +99,17 @@ public class AdapterSession extends BaseAdapter
 		public TextView tvMissed;
 		public TextView tvUnread;
 
-		public HodlerView(View baseView)
+		public HodlerView(View convertView)
 		{
-			this.baseView = baseView;
-			tvCreate = (TextView) baseView.findViewById(R.id.tv_create_session);
-			tvName = (TextView) baseView.findViewById(R.id.tv_name);
-			tvCount = (TextView) baseView.findViewById(R.id.tv_count);
-			delPannel = (LinearLayout) baseView.findViewById(R.id.session_del_pannel);
-			ivDel = (ImageView) baseView.findViewById(R.id.btn_session_del);
-			missedPanel = (LinearLayout) baseView.findViewById(R.id.session_missed_panel);
-			tvMissed = (TextView) baseView.findViewById(R.id.tv_session_missed);
-			tvUnread = (TextView) baseView.findViewById(R.id.tv_unread_count);
+			this.baseView = (LinearLayout) convertView.findViewById(R.id.baseview);
+			tvCreate = (TextView) convertView.findViewById(R.id.tv_create_session);
+			tvName = (TextView) convertView.findViewById(R.id.tv_name);
+			tvCount = (TextView) convertView.findViewById(R.id.tv_count);
+			delPannel = (LinearLayout) convertView.findViewById(R.id.session_del_pannel);
+			ivDel = (ImageView) convertView.findViewById(R.id.btn_session_del);
+			missedPanel = (LinearLayout) convertView.findViewById(R.id.session_missed_panel);
+			tvMissed = (TextView) convertView.findViewById(R.id.tv_session_missed);
+			tvUnread = (TextView) convertView.findViewById(R.id.tv_unread_count);
 		}
 
 		public void fill(final AirSession item)
@@ -130,6 +126,18 @@ public class AdapterSession extends BaseAdapter
 				else
 				{
 					tvCount.setText(item.getMemberAll().size() + "");
+				}
+				AirSession currentSession = AirSessionControl.getInstance().getCurrentSession();
+				if (currentSession != null)
+				{
+					if (currentSession.getSessionCode().equals(item.getSessionCode()))
+					{
+						baseView.setBackgroundResource(R.drawable.selector_listitem_channel_1);
+					}
+					else
+					{
+						baseView.setBackgroundResource(R.drawable.selector_listitem_channel);
+					}
 				}
 				if (item.getMessageUnreadCount() > 0)
 				{

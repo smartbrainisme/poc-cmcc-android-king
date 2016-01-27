@@ -93,6 +93,7 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 		});
 		registerSessionUpdateListener();
 		mInstance = this;
+		refreshChannelAndDialog();
 	}
 	
 	public void checkBrodcast()

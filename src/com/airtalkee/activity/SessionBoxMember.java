@@ -345,7 +345,6 @@ public class SessionBoxMember extends View implements OnClickListener, OnItemCli
 						{
 							dialog.cancel();
 							Util.Toast(contextMain, contextMain.getString(R.string.talk_incoming_channel_alert_sending));
-							AirtalkeeChannel.getInstance().ChannelAlert(session.getSessionCode(), false);
 						}
 					});
 					builder.setNegativeButton(contextMain.getString(R.string.talk_no), new DialogInterface.OnClickListener()

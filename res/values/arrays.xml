@@ -55,4 +55,20 @@
 		<item>@string/talk_scathed</item>
 	</string-array>
 	<!-- Smiley resource id array, must be one to one mapped to code array -->
+	 <string-array name="smiley_code_array">
+        <item>(图片)</item>
+        <item>(录音)</item>
+        <item>(呼叫未接)</item>
+        <item>(呼叫拒接)</item>
+        <item>(呼入)</item>
+        <item>(呼出)</item>
+    </string-array>
+    <array name="smiley_resid_array">
+        <item>@drawable/icon_images</item>
+        <item>@drawable/icon_sound</item>
+        <item>@drawable/ic_call_missed</item>
+        <item>@drawable/ic_call_rejected</item>
+        <item>@drawable/ic_call_incoming</item>
+        <item>@drawable/ic_call_outgoing</item>
+    </array>
 </resources>

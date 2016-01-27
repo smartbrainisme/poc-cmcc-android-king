@@ -279,6 +279,7 @@ public class MListView extends ListView implements OnScrollListener, OnClickList
 	public void setAdapter(BaseAdapter adapter)
 	{
 		super.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
 	}
 
 	@Override

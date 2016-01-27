@@ -312,8 +312,6 @@
 	<string name="talk_member_del_fail">成员删除失败</string>
 	<string name="talk_channel_create_tip">提示：</string>
 	<string name="talk_channel_btn_send_msg">发送</string>
-	<string name="talk_channel_manager_grab_enable">抢断模式已开启，您可以随时抢断低级别用户的讲话！</string>
-	<string name="talk_channel_manager_grab_disable">抢断模式已关闭</string>
 	<string name="talk_mode_changing">正在切换模式...</string>
 	<string name="talk_mode_normal">已切到扬声器模式</string>
 	<string name="talk_mode_in_call">已切到听筒模式</string> 

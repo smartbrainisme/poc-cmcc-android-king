@@ -2,7 +2,6 @@ package com.airtalkee.activity.home.widget;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.R.integer;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
