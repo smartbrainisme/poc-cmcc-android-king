@@ -331,14 +331,15 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 							return;
 						}
 
-						if (Util.IsUserName(ipocId))
-						{
-							AirtalkeeUserInfo.getInstance().UserInfoGetIdByUserId(ipocId, pwd);
-						}
-						else
-						{
-							AirtalkeeAccount.getInstance().Login(ipocId, pwd);
-						}
+//						if (Util.IsUserName(ipocId))
+//						{
+//							AirtalkeeUserInfo.getInstance().UserInfoGetIdByUserId(ipocId, pwd);
+//						}
+//						else
+//						{
+//							AirtalkeeAccount.getInstance().Login(ipocId, pwd);
+//						}
+						AirtalkeeAccount.getInstance().Login(ipocId, pwd);
 
 						accountStateShow(STATE_LOGIN);
 					}

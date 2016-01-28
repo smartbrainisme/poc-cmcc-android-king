@@ -19,9 +19,8 @@ import com.airtalkee.activity.MenuReportAsVidActivity;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.sdk.video.record.VideoQuality;
 import com.airtalkee.sdk.video.record.VideoSession;
-import com.airtalkee.sdk.video.record.VideoSession.Callback;
 
-public class VideoCamera extends Activity implements OnClickListener, Callback
+public class VideoCamera extends Activity implements OnClickListener, VideoSession.Callback
 {
 	public static String EXTRA_VIDEO_PATH = "extra_video_path";
 	private ImageView mButtonStart;

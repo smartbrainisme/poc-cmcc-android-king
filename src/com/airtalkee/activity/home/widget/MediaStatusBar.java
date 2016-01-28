@@ -203,6 +203,10 @@ public class MediaStatusBar extends LinearLayout implements
 		{
 			barTitle.refreshMediaStatus();
 			talkBtn.refreshPttButton();
+			if(SessionAndChannelView.getInstance() != null)
+			{
+				SessionAndChannelView.getInstance().refreshChannelAndDialog();
+			}
 		}
 	}
 
@@ -247,6 +251,7 @@ public class MediaStatusBar extends LinearLayout implements
 	{
 		// TODO Auto-generated method stub
 		notify2UpdateView(session.getSessionCode(), TYPE_ON_SESSION_MEMBER_UPDATE);
+		
 	}
 
 	@Override
@@ -408,7 +413,6 @@ public class MediaStatusBar extends LinearLayout implements
 		intent.setAction(ACTION_ON_SESSION_UPDATE);
 		intent.putExtra(EXTRA_SESSION_CODE, sessionCode);
 		intent.putExtra(EXTRA_TYPE, type);
-
 		getContext().sendBroadcast(intent);
 	}
 

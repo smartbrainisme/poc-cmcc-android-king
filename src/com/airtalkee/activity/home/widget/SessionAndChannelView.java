@@ -299,14 +299,16 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 			// TODO Auto-generated method stub
 			if (intent.getAction().equals(MediaStatusBar.ACTION_ON_SESSION_UPDATE))
 			{
-
 				int type = intent.getIntExtra(MediaStatusBar.EXTRA_TYPE, 0);
 				switch (type)
 				{
+					case MediaStatusBar.TYPE_ON_SESSION_MEMBER_UPDATE:
 					case MediaStatusBar.TYPE_ON_SESSION_ESTABLISHED:
 					case MediaStatusBar.TYPE_ON_SESSION_PRESENCE:
 						if (adapterChannel != null)
 							adapterChannel.notifyDataSetChanged();
+						if (adapterSession != null)
+							adapterSession.notifyDataSetChanged();
 						break;
 				}
 

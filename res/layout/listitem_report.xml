@@ -31,7 +31,14 @@
             android:layout_height="fill_parent"
             android:layout_alignParentLeft="true"
             android:background="@drawable/report_default_vid"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop" 
+            android:visibility="gone"/>
+
+        <VideoView
+            android:id="@+id/talk_report_video"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:visibility="gone"/>
 
         <ImageView
             android:id="@+id/talk_report_play"
@@ -81,20 +88,6 @@
                 android:text="@string/talk_tools_report_click"
                 android:visibility="gone" />
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/talk_report_size"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:shadowColor="#000000"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="0.5"
-            android:text="120K"
-            android:textColor="#ffffff"
-            android:textSize="16dip"
-            android:visibility="gone" />
     </RelativeLayout>
 
     <LinearLayout

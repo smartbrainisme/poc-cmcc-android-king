@@ -1,10 +1,13 @@
 package com.airtalkee.adapter;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.media.MediaMetadataRetriever;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -18,14 +21,13 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Toast;
-import com.airtalkee.activity.MenuReportActivity;
 import com.airtalkee.control.AirReportManager;
 import com.airtalkee.entity.AirReport;
 import com.airtalkee.listener.OnMmiLocationListener;
 import com.airtalkee.sdk.AirtalkeeReport;
-import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
@@ -122,10 +124,10 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 			convertView = LayoutInflater.from(context).inflate(R.layout.listitem_report, null);
 			holder = new ViewHolder();
 			holder.icon = (ImageView) convertView.findViewById(R.id.talk_report_icon);
+			holder.video = (VideoView) convertView.findViewById(R.id.talk_report_video);
 			holder.play = (ImageView) convertView.findViewById(R.id.talk_report_play);
 			holder.task = (TextView) convertView.findViewById(R.id.talk_report_task);
 			holder.time = (TextView) convertView.findViewById(R.id.talk_report_time);
-			holder.size = (TextView) convertView.findViewById(R.id.talk_report_size);
 			holder.detail = (TextView) convertView.findViewById(R.id.talk_report_detail);
 			holder.progressLayout = (RelativeLayout) convertView.findViewById(R.id.talk_report_progress_layout);
 			holder.progressBar = (ProgressBar) convertView.findViewById(R.id.talk_report_progress);
@@ -154,13 +156,24 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 		if (report != null)
 		{
 			viewMap.put(report.getCode(), holder.progressLayout);
+			holder.video.setVisibility(View.GONE);
 			if (report.getType() == AirtalkeeReport.RESOURCE_TYPE_VIDEO)
-				imageLoader.displayImage(null, holder.icon);
+			{
+				holder.icon.setVisibility(View.VISIBLE);
+				holder.video.setVideoPath(report.getResPath());
+				MediaMetadataRetriever rev = new MediaMetadataRetriever();
+				rev.setDataSource(context, Uri.fromFile(new File(report.getResPath())));
+				Bitmap bitmap = rev.getFrameAtTime(1 * 1000 * 2000, MediaMetadataRetriever.OPTION_CLOSEST_SYNC);
+				holder.icon.setImageBitmap(bitmap);
+			}
 			else
+			{
 				imageLoader.displayImage(report.getResUri().toString(), holder.icon);
+				holder.icon.setVisibility(View.VISIBLE);
+			}
 
 			holder.time.setText(context.getString(R.string.talk_tools_report_date) + "：" + report.getTime().substring(0, 16));
-			holder.size.setText(MenuReportActivity.sizeMKB(report.getResSize()));
+			// holder.size.setText(MenuReportActivity.sizeMKB(report.getResSize()));
 
 			if (report.getTarget() == AirReport.TARGET_TASK_DISPATCH)
 			{
@@ -168,8 +181,9 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 				holder.task.setVisibility(View.VISIBLE);
 			}
 			else
+			{
 				holder.task.setVisibility(View.GONE);
-
+			}
 			if (!Utils.isEmpty(report.getResContent()))
 			{
 				String content = report.getResContent().contains("\r") ? report.getResContent().substring(0, report.getResContent().lastIndexOf('\r')) : context.getString(R.string.talk_report_upload_no_content);
@@ -281,6 +295,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 		TextView uploadStep;
 		CheckBox cbReport;
 		ImageView ivReportEnter;
+		VideoView video;
 	}
 
 	@Override

@@ -25,7 +25,6 @@ import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.UriUtil;
 import com.airtalkee.Util.Util;
-import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.ReportProgressAlertDialog;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirReportManager;
