@@ -2,7 +2,6 @@ package com.airtalkee.widget;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.view.SurfaceView;
@@ -37,8 +36,6 @@ public class VideoCamera extends Activity implements OnClickListener, CallbackRe
 	private RelativeLayout rlBottombars;
 	private ImageView ivSure, ivClose;
 	
-	private String picPathTemp = "";
-	private Uri picUriTemp = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)

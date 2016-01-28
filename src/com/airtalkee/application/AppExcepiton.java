@@ -8,7 +8,8 @@ import android.content.Context;
 import android.os.Environment;
 import android.text.format.Time;
 import android.util.Log;
-import com.airtalkee.bluetooth.BluetoothManager;
+
+import com.airtalkee.control.VoiceManager;
 
 public class AppExcepiton implements UncaughtExceptionHandler
 {

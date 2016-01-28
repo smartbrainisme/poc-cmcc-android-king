@@ -33,9 +33,9 @@ import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
 import com.airtalkee.adapter.AdapterQueue;
 import com.airtalkee.adapter.AdapterTools;
-import com.airtalkee.bluetooth.BluetoothManager;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirSessionControl;
+import com.airtalkee.control.VoiceManager;
 import com.airtalkee.listener.OnMmiSessionBoxRefreshListener;
 import com.airtalkee.listener.OnMmiSessionListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
@@ -440,8 +440,8 @@ public class SessionBoxTalk extends View implements OnClickListener,
 
 	public void refreshSession()
 	{
-		if (BluetoothManager.getInstance() != null)
-			BluetoothManager.getInstance().setModeContext(toolPlayMode, contextMain);
+		if (VoiceManager.getInstance() != null)
+			VoiceManager.getInstance().setModeContext(toolPlayMode, contextMain);
 		if (session != null)
 		{
 			switch (session.getSessionState())
@@ -634,10 +634,10 @@ public class SessionBoxTalk extends View implements OnClickListener,
 			switch (arg2)
 			{
 				case AdapterTools.MENU_SPEAKER:
-					BluetoothManager.getInstance().doChangeSpeaker();
+					VoiceManager.getInstance().doChangeSpeaker();
 					break;
 				case AdapterTools.MENU_RECEIVER:
-					BluetoothManager.getInstance().doChangeVoiceCall();
+					VoiceManager.getInstance().doChangeVoiceCall();
 					break;
 			}
 		}
@@ -670,7 +670,7 @@ public class SessionBoxTalk extends View implements OnClickListener,
 
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
-		BluetoothManager.getInstance().onActivityResult(requestCode, resultCode, data);
+		VoiceManager.getInstance().onActivityResult(requestCode, resultCode, data);
 	}
 
 	private boolean isTalkLongClick = false;

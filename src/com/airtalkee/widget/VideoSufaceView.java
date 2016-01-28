@@ -1,6 +1,5 @@
 package com.airtalkee.widget;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import android.app.Activity;
@@ -8,7 +7,6 @@ import android.content.Context;
 import android.hardware.Camera;
 import android.hardware.Camera.AutoFocusCallback;
 import android.hardware.Camera.CameraInfo;
-import android.hardware.Camera.PictureCallback;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -36,6 +34,7 @@ import com.airtalkee.activity.VideoSessionActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
+<<<<<<< HEAD
 import com.airtalkee.sdk.AirtalkeeReport;
 import com.airtalkee.sdk.controller.AirTaskController;
 import com.airtalkee.sdk.entity.AirSession;
@@ -43,22 +42,25 @@ import com.airtalkee.sdk.listener.AirTaskTakePictureListener;
 import com.airtalkee.sdk.listener.CallbackRtspClient;
 import com.airtalkee.sdk.listener.CallbackVideoSession;
 import com.airtalkee.sdk.util.IOoperate;
+=======
+import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.sdk.listener.CallbackRtspClient;
+import com.airtalkee.sdk.listener.CallbackVideoSession;
+>>>>>>> abc4dd6fbc9017cf30d16ad1255cb14f30fbf601
 import com.airtalkee.sdk.video.Session;
 import com.airtalkee.sdk.video.SessionBuilder;
 import com.airtalkee.sdk.video.codec.VideoQuality;
 import com.airtalkee.sdk.video.gl.SurfaceView;
-import com.airtalkee.sdk.video.hw.external.CameraUsbManager;
 import com.airtalkee.sdk.video.rtsp.RtspClient;
-import com.luktong.multistream.sdk.ui.PreviewSurfaceView;
-import com.luktong.multistream.sdk.usb.DeviceFilter;
-import com.luktong.multistream.sdk.usb.USBMonitor;
-import com.luktong.multistream.sdk.usb.USBMonitor.OnDeviceConnectListener;
-import com.luktong.multistream.sdk.usb.USBMonitor.UsbControlBlock;
 
 public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		CallbackRtspClient, CallbackVideoSession, SurfaceHolder.Callback,
+<<<<<<< HEAD
 		SensorEventListener, AirTaskTakePictureListener,
 		OnDeviceConnectListener, DialogListener
+=======
+		SensorEventListener, DialogListener
+>>>>>>> abc4dd6fbc9017cf30d16ad1255cb14f30fbf601
 {
 	// private ImageButton mButtonStart;
 	private ImageButton mButtonFlash;
@@ -67,11 +69,9 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	private ImageButton mButtonMic;
 	private View parentView;
 	private SurfaceView mSurfaceView;
-	private PreviewSurfaceView mUSBSurfaceView = null;
 	// private TextView mTextBitrate;
 	private ProgressBar mProgressBar;
 	private Session mSession;
-	private String mSessionUid = "";
 	private RtspClient mClient;
 	private String uri;
 	private OnVideoStateChangeListener l;
@@ -81,13 +81,10 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	private SensorManager sm = null;
 	private Sensor mAccelerometer = null;
 	Activity activity;
-	private CameraUsbManager cameraUsbBinder = null;
-	private USBMonitor mUSBMonitor;
 	boolean pendingUSBConnect0 = false;
 	UsbDevice usbConCB0 = null;
 	@SuppressWarnings("unused")
 	private boolean allowCheckedChangeEvent = true;
-	private int cameraType = Session.CAMERA_EXTERNAL_TYPE_NONE;
 	private boolean isCameraUsbReady = false;
 
 	private TextView tv_status;
@@ -133,7 +130,6 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	{
 		sm = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
 		mAccelerometer = sm.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-		AirTaskController.getInstance().setAirTaskTakePictureListener(this);
 		// mButtonStart = (ImageButton) findViewById(R.id.start);
 		mButtonFlash = (ImageButton) findViewById(R.id.flash);
 		mButtonCamera = (ImageButton) findViewById(R.id.camera);
@@ -151,11 +147,6 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		mButtonMic.setTag(false);
 		mButtonMic.setEnabled(false);
 		mButtonFlash.setTag("off");
-
-		mUSBMonitor = new USBMonitor(this.getContext(), this);
-		mUSBMonitor.register();
-		cameraUsbBinder = CameraUsbManager.getInstance();
-		cameraUsbBinder.startManager();
 
 		tv_status = (TextView) findViewById(R.id.tv_video_status);
 		ch_time = (Chronometer) findViewById(R.id.ch_timer);
@@ -185,7 +176,6 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 			return;
 		}
 		// Configures the SessionBuilder
-		this.cameraType = cameraType;
 		mSession = SessionBuilder.getInstance().setContext(this.getContext().getApplicationContext()).setVideoEncoder(SessionBuilder.VIDEO_H264).setSurfaceView(mSurfaceView).setPreviewOrientation(0).setCallback(this).setExternalCameraType(cameraType).build();
 
 		// Configures the RTSP client
@@ -196,21 +186,8 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		selectQuality(rg.getCheckedRadioButtonId(), flag);
 		toggleStream();
 
-		switch (cameraType)
-		{
-			case Session.CAMERA_EXTERNAL_TYPE_NONE:
-				// mUSBSurfaceView.setVisibility(View.GONE);
-				mSurfaceView.getHolder().addCallback(this);
-				mSurfaceView.setVisibility(View.VISIBLE);
-				break;
-			case Session.CAMERA_EXTERNAL_TYPE_USB:
-				mUSBSurfaceView.setVisibility(View.VISIBLE);
-				mSurfaceView.setVisibility(View.GONE);
-				startUsbPreview();
-				break;
-			case Session.CAMERA_EXTERNAL_TYPE_WIFI:
-				break;
-		}
+		mSurfaceView.getHolder().addCallback(this);
+		mSurfaceView.setVisibility(View.VISIBLE);
 	}
 
 	public void finish()
@@ -225,17 +202,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 			this.setVisibility(View.GONE);
 			mClient.stopStream();
 			mSession.release();
-			switch (cameraType)
-			{
-				case Session.CAMERA_EXTERNAL_TYPE_NONE:
-					mSurfaceView.getHolder().removeCallback(this);
-					break;
-				case Session.CAMERA_EXTERNAL_TYPE_USB:
-					stopUsbPreview();
-					break;
-				case Session.CAMERA_EXTERNAL_TYPE_WIFI:
-					break;
-			}
+			mSurfaceView.getHolder().removeCallback(this);
 		}
 	}
 
@@ -466,7 +433,6 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		enableUI();
 		if (sm != null)
 			sm.unregisterListener(this);
-		AirTaskController.getInstance().setAirTaskTakePictureListener(null);
 		// mButtonStart.setImageResource(R.drawable.ic_switch_video);
 		mProgressBar.setVisibility(View.GONE);
 		// tv_status.setText(getContext().getString(R.string.talk_video_stop));
@@ -619,215 +585,6 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 
 	}
 
-	private PictureCallback jpegCallback = new PictureCallback()
-	{
-		public void onPictureTaken(byte[] _data, Camera _camera)
-		{
-			try
-			{
-				mSession.toggleFlash(false);
-				/* 取得相仞Bitmap对象 */
-				if (_data != null)
-				{
-					new IOoperate().fileSave(IOoperate.VIDEO_PATH, Util.getCurrentTime() + ".jpg", _data, false);
-					AirtalkeeReport.getInstance().ReportCaputreImage(mSessionUid, AirtalkeeReport.RESOURCE_TYPE_PICTURE, "", _data, "");
-				}
-
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
-	};
-
-	public void takePicture(String uid, boolean flash)
-	{
-		if (mSession != null)
-		{
-			mSession.takePicture(jpegCallback);
-			mSessionUid = uid;
-			if (flash)
-				mSession.toggleFlash(true);
-		}
-	}
-
-	@Override
-	public void onTaskTakePicture(String uid, boolean toFlashLamp)
-	{
-		// TODO Auto-generated method stub
-		takePicture(uid, toFlashLamp);
-	}
-
-	/****************************************************************
-	 * 
-	 * USB camera
-	 * 
-	 ****************************************************************/
-
-	private void startUsbPreview()
-	{
-		if (cameraUsbBinder != null)
-		{
-			final List<DeviceFilter> filter = DeviceFilter.getDeviceFilters(this.getContext(), R.xml.device_filter);
-			List<UsbDevice> devices = mUSBMonitor.getDeviceList(filter.get(0));
-
-			if (devices != null && devices.size() > 0)
-			{
-
-				allowCheckedChangeEvent = false;
-				allowCheckedChangeEvent = true;
-				UsbDevice device = devices.get(0);
-				pendingUSBConnect0 = true;
-				mUSBMonitor.requestPermission(device);
-
-			}
-			else
-			{
-				allowCheckedChangeEvent = false;
-				allowCheckedChangeEvent = true;
-			}
-		}
-		else
-		{
-			allowCheckedChangeEvent = false;
-			allowCheckedChangeEvent = true;
-		}
-	}
-
-	private void stopUsbPreview()
-	{
-		if (cameraUsbBinder == null || !cameraUsbBinder.stopPreview())
-		{
-			allowCheckedChangeEvent = false;
-			allowCheckedChangeEvent = true;
-		}
-	}
-
-	private void connectUSBCamera(UsbControlBlock ctrlBlock, UsbDevice device)
-	{
-
-		pendingUSBConnect0 = false;
-		if (!cameraUsbBinder.startPreview(mVideoWidth, mVideoHeight, mFramerate, mFramerate, ctrlBlock))
-		{
-			allowCheckedChangeEvent = false;
-			allowCheckedChangeEvent = true;
-			usbConCB0 = null;
-
-		}
-		else
-		{
-			cameraUsbBinder.setPreviewSurface(null);
-			cameraUsbBinder.setPreviewSurface(mUSBSurfaceView.getHolder().getSurface());
-			allowCheckedChangeEvent = false;
-
-			allowCheckedChangeEvent = true;
-			startUsbPreview();
-			usbConCB0 = device;
-		}
-	}
-
-	private void disconnectUSBCamera()
-	{
-		if (cameraUsbBinder != null)
-		{
-
-			if (cameraUsbBinder.isPreview())
-			{
-				cameraUsbBinder.stopPreview();
-			}
-
-			usbConCB0 = null;
-		}
-	}
-
-	@Override
-	public void onAttach(UsbDevice arg0)
-	{
-		// TODO Auto-generated method stub
-		// Toast.makeText(this.getContext(), "USB_DEVICE_ATTACHED",
-		// Toast.LENGTH_SHORT).show();
-		isCameraUsbReady = true;
-	}
-
-	@Override
-	public void onDettach(UsbDevice device)
-	{
-		// TODO Auto-generated method stub
-		// Toast.makeText(this.getContext(), "USB_DEVICE_DETACHED",
-		// Toast.LENGTH_SHORT).show();
-		isCameraUsbReady = false;
-		if (device != null)
-		{
-			activity.runOnUiThread(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-
-					disconnectUSBCamera();
-
-				}
-			});
-		}
-	}
-
-	@Override
-	public void onCancel(UsbDevice arg0)
-	{
-		// TODO Auto-generated method stub
-		isCameraUsbReady = false;
-		activity.runOnUiThread(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				allowCheckedChangeEvent = false;
-				// UsbCameraActivity.this.tbtnStartStopPreview.setChecked(false);
-				// UsbCameraActivity.this.tbtnStartStopPreview.setEnabled(true);
-				stopUsbPreview();
-				allowCheckedChangeEvent = true;
-
-			}
-		});
-	}
-
-	@Override
-	public void onConnect(final UsbDevice device, final UsbControlBlock ctrlBlock, boolean arg2)
-	{
-		// TODO Auto-generated method stub
-		isCameraUsbReady = true;
-		if (pendingUSBConnect0)
-		{
-			activity.runOnUiThread(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					connectUSBCamera(ctrlBlock, device);
-				}
-			});
-		}
-	}
-
-	@Override
-	public void onDisconnect(UsbDevice device, UsbControlBlock arg1)
-	{
-		// TODO Auto-generated method stub
-		isCameraUsbReady = false;
-		if (device != null)
-		{
-			activity.runOnUiThread(new Runnable()
-			{
-				@Override
-				public void run()
-				{
-					disconnectUSBCamera();
-				}
-			});
-		}
-	}
-
 	@Override
 	public void onClickOk(int id,Object obj)
 	{
@@ -846,4 +603,5 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		// TODO Auto-generated method stub
 		
 	}
+
 }

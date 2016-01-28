@@ -4,21 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.media.AudioManager.OnAudioFocusChangeListener;
-import com.airtalkee.R;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.Util.SoundPlayer;
 import com.airtalkee.Util.Util;
-import com.airtalkee.activity.AccountActivity;
-import com.airtalkee.activity.MainActivity;
-import com.airtalkee.activity.home.HomeActivity;
-import com.airtalkee.bluetooth.BluetoothManager;
 import com.airtalkee.config.Config;
 import com.airtalkee.receiver.ReceiverPhoneState;
 import com.airtalkee.sdk.OnMediaSoundListener;
 import com.airtalkee.sdk.controller.SessionMediaController;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
-import com.airtalkee.sdk.util.Utils;
 
 public class AirSessionMediaSound implements OnMediaSoundListener
 {
@@ -39,34 +33,12 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		if (!ReceiverPhoneState.isCalling)
 		{
 
-			if (BluetoothManager.getInstance().getMode() == AudioManager.MODE_IN_COMMUNICATION)
+			if (VoiceManager.getInstance().getMode() == AudioManager.MODE_IN_COMMUNICATION)
 				SoundPlayer.soundPlay(SoundPlayer.PLAYER_MEDIA_OTHER_ON_LOW, false);
 			else
 				SoundPlayer.soundPlay(SoundPlayer.PLAYER_MEDIA_OTHER_ON, false);
 			Sound.vibrate(30, context);
 		}
-
-//		if (session != null && session.getType() == AirSession.TYPE_CHANNEL && !Utils.isEmpty(content))
-//		{
-//			boolean show = false;
-//			Intent intent = null;
-//			if (HomeActivity.getInstance() == null)
-//			{
-//				intent = new Intent();
-//				intent.setClass(context, AccountActivity.class);
-//				show = true;
-//			}
-//			else if (!HomeActivity.getInstance().isShowing)
-//			{
-//				intent = new Intent();
-//				intent.setClass(context, MainActivity.class);
-//				show = true;
-//			}
-//			if (show)
-//			{
-//				Util.showNotification(Util.NOTIFI_ID_VOICE_LISTEN, context, intent, content, content + " " + context.getString(R.string.talk_speaking), context.getString(R.string.talk_speaking), null);
-//			}
-//		}
 	}
 
 	@Override
@@ -75,7 +47,7 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		pttLightStateRefresh(session, SessionMediaController.MEDIA_SOUND_OTHER_OFF);
 		if (!ReceiverPhoneState.isCalling)
 		{
-			if (BluetoothManager.getInstance().getMode() != AudioManager.MODE_IN_COMMUNICATION)
+			if (VoiceManager.getInstance().getMode() != AudioManager.MODE_IN_COMMUNICATION)
 				SoundPlayer.soundPlay(SoundPlayer.PLAYER_MEDIA_OTHER_OFF, false);
 
 		}
@@ -86,17 +58,8 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 	@Override
 	public void onMediaSoundTalkBegin(AirSession session)
 	{
-		// TODO Auto-generated method stub
-		/*
-		 * Sound.playSound(Sound.PLAYER_MEDIA_ME_ON, context,new
-		 * OnCompletionListener() {
-		 * 
-		 * @Override public void onCompletion(MediaPlayer mp) { // TODO
-		 * Auto-generated method stub am.setBluetoothScoOn(true);
-		 * am.startBluetoothSco(); } });
-		 */
 		pttLightStateRefresh(session, SessionMediaController.MEDIA_SOUND_ME_ON);
-		if (BluetoothManager.getInstance().getMode() == AudioManager.MODE_IN_COMMUNICATION)
+		if (VoiceManager.getInstance().getMode() == AudioManager.MODE_IN_COMMUNICATION)
 			SoundPlayer.soundPlay(SoundPlayer.PLAYER_MEDIA_ME_ON_LOW, false);
 		else
 			SoundPlayer.soundPlay(SoundPlayer.PLAYER_MEDIA_ME_ON, false);
@@ -121,7 +84,7 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		pttLightStateRefresh(session, SessionMediaController.MEDIA_SOUND_ME_OFF);
 		if (Config.funcPlayMediaTalkOff)
 		{
-			if (BluetoothManager.getInstance().getMode() == AudioManager.MODE_IN_COMMUNICATION)
+			if (VoiceManager.getInstance().getMode() == AudioManager.MODE_IN_COMMUNICATION)
 				SoundPlayer.soundPlay(SoundPlayer.PLAYER_MEDIA_ME_OFF_LOW, false);
 			else
 				SoundPlayer.soundPlay(SoundPlayer.PLAYER_MEDIA_ME_OFF, false);
