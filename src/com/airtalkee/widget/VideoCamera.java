@@ -16,11 +16,12 @@ import android.widget.RelativeLayout;
 import com.airtalkee.R;
 import com.airtalkee.activity.MenuReportAsPicActivity;
 import com.airtalkee.activity.MenuReportAsVidActivity;
+import com.airtalkee.sdk.listener.CallbackRecordVideoSession;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.sdk.video.record.VideoQuality;
 import com.airtalkee.sdk.video.record.VideoSession;
 
-public class VideoCamera extends Activity implements OnClickListener, VideoSession.Callback
+public class VideoCamera extends Activity implements OnClickListener, CallbackRecordVideoSession
 {
 	public static String EXTRA_VIDEO_PATH = "extra_video_path";
 	private ImageView mButtonStart;

@@ -35,13 +35,14 @@ import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirFunctionSetting;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.sdk.listener.AirTaskPushListener;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.services.AirServices;
 
 public class AirMessageTransaction implements OnMessageListener,
 		OnMessagePttListener, OnSystemBroadcastListener,
-		OnSystemFenceWarningListener, AirTaskController.AirTaskPushListener,
+		OnSystemFenceWarningListener, AirTaskPushListener,
 		DialogListener
 {
 	private static final int DIALOG_2_SEND_MESSAGE = 101;
