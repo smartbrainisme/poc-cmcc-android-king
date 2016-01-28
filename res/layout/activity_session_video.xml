@@ -73,8 +73,7 @@
 
             <RelativeLayout
                 android:layout_width="150dp"
-                android:layout_height="fill_parent"
-                android:layout_above="@id/talk_video_ptt_panel" >
+                android:layout_height="fill_parent">
 
                 <RelativeLayout
                     android:id="@id/talk_video_panel"
