@@ -30,13 +30,13 @@ import com.airtalkee.activity.TempSessionActivity;
 import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.widget.InCommingAlertDialog;
 import com.airtalkee.application.MainApplication;
-import com.airtalkee.bluetooth.BluetoothManager;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirAccountManager;
 import com.airtalkee.control.AirMessageTransaction;
 import com.airtalkee.control.AirReportManager;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.control.AirSessionMediaSound;
+import com.airtalkee.control.VoiceManager;
 import com.airtalkee.dao.DBHelp;
 import com.airtalkee.receiver.ReceiverConnectionChange;
 import com.airtalkee.receiver.ReceiverPhoneState;
@@ -126,8 +126,8 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		// TODO Auto-generated method stub
 		super.onDestroy();
 		unregisterReceiver(ccr);
-		if (BluetoothManager.getInstance() != null)
-			BluetoothManager.getInstance().release();
+		if (VoiceManager.getInstance() != null)
+			VoiceManager.getInstance().release();
 
 		if (receiverScreen != null)
 			unregisterReceiver(receiverScreen);
@@ -148,7 +148,7 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 			iOperator = new IOoperate();
 			AirMmiTimer.getInstance();
 			Util.versionConfig(this);
-			BluetoothManager.newInstance(this);
+			VoiceManager.newInstance(this);
 			MobclickAgent.updateOnlineConfig(this);
 			initImageLoader();
 			SoundPlayer.soundInit(this);

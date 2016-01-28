@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.telephony.TelephonyManager;
 import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.AirMmiTimerListener;
-import com.airtalkee.bluetooth.BluetoothManager;
+import com.airtalkee.control.VoiceManager;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.services.AirServices;
