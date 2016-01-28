@@ -38,8 +38,10 @@ import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeReport;
 import com.airtalkee.sdk.controller.AirTaskController;
-import com.airtalkee.sdk.controller.AirTaskController.AirTaskTakePictureListener;
 import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.sdk.listener.AirTaskTakePictureListener;
+import com.airtalkee.sdk.listener.CallbackRtspClient;
+import com.airtalkee.sdk.listener.CallbackVideoSession;
 import com.airtalkee.sdk.util.IOoperate;
 import com.airtalkee.sdk.video.Session;
 import com.airtalkee.sdk.video.SessionBuilder;
@@ -54,7 +56,7 @@ import com.luktong.multistream.sdk.usb.USBMonitor.OnDeviceConnectListener;
 import com.luktong.multistream.sdk.usb.USBMonitor.UsbControlBlock;
 
 public class VideoSufaceView extends FrameLayout implements OnClickListener,
-		RtspClient.Callback, Session.Callback, SurfaceHolder.Callback,
+		CallbackRtspClient, CallbackVideoSession, SurfaceHolder.Callback,
 		SensorEventListener, AirTaskTakePictureListener,
 		OnDeviceConnectListener, DialogListener
 {
