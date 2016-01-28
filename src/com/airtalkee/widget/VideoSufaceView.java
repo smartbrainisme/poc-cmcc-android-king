@@ -35,6 +35,8 @@ import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.sdk.listener.CallbackRtspClient;
+import com.airtalkee.sdk.listener.CallbackVideoSession;
 import com.airtalkee.sdk.video.Session;
 import com.airtalkee.sdk.video.SessionBuilder;
 import com.airtalkee.sdk.video.codec.VideoQuality;
@@ -42,7 +44,7 @@ import com.airtalkee.sdk.video.gl.SurfaceView;
 import com.airtalkee.sdk.video.rtsp.RtspClient;
 
 public class VideoSufaceView extends FrameLayout implements OnClickListener,
-		RtspClient.Callback, Session.Callback, SurfaceHolder.Callback,
+		CallbackRtspClient, CallbackVideoSession, SurfaceHolder.Callback,
 		SensorEventListener, DialogListener
 {
 	// private ImageButton mButtonStart;

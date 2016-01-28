@@ -29,21 +29,18 @@ import com.airtalkee.sdk.OnMessageListener;
 import com.airtalkee.sdk.OnMessagePttListener;
 import com.airtalkee.sdk.OnSystemBroadcastListener;
 import com.airtalkee.sdk.OnSystemFenceWarningListener;
-import com.airtalkee.sdk.controller.AirTaskController;
 import com.airtalkee.sdk.controller.SessionController;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirFunctionSetting;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
-import com.airtalkee.sdk.listener.AirTaskPushListener;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.services.AirServices;
 
 public class AirMessageTransaction implements OnMessageListener,
 		OnMessagePttListener, OnSystemBroadcastListener,
-		OnSystemFenceWarningListener, AirTaskPushListener,
-		DialogListener
+		OnSystemFenceWarningListener, DialogListener
 {
 	private static final int DIALOG_2_SEND_MESSAGE = 101;
 	private static final int DIALOG_CALL_CENTER = 100;
@@ -61,7 +58,6 @@ public class AirMessageTransaction implements OnMessageListener,
 		AirtalkeeMessage.getInstance().setOnMessagePttListener(this);
 		AirtalkeeAccount.getInstance().setOnSystemBroadcastListener(this);
 		AirtalkeeAccount.getInstance().setOnSystemFenceWarningListener(this);
-		AirTaskController.getInstance().setAirTalkPushListener(this);
 	}
 
 	public static AirMessageTransaction getInstance()
@@ -415,13 +411,6 @@ public class AirMessageTransaction implements OnMessageListener,
 			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Config.funcCenterCallNumber));
 			context.startActivity(intent);
 		}
-	}
-
-	@Override
-	public void onTaskDispatch(String taskId, String taskName)
-	{
-		// TODO Auto-generated method stub
-		
 	}
 
 }
