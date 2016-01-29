@@ -41,12 +41,7 @@ import com.airtalkee.services.AirServices;
 
 public class AirMessageTransaction implements OnMessageListener,
 		OnMessagePttListener, OnSystemBroadcastListener,
-<<<<<<< HEAD
-		OnSystemFenceWarningListener, AirTaskPushListener,
-		DialogListener
-=======
-		OnSystemFenceWarningListener, DialogListener
->>>>>>> abc4dd6fbc9017cf30d16ad1255cb14f30fbf601
+		OnSystemFenceWarningListener, AirTaskPushListener, DialogListener
 {
 	private static final int DIALOG_2_SEND_MESSAGE = 101;
 	private static final int DIALOG_CALL_CENTER = 100;
@@ -152,20 +147,21 @@ public class AirMessageTransaction implements OnMessageListener,
 			Util.showNotification(Util.NOTIFI_ID_MESSAGE, AirServices.getInstance(), intent, from, typeText, msg, null);
 			Sound.playSound(Sound.PLAYER_NEWINFO, false, ct);
 
-//			if (MainActivity.getInstance() != null && MainActivity.getInstance().viewMiddle != null)
-//			{
-//				MainActivity.getInstance().viewMiddle.refreshNewMsg();
-//			}
-//
-//			if (SessionAndChannelView.getInstance() != null)
-//			{
-//				SessionAndChannelView.getInstance().refreshChannelAndDialog();
-//				SessionAndChannelView.getInstance().resume();
-//			}
-//			if (HomeActivity.getInstance() != null)
-//			{
-//				HomeActivity.getInstance().checkNewIM(false);
-//			}
+			// if (MainActivity.getInstance() != null &&
+			// MainActivity.getInstance().viewMiddle != null)
+			// {
+			// MainActivity.getInstance().viewMiddle.refreshNewMsg();
+			// }
+			//
+			// if (SessionAndChannelView.getInstance() != null)
+			// {
+			// SessionAndChannelView.getInstance().refreshChannelAndDialog();
+			// SessionAndChannelView.getInstance().resume();
+			// }
+			// if (HomeActivity.getInstance() != null)
+			// {
+			// HomeActivity.getInstance().checkNewIM(false);
+			// }
 		}
 	}
 
@@ -417,6 +413,13 @@ public class AirMessageTransaction implements OnMessageListener,
 			Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + Config.funcCenterCallNumber));
 			context.startActivity(intent);
 		}
+	}
+
+	@Override
+	public void onTaskDispatch(String taskId, String taskName)
+	{
+		// TODO Auto-generated method stub
+
 	}
 
 }

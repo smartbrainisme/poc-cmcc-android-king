@@ -34,19 +34,9 @@ import com.airtalkee.activity.VideoSessionActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
-<<<<<<< HEAD
-import com.airtalkee.sdk.AirtalkeeReport;
-import com.airtalkee.sdk.controller.AirTaskController;
-import com.airtalkee.sdk.entity.AirSession;
-import com.airtalkee.sdk.listener.AirTaskTakePictureListener;
-import com.airtalkee.sdk.listener.CallbackRtspClient;
-import com.airtalkee.sdk.listener.CallbackVideoSession;
-import com.airtalkee.sdk.util.IOoperate;
-=======
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.listener.CallbackRtspClient;
 import com.airtalkee.sdk.listener.CallbackVideoSession;
->>>>>>> abc4dd6fbc9017cf30d16ad1255cb14f30fbf601
 import com.airtalkee.sdk.video.Session;
 import com.airtalkee.sdk.video.SessionBuilder;
 import com.airtalkee.sdk.video.codec.VideoQuality;
@@ -55,12 +45,7 @@ import com.airtalkee.sdk.video.rtsp.RtspClient;
 
 public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		CallbackRtspClient, CallbackVideoSession, SurfaceHolder.Callback,
-<<<<<<< HEAD
-		SensorEventListener, AirTaskTakePictureListener,
-		OnDeviceConnectListener, DialogListener
-=======
 		SensorEventListener, DialogListener
->>>>>>> abc4dd6fbc9017cf30d16ad1255cb14f30fbf601
 {
 	// private ImageButton mButtonStart;
 	private ImageButton mButtonFlash;
