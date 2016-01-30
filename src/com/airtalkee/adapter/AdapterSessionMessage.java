@@ -102,9 +102,6 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
-		// TODO Auto-generated method stub
-		// Log.d(AdapterSessionMessage.class,
-		// "AdapterSessionMessage - getView");
 		AirMessage iMessage = (AirMessage) getItem(position);
 		if (iMessage != null)
 		{
@@ -355,9 +352,9 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		}
 		else if (type == AirMessage.TYPE_PICTURE)
 		{
+			holder2.record_default.setVisibility(View.GONE);
 			holder2.pic.setVisibility(View.VISIBLE);
 			holder2.record_layout.setVisibility(View.GONE);
-			holder2.body.setVisibility(View.GONE);
 			displayImageByUrl(iMessage.getImageUri(), holder2.pic, this);
 		}
 
@@ -388,6 +385,7 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 			default:
 				holder2.time.setText(iMessage.getTime());
 				holder2.pro.setVisibility(View.GONE);
+				holder2.record_default.setVisibility(View.VISIBLE);
 				break;
 		}
 		holder2.msg_ptt.setVisibility(iMessage.getRecordType() == AirMessage.RECORD_TYPE_PTT ? View.VISIBLE : View.INVISIBLE);

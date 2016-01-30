@@ -94,72 +94,73 @@ public class AirMessageTransaction implements OnMessageListener,
 	public void onMessageIncomingRecv(boolean isCustom, AirMessage message)
 	{
 		// TODO Auto-generated method stub
-		if (message.getSession().getSessionState() == AirSession.SESSION_STATE_DIALOG)
+
+		Log.i(AirMessageTransaction.class, "AirMessageTransaction onMessageIncomingRecv");
+		Context ct = AirServices.getInstance();
+		String from = "";
+		String typeText = "";
+		String msg = "";
+		if (message != null)
 		{
-			Log.i(AirMessageTransaction.class, "AirMessageTransaction onMessageIncomingRecv");
-			Context ct = AirServices.getInstance();
-			String from = "";
-			String typeText = "";
-			String msg = "";
-			if (message != null)
-			{
-				from = message.getInameFrom();
+			from = message.getInameFrom();
 
-				switch (message.getType())
-				{
-					case AirMessage.TYPE_PICTURE:
-						typeText = Config.app_name + ct.getString(R.string.talk_msg_pic);
-						msg = typeText;
-						break;
-					case AirMessage.TYPE_TEXT:
-						typeText = Config.app_name + ct.getString(R.string.talk_msg_text);
-						msg = message.getBody();
-						break;
-					case AirMessage.TYPE_RECORD:
-						AirtalkeeMessage.getInstance().MessageRecordPlayDownload(message);
-						typeText = Config.app_name + ct.getString(R.string.talk_msg_rec);
-						msg = typeText;
-						break;
-					case AirMessage.TYPE_SYSTEM:
-						typeText = Config.app_name + ct.getString(R.string.talk_session_msg);
-						msg = typeText;
-						break;
-					case AirMessage.TYPE_CHANNEL_ALERT:
-						typeText = ct.getString(R.string.talk_incoming_channel_alert_message);
-						msg = typeText;
-						break;
-				}
+			switch (message.getType())
+			{
+				case AirMessage.TYPE_PICTURE:
+					typeText = Config.app_name + ct.getString(R.string.talk_msg_pic);
+					msg = typeText;
+					break;
+				case AirMessage.TYPE_TEXT:
+					typeText = Config.app_name + ct.getString(R.string.talk_msg_text);
+					msg = message.getBody();
+					break;
+				case AirMessage.TYPE_RECORD:
+					AirtalkeeMessage.getInstance().MessageRecordPlayDownload(message);
+					typeText = Config.app_name + ct.getString(R.string.talk_msg_rec);
+					msg = typeText;
+					break;
+				case AirMessage.TYPE_SYSTEM:
+					typeText = Config.app_name + ct.getString(R.string.talk_session_msg);
+					msg = typeText;
+					break;
+				case AirMessage.TYPE_CHANNEL_ALERT:
+					typeText = ct.getString(R.string.talk_incoming_channel_alert_message);
+					msg = typeText;
+					break;
 			}
+		}
 
-			boolean isHandled = false;
-			if (msgListener != null)
-				isHandled = msgListener.onMessageIncomingRecv(isCustom, message);
-			if (!isHandled && message.getSessionCode() != null)
+		boolean isHandled = false;
+		if (msgListener != null)
+			isHandled = msgListener.onMessageIncomingRecv(isCustom, message);
+		if (!isHandled && message.getSessionCode() != null)
+		{
+			Intent intent = new Intent();
+			if (AirSession.sessionType(message.getSessionCode()) == AirSession.TYPE_CHANNEL)
 			{
-				Intent intent = new Intent();
-				if (AirSession.sessionType(message.getSessionCode()) == AirSession.TYPE_CHANNEL)
-				{
-					intent.setClass(ct, HomeActivity.class);
-				}
-				else
-				{
-					intent.setClass(ct, HomeActivity.class);
-				}
-				intent.putExtra("sessionCode", message.getSessionCode());
-				intent.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				Util.showNotification(Util.NOTIFI_ID_MESSAGE, AirServices.getInstance(), intent, from, typeText, msg, null);
+				intent.setClass(ct, HomeActivity.class);
+			}
+			else
+			{
+				intent.setClass(ct, HomeActivity.class);
+			}
+			intent.putExtra("sessionCode", message.getSessionCode());
+			intent.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			Util.showNotification(Util.NOTIFI_ID_MESSAGE, AirServices.getInstance(), intent, from, typeText, msg, null);
+			if (message.getSession().getSessionState() == AirSession.SESSION_STATE_DIALOG)
+			{
 				Sound.playSound(Sound.PLAYER_NEWINFO, false, ct);
-				if (SessionAndChannelView.getInstance() != null)
-				{
-					SessionAndChannelView.getInstance().refreshChannelAndDialog();
-					SessionAndChannelView.getInstance().resume();
-				}
-				if (HomeActivity.getInstance() != null)
-					HomeActivity.getInstance().checkNewIM(false);
-				if(StatusBarTitle.getInstance() != null)
-					StatusBarTitle.getInstance().refreshNewMsg();
 			}
+			if (SessionAndChannelView.getInstance() != null)
+			{
+				SessionAndChannelView.getInstance().refreshChannelAndDialog();
+				SessionAndChannelView.getInstance().resume();
+			}
+			if (HomeActivity.getInstance() != null)
+				HomeActivity.getInstance().checkNewIM(false);
+			if (StatusBarTitle.getInstance() != null)
+				StatusBarTitle.getInstance().refreshNewMsg();
 		}
 	}
 

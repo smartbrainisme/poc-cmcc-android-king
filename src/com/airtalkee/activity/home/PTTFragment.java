@@ -292,7 +292,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 			recPlaybackNone.setVisibility(View.GONE);
 			if (msg.getState() == AirMessage.STATE_NEW)
 			{
-				recPlaybackNew.setVisibility(View.VISIBLE);
+				recPlaybackNew.setVisibility(View.GONE);
 			}
 			else
 			{

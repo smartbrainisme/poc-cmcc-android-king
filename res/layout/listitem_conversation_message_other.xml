@@ -63,7 +63,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/user_name"
-                android:layout_marginRight="50dip"
                 android:background="?theme_msg_recv" >
 
                 <!-- text and picture Message -->
@@ -173,8 +172,10 @@
                 android:id="@+id/un_read"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignRight="@id/body_content"
+                android:layout_toRightOf="@id/body_content"
+                android:layout_alignTop="@id/body_content"
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
                 android:src="@drawable/msg_unread" />
 
             <ImageView

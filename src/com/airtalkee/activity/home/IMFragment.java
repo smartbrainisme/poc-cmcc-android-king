@@ -671,6 +671,13 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				pro.setAnimation(null);
 				pro.setVisibility(View.GONE);
 			}
+			ImageView record = (ImageView) view.findViewById(R.id.record_pic);
+			if (record != null)
+			{
+				record.setVisibility(View.VISIBLE);
+				// record.setSelected(true);
+				record.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_play, getActivity()));
+			}
 		}
 	}
 
