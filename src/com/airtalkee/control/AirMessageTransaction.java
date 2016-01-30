@@ -17,6 +17,8 @@ import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
+import com.airtalkee.activity.home.widget.MediaStatusBar;
+import com.airtalkee.activity.home.widget.SessionAndChannelView;
 import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.config.Config;
 import com.airtalkee.listener.OnMmiMessageListener;
@@ -92,76 +94,72 @@ public class AirMessageTransaction implements OnMessageListener,
 	public void onMessageIncomingRecv(boolean isCustom, AirMessage message)
 	{
 		// TODO Auto-generated method stub
-		Log.i(AirMessageTransaction.class, "AirMessageTransaction onMessageIncomingRecv");
-		Context ct = AirServices.getInstance();
-		String from = "";
-		String typeText = "";
-		String msg = "";
-		if (message != null)
+		if (message.getSession().getSessionState() == AirSession.SESSION_STATE_DIALOG)
 		{
-			from = message.getInameFrom();
+			Log.i(AirMessageTransaction.class, "AirMessageTransaction onMessageIncomingRecv");
+			Context ct = AirServices.getInstance();
+			String from = "";
+			String typeText = "";
+			String msg = "";
+			if (message != null)
+			{
+				from = message.getInameFrom();
 
-			switch (message.getType())
-			{
-				case AirMessage.TYPE_PICTURE:
-					typeText = Config.app_name + ct.getString(R.string.talk_msg_pic);
-					msg = typeText;
-					break;
-				case AirMessage.TYPE_TEXT:
-					typeText = Config.app_name + ct.getString(R.string.talk_msg_text);
-					msg = message.getBody();
-					break;
-				case AirMessage.TYPE_RECORD:
-					AirtalkeeMessage.getInstance().MessageRecordPlayDownload(message);
-					typeText = Config.app_name + ct.getString(R.string.talk_msg_rec);
-					msg = typeText;
-					break;
-				case AirMessage.TYPE_SYSTEM:
-					typeText = Config.app_name + ct.getString(R.string.talk_session_msg);
-					msg = typeText;
-					break;
-				case AirMessage.TYPE_CHANNEL_ALERT:
-					typeText = ct.getString(R.string.talk_incoming_channel_alert_message);
-					msg = typeText;
-					break;
+				switch (message.getType())
+				{
+					case AirMessage.TYPE_PICTURE:
+						typeText = Config.app_name + ct.getString(R.string.talk_msg_pic);
+						msg = typeText;
+						break;
+					case AirMessage.TYPE_TEXT:
+						typeText = Config.app_name + ct.getString(R.string.talk_msg_text);
+						msg = message.getBody();
+						break;
+					case AirMessage.TYPE_RECORD:
+						AirtalkeeMessage.getInstance().MessageRecordPlayDownload(message);
+						typeText = Config.app_name + ct.getString(R.string.talk_msg_rec);
+						msg = typeText;
+						break;
+					case AirMessage.TYPE_SYSTEM:
+						typeText = Config.app_name + ct.getString(R.string.talk_session_msg);
+						msg = typeText;
+						break;
+					case AirMessage.TYPE_CHANNEL_ALERT:
+						typeText = ct.getString(R.string.talk_incoming_channel_alert_message);
+						msg = typeText;
+						break;
+				}
 			}
-		}
 
-		boolean isHandled = false;
-		if (msgListener != null)
-			isHandled = msgListener.onMessageIncomingRecv(isCustom, message);
-		if (!isHandled && message.getSessionCode() != null)
-		{
-			Intent intent = new Intent();
-			if (AirSession.sessionType(message.getSessionCode()) == AirSession.TYPE_CHANNEL)
+			boolean isHandled = false;
+			if (msgListener != null)
+				isHandled = msgListener.onMessageIncomingRecv(isCustom, message);
+			if (!isHandled && message.getSessionCode() != null)
 			{
-				intent.setClass(ct, AccountActivity.class);
-			}
-			else
-			{
-				intent.setClass(ct, SessionDialogActivity.class);
+				Intent intent = new Intent();
+				if (AirSession.sessionType(message.getSessionCode()) == AirSession.TYPE_CHANNEL)
+				{
+					intent.setClass(ct, HomeActivity.class);
+				}
+				else
+				{
+					intent.setClass(ct, HomeActivity.class);
+				}
 				intent.putExtra("sessionCode", message.getSessionCode());
-				intent.putExtra("type", AirServices.TEMP_SESSION_TYPE_RESUME);
+				intent.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				Util.showNotification(Util.NOTIFI_ID_MESSAGE, AirServices.getInstance(), intent, from, typeText, msg, null);
+				Sound.playSound(Sound.PLAYER_NEWINFO, false, ct);
+				if (SessionAndChannelView.getInstance() != null)
+				{
+					SessionAndChannelView.getInstance().refreshChannelAndDialog();
+					SessionAndChannelView.getInstance().resume();
+				}
+				if (HomeActivity.getInstance() != null)
+					HomeActivity.getInstance().checkNewIM(false);
+				if(StatusBarTitle.getInstance() != null)
+					StatusBarTitle.getInstance().refreshNewMsg();
 			}
-			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			Util.showNotification(Util.NOTIFI_ID_MESSAGE, AirServices.getInstance(), intent, from, typeText, msg, null);
-			Sound.playSound(Sound.PLAYER_NEWINFO, false, ct);
-
-			// if (MainActivity.getInstance() != null &&
-			// MainActivity.getInstance().viewMiddle != null)
-			// {
-			// MainActivity.getInstance().viewMiddle.refreshNewMsg();
-			// }
-			//
-			// if (SessionAndChannelView.getInstance() != null)
-			// {
-			// SessionAndChannelView.getInstance().refreshChannelAndDialog();
-			// SessionAndChannelView.getInstance().resume();
-			// }
-			// if (HomeActivity.getInstance() != null)
-			// {
-			// HomeActivity.getInstance().checkNewIM(false);
-			// }
 		}
 	}
 
@@ -372,7 +370,7 @@ public class AirMessageTransaction implements OnMessageListener,
 
 	private void callStationCenter()
 	{
-		final Context context = HomeActivity.getInstance();
+		final Context context = AirServices.getInstance();
 		if (Config.funcCenterCall == AirFunctionSetting.SETTING_ENABLE)
 		{
 			if (AirtalkeeAccount.getInstance().isAccountRunning())
@@ -394,7 +392,8 @@ public class AirMessageTransaction implements OnMessageListener,
 										dialog = new AlertDialog(context, null, context.getString(R.string.talk_call_offline_tip), context.getString(R.string.talk_session_call_cancel), context.getString(R.string.talk_call_leave_msg), AirMessageTransaction.this, DIALOG_2_SEND_MESSAGE, s.getSessionCode());
 										dialog.show();
 										break;
-									default:
+									case AirSession.SESSION_RELEASE_REASON_REJECTED:
+										Toast.makeText1(AirServices.getInstance(), "对方已拒接", Toast.LENGTH_SHORT).show();
 										break;
 								}
 							}

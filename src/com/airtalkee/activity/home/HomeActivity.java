@@ -8,6 +8,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnCancelListener;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -52,8 +53,7 @@ import com.airtalkee.widget.SlidingUpPanelLayout;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelSlideListener;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelState;
 
-public class HomeActivity extends BaseActivity implements PanelSlideListener,
-		OnPageChangeListener, ViewChangeListener
+public class HomeActivity extends BaseActivity implements PanelSlideListener, OnPageChangeListener, ViewChangeListener
 {
 	private AirSession session;
 	private PageFragmentAdapter adapter;
@@ -79,8 +79,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		com.airtalkee.sdk.util.Log.i(HomeActivity.class, "HomeActivity onCreate");
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
-		session = AirSessionControl.getInstance().getCurrentSession();
-
+		session = AirSessionControl.getInstance().getCurrentSession();	
 		mInstance = this;
 
 		setContentView(R.layout.activity_home);
@@ -113,10 +112,13 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		{
 			checkNewIM(false);
 		}
-		if (session.getType() == AirSession.TYPE_CHANNEL)
+		if (session != null)
 		{
-			AirChannel channel = session.getChannel();
-			channel.setRoleAppling(true);
+			if (session.getType() == AirSession.TYPE_CHANNEL)
+			{
+				AirChannel channel = session.getChannel();
+				channel.setRoleAppling(true);
+			}
 		}
 	}
 
@@ -246,6 +248,15 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 			SessionAndChannelView.getInstance().refreshChannelAndDialog();
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 			channelView.setVisibility(View.GONE);
+			if(StatusBarTitle.getInstance() != null)
+				StatusBarTitle.getInstance().refreshNewMsg();
+			try
+			{
+				IMFragment.getInstance().setTextPannelVisiblity(View.GONE);
+			}
+			catch (Exception e)
+			{
+			}
 		}
 		else
 		{
@@ -274,8 +285,27 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 	protected void onResume()
 	{
 		super.onResume();
+		com.airtalkee.sdk.util.Log.i(HomeActivity.class, "HomeActivity onResume");
+		Intent intent = getIntent();
+		String sessionCode = intent.getStringExtra("sessionCode");
+		int sessionType = intent.getIntExtra("type", -1);
+		if (sessionCode != null)
+		{
+			session = AirtalkeeSessionManager.getInstance().getSessionByCode(sessionCode);
+		}
+		else 
+		{
+			session = AirSessionControl.getInstance().getCurrentSession();	
+		}
+		if (sessionType == AirServices.TEMP_SESSION_TYPE_MESSAGE)
+		{
+			pageIndex = PAGE_IM;
+			onPageSelected(pageIndex);
+		}
 		if (mediaStatusBar != null)
+		{
 			mediaStatusBar.setSession(session);
+		}
 		StatusBarTitle.getInstance().checkBrodcast();
 	}
 

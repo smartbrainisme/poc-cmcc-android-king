@@ -44,7 +44,7 @@
                     <LinearLayout
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="2"
                         android:orientation="horizontal" >
 
                         <TextView
@@ -69,10 +69,9 @@
                         <TextView
                             android:id="@+id/talk_playback_user"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="fill_parent"
                             android:layout_margin="2dip"
                             android:ellipsize="end"
-                            android:maxEms="9"
                             android:maxLines="1"
                             android:textColor="#fff"
                             android:textSize="12sp" />

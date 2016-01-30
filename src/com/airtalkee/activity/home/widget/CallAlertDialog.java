@@ -8,9 +8,11 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import com.airtalkee.R;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.activity.TempSessionActivity;
 import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.SessionDialogActivity;
+import com.airtalkee.activity.home.SessionNewActivity;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.listener.OnMmiSessionListener;
@@ -141,6 +143,10 @@ public class CallAlertDialog extends AlertDialog implements android.view.View.On
 				mInstance.pageIndex = HomeActivity.PAGE_PTT;
 				mInstance.panelCollapsed();
 			}
+			if (SessionNewActivity.getInstance() != null)
+			{
+				SessionNewActivity.getInstance().finish();
+			}
 		}
 		this.cancel();
 	}
@@ -152,7 +158,6 @@ public class CallAlertDialog extends AlertDialog implements android.view.View.On
 		AirSessionControl.getInstance().setOnMmiSessionListener(null);
 		this.cancel();
 		this.session = null;
-		
 		if(listener != null)
 		{
 			listener.onDialogCancel(reason);

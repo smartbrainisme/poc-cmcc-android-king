@@ -295,19 +295,5 @@ public class Smilify
 
 			spannable.setSpan(smileySpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		}
-
-//		String[] array = mContext.getResources().getStringArray(R.array.smiley_code_array);
-//		for (int i=0; i<array.length; i++ )
-//		{
-//			int index = spannable.toString().indexOf(array[i]);
-//			if( index>=0 )//含有表情符号
-//			{
-//				int start = index;
-//				int end = index+array[i].length();
-//				String smileyCode = spannable.subSequence(start, end).toString();
-//				SmileySpan smileySpan = new SmileySpan(smileyCode,i);
-//				spannable.setSpan(smileySpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//			}
-//		}
 	}
 }

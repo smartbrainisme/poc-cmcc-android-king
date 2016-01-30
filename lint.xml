@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="ClickableViewAccessibility" severity="ignore" />
+    <issue id="InflateParams" severity="ignore" />
+    <issue id="InlinedApi">
+        <ignore path="src/com/airtalkee/adapter/AdapterReport.java" />
+    </issue>
+    <issue id="NewApi">
+        <ignore path="src/com/airtalkee/Util/Util.java" />
+        <ignore path="src/com/airtalkee/adapter/AdapterReport.java" />
+    </issue>
+</lint>

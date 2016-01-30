@@ -30,6 +30,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.airtalkee.R;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.AdapterMember.CheckedCallBack;
 import com.airtalkee.activity.home.widget.AlertDialog;
@@ -470,13 +471,18 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 							public void onDialogCancel(int reason)
 							{
 								// TODO Auto-generated method stub
+								Log.i(MemberFragment.class, "MemberFragment reason = "+reason);
 								switch (reason)
 								{
 									case AirSession.SESSION_RELEASE_REASON_NOTREACH:
 										dialog = new AlertDialog(getActivity(), null, getString(R.string.talk_call_offline_tip), getString(R.string.talk_session_call_cancel), getString(R.string.talk_call_leave_msg), listener, reason);
 										dialog.show();
 										break;
-									default:
+									case AirSession.SESSION_RELEASE_REASON_REJECTED:
+										Toast.makeText1(AirServices.getInstance(), "对方已拒接", Toast.LENGTH_SHORT).show();
+										break;
+									case AirSession.SESSION_RELEASE_REASON_BUSY:
+										Toast.makeText1(AirServices.getInstance(), "对方正在通话中，无法建立呼叫", Toast.LENGTH_SHORT).show();
 										break;
 								}
 							}
@@ -489,10 +495,6 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 						HomeActivity.getInstance().pageIndex = BaseActivity.PAGE_IM;
 						HomeActivity.getInstance().onViewChanged(s.getSessionCode());
 						HomeActivity.getInstance().panelCollapsed();
-//						Intent it = new Intent(getActivity(), SessionDialogActivity.class);
-//						it.putExtra("sessionCode", s.getSessionCode());
-//						it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
-//						getActivity().startActivity(it);
 					}
 
 				}

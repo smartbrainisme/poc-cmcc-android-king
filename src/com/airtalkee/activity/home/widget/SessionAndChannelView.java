@@ -180,9 +180,12 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 		switch (parent.getId())
 		{
 			case R.id.gv_channels:
-				if (session.getType() == AirSession.TYPE_DIALOG)
+				if (session != null)
 				{
-					AirSessionControl.getInstance().SessionEndCall(session);
+					if (session.getType() == AirSession.TYPE_DIALOG)
+					{
+						AirSessionControl.getInstance().SessionEndCall(session);
+					}
 				}
 				AirChannel channel = (AirChannel) adapterChannel.getItem(position);
 				if (channel != null)
@@ -213,15 +216,17 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 					}
 					else
 					{
-						/*
 						dialog = new AlertDialog(getContext(), getContext().getString(R.string.talk_in_temp_session_tip), getContext().getString(R.string.talk_no_tip), getContext().getString(R.string.talk_ok), true, new DialogListener()
 						{
 							@Override
 							public void onClickOk(int id, boolean isChecked)
 							{
 								showDialog = !isChecked;
-								AirSessionControl.getInstance().SessionEndCall(session);
 								AirSession s = (AirSession) adapterSession.getItem(position);
+								if (session.getType() == AirSession.TYPE_DIALOG && session.getSessionState() == AirSession.SESSION_STATE_DIALOG && !s.getSessionCode().equals(session.getSessionCode()))
+								{
+									AirSessionControl.getInstance().SessionEndCall(session);
+								}
 								if (s != null)
 								{
 									// AirtalkeeSessionManager.getInstance().getSessionByCode(s.getSessionCode());
@@ -244,14 +249,17 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 								dialog.cancel();
 							}
 						}, 0);
-						if(showDialog && session.getType() == AirSession.TYPE_DIALOG)
+						AirSession s = (AirSession) adapterSession.getItem(position);
+						if(showDialog && session.getType() == AirSession.TYPE_DIALOG && !s.getSessionCode().equals(session.getSessionCode()))
 						{
 							dialog.show();
 						}
 						else
 						{
-							AirSessionControl.getInstance().SessionEndCall(session);
-							AirSession s = (AirSession) adapterSession.getItem(position);
+							if (session.getType() == AirSession.TYPE_DIALOG && session.getSessionState() == AirSession.SESSION_STATE_DIALOG && !s.getSessionCode().equals(session.getSessionCode()))
+							{
+								AirSessionControl.getInstance().SessionEndCall(session);
+							}
 							if (s != null)
 							{
 								if (listener != null)
@@ -261,7 +269,8 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 							}
 							refreshChannelAndDialog();
 							PTTFragment.getInstance().getVideoPannel().setVisibility(View.GONE);
-						}*/
+						}
+						/*
 						AirSession s = (AirSession) adapterSession.getItem(position);
 						if (session.getType() == AirSession.TYPE_DIALOG && session.getSessionState() == AirSession.SESSION_STATE_DIALOG && !s.getSessionCode().equals(session.getSessionCode()))
 						{
@@ -276,7 +285,7 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 							}
 						}
 						refreshChannelAndDialog();
-						PTTFragment.getInstance().getVideoPannel().setVisibility(View.GONE);
+						PTTFragment.getInstance().getVideoPannel().setVisibility(View.GONE);*/
 					}
 				}
 				break;
@@ -311,7 +320,6 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 							adapterSession.notifyDataSetChanged();
 						break;
 				}
-
 			}
 		}
 	};

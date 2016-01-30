@@ -33,7 +33,9 @@ import android.text.TextUtils;
 import android.text.format.Time;
 import android.view.inputmethod.InputMethodManager;
 import com.airtalkee.R;
+import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.sdk.AirtalkeeAccount;
+import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
@@ -553,15 +555,7 @@ public class Util
 				catch (UnsupportedEncodingException e)
 				{}
 			}
-			// create spannable string
 			SpannableString spannable = new SpannableString(msg);
-			// spannable.setSpan(new SuperTextSpan(), 1, 4,
-			// spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-			// add link for URL
-			// Linkify.addLinks(spannable,
-			// Linkify.ALL);//ȥ�������ӣ�Ŀǰ�޷��������Ự��Ŀ�ϣ�����������»��ߣ�ûɶ�ã�
-			// add smiley
 			Smilify.getInstance(context).addSmiley(spannable, isfontheight);
 			return spannable;
 		}

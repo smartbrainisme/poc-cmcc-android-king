@@ -408,7 +408,6 @@ public class MediaStatusBar extends LinearLayout implements
 
 	private void notify2UpdateView(String sessionCode, int type)
 	{
-
 		final Intent intent = new Intent();
 		intent.setAction(ACTION_ON_SESSION_UPDATE);
 		intent.putExtra(EXTRA_SESSION_CODE, sessionCode);

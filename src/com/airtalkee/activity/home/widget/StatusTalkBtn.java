@@ -1,5 +1,6 @@
 package com.airtalkee.activity.home.widget;
 
+import java.util.Date;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.AirMmiTimerListener;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MainSessionView;
 import com.airtalkee.config.Config;
@@ -22,6 +24,7 @@ import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
+import com.airtalkee.services.AirServices;
 
 public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirMmiTimerListener
 {
@@ -155,116 +158,135 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 		}
 	}
 
+	private Date dateOld = null;
 	@Override
 	public boolean onTouch(View v, MotionEvent event)
 	{
-		// TODO Auto-generated method stub
 		switch (v.getId())
 		{
 			case R.id.media_ptt_box:
 			{
-				boolean isAction = false;
-				if (v.getId() == R.id.talk_btn_session)
+				try
 				{
-					if (event.getAction() == MotionEvent.ACTION_DOWN)
+					boolean isAction = false;
+					if (v.getId() == R.id.talk_btn_session)
 					{
-						double d = Math.sqrt((btnTalk.getWidth() / 2 - event.getX()) * (btnTalk.getWidth() / 2 - event.getX()) + (btnTalk.getHeight() / 2 - event.getY())
-							* (btnTalk.getHeight() / 2 - event.getY()));
-						if (btnTalk.getWidth() / 2 >= d)
+						if (event.getAction() == MotionEvent.ACTION_DOWN)
 						{
-							isAction = true;
-						}
-					}
-					else
-						isAction = true;
-				}
-				else
-					isAction = true;
-
-				if (isAction && session != null)
-				{
-
-					if (session.getSessionState() == AirSession.SESSION_STATE_DIALOG)
-					{
-						if (Config.pttClickSupport)
-						{
-							if (event.getAction() == MotionEvent.ACTION_DOWN)
+							double d = Math.sqrt((btnTalk.getWidth() / 2 - event.getX()) * (btnTalk.getWidth() / 2 - event.getX()) + (btnTalk.getHeight() / 2 - event.getY()) * (btnTalk.getHeight() / 2 - event.getY()));
+							if (btnTalk.getWidth() / 2 >= d)
 							{
-								isTalkLongClick = false;
-								v.setPressed(true);
-								Log.i(MainSessionView.class, "TalkButton Start timeout!");
-								AirMmiTimer.getInstance().TimerRegister(getContext(), this, false, true, TIMEOUT_LONG_CLICK, false, null);
-							}
-							else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
-							{
-								AirMmiTimer.getInstance().TimerUnregister(getContext(), this);
-								if (session.getSessionState() == AirSession.SESSION_STATE_DIALOG)
-								{
-									if (isTalkLongClick)
-									{
-										Log.i(MainSessionView.class, "TalkButton onLongClick released!");
-										AirtalkeeSessionManager.getInstance().TalkRelease(session);
-										isTalkLongClick = false;
-										v.setPressed(false);
-									}
-									else
-									{
-										Log.i(MainSessionView.class, "TalkButton onClick!");
-										AirtalkeeSessionManager.getInstance().TalkButtonClick(session, channel != null ? channel.isRoleAppling() : false);
-									}
-								}
-								isTalkLongClick = false;
+								isAction = true;
 							}
 						}
 						else
+							isAction = true;
+					}
+					else
+						isAction = true;
+
+					if (isAction && session != null)
+					{
+						if (session.getSessionState() == AirSession.SESSION_STATE_DIALOG)
+						{
+							if (Config.pttClickSupport)
+							{
+								if (event.getAction() == MotionEvent.ACTION_DOWN)
+								{
+									isTalkLongClick = false;
+									v.setPressed(true);
+									Log.i(MainSessionView.class, "TalkButton Start timeout!");
+									AirMmiTimer.getInstance().TimerRegister(getContext(), this, false, true, TIMEOUT_LONG_CLICK, false, null);
+								}
+								else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
+								{
+									AirMmiTimer.getInstance().TimerUnregister(getContext(), this);
+									if (session.getSessionState() == AirSession.SESSION_STATE_DIALOG)
+									{
+										if (isTalkLongClick)
+										{
+											Log.i(MainSessionView.class, "TalkButton onLongClick released!");
+											AirtalkeeSessionManager.getInstance().TalkRelease(session);
+											isTalkLongClick = false;
+											v.setPressed(false);
+										}
+										else
+										{
+											Log.i(MainSessionView.class, "TalkButton onClick!");
+											AirtalkeeSessionManager.getInstance().TalkButtonClick(session, channel != null ? channel.isRoleAppling() : false);
+										}
+									}
+									isTalkLongClick = false;
+								}
+							}
+							else
+							{
+								if (event.getAction() == MotionEvent.ACTION_DOWN)
+								{
+									Log.i(MainSessionView.class, "TalkButton onLongClick TalkRequest!");
+									AirtalkeeSessionManager.getInstance().TalkRequest(session, channel != null ? channel.isRoleAppling() : false);
+								}
+								else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
+								{
+									Log.i(MainSessionView.class, "TalkButton onLongClick TalkRelease!");
+									AirtalkeeSessionManager.getInstance().TalkRelease(session);
+								}
+							}
+						}
+						else if (session.getSessionState() == AirSession.SESSION_STATE_CALLING)
 						{
 							if (event.getAction() == MotionEvent.ACTION_DOWN)
 							{
-								Log.i(MainSessionView.class, "TalkButton onLongClick TalkRequest!");
-								AirtalkeeSessionManager.getInstance().TalkRequest(session, channel != null ? channel.isRoleAppling() : false);
-							}
-							else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
-							{
-								Log.i(MainSessionView.class, "TalkButton onLongClick TalkRelease!");
-								AirtalkeeSessionManager.getInstance().TalkRelease(session);
-							}
-						}
-					}
-					else if (session.getSessionState() == AirSession.SESSION_STATE_CALLING)
-					{
-						if (event.getAction() == MotionEvent.ACTION_DOWN)
-						{
-							if (session.getType() == AirSession.TYPE_DIALOG)
-							{
-								AirSessionControl.getInstance().SessionEndCall(session);
-							}
-						}
-					}
-					else if (session.getSessionState() == AirSession.SESSION_STATE_IDLE)
-					{
-						if (event.getAction() == MotionEvent.ACTION_DOWN)
-						{
-							if (session.getType() == AirSession.TYPE_DIALOG)
-							{
-								AirSessionControl.getInstance().SessionMakeCall(session);
-							}
-							else if (session.getType() == AirSession.TYPE_CHANNEL)
-							{
-								if (AirtalkeeAccount.getInstance().isEngineRunning())
+								Date dateNew = new Date();
+								float seconds = (dateNew.getTime() - dateOld.getTime()) / 1000f;
+								Log.i(StatusTalkBtn.class, "StatusTalkBtn seconds ="+seconds);
+								if(seconds < 0.5)
 								{
-									AirSessionControl.getInstance().SessionChannelIn(session.getSessionCode());
+									Toast.makeText1(AirServices.getInstance(), "点击间隔太短", Toast.LENGTH_SHORT).show();	
+									return false;
 								}
-								else
+								if (session.getType() == AirSession.TYPE_DIALOG)
 								{
-									Util.Toast(getContext(), getContext().getString(R.string.talk_network_warning));
+									AirSessionControl.getInstance().SessionEndCall(session);
 								}
 							}
+							else if (event.getAction() == MotionEvent.ACTION_UP) 
+							{
+								dateOld = new Date();
+							}
 						}
-					}
-					return true;
+						else if (session.getSessionState() == AirSession.SESSION_STATE_IDLE)
+						{
+							if (event.getAction() == MotionEvent.ACTION_DOWN)
+							{
+								if (session.getType() == AirSession.TYPE_DIALOG)
+								{
+									AirSessionControl.getInstance().SessionMakeCall(session);
+								}
+								else if (session.getType() == AirSession.TYPE_CHANNEL)
+								{
+									if (AirtalkeeAccount.getInstance().isEngineRunning())
+									{
+										AirSessionControl.getInstance().SessionChannelIn(session.getSessionCode());
+									}
+									else
+									{
+										Util.Toast(getContext(), getContext().getString(R.string.talk_network_warning));
+									}
+								}
+							}
+							else if (event.getAction() == MotionEvent.ACTION_UP) 
+							{
+								dateOld = null;
+							}
+						}
+						return true;
 
+					}
+					break;
 				}
-				break;
+				catch (Exception e)
+				{ }
 			}
 		}
 		return false;

@@ -331,7 +331,7 @@
                     android:id="@+id/gps_t"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dip"
+                    android:layout_marginLeft="10dip"
                     android:layout_marginRight="15dip"
                     android:gravity="left|center_vertical"
                     android:textColor="#282828"

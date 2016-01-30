@@ -345,13 +345,27 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 	@Override
 	public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time)
 	{
+
+	}
+
+	@Override
+	public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time, String address)
+	{
 		if (isUploading && id == AirLocation.AIR_LOCATION_ID_ONCE)
 		{
 			myToast.cancel();
 			String detail = report_detail.getText().toString();
 			int size = rbBig.isChecked() ? videoSize : (int) (videoSize * 0.8f);
-			reportDialog = new ReportProgressAlertDialog(this, MenuReportActivity.sizeMKB(size));
-			reportDialog.show();
+			if (mInstance != null)
+			{
+				reportDialog = new ReportProgressAlertDialog(AirServices.getInstance(), MenuReportActivity.sizeMKB(size));
+				try
+				{
+					reportDialog.show();
+				}
+				catch (Exception e)
+				{}
+			}
 			File file = new File(videoPath);
 			try
 			{
@@ -380,6 +394,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 			AirReportManager.getInstance().Report(taskId, taskName, AirtalkeeReport.RESOURCE_TYPE_VIDEO, resTypeExtension, videoUri, videoPath, detail, videoSize, latitude, longitude);
 			isUploading = false;
 		}
+
 	}
 
 	@Override

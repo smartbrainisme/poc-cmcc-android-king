@@ -209,9 +209,8 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 			reportDialog.cancel();
 		}
 		catch (Exception e)
-		{
-		}
-		
+		{}
+
 	}
 
 	@Override
@@ -370,15 +369,29 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 	@Override
 	public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time)
 	{
-		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time, String address)
+	{
 		if (isUploading && id == AirLocation.AIR_LOCATION_ID_ONCE)
 		{
 			myToast.cancel();
 			String detail = report_detail.getText().toString();
 			String path = isHighQuality ? picPathTemp : picPath;
 			String size = isHighQuality ? MenuReportActivity.sizeMKB(picSizeTemp) + "" : MenuReportActivity.sizeMKB(picSize) + "";
-			reportDialog = new ReportProgressAlertDialog(this, size);
-			reportDialog.show();
+			if (mInstance != null)
+			{
+				reportDialog = new ReportProgressAlertDialog(this, size);
+				try
+				{
+					reportDialog.show();
+				}
+				catch (Exception e)
+				{}
+
+			}
 			File file = new File(path);
 			Uri uri = Uri.fromFile(file);
 			try

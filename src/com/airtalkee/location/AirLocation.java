@@ -211,7 +211,7 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 	// =================================
 
 	@Override
-	public void OnMapLocation(boolean isOk, int id, int type, boolean isFinal, double latitude, double longitude, double altitude, float direction, float speed, String time)
+	public void OnMapLocation(boolean isOk, int id, int type, boolean isFinal, double latitude, double longitude, double altitude, float direction, float speed, String time, String address)
 	{
 		// TODO Auto-generated method stub
 		if (isOk && isFinal && id == AIR_LOCATION_ID_LOOP)
@@ -228,7 +228,7 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 
 		if (listener != null)
 		{
-			listener.onLocationChanged(isOk, id, type, latitude, longitude, altitude, speed, time);
+			listener.onLocationChanged(isOk, id, type, latitude, longitude, altitude, speed, time, address);
 		}
 	}
 

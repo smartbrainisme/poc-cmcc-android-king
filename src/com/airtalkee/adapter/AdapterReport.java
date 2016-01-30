@@ -17,6 +17,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -141,6 +142,8 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 			holder.uploadStep = (TextView) convertView.findViewById(R.id.talk_report_retry_step);
 			holder.cbReport = (CheckBox) convertView.findViewById(R.id.cb_report);
 			holder.ivReportEnter = (ImageView) convertView.findViewById(R.id.iv_report_enter);
+			holder.retryLayout = (LinearLayout) convertView.findViewById(R.id.talk_report_retry_panel);
+			holder.retryLayout.getBackground().setAlpha(200);
 			convertView.setTag(holder);
 		}
 		else
@@ -204,6 +207,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 					holder.uploadStep.setText(context.getString(R.string.talk_tools_report_waiting));
 					holder.uploadStep.setVisibility(View.VISIBLE);
 					holder.failText.setVisibility(View.VISIBLE);
+					holder.retryLayout.setVisibility(View.VISIBLE);
 					break;
 				}
 				case AirReport.STATE_UPLOADING:
@@ -213,6 +217,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 					holder.uploadStep.setVisibility(View.VISIBLE);
 					holder.failText.setVisibility(View.VISIBLE);
 					holder.stateRetry.setVisibility(View.GONE);
+					holder.retryLayout.setVisibility(View.VISIBLE);
 					break;
 				}
 				case AirReport.STATE_RESULT_OK:
@@ -232,6 +237,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 					holder.stateRetry.setVisibility(View.GONE);
 					holder.uploadStep.setVisibility(View.GONE);
 					holder.failText.setVisibility(View.GONE);
+					holder.retryLayout.setVisibility(View.GONE);
 					break;
 				}
 				case AirReport.STATE_RESULT_FAIL:
@@ -244,6 +250,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 					holder.uploadStep.setText(context.getString(R.string.talk_tools_report_click));
 					holder.uploadStep.setVisibility(View.VISIBLE);
 					holder.progressBar.setVisibility(View.GONE);
+					holder.retryLayout.setVisibility(View.VISIBLE);
 					break;
 				}
 			}
@@ -296,6 +303,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 		CheckBox cbReport;
 		ImageView ivReportEnter;
 		VideoView video;
+		LinearLayout retryLayout;
 	}
 
 	@Override
@@ -358,7 +366,14 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 	}
 
 	@Override
+	public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time, String address)
+	{
+	}
+
+	@Override
 	public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time)
 	{
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -10,14 +10,14 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.airtalkee.R;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
+import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.MemberAllView;
+import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.airtalkee.activity.home.widget.MemberAllView.MemberCheckListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeMessage;
@@ -25,6 +25,7 @@ import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.controller.SessionController;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.services.AirServices;
 
 public class SessionNewActivity extends Activity implements OnClickListener, MemberCheckListener, TextWatcher
 {
@@ -36,6 +37,12 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 	private CallAlertDialog alertDialog;
 	private int DIALOG_CALL = 111;
 
+	private static SessionNewActivity mInstance;
+	
+	public static SessionNewActivity getInstance()
+	{
+		return mInstance;
+	}
 	// search
 //	private EditText etSearch;
 //	private ImageView ivSearch;
@@ -57,7 +64,7 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 		findViewById(R.id.bar_left).setOnClickListener(this);
 		findViewById(R.id.bar_mid).setOnClickListener(this);
 		findViewById(R.id.bar_right).setOnClickListener(this);
-
+		mInstance = this;
 //		etSearch = (EditText) findViewById(R.id.et_search);
 //		etSearch.addTextChangedListener(this);
 //		ivSearch = (ImageView) findViewById(R.id.iv_search);
@@ -87,12 +94,6 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 			case R.id.bar_right:
 				callSelectClean();
 				break;
-//			case R.id.iv_search:
-//				etSearch.setText("");
-//				break;
-//			case R.id.btn_search:
-//				searchByKey();
-//				break;
 		}
 	}
 
@@ -124,7 +125,25 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 				AirSession s = SessionController.SessionMatch(tempCallMembers);
 				if (isCall)
 				{
-					alertDialog = new CallAlertDialog(this, "正在呼叫" + s.getDisplayName(), "请稍后...", s.getSessionCode(), DIALOG_CALL);
+					alertDialog = new CallAlertDialog(this, "正在呼叫" + s.getDisplayName(), "请稍后...", s.getSessionCode(), DIALOG_CALL, new OnAlertDialogCancelListener()
+					{
+						@Override
+						public void onDialogCancel(int reason)
+						{
+							// TODO Auto-generated method stub
+							switch (reason)
+							{
+								// case AirSession.SESSION_RELEASE_REASON_NOTREACH:
+								//	break;
+								case AirSession.SESSION_RELEASE_REASON_REJECTED:
+									Toast.makeText1(mInstance, "对方已拒接", Toast.LENGTH_SHORT).show();
+									break;
+								case AirSession.SESSION_RELEASE_REASON_BUSY:
+									Toast.makeText1(AirServices.getInstance(), "对方正在通话中，无法建立呼叫", Toast.LENGTH_SHORT).show();
+									break;
+							}
+						}
+					});
 					alertDialog.show();
 				}
 				else
@@ -135,12 +154,6 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 						HomeActivity.getInstance().onViewChanged(s.getSessionCode());
 						HomeActivity.getInstance().panelCollapsed();
 					}
-					// Intent it = new Intent(this,
-					// SessionDialogActivity.class);
-					// it.putExtra("sessionCode", s.getSessionCode());
-					// it.putExtra("type",
-					// AirServices.TEMP_SESSION_TYPE_MESSAGE);
-					// startActivity(it);
 				}
 
 			}

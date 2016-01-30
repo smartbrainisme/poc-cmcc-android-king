@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.lang.Thread.UncaughtExceptionHandler;
+import android.app.LauncherActivity;
 import android.content.Context;
 import android.os.Environment;
 import android.text.format.Time;
 import android.util.Log;
-
 import com.airtalkee.control.VoiceManager;
 
 public class AppExcepiton implements UncaughtExceptionHandler

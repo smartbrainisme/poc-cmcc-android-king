@@ -23,6 +23,7 @@ public class ReportProgressAlertDialog extends Dialog implements OnClickListener
 	{
 		super(context, R.style.alert_dialog);
 		this.fileSize = fileSize;
+		this.context = context;
 	}
 
 	@Override

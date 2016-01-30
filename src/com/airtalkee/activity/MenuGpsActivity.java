@@ -23,7 +23,7 @@ import com.airtalkee.location.AirLocation;
 public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		OnMmiLocationListener, OnCheckedChangeListener
 {
-	private TextView gps_t;
+	private TextView gps_t, gps_t_text;
 	int[] mFrequenceValue = { AirLocation.AIR_LOCATION_FRE_NAVIGATE, AirLocation.AIR_LOCATION_FRE_MINUTE_1, AirLocation.AIR_LOCATION_FRE_MINUTE_5, AirLocation.AIR_LOCATION_FRE_MINUTE_15, AirLocation.AIR_LOCATION_FRE_MINUTE_30, AirLocation.AIR_LOCATION_FRE_MINUTE_60 };
 	String[] mFrequence = null;
 	String[] mState = null;
@@ -93,6 +93,7 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 
 		mState = getResources().getStringArray(R.array.gps_state);
 		gps_t = (TextView) findViewById(R.id.gps_t);
+		gps_t_text = (TextView) findViewById(R.id.gps_t_text);
 
 		gpsFrequenceText = (TextView) findViewById(R.id.gps_frequence_text);
 		gpsFrequenceHigh = (TextView) findViewById(R.id.gps_frequence_high_text);
@@ -219,43 +220,10 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		AirLocation.getInstance(this).setListener(null, AirLocation.AIR_LOCATION_ID_LOOP);
 	}
 
-	private void refreshGpsData(int type, double latitude, double longitude, double altitude, float speed, String time)
+	private void refreshGpsData(int type, double latitude, double longitude, double altitude, float speed, String time, String address)
 	{
+		gps_t_text.setText(address + "附近");
 		gps_t.setText(time + "");
-	}
-
-	private void confirmGpsHighPrecision()
-	{
-		final boolean isGpsActived = AirLocation.getInstance(this).GpsIsActive();
-
-		String btn_ok = isGpsActived ? getString(R.string.talk_ok) : getString(R.string.talk_gps_setting);
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setMessage(getString(R.string.talk_gps_high_tip));
-		builder.setPositiveButton(btn_ok, new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int whichButton)
-			{
-				dialog.cancel();
-				if (!isGpsActived)
-				{
-					AirLocation.getInstance(MenuGpsActivity.this).GpsActive();
-				}
-
-				AirLocation.getInstance(MenuGpsActivity.this).loopRun(MenuGpsActivity.this, AirLocation.AIR_LOCATION_FRE_NAVIGATE, true);
-				setGpsView(true);
-				setHighFreView(true);
-			}
-		});
-
-		builder.setNegativeButton(getString(R.string.talk_no), new DialogInterface.OnClickListener()
-		{
-			public void onClick(DialogInterface dialog, int whichButton)
-			{
-				dialog.cancel();
-				setHighFreView(false);
-			}
-		});
-		builder.show();
 	}
 
 	@Override
@@ -275,9 +243,18 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 	@Override
 	public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time)
 	{
+		//		if (isOk && id == AirLocation.AIR_LOCATION_ID_LOOP)
+		//		{
+		//			refreshGpsData(type, latitude, longitude, altitude, speed, time);
+		//		}
+	}
+	
+	@Override
+	public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time, String address)
+	{
 		if (isOk && id == AirLocation.AIR_LOCATION_ID_LOOP)
 		{
-			refreshGpsData(type, latitude, longitude, altitude, speed, time);
+			refreshGpsData(type, latitude, longitude, altitude, speed, time, address);
 		}
 	}
 

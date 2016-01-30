@@ -71,7 +71,7 @@ public class MenuNoticeActivity extends ActivityBase implements OnClickListener
 		}
 
 		Util.closeNotification(Util.NOTIFI_ID_NOTICE);
-		AirtalkeeAccount.getInstance().SystemBroadcastNumberClean();
+		// AirtalkeeAccount.getInstance().SystemBroadcastNumberClean();
 		openWeb(url);
 	}
 	

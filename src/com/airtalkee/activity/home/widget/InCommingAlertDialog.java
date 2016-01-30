@@ -1,6 +1,5 @@
 package com.airtalkee.activity.home.widget;
 
-import android.app.LauncherActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import com.airtalkee.R;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.HomeActivity;
+import com.airtalkee.activity.home.SessionNewActivity;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.sdk.AirtalkeeMessage;
@@ -51,7 +51,11 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 	public void onClickOk(int id,Object obj)
 	{
 		Log.i(InCommingAlertDialog.class, "InCommingAlertDialog click ok!");
-		
+		AirSession session = AirSessionControl.getInstance().getCurrentSession();
+		if (session.getType() == AirSession.TYPE_DIALOG)
+		{
+			AirSessionControl.getInstance().SessionEndCall(session);
+		}
 		Sound.stopSound(Sound.PLAYER_INCOMING_RING);
 		AirtalkeeSessionManager.getInstance().SessionIncomingAccept(temAirSession);
 		AirtalkeeMessage.getInstance().MessageSystemGenerate(temAirSession, getContext().getString(R.string.talk_call_state_incoming_call), false);
@@ -139,6 +143,10 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 				mInstance.onViewChanged(session.getSessionCode());
 				mInstance.pageIndex = HomeActivity.PAGE_PTT;
 				mInstance.panelCollapsed();
+			}
+			if (SessionNewActivity.getInstance() != null)
+			{
+				SessionNewActivity.getInstance().finish();
 			}
 		}
 		this.cancel();

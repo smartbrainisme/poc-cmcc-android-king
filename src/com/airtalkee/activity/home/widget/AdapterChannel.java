@@ -86,19 +86,11 @@ public class AdapterChannel extends BaseAdapter
 						}
 					});
 					tvUnread.setText(currentChannel.getMessageUnreadCount() + "");
-					if (item.getMsgUnReadCount() > 0)
-					{
-						tvUnread.setVisibility(View.VISIBLE);
-						tvUnread.setText(item.getMsgUnReadCount() + "");
-					}
-					else
-						tvUnread.setVisibility(View.GONE);
 				}
 				else
 				{
 					baseView.setBackgroundResource(R.drawable.selector_listitem_channel);
 					ivListener.setBackgroundResource(R.drawable.ic_listen);
-					tvUnread.setVisibility(View.GONE);
 				}
 				
 				if (item.getSession() != null && item.getSession().getSessionState() == AirSession.SESSION_STATE_DIALOG)
@@ -118,11 +110,19 @@ public class AdapterChannel extends BaseAdapter
 					}
 					tvCount.setText(onlineNumber + "/" + item.getCount());
 					ivListener.setVisibility(View.VISIBLE);
+					if (item.getMsgUnReadCount() > 0)
+					{
+						tvUnread.setVisibility(View.VISIBLE);
+						tvUnread.setText(item.getMsgUnReadCount() + "");
+					}
+					else
+						tvUnread.setVisibility(View.GONE);
 				}
 				else
 				{
 					tvCount.setText(item.getCount() + "");
 					ivListener.setVisibility(View.GONE);
+					tvUnread.setVisibility(View.GONE);
 				}
 				if (item.getSession() != null && item.getSession().isVoiceLocked())
 				{

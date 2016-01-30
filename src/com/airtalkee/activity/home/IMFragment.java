@@ -112,8 +112,10 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		findViewById(R.id.btn_voice_close).setOnClickListener(this);
 		etMsg.addTextChangedListener(this);
 		
+		adapterMessage = new AdapterSessionMessage(getActivity(), this, this);
+		adapterMessage.notifyDataSetChanged();
 		lvMessage = (PullToRefreshListView) findViewById(R.id.lv_message);
-		lvMessage.setAdapter(adapterMessage = new AdapterSessionMessage(getActivity(), this, this));
+		lvMessage.setAdapter(adapterMessage);
 		lvMessage.setOnRefreshListener(this);
 		lvMessage.setOnItemClickListener(this);
 		
@@ -374,13 +376,19 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 
 	public void setSession(AirSession s)
 	{
-
 		if ((s != null && session != null && !s.getSessionCode().equals(session.getSessionCode())) || (session == null && s != null))
 		{
 			if (lvMessage == null)
 				return;
+			refreshMessages();
 			lvMessage.setHaveMore(s.isMessageMore());
-			mHandler.sendEmptyMessageDelayed(1, 100);
+			try
+			{
+				mHandler.sendEmptyMessageDelayed(1, 10);
+			}
+			catch (Exception e)
+			{
+			}
 		}
 		this.session = s;
 		Log.d(SessionBoxMessage.class, "SessionBoxMessage - setSession");
@@ -389,7 +397,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 			etMsg.setText(s.getMessageTextDraft());
 		}
 		adapterMessage.setSession(s);
-
 	}
 
 	public void refreshMessages()
@@ -853,6 +860,8 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	{
 		// TODO Auto-generated method stub
 		int position = 10;
+		adapterMessage.notifyDataSetChanged();
+		adapterMessage.notifyDataSetInvalidated();
 		if (messages != null)
 		{
 			position = messages.size();
@@ -860,7 +869,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		lvMessage.onRefreshComplete();
 		lvMessage.setHaveMore(session.isMessageMore());
 		lvMessage.setSelectionFromTop(position, 0);
-		adapterMessage.notifyDataSetInvalidated();
 	}
 
 	@Override

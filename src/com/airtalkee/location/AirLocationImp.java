@@ -5,6 +5,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import com.airtalkee.R.string;
 import com.airtalkee.Util.AirMmiTimer;
 import com.airtalkee.Util.AirMmiTimerListener;
 import com.airtalkee.Util.Util;
@@ -43,6 +44,7 @@ public class AirLocationImp
 	public static float mDirection = 0;
 	public static float mSpeed = 0;
 	public static String mTime = "";
+	public static String mAddress = "";
 
 	public void LocationGet(final Context context, final OnMapListener listener, final int actionId, final int timeoutSeconds)
 	{
@@ -102,6 +104,37 @@ public class AirLocationImp
 		return mTime;
 	}
 
+	private void listenerCallback(OnMapListener listener, int id, int type, boolean isFinal, double latitude, double longitude, double altitude, float direction, float speed, String time, String address)
+	{
+		boolean isOk = false;
+		if (latitude != CELL_ERROR && latitude != 0)
+			mLatitude = latitude;
+		if (longitude != CELL_ERROR && longitude != 0)
+			mLongitude = longitude;
+		if (altitude != CELL_ERROR && altitude != 0)
+			mAltitude = altitude;
+		if (speed != CELL_ERROR && speed != 0)
+			mSpeed = speed;
+		if (direction != CELL_ERROR && direction != 0)
+			mDirection = direction;
+
+		if (mLatitude != 0 && mLongitude != 0)
+		{
+			isOk = true;
+			mTime = time;
+			mType = type;
+		}
+		if(address != null)
+		{
+			mAddress = address;
+		}
+
+		if (listener != null)
+		{
+			listener.OnMapLocation(isOk, id, type, isFinal, mLatitude, mLongitude, mAltitude, mDirection, mSpeed, mTime, mAddress);
+		}
+	}
+	
 	private void listenerCallback(OnMapListener listener, int id, int type, boolean isFinal, double latitude, double longitude, double altitude, float direction, float speed, String time)
 	{
 		boolean isOk = false;
@@ -125,7 +158,7 @@ public class AirLocationImp
 
 		if (listener != null)
 		{
-			listener.OnMapLocation(isOk, id, type, isFinal, mLatitude, mLongitude, mAltitude, mDirection, mSpeed, mTime);
+			listener.OnMapLocation(isOk, id, type, isFinal, mLatitude, mLongitude, mAltitude, mDirection, mSpeed, mTime, mAddress);
 		}
 	}
 
@@ -234,11 +267,13 @@ public class AirLocationImp
 			@Override
 			public void onReceiveLocation(BDLocation location)
 			{
+				
 				long ts = Util.getTimeGap(location.getTime());
+				
 				Log.i(AirLocationImp.class, "[LOCATION][ID:" + id + "][BAIDU-CELL][FINAL: " + isFinal + "] X:" + location.getLatitude() + " Y:" + location.getLongitude() + " Time:" + location.getTime() + " TimeGap:" + ts + "s");
 				if (ts > -AirLocation.AIR_LOCATION_CELL_TIME_GAP)
 				{
-					listenerCallback(listener, id, LOCATION_TYPE_CELL_BAIDU, isFinal, location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getDirection(), location.getSpeed(), Util.getCurrentDate());
+					listenerCallback(listener, id, LOCATION_TYPE_CELL_BAIDU, isFinal, location.getLatitude(), location.getLongitude(), location.getAltitude(), location.getDirection(), location.getSpeed(), Util.getCurrentDate(), location.getAddrStr());
 				}
 				else
 				{

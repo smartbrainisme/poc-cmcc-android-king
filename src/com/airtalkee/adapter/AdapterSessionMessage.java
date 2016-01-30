@@ -28,8 +28,7 @@ import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
 
-public class AdapterSessionMessage extends AdapterBase implements
-		OnImageLoadCompletedListener
+public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCompletedListener
 {
 	AirSession currentSession = null;
 	final int TYPE_ME = 0;
@@ -142,16 +141,30 @@ public class AdapterSessionMessage extends AdapterBase implements
 							msg_body += iMessage.getBody().replaceAll("\r", "");
 							if (!TextUtils.equals(iMessage.getIpocidFrom(), AirtalkeeUserInfo.getInstance().getUserInfo().getIpocId()))
 							{
-								if(!msg_body.contains(iMessage.getInameFrom()))
+								if (!msg_body.contains(iMessage.getInameFrom()))
 								{
 									msg_body += " (" + iMessage.getInameFrom() + ")";
 								}
+							}
+							if(msg_body.contains("JOINED")) 
+							{
+								String time = msg_body.substring(0,10);
+								String joinedId = msg_body.substring(10,msg_body.indexOf(")") + 1);
+								String joinId = null;
+								if(msg_body.contains("BY"))
+								{
+									joinId = msg_body.substring(msg_body.lastIndexOf("("),msg_body.lastIndexOf(")") + 1);
+								}
+								if(joinId == null)
+									msg_body = time + joinedId + " 被加入";
+								else
+									msg_body = time + joinedId + " 被 " + joinId + " 加入";
 							}
 							spannable = Util.buildPlainMessageSpannable(mContext, msg_body.getBytes());
 							holder.bodyLayout.setVisibility(View.GONE);
 							holder.tvSystem.setVisibility(View.VISIBLE);
 							holder.tvSystem.setText(spannable);
-							Log.i(AdapterSessionMessage.class, "AdapterSessionMessage TYPE_SYSTEM msg="+holder.tvSystem.getText());
+							Log.i(AdapterSessionMessage.class, "AdapterSessionMessage TYPE_SYSTEM msg=" + holder.tvSystem.getText());
 							break;
 						}
 
@@ -160,7 +173,7 @@ public class AdapterSessionMessage extends AdapterBase implements
 							holder.bodyLayout.setVisibility(View.VISIBLE);
 							holder.tvSystem.setVisibility(View.GONE);
 							holder.body.setText(spannable);
-							Log.i(AdapterSessionMessage.class, "AdapterSessionMessage TYPE_default msg="+holder.body.getText());
+							Log.i(AdapterSessionMessage.class, "AdapterSessionMessage TYPE_default msg=" + holder.body.getText());
 							break;
 						}
 					}
@@ -559,11 +572,19 @@ public class AdapterSessionMessage extends AdapterBase implements
 		switch (orientation)
 		{
 			case AdapterSessionMessage.ORIENTATION_HORIZONTAL:
-//				params.width = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_widht) * ((float) (width) / (float) (height)) * 2);
-//				params.height = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_height) * ((float) (width) / (float) (height)) * 2);
+				// params.width = (int)
+				// (mContext.getResources().getDimension(R.dimen.msg_pic_widht)
+				// * ((float) (width) / (float) (height)) * 2);
+				// params.height = (int)
+				// (mContext.getResources().getDimension(R.dimen.msg_pic_height)
+				// * ((float) (width) / (float) (height)) * 2);
 			case AdapterSessionMessage.ORIENTATION_VERTICAL:
-//				params.width = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_height) * ((float) (height) / (float) (width)) * 2);
-//				params.height = (int) (mContext.getResources().getDimension(R.dimen.msg_pic_widht) * ((float) (height) / (float) (width)) * 2);
+				// params.width = (int)
+				// (mContext.getResources().getDimension(R.dimen.msg_pic_height)
+				// * ((float) (height) / (float) (width)) * 2);
+				// params.height = (int)
+				// (mContext.getResources().getDimension(R.dimen.msg_pic_widht)
+				// * ((float) (height) / (float) (width)) * 2);
 				params.width = width;
 				params.height = height;
 				break;
