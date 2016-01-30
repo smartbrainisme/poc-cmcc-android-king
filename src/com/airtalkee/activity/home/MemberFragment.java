@@ -53,6 +53,7 @@ import com.airtalkee.sdk.util.Log;
 import com.airtalkee.services.AirServices;
 import com.airtalkee.widget.MListView;
 import com.airtalkee.widget.MyRelativeLayout;
+import com.baidu.location.n;
 
 public class MemberFragment extends BaseFragment implements OnClickListener,
 		OnItemClickListener, CheckedCallBack, MemberCheckListener,
@@ -141,6 +142,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		setSession(getSession());
 		if (getSession() != null)
 		{
+			currentSelectPage = R.id.tab_member_session;
 			refreshTab(R.id.tab_member_session);
 			AirtalkeeContactPresence.getInstance().setContactPresenceListener(this);
 			if (getSession().getType() == AirSession.TYPE_CHANNEL)
@@ -227,6 +229,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 				{
 					memberAllView = new MemberAllView(getActivity(), this);
 					memberAllView.adapterMember.notifyDataSetChanged();
+					memAllContainer.addView(null);
 					memAllContainer.addView(memberAllView);
 				}
 				memberAllView.adapterMember.notifyMember(memberAllView.memberAll);
@@ -268,11 +271,11 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 					ivSerachIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_white));
 					searchPannelChannel.setVisibility(View.GONE);
 					searchEditChannel.clearFocus();
+					searchEditChannel.setText("");
 					Util.hideSoftInput(getActivity());
 				}
 			}
-			else
-			// 全部成员
+			else if (id == R.id.tab_member_all)// 全部成员
 			{
 				if (searchPannelAll.getVisibility() == View.GONE)
 				{
@@ -286,6 +289,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 					ivSerachIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_white));
 					searchPannelAll.setVisibility(View.GONE);
 					searchEditAll.clearFocus();
+					searchEditAll.setText("");
 					Util.hideSoftInput(getActivity());
 				}
 			}
@@ -319,6 +323,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 			}
 			case R.id.iv_search_icon:
 			{
+				refreshTab(currentSelectPage);
 				refreshSearch(currentSelectPage);
 				break;
 			}

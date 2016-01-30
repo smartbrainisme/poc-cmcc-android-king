@@ -30,6 +30,7 @@ import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
+import com.airtalkee.sdk.util.Log;
 import com.airtalkee.widget.MListView;
 
 public class MemberAllView extends LinearLayout implements OnClickListener, OnItemClickListener, TextWatcher, CheckedCallBack
@@ -148,8 +149,14 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 
 	private void searchByKey()
 	{
+		Log.i(MemberAllView.class, "memberall size = " + memberAll.size());
 		String key = etSearch.getText().toString();
 		memberSearchResult.clear();
+		if(memberAll == null || memberAll.size() == 0)
+		{
+			memberAll = getAllAirContacts();
+			lvMemberAll.setAdapter(adapterMember);
+		}
 		if (TextUtils.isEmpty(key))
 		{
 			adapterMember.notifyMember(memberAll);
