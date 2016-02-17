@@ -9,6 +9,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
@@ -33,9 +34,7 @@ import android.text.TextUtils;
 import android.text.format.Time;
 import android.view.inputmethod.InputMethodManager;
 import com.airtalkee.R;
-import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.sdk.AirtalkeeAccount;
-import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
@@ -58,7 +57,7 @@ public class Util
 	public static void showNotification(int id, Context context, Intent intent, String from, String ticker, String message, Object object)
 	{
 		nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-		PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		PendingIntent contentIntent = PendingIntent.getActivity(context, UUID.randomUUID().hashCode(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		int flag = -1;
 		int drawableId = R.drawable.notfiy_icon;
 		switch (id)

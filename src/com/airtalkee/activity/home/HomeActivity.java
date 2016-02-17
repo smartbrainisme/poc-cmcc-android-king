@@ -53,7 +53,8 @@ import com.airtalkee.widget.SlidingUpPanelLayout;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelSlideListener;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelState;
 
-public class HomeActivity extends BaseActivity implements PanelSlideListener, OnPageChangeListener, ViewChangeListener
+public class HomeActivity extends BaseActivity implements PanelSlideListener,
+		OnPageChangeListener, ViewChangeListener
 {
 	private AirSession session;
 	private PageFragmentAdapter adapter;
@@ -79,7 +80,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		com.airtalkee.sdk.util.Log.i(HomeActivity.class, "HomeActivity onCreate");
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
-		session = AirSessionControl.getInstance().getCurrentSession();	
+		session = AirSessionControl.getInstance().getCurrentSession();
 		mInstance = this;
 
 		setContentView(R.layout.activity_home);
@@ -129,10 +130,11 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		if (!isChannel)
 		{
 			/*
-			if (session != null && session.getSessionState() != AirSession.SESSION_STATE_IDLE && session.getType() == AirSession.TYPE_DIALOG)
-			{
-				AirSessionControl.getInstance().SessionEndCall(session);
-			}*/
+			 * if (session != null && session.getSessionState() !=
+			 * AirSession.SESSION_STATE_IDLE && session.getType() ==
+			 * AirSession.TYPE_DIALOG) {
+			 * AirSessionControl.getInstance().SessionEndCall(session); }
+			 */
 			AirtalkeeMessage.getInstance().MessageListMoreClean(session);
 		}
 		if (channelView != null)
@@ -248,15 +250,14 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 			SessionAndChannelView.getInstance().refreshChannelAndDialog();
 			getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 			channelView.setVisibility(View.GONE);
-			if(StatusBarTitle.getInstance() != null)
+			if (StatusBarTitle.getInstance() != null)
 				StatusBarTitle.getInstance().refreshNewMsg();
 			try
 			{
 				IMFragment.getInstance().setTextPannelVisiblity(View.GONE);
 			}
 			catch (Exception e)
-			{
-			}
+			{}
 		}
 		else
 		{
@@ -286,21 +287,28 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 	{
 		super.onResume();
 		com.airtalkee.sdk.util.Log.i(HomeActivity.class, "HomeActivity onResume");
-		Intent intent = getIntent();
-		String sessionCode = intent.getStringExtra("sessionCode");
-		int sessionType = intent.getIntExtra("type", -1);
-		if (sessionCode != null)
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null)
 		{
-			session = AirtalkeeSessionManager.getInstance().getSessionByCode(sessionCode);
-		}
-		else 
-		{
-			session = AirSessionControl.getInstance().getCurrentSession();	
-		}
-		if (sessionType == AirServices.TEMP_SESSION_TYPE_MESSAGE)
-		{
-			pageIndex = PAGE_IM;
-			onPageSelected(pageIndex);
+			String sessionTag = bundle.getString("tag");
+			if ("onMessageIncomingRecv".equals(sessionTag))
+			{
+				String sessionCode = bundle.getString("sessionCode");
+				int sessionType = bundle.getInt("type", -1);
+				if (sessionCode != null)
+				{
+					session = AirtalkeeSessionManager.getInstance().getSessionByCode(sessionCode);
+				}
+				else
+				{
+					session = AirSessionControl.getInstance().getCurrentSession();
+				}
+				if (sessionType == AirServices.TEMP_SESSION_TYPE_MESSAGE)
+				{
+					pageIndex = PAGE_IM;
+					onPageSelected(pageIndex);
+				}
+			}
 		}
 		if (mediaStatusBar != null)
 		{
@@ -496,30 +504,30 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		return super.dispatchKeyEvent(event);
 	}
 
-//	@Override
-//	public boolean dispatchTouchEvent(MotionEvent ev)
-//	{
-//		if (ev.getAction() == MotionEvent.ACTION_DOWN)
-//		{
-//			if(Config.model.contains("MT7"))
-//			{
-//				View v = mediaStatusBar.getBottomBarParent();
-//				if (isShouldHideInput(v, ev))
-//				{
-////					RelativeLayout ivSpetrum = PTTFragment.getInstance().getIvSpetrum();
-////					LayoutParams p = (LayoutParams) ivSpetrum.getLayoutParams();
-////					p.setMargins(0, 14, 0, 0);
-////					ivSpetrum.setLayoutParams(p);
-//				}
-//			}
-//			return super.dispatchTouchEvent(ev);
-//		}
-//
-//		if (getWindow().superDispatchTouchEvent(ev))
-//		{
-//			return true;
-//		}
-//		return onTouchEvent(ev);
-//	}
+	// @Override
+	// public boolean dispatchTouchEvent(MotionEvent ev)
+	// {
+	// if (ev.getAction() == MotionEvent.ACTION_DOWN)
+	// {
+	// if(Config.model.contains("MT7"))
+	// {
+	// View v = mediaStatusBar.getBottomBarParent();
+	// if (isShouldHideInput(v, ev))
+	// {
+	// // RelativeLayout ivSpetrum = PTTFragment.getInstance().getIvSpetrum();
+	// // LayoutParams p = (LayoutParams) ivSpetrum.getLayoutParams();
+	// // p.setMargins(0, 14, 0, 0);
+	// // ivSpetrum.setLayoutParams(p);
+	// }
+	// }
+	// return super.dispatchTouchEvent(ev);
+	// }
+	//
+	// if (getWindow().superDispatchTouchEvent(ev))
+	// {
+	// return true;
+	// }
+	// return onTouchEvent(ev);
+	// }
 
 }

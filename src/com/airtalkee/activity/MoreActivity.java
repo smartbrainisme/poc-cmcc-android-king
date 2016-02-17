@@ -103,31 +103,10 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		mVoiceMode.setOnClickListener(this);
 
 		// GPS item
-		if (Config.funcCenterLocation == AirFunctionSetting.SETTING_DISABLE)
-		{
-			findViewById(R.id.talk_lv_tool_gps).setVisibility(View.GONE);
-			findViewById(R.id.talk_lv_tool_gps_divider).setVisibility(View.GONE);
-		}
-		else
-		{
-			if (Config.funcCenterLocationMenuShow)
-			{
-				// findViewById(R.id.talk_lv_tool_gps).setOnClickListener(this);
-				// findViewById(R.id.talk_lv_tool_gps).setVisibility(View.VISIBLE);
-				// findViewById(R.id.talk_lv_tool_gps_divider).setVisibility(View.VISIBLE);
-
-				findViewById(R.id.talk_lv_tool_gps).setVisibility(View.GONE);
-				findViewById(R.id.talk_lv_tool_gps_divider).setVisibility(View.GONE);
-			}
-			else
-			{
-				// findViewById(R.id.talk_lv_tool_gps).setVisibility(View.GONE);
-				// findViewById(R.id.talk_lv_tool_gps_divider).setVisibility(View.GONE);
-				findViewById(R.id.talk_lv_tool_gps).setOnClickListener(this);
-				findViewById(R.id.talk_lv_tool_gps).setVisibility(View.VISIBLE);
-				findViewById(R.id.talk_lv_tool_gps_divider).setVisibility(View.VISIBLE);
-			}
-		}
+		findViewById(R.id.talk_lv_tool_gps).setOnClickListener(this);
+		findViewById(R.id.talk_lv_tool_gps).setVisibility(View.VISIBLE);
+		findViewById(R.id.talk_lv_tool_gps_divider).setVisibility(View.VISIBLE);
+		
 		findViewById(R.id.talk_setting_voice).setOnClickListener(this);
 		findViewById(R.id.talk_lv_tool_upload_record).setOnClickListener(this);// 上报记录
 		findViewById(R.id.talk_lv_tool_help).setOnClickListener(this);// 使用和帮助

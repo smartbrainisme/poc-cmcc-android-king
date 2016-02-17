@@ -137,6 +137,8 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	{
 		// TODO Auto-generated method stub
 		super.onResume();
+		searchEditChannel.setText("");
+		searchEditAll.setText("");
 		if (mediaStatusBar != null)
 			mediaStatusBar.setBarEnable(HomeActivity.PAGE_MEMBER, false);
 		setSession(getSession());

@@ -103,7 +103,6 @@ public class AirMessageTransaction implements OnMessageListener,
 		if (message != null)
 		{
 			from = message.getInameFrom();
-
 			switch (message.getType())
 			{
 				case AirMessage.TYPE_PICTURE:
@@ -143,9 +142,10 @@ public class AirMessageTransaction implements OnMessageListener,
 			else
 			{
 				intent.setClass(ct, HomeActivity.class);
+				intent.putExtra("tag", "onMessageIncomingRecv");
+				intent.putExtra("sessionCode", message.getSessionCode());
+				intent.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
 			}
-			intent.putExtra("sessionCode", message.getSessionCode());
-			intent.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			Util.showNotification(Util.NOTIFI_ID_MESSAGE, AirServices.getInstance(), intent, from, typeText, msg, null);
 			if (message.getSession().getSessionState() == AirSession.SESSION_STATE_DIALOG)

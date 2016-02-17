@@ -27,7 +27,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/icon_cmcc" />
+                android:src="@drawable/icon_cmcc_orange" />
 
             <TextView
                 android:id="@+id/tv_cmcc"

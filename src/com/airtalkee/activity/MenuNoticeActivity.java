@@ -32,7 +32,7 @@ import com.airtalkee.sdk.util.Utils;
 public class MenuNoticeActivity extends ActivityBase implements OnClickListener
 {
 
-	private final String NOTICE_LIST_BASE = "textAnnouncementAction_listTextUI.action?userId=<UID>&lang=<LANG>";
+	private final String NOTICE_LIST_BASE = "textAnnouncementAction_listTextUI.action?userId=<UID>&lang=<LANG>&type=1";
 	private final String NOTICE_LIST = "textAnnouncementAction_listTextUI.action";
 	private final String NOTICE_CONTENT = "textAnnouncementAction_commentTextUI.action";
 	private final String NOTICE_CONTENT_PARAM_LANG = "&lang=";
@@ -194,7 +194,6 @@ public class MenuNoticeActivity extends ActivityBase implements OnClickListener
 			{
 				url = AccountController.getDmWebNoticeUrl() + NOTICE_LIST_BASE;
 			}
-
 			if (url.contains(NOTICE_LIST))
 			{
 				url = url.replace("<UID>", AirtalkeeAccount.getInstance().getUserId());

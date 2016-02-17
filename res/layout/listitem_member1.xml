@@ -21,14 +21,14 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/user_state_offline" />
 
-        <TextView
+        <com.airtalkee.activity.home.widget.MarqueeTextView
             android:id="@id/talk_tv_group_member"
             android:layout_width="wrap_content"
             android:layout_height="24dip"
             android:layout_marginRight="10dp"
+            android:ellipsize="marquee"
             android:gravity="center_vertical"
             android:singleLine="true"
-            android:text="TEXT"
             android:textColor="?theme_color_text1"
             android:textSize="18dip" />
 

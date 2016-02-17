@@ -7,6 +7,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -152,6 +153,9 @@ public class AdapterMember extends BaseAdapter
 			holder = new ViewHolder();
 			holder.checkBox = (CheckBox) convertView.findViewById(R.id.talk_cb_group_member);
 			holder.tvName = (TextView) convertView.findViewById(R.id.talk_tv_group_member);
+			holder.tvName.setMovementMethod(ScrollingMovementMethod.getInstance());
+			holder.tvName.requestFocus();
+			holder.tvName.setFocusableInTouchMode(true);
 			holder.ivSPresence = (ImageView) convertView.findViewById(R.id.talk_iv_presence);
 			holder.ivRole = (ImageView) convertView.findViewById(R.id.talk_iv_group_role);
 			convertView.setTag(holder);
@@ -163,7 +167,14 @@ public class AdapterMember extends BaseAdapter
 		final AirContact member = (AirContact) getItem(position);
 		if (member != null)
 		{
-			holder.tvName.setText(member.getDisplayName());
+			if (TextUtils.equals(member.getDisplayName(), member.getIpocId()))
+			{
+				holder.tvName.setText(member.getDisplayName());
+			}
+			else
+			{
+				holder.tvName.setText(member.getDisplayName() + "(" + member.getIpocId() + ")");
+			}
 			if (TextUtils.equals(AirtalkeeAccount.getInstance().getUserId(), member.getIpocId()))
 			{
 				holder.ivSPresence.setImageResource(R.drawable.user_state_online);

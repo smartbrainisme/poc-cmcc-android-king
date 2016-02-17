@@ -3,21 +3,22 @@ package com.airtalkee.activity.home;
 import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.airtalkee.R;
 import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.home.widget.AlertDialog;
+import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.CallAlertDialog;
-import com.airtalkee.activity.home.widget.MemberAllView;
 import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
+import com.airtalkee.activity.home.widget.MemberAllView;
 import com.airtalkee.activity.home.widget.MemberAllView.MemberCheckListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeMessage;
@@ -27,7 +28,8 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.services.AirServices;
 
-public class SessionNewActivity extends Activity implements OnClickListener, MemberCheckListener, TextWatcher
+public class SessionNewActivity extends Activity implements OnClickListener,
+		MemberCheckListener
 {
 
 	private LinearLayout containner;
@@ -37,17 +39,17 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 	private CallAlertDialog alertDialog;
 	private int DIALOG_CALL = 111;
 
+	private ImageView ivBtnLeft, ivBtnMid, ivBtnRight;
+	private int[] memResChecked = new int[] { R.drawable.selector_fun_call, R.drawable.selector_fun_msg, R.drawable.selector_fun_cancel };
+	private int[] memResUnchecked = new int[] { R.drawable.ic_fun_call_dis, R.drawable.ic_fun_msg_dis, R.drawable.ic_fun_cancel_dis };
+	AlertDialog dialog;
+
 	private static SessionNewActivity mInstance;
-	
+
 	public static SessionNewActivity getInstance()
 	{
 		return mInstance;
 	}
-	// search
-//	private EditText etSearch;
-//	private ImageView ivSearch;
-//	private Button btnSearch;
-//	List<AirContact> memberSearchResult = new ArrayList<AirContact>();
 
 	@Override
 	protected void onCreate(Bundle bundle)
@@ -61,17 +63,13 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 		containner = (LinearLayout) findViewById(R.id.containner);
 		containner.addView(memAllView);
 		memAllView.getSearchPannel().setVisibility(View.VISIBLE);
-		findViewById(R.id.bar_left).setOnClickListener(this);
-		findViewById(R.id.bar_mid).setOnClickListener(this);
-		findViewById(R.id.bar_right).setOnClickListener(this);
+		ivBtnLeft = (ImageView) findViewById(R.id.bar_left);
+		ivBtnLeft.setOnClickListener(this);
+		ivBtnMid = (ImageView) findViewById(R.id.bar_mid);
+		ivBtnMid.setOnClickListener(this);
+		ivBtnRight = (ImageView) findViewById(R.id.bar_right);
+		ivBtnRight.setOnClickListener(this);
 		mInstance = this;
-//		etSearch = (EditText) findViewById(R.id.et_search);
-//		etSearch.addTextChangedListener(this);
-//		ivSearch = (ImageView) findViewById(R.id.iv_search);
-//
-//		btnSearch = (Button) findViewById(R.id.btn_search);
-//		btnSearch.setOnClickListener(this);
-
 	}
 
 	@Override
@@ -133,8 +131,10 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 							// TODO Auto-generated method stub
 							switch (reason)
 							{
-								// case AirSession.SESSION_RELEASE_REASON_NOTREACH:
-								//	break;
+								case AirSession.SESSION_RELEASE_REASON_NOTREACH:
+									dialog = new AlertDialog(mInstance, null, getString(R.string.talk_call_offline_tip), getString(R.string.talk_session_call_cancel), getString(R.string.talk_call_leave_msg), listener, reason);
+									dialog.show();
+									break;
 								case AirSession.SESSION_RELEASE_REASON_REJECTED:
 									Toast.makeText1(mInstance, "对方已拒接", Toast.LENGTH_SHORT).show();
 									break;
@@ -148,14 +148,11 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 				}
 				else
 				{
-					if (s != null)
-					{
-						AirtalkeeSessionManager.getInstance().getSessionByCode(s.getSessionCode());
-						HomeActivity.getInstance().onViewChanged(s.getSessionCode());
-						HomeActivity.getInstance().panelCollapsed();
-					}
+					AirtalkeeSessionManager.getInstance().getSessionByCode(s.getSessionCode());
+					HomeActivity.getInstance().pageIndex = BaseActivity.PAGE_IM;
+					HomeActivity.getInstance().onViewChanged(s.getSessionCode());
+					HomeActivity.getInstance().panelCollapsed();
 				}
-
 			}
 			else
 			{
@@ -168,27 +165,10 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 		}
 
 	}
-	
-	private void searchByKey()
-	{
-//		String key = etSearch.getText().toString();
-//		memberSearchResult.clear();
-//		setSession(getSession());
-//		for (int i = 0; i < adapterMember.getCount(); i++)
-//		{
-//			AirContact contact = (AirContact) adapterMember.getItem(i);
-//			if (contact.getDisplayName().equalsIgnoreCase(key) || contact.getIpocId().equals(key) || contact.getDisplayName().contains(key) || contact.getIpocId().contains(key))
-//			{
-//				memberSearchResult.add(contact);
-//			}
-//		}
-//		refreshMembers(getSession(), memberSearchResult);
-	}
 
 	@Override
 	public void onMemberChecked(boolean isChecked)
 	{
-		// TODO Auto-generated method stub
 		refreshBottomView(isChecked);
 	}
 
@@ -199,34 +179,42 @@ public class SessionNewActivity extends Activity implements OnClickListener, Mem
 			View child = bottom.getChildAt(i);
 			child.setEnabled(isChecked);
 		}
+		if (isChecked)
+		{
+			ivBtnLeft.setImageResource(memResChecked[0]);
+			ivBtnMid.setImageResource(memResChecked[1]);
+			ivBtnRight.setImageResource(memResChecked[2]);
+		}
+		else
+		{
+			ivBtnLeft.setImageResource(memResUnchecked[0]);
+			ivBtnMid.setImageResource(memResUnchecked[1]);
+			ivBtnRight.setImageResource(memResUnchecked[2]);
+		}
 	}
 
-	@Override
-	public void beforeTextChanged(CharSequence s, int start, int count, int after)
+	private DialogListener listener = new DialogListener()
 	{
+		@Override
+		public void onClickOk(int id, boolean isChecked)
+		{
+			// TODO Auto-generated method stub
 
-	}
+		}
 
-	@Override
-	public void onTextChanged(CharSequence s, int start, int before, int count)
-	{
-//		btnSearch.setEnabled(!TextUtils.isEmpty(etSearch.getText()));
-//		if (TextUtils.isEmpty(etSearch.getText()))
-//		{
-//			ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ic_member_search));
-//			ivSearch.setOnClickListener(null);
-//		}
-//		else
-//		{
-//			searchByKey();
-//			ivSearch.setImageDrawable(getResources().getDrawable(R.drawable.ic_close_cicle));
-//			ivSearch.setOnClickListener(this);
-//		}
-	}
+		@Override
+		public void onClickOk(int id, Object object)
+		{
+			AirtalkeeMessage.getInstance().MessageRecordPlayStop();
+			callSelectMember(false);
+			callSelectClean();
+		}
 
-	@Override
-	public void afterTextChanged(Editable s)
-	{
+		@Override
+		public void onClickCancel(int id)
+		{
+			// TODO Auto-generated method stub
 
-	}
+		}
+	};
 }
