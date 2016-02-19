@@ -152,7 +152,7 @@ public class AdapterMemberAll extends BaseAdapter
 		final AirContact member = (AirContact) getItem(position);
 		if (member != null)
 		{
-			holder.tvName.setText(member.getDisplayName());
+			holder.tvName.setText(member.getDisplayName() + "(" + member.getIpocId() + ")");
 			if (TextUtils.equals(AirtalkeeAccount.getInstance().getUserId(), member.getIpocId()))
 			{
 				holder.ivSPresence.setImageResource(R.drawable.user_state_online);
@@ -209,7 +209,7 @@ public class AdapterMemberAll extends BaseAdapter
 			String myIpocId = (AirtalkeeAccount.getInstance() != null) ? AirtalkeeAccount.getInstance().getUserId() : "";
 			if (myIpocId.equals(member.getIpocId()))
 			{
-				holder.tvName.setText(member.getDisplayName());
+				//holder.tvName.setText(member.getDisplayName());
 				holder.checkBox.setClickable(false);
 				holder.checkBox.setVisibility(View.INVISIBLE);
 			}

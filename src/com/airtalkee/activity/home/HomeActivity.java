@@ -68,10 +68,19 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 	private boolean isChannel = true;
 
 	private static HomeActivity mInstance;
-
 	public static HomeActivity getInstance()
 	{
 		return mInstance;
+	}
+	
+	public AirSession getSession()
+	{
+		return session;
+	}
+	
+	public void setSession(AirSession session)
+	{
+		this.session = session;
 	}
 
 	@Override
@@ -283,7 +292,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 	}
 
 	@Override
-	protected void onResume()
+	public void onResume()
 	{
 		super.onResume();
 		com.airtalkee.sdk.util.Log.i(HomeActivity.class, "HomeActivity onResume");

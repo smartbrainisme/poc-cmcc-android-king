@@ -11,8 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.airtalkee.R;
 
-public class AlertDialog extends Dialog implements
-		android.view.View.OnClickListener
+public class AlertDialog extends Dialog implements android.view.View.OnClickListener
 {
 
 	protected TextView tvTitle;

@@ -232,6 +232,7 @@ public class MediaStatusBar extends LinearLayout implements
 	public void onSessionReleased(AirSession session, int reason)
 	{
 		// TODO Auto-generated method stub
+		Log.i(MediaStatusBar.class, "onSessionReleased MediaStatusBar start reason = " + reason);
 		sessionRefresh();
 		notify2UpdateView(session.getSessionCode(), TYPE_ON_SESSION_RELEASED);
 	}

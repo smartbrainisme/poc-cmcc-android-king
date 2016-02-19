@@ -4,20 +4,23 @@ import java.util.List;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
+import android.view.WindowManager;
 import com.airtalkee.R;
 import com.airtalkee.Util.Sound;
 import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.AccountActivity;
 import com.airtalkee.activity.MenuNoticeActivity;
+import com.airtalkee.activity.MoreActivity;
 import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.activity.home.SessionDialogActivity;
 import com.airtalkee.activity.home.widget.AlertDialog;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
-import com.airtalkee.activity.home.widget.MediaStatusBar;
 import com.airtalkee.activity.home.widget.SessionAndChannelView;
 import com.airtalkee.activity.home.widget.StatusBarTitle;
 import com.airtalkee.config.Config;
@@ -280,10 +283,10 @@ public class AirMessageTransaction implements OnMessageListener,
 	}
 
 	@Override
-	public void onSystemBroadcastPush(String title, String url)
+	public void onSystemBroadcastPush(final String title, String url)
 	{
 		// TODO Auto-generated method stub
-		Context ct = HomeActivity.getInstance();
+		final Context ct = AirServices.getInstance();
 		if (ct != null)
 		{
 			Intent intent = new Intent();
@@ -295,9 +298,24 @@ public class AirMessageTransaction implements OnMessageListener,
 			// 弹出窗口
 			try
 			{
-				dialog = new AlertDialog(ct, ct.getString(R.string.talk_tools_notice), title, ct.getString(R.string.talk_tools_know), ct.getString(R.string.talk_session_call), this, DIALOG_CALL);
-				dialog.show();
-				StatusBarTitle.getInstance().checkBrodcast();
+				Handler handler = new Handler(Looper.getMainLooper());
+				handler.post(new Runnable()
+				{
+					public void run()
+					{
+						dialog = new AlertDialog(ct, ct.getString(R.string.talk_tools_notice), title, ct.getString(R.string.talk_tools_know), ct.getString(R.string.talk_session_call), AirMessageTransaction.this, DIALOG_CALL);
+						dialog.getWindow().setType((WindowManager.LayoutParams.TYPE_SYSTEM_ALERT));
+						dialog.show();
+					}
+				});
+				if (StatusBarTitle.getInstance() != null)
+				{
+					StatusBarTitle.getInstance().checkBrodcast();
+				}
+				if (MoreActivity.getInstance() != null)
+				{
+					MoreActivity.getInstance().checkBrodcast();
+				}
 			}
 			catch (Exception e)
 			{

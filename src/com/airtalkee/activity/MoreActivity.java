@@ -24,7 +24,6 @@ import com.airtalkee.sdk.OnUserInfoListener;
 import com.airtalkee.sdk.controller.AccountController;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactGroup;
-import com.airtalkee.sdk.entity.AirFunctionSetting;
 
 public class MoreActivity extends ActivityBase implements OnClickListener,
 		OnUserInfoListener, OnSeekBarChangeListener
@@ -127,7 +126,7 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		tvUserIpocid.setText(AirtalkeeAccount.getInstance().getUserId());
 
 		ivUnread = (ImageView) findViewById(R.id.iv_Unread);
-		checkBrodcast();
+		//checkBrodcast();
 	}
 	
 	public void checkBrodcast()
@@ -145,7 +144,6 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 	@Override
 	public void finish()
 	{
-		// TODO Auto-generated method stub
 		super.finish();
 	}
 

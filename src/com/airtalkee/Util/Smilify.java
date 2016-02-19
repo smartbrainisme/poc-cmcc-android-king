@@ -129,11 +129,8 @@ public class Smilify
 			if (array == null)
 			{
 				array = mContext.getResources().getStringArray(R.array.smiley_code_array);
-
-				//				Arrays.sort(array);
 			}
 			int index = 0;//
-
 			for (String str : array)
 			{
 				if (str.equals(mSmiley))
@@ -145,8 +142,6 @@ public class Smilify
 					index++;
 				}
 			}
-//			Log.i( "mSmiley  index"+index);
-
 			TypedArray resIds = mContext.getResources().obtainTypedArray(R.array.smiley_resid_array);
 			int resId = resIds.getResourceId(index, 0);
 			if (resId == 0)
@@ -292,7 +287,6 @@ public class Smilify
 			int end = m.end();
 			String smileyCode = spannable.subSequence(start, end).toString();
 			SmileySpan smileySpan = new SmileySpan(smileyCode);
-
 			spannable.setSpan(smileySpan, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 		}
 	}

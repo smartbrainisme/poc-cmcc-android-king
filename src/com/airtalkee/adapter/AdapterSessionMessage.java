@@ -134,6 +134,7 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 					{
 						case AirMessage.TYPE_SYSTEM:
 						{
+							holder.userName.setVisibility(View.INVISIBLE);
 							msg_body = "[" + iMessage.getTime() + "] ";
 							msg_body += iMessage.getBody().replaceAll("\r", "");
 							if (!TextUtils.equals(iMessage.getIpocidFrom(), AirtalkeeUserInfo.getInstance().getUserInfo().getIpocId()))
@@ -167,10 +168,10 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 
 						default:
 						{
+							holder.userName.setVisibility(View.VISIBLE);
 							holder.bodyLayout.setVisibility(View.VISIBLE);
 							holder.tvSystem.setVisibility(View.GONE);
 							holder.body.setText(spannable);
-							Log.i(AdapterSessionMessage.class, "AdapterSessionMessage TYPE_default msg=" + holder.body.getText());
 							break;
 						}
 					}
@@ -203,6 +204,7 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 			convertView = ((Activity) mContext).getLayoutInflater().inflate(R.layout.listitem_conversation_message_me, null);
 			holder1 = new ViewHolder1();
 			holder1.ViewHolderInit(convertView);
+			holder1.userName = (TextView) convertView.findViewById(R.id.user_name);
 			holder1.report_icon = (ImageView) convertView.findViewById(R.id.report_icon);
 			convertView.setTag(holder1);
 
@@ -213,13 +215,13 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		}
 		if (holder1 == null)
 			return convertView;
-		holder1.pic.setVisibility(View.GONE);
 		holder1.body.setVisibility(View.VISIBLE);
 		holder1.pro.setVisibility(View.GONE);
 		holder1.tvAndIvLayout.setVisibility(View.VISIBLE);
 		holder1.record_layout.setVisibility(View.GONE);
 		holder1.bodyContent.setTag(iMessage);
 		holder1.bodyContent.setOnClickListener(onClicklistener);
+		holder1.pic.setVisibility(View.GONE);
 		holder1.bodyContent.setOnLongClickListener(onLongClickListener);
 		if (type == AirMessage.TYPE_RECORD)// Record Message
 		{
@@ -321,12 +323,11 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 
 		if (holder2 == null)
 			return convertView;
-
+		holder2.pic.setVisibility(View.GONE);
 		holder2.bodyContent.setTag(iMessage);
 		holder2.bodyContent.setOnClickListener(onClicklistener);
 		holder2.bodyContent.setOnLongClickListener(onLongClickListener);
 		holder2.unRead.setVisibility(View.GONE);
-		holder2.pic.setVisibility(View.GONE);
 		holder2.record_layout.setVisibility(View.GONE);
 		holder2.body.setVisibility(View.VISIBLE);
 		holder2.tvAndIvLayout.setVisibility(View.VISIBLE);
@@ -423,6 +424,7 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		protected TextView tvSystem;
 		protected ImageView msg_ptt;
 		protected View bodyContent;
+		protected TextView userName;
 
 		// protected View layoutFriendInfo;
 		// protected View btnAddFriend;
@@ -471,7 +473,6 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 	{
 		TextView downlaod_btn;
 		ImageView unRead;
-		TextView userName;
 	}
 
 	private boolean needShowDateline(int position)

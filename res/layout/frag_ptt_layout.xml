@@ -89,14 +89,14 @@
                             android:layout_width="fill_parent"
                             android:layout_height="fill_parent"
                             android:gravity="center_vertical|right"
-                            android:orientation="horizontal" >
+                            android:orientation="horizontal" 
+                            android:visibility="invisible">
 
                             <ImageView
                                 android:id="@+id/talk_playback_user_unread"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/msg_unread"
-                                android:visibility="gone" />
+                                android:src="@drawable/msg_unread"/>
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>

@@ -3,6 +3,7 @@
 
 	<!-- APP NAME -->
 	<string name="app_name_cmcc">和对讲</string>
+	<string name="app_name_poc">4G POC</string>
 	<string name="copyright"></string>
 	<string name="copyright_cmcc1">Copyright 2009-2015 中国移动</string>
 	<string name="copyright_cmcc2">中国移动 版权所有</string>

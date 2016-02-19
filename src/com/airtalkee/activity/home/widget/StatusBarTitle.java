@@ -17,7 +17,9 @@ import com.airtalkee.R;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Toast;
 import com.airtalkee.activity.MoreActivity;
+import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.config.Config;
+import com.airtalkee.control.AirSessionControl;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
@@ -33,8 +35,9 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 	private View btnLeft, btnRight;
 	private ImageView ivBtnLeft, ivUnReadDot, ivNoticeUnread;
 	private AirSession session = null;
-	
+
 	private static StatusBarTitle mInstance;
+
 	public static StatusBarTitle getInstance()
 	{
 		return mInstance;
@@ -70,7 +73,7 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		btnRight.setOnClickListener(this);
 		checkBrodcast();
 	}
-	
+
 	public void checkBrodcast()
 	{
 		if (Config.funcBroadcast && AirtalkeeAccount.getInstance().SystemBroadcastNumberGet() > 0)
@@ -90,11 +93,6 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		refreshNewMsg();
 	}
 
-	public void setLeftMenuInVisible()
-	{
-		btnLeft.setVisibility(View.INVISIBLE);
-	}
-
 	public void refreshMediaStatus()
 	{
 		if (session != null)
@@ -103,19 +101,18 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 			{
 				if (session.getType() == AirSession.TYPE_DIALOG)
 				{
-					btnLeft.setVisibility(View.INVISIBLE);
+					ivBtnLeft.setImageResource(R.drawable.incoming_reject_icon);
 				}
 				else
 				{
-					btnLeft.setVisibility(View.VISIBLE);
-				}
-				if (session.isVoiceLocked())
-				{
-					ivBtnLeft.setImageResource(R.drawable.ic_lock);
-				}
-				else
-				{
-					ivBtnLeft.setImageResource(R.drawable.ic_unlock);
+					if (session.isVoiceLocked())
+					{
+						ivBtnLeft.setImageResource(R.drawable.ic_lock);
+					}
+					else
+					{
+						ivBtnLeft.setImageResource(R.drawable.ic_unlock);
+					}
 				}
 				tvTitle.setText(session.getDisplayName());
 				// tvTitle.setCompoundDrawables(getResources().getDrawable(R.drawable.ic_drag_down),
@@ -198,6 +195,16 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 						ivBtnLeft.setImageResource(R.drawable.ic_lock);
 						Toast.makeText1(this.getContext(), getContext().getString(R.string.talk_channel_lock_tip), Toast.LENGTH_LONG).show();
 					}
+				}
+				else if (session != null && session.getType() == AirSession.TYPE_DIALOG)
+				{
+					if (session.getSessionState() == AirSession.SESSION_STATE_DIALOG)
+					{
+						AirSessionControl.getInstance().SessionEndCall(session);
+					}
+					session = AirSessionControl.getInstance().getCurrentChannelSession();
+					HomeActivity.getInstance().setSession(session);
+					HomeActivity.getInstance().onResume();
 				}
 				break;
 			case R.id.right_button:

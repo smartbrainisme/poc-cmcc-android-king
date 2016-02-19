@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import com.airtalkee.R;
 import com.airtalkee.Util.Util;
+import com.airtalkee.sdk.engine.AirEngine;
 import com.airtalkee.sdk.entity.AirFunctionSetting;
 
 public class Config
@@ -22,7 +23,7 @@ public class Config
 	public static int marketCode = MARKET_CMCC;
 	// =======================================================
 
-	public static final int TRACE_MODE = TRACE_MODE_ON_FILE;
+	public static final int TRACE_MODE = TRACE_MODE_ON_SCREEN;
 
 	// =======================================================
 	// DEFINE
@@ -145,7 +146,7 @@ public class Config
 
 	public static void marketConfig(Context context)
 	{
-		app_name = context.getString(R.string.app_name_cmcc);
+		app_name = context.getString(R.string.app_name_poc);
 		VERSION_CODE = Util.appVersion(context);
 		serverAddress = "112.33.0.187";
 		funcStatisticNetwork = true;
@@ -154,6 +155,11 @@ public class Config
 		funcShowCustomLogoIconId = R.drawable.logo_cmcc;
 		funcShowCustomLogoStringId1 = R.string.copyright_cmcc1;
 		funcShowCustomLogoStringId2 = R.string.copyright_cmcc2;
+		
+		if (model.startsWith("HUAWEI"))
+		{
+			AirEngine._video_fixed_color_format = true;
+		}
 	}
 
 }

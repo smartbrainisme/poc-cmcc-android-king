@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import com.airtalkee.Util.Sound;
+import com.airtalkee.Util.Toast;
+import com.airtalkee.activity.home.widget.MediaStatusBar;
 import com.airtalkee.listener.OnMmiSessionListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
@@ -16,29 +18,31 @@ import com.airtalkee.sdk.controller.ChannelController;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
+import com.airtalkee.sdk.util.Log;
 import com.airtalkee.services.AirServices;
-
 
 public class AirSessionControl implements OnSessionListener
 {
 
 	private static final String KEY_GROUP_KEEP = "GROUP_KEEP";
 	private static final String KEY_GROUP_ATTACH = "GROUP_ATTACH_";
-	
+
 	private static final String JSON_GIDS = "gids";
-	
-	private  List<AirChannel> mChannels = new ArrayList<AirChannel>();
-	private  List<AirSession> mSessions = new ArrayList<AirSession>();
-	private  HashMap<String, AirSession> mSessionMap = new HashMap<String, AirSession>();
-	private  AirSession mSessionCurrentChannel = null;
+
+	private List<AirChannel> mChannels = new ArrayList<AirChannel>();
+	private List<AirSession> mSessions = new ArrayList<AirSession>();
+	private HashMap<String, AirSession> mSessionMap = new HashMap<String, AirSession>();
+	private AirSession mSessionCurrentChannel = null;
 
 	private static AirSessionControl mInstance = null;
 	private OnMmiSessionListener sessionListener = null;
 	private int currentChannelIndex = 0;
 	private AirChannel currentSelectChannel = null;
+
 	private AirSessionControl()
-	{}
-	
+	{
+	}
+
 	public static AirSessionControl getInstance()
 	{
 		if (mInstance == null)
@@ -53,11 +57,11 @@ public class AirSessionControl implements OnSessionListener
 	{
 		this.sessionListener = l;
 	}
-	
+
 	// ==============================
 	// Session
 	// ==============================
-	
+
 	public void SessionChannelAttach(boolean isKeep)
 	{
 		List<AirChannel> channels = new ArrayList<AirChannel>();
@@ -69,10 +73,10 @@ public class AirSessionControl implements OnSessionListener
 		{
 			channelJsonParse(KEY_GROUP_ATTACH + AirtalkeeAccount.getInstance().getUserId(), channels);
 		}
-		
+
 		if (channels.size() > 0)
 		{
-			for (int i = 0; i < channels.size(); i ++)
+			for (int i = 0; i < channels.size(); i++)
 			{
 				AirSession session = AirtalkeeSessionManager.getInstance().SessionCall(channels.get(i).getId());
 				sessionListPut(session, false);
@@ -96,7 +100,7 @@ public class AirSessionControl implements OnSessionListener
 		if (s != null && s.getSessionState() == AirSession.SESSION_STATE_DIALOG)
 		{
 			sessionListPut(s, true);
-			//AirtalkeeSessionManager.getInstance().SessionLock(s, true);
+			// AirtalkeeSessionManager.getInstance().SessionLock(s, true);
 		}
 		else
 		{
@@ -104,7 +108,7 @@ public class AirSessionControl implements OnSessionListener
 			sessionListPut(session, true);
 		}
 	}
-	
+
 	public void SessionChannelOut(String channelId)
 	{
 		AirtalkeeSessionManager.getInstance().SessionBye(channelId);
@@ -127,12 +131,11 @@ public class AirSessionControl implements OnSessionListener
 		Sound.stopSound(Sound.PLAYER_CALL_DIAL);
 		AirtalkeeSessionManager.getInstance().SessionBye(session);
 	}
-	
 
 	// ==============================
 	// Session list management
 	// ==============================
-	
+
 	public AirSession getCurrentSession()
 	{
 		AirSession session = null;
@@ -142,7 +145,7 @@ public class AirSessionControl implements OnSessionListener
 		}
 		return session;
 	}
-	
+
 	public boolean getCurrentSessionGrap()
 	{
 		boolean isGrap = false;
@@ -153,7 +156,7 @@ public class AirSessionControl implements OnSessionListener
 		}
 		return isGrap;
 	}
-	
+
 	public void setCurrentChannelSession(AirSession session)
 	{
 		if (session != null && session.getSessionState() == AirSession.SESSION_STATE_DIALOG)
@@ -161,7 +164,7 @@ public class AirSessionControl implements OnSessionListener
 			sessionListPut(session, true);
 		}
 	}
-	
+
 	public AirSession getCurrentChannelSession()
 	{
 		return mSessionCurrentChannel;
@@ -183,17 +186,17 @@ public class AirSessionControl implements OnSessionListener
 			mSessionMap.put(session.getSessionCode(), session);
 			if (session.getChannel() != null)
 				mChannels.add(session.getChannel());
-			
+
 			if (session.getType() == AirSession.TYPE_CHANNEL)
 			{
 				mSessionCurrentChannel = session;
 			}
-			
+
 			if (save)
 				channelJsonBuild(KEY_GROUP_KEEP, mChannels);
 		}
 	}
-	
+
 	private void sessionListRemove(AirSession session)
 	{
 		if (session != null)
@@ -205,7 +208,7 @@ public class AirSessionControl implements OnSessionListener
 			if (session == mSessionCurrentChannel)
 			{
 				mSessionCurrentChannel = null;
-				for (int i = mSessions.size() - 1; i >= 0; i --)
+				for (int i = mSessions.size() - 1; i >= 0; i--)
 				{
 					AirSession s = mSessions.get(i);
 					if (s != null && s.getType() == AirSession.TYPE_CHANNEL)
@@ -217,7 +220,7 @@ public class AirSessionControl implements OnSessionListener
 			channelJsonBuild(KEY_GROUP_KEEP, mChannels);
 		}
 	}
-	
+
 	// ==============================
 	// Events
 	// ==============================
@@ -233,14 +236,16 @@ public class AirSessionControl implements OnSessionListener
 				Sound.stopSound(Sound.PLAYER_CALL_DIAL);
 				Sound.playSound(Sound.PLAYER_CALL_BEGIN, false, AirServices.getInstance());
 				sessionListPut(session, false);
-				//AirtalkeeSessionManager.getInstance().SessionLock(session, true);
+				// AirtalkeeSessionManager.getInstance().SessionLock(session,
+				// true);
 			}
 			else
 			{
 				channelIndexSet(session.getChannel());
 				if (session == mSessionCurrentChannel)
 				{
-					//AirtalkeeSessionManager.getInstance().SessionLock(session, true);
+					// AirtalkeeSessionManager.getInstance().SessionLock(session,
+					// true);
 				}
 			}
 		}
@@ -301,14 +306,17 @@ public class AirSessionControl implements OnSessionListener
 		{
 			Sound.stopSound(Sound.PLAYER_CALL_DIAL);
 			Sound.playSound(Sound.PLAYER_CALL_END, false, AirServices.getInstance());
-			//AirtalkeeSessionManager.getInstance().SessionLock(session, false);
+			// AirtalkeeSessionManager.getInstance().SessionLock(session,
+			// false);
 		}
 		if (sessionListener != null)
 		{
 			sessionListener.onSessionReleased(session, reason);
 		}
+		if (session.getType() == AirSession.TYPE_DIALOG)
+			Toast.makeText1(AirServices.getInstance(), "会话已结束", Toast.LENGTH_LONG).show();
 	}
-	
+
 	// ==============================
 	// GROUP keep & attach JSON
 	// ==============================
@@ -324,7 +332,7 @@ public class AirSessionControl implements OnSessionListener
 				JSONArray array = json.optJSONArray(JSON_GIDS);
 				if (array != null && array.length() > 0)
 				{
-					for (int i = 0; i < array.length(); i ++)
+					for (int i = 0; i < array.length(); i++)
 					{
 						AirChannel ch = AirtalkeeChannel.getInstance().ChannelGetByCode(array.getString(i));
 						if (ch != null)
@@ -341,14 +349,14 @@ public class AirSessionControl implements OnSessionListener
 			}
 		}
 	}
-	
+
 	private void channelJsonBuild(String key, List<AirChannel> channels)
 	{
 		try
 		{
 			JSONObject json = new JSONObject();
 			JSONArray array = new JSONArray();
-			for (int i = 0; i < channels.size(); i ++)
+			for (int i = 0; i < channels.size(); i++)
 			{
 				array.put(i, channels.get(i).getId());
 			}
@@ -361,51 +369,51 @@ public class AirSessionControl implements OnSessionListener
 			AirServices.iOperator.putString(key, "");
 		}
 	}
-	
+
 	public void channelAttachLoad()
 	{
 		List<AirChannel> channels = new ArrayList<AirChannel>();
 		channelJsonParse(KEY_GROUP_ATTACH + AirtalkeeAccount.getInstance().getUserId(), channels);
-		for (int i = 0; i < channels.size(); i ++)
+		for (int i = 0; i < channels.size(); i++)
 		{
 			AirChannel ch = AirtalkeeChannel.getInstance().ChannelGetByCode(channels.get(i).getId());
 			if (ch != null)
 				ch.setAttachItem(true);
 		}
 	}
-	
+
 	public void channelAttachSave()
 	{
 		List<AirChannel> channels = new ArrayList<AirChannel>();
-		for (int i = 0; i < AirtalkeeChannel.getInstance().getChannels().size(); i ++)
+		for (int i = 0; i < AirtalkeeChannel.getInstance().getChannels().size(); i++)
 		{
 			if (AirtalkeeChannel.getInstance().getChannels().get(i).isAttachItem())
 				channels.add(AirtalkeeChannel.getInstance().getChannels().get(i));
 		}
 		channelJsonBuild(KEY_GROUP_ATTACH + AirtalkeeAccount.getInstance().getUserId(), channels);
 	}
-	
+
 	public boolean channelToggle()
 	{
 		boolean isToogle = currentSelectChannel != null && mSessionCurrentChannel != null && !currentSelectChannel.getId().equals(mSessionCurrentChannel.getSessionCode());
-		if(isToogle)
+		if (isToogle)
 		{
 			SessionChannelOut(mSessionCurrentChannel.getSessionCode());
 			SessionChannelIn(currentSelectChannel.getId());
 		}
 		return isToogle;
 	}
-	
+
 	public void channelIndexSet(AirChannel ch)
 	{
-		if(ch != null)
+		if (ch != null)
 		{
 			List<AirChannel> channels = ChannelController.dataChannelsGet();
-			if(channels != null && channels.size() > 0)
+			if (channels != null && channels.size() > 0)
 			{
-				for(int i = 0; i < channels.size(); i++)
+				for (int i = 0; i < channels.size(); i++)
 				{
-					if(channels.get(i).getId().equals(ch.getId()))
+					if (channels.get(i).getId().equals(ch.getId()))
 					{
 						currentChannelIndex = i;
 						currentSelectChannel = null;
@@ -415,42 +423,42 @@ public class AirSessionControl implements OnSessionListener
 			}
 		}
 	}
-	
-	public void channelSelect(boolean  plus)
+
+	public void channelSelect(boolean plus)
 	{
 		List<AirChannel> channels = ChannelController.dataChannelsGet();
-		
-		if(channels != null && channels.size() > 0)
+
+		if (channels != null && channels.size() > 0)
 		{
-			if(plus)
-				currentChannelIndex ++;
+			if (plus)
+				currentChannelIndex++;
 			else
-				currentChannelIndex --;
-			
-			if(currentChannelIndex < 0)
-				currentChannelIndex = channels.size() -1;
-			else if(currentChannelIndex >= channels.size())
+				currentChannelIndex--;
+
+			if (currentChannelIndex < 0)
+				currentChannelIndex = channels.size() - 1;
+			else if (currentChannelIndex >= channels.size())
 				currentChannelIndex = 0;
-			
-			AirChannel channel  = null;
-			for(int i = 0; i < channels.size(); i++)
+
+			AirChannel channel = null;
+			for (int i = 0; i < channels.size(); i++)
 			{
-				if(currentChannelIndex == i)
+				if (currentChannelIndex == i)
 					channel = channels.get(i);
 			}
-			if(channel != null)
+			if (channel != null)
 			{
-				//TTS 
+				// TTS
 				currentSelectChannel = channel;
 			}
 			else
 			{
-				//tip channel is null
+				// tip channel is null
 			}
 		}
 		else
 		{
-			//tip channel list is null
+			// tip channel list is null
 		}
 	}
 }
