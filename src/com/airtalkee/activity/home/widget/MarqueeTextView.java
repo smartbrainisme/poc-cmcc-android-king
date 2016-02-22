@@ -1,6 +1,7 @@
 package com.airtalkee.activity.home.widget;
 
 import android.content.Context;
+import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
@@ -26,5 +27,11 @@ public class MarqueeTextView extends TextView
 	public boolean isFocused()
 	{
 		return true;
+	}
+
+	@Override
+	protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect)
+	{
+		
 	}
 }

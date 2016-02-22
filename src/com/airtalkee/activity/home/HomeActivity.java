@@ -1,5 +1,6 @@
 package com.airtalkee.activity.home;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +9,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnCancelListener;
 import android.media.AudioManager;
 import android.os.Bundle;
@@ -18,23 +18,17 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
-import android.widget.RelativeLayout;
-import android.widget.RelativeLayout.LayoutParams;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.DensityUtil;
-import com.airtalkee.Util.Util;
-import com.airtalkee.activity.MainActivity;
-import com.airtalkee.activity.SessionBox;
-import com.airtalkee.activity.TempSessionActivity;
 import com.airtalkee.activity.home.widget.MediaStatusBar;
 import com.airtalkee.activity.home.widget.SessionAndChannelView;
 import com.airtalkee.activity.home.widget.SessionAndChannelView.ViewChangeListener;
@@ -68,16 +62,17 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 	private boolean isChannel = true;
 
 	private static HomeActivity mInstance;
+
 	public static HomeActivity getInstance()
 	{
 		return mInstance;
 	}
-	
+
 	public AirSession getSession()
 	{
 		return session;
 	}
-	
+
 	public void setSession(AirSession session)
 	{
 		this.session = session;
@@ -129,6 +124,35 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 				AirChannel channel = session.getChannel();
 				channel.setRoleAppling(true);
 			}
+		}
+		toMarquee();
+	}
+
+	//解决 部分机型的textView设置android:ellipsize="marquee"后 仍会显示省略号
+	private void toMarquee()
+	{
+		ViewConfiguration configuration = ViewConfiguration.get(this);
+		Class claz = configuration.getClass();
+		try
+		{
+			Field field = claz.getDeclaredField("mFadingMarqueeEnabled");
+			field.setAccessible(true);
+			field.set(configuration, true);
+		}
+		catch (NoSuchFieldException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IllegalArgumentException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch (IllegalAccessException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 

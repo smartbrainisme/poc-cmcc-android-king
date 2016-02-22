@@ -64,7 +64,8 @@
         <item>(呼出)</item>
     </string-array>
     <array name="smiley_resid_array">
-        <item>@drawable/icon_images</item>
+        <item></item>
+        <!-- <item>@drawable/icon_images</item> -->
         <item>@drawable/icon_sound</item>
         <item>@drawable/ic_call_missed</item>
         <item>@drawable/ic_call_rejected</item>

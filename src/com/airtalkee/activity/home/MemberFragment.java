@@ -98,12 +98,15 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 
 		btnSearch = (Button) findViewById(R.id.btn_search);
 		btnSearch.setOnClickListener(this);
-		
+
 		lvMember = (MListView) findViewById(R.id.talk_lv_member);
 		lvMember.setAdapter(adapterMember = new AdapterMember(getActivity(), null, null, true, true, this));
 		lvMember.setOnItemClickListener(this);
+
 		tabMemberSession = (TextView) findViewById(R.id.tab_member_session);
+		tabMemberSession.setOnClickListener(this);
 		tabMemberAll = (TextView) findViewById(R.id.tab_member_all);
+		tabMemberAll.setOnClickListener(this);
 
 		ivSerachIcon = (ImageView) findViewById(R.id.iv_search_icon);
 		ivSerachIcon.setOnClickListener(this);
@@ -113,11 +116,10 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		memAllContainer.addView(memberAllView);
 
 		searchPannelChannel = (LinearLayout) findViewById(R.id.serach_pannel);
-		searchPannelAll = (LinearLayout) memberAllView.findViewById(R.id.serach_pannel);
-
 		searchEditChannel = (EditText) findViewById(R.id.et_search);
+		searchPannelAll = (LinearLayout) memberAllView.findViewById(R.id.serach_pannel);
 		searchEditAll = (EditText) memberAllView.findViewById(R.id.et_search);
-		
+
 		searchEditChannel.addTextChangedListener(this);
 		ivSearch = (ImageView) findViewById(R.id.iv_search);
 		ids.put(R.id.tab_member_session, tabMemberSession);
@@ -155,7 +157,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 			{
 				addMemberPanel.setVisibility(View.VISIBLE);
 			}
-			
+
 		}
 	}
 
@@ -200,6 +202,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 
 	public void refreshTab(int id)
 	{
+		Log.i(MemberFragment.class, "MemberFragment refreshTab start id = " + id);
 		searchPannelAll.setVisibility(View.GONE);
 		searchPannelChannel.setVisibility(View.GONE);
 		ivSerachIcon.setImageDrawable(getResources().getDrawable(R.drawable.ic_search_white));
@@ -209,36 +212,43 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		{
 			Integer i = iter.next();
 			TextView v = ids.get(i);
-			v.setOnClickListener(this);
 			v.setSelected(i == id);
 		}
 		try
 		{
 			if (id == R.id.tab_member_session) // 频道成员
 			{
+				Log.i(MemberFragment.class, "MemberFragment 频道成员 id = " + id);
 				lvMember.setVisibility(View.VISIBLE);
 				memAllContainer.setVisibility(View.GONE);
-				if(memberSearchResult.size() > 0)
+				if (memberSearchResult.size() > 0)
 				{
 					setSession(getSession());
 				}
 				tabMemberSession.setEnabled(false);
 				tabMemberAll.setEnabled(true);
 			}
-			else // 全部成员
+			else if (id == R.id.tab_member_all)// 全部成员
 			{
 				if (memberAllView == null || memberAllView.memberAll.size() < 1)
 				{
+					memAllContainer.removeView(memberAllView);
 					memberAllView = new MemberAllView(getActivity(), this);
 					memberAllView.adapterMember.notifyDataSetChanged();
-					memAllContainer.addView(null);
 					memAllContainer.addView(memberAllView);
+					searchPannelAll = (LinearLayout) memberAllView.findViewById(R.id.serach_pannel);
+					searchEditAll = (EditText) memberAllView.findViewById(R.id.et_search);
 				}
+				Log.i(MemberFragment.class, "MemberFragment 全部成员 id  = " + id);
 				memberAllView.adapterMember.notifyMember(memberAllView.memberAll);
 				lvMember.setVisibility(View.GONE);
 				memAllContainer.setVisibility(View.VISIBLE);
 				tabMemberSession.setEnabled(true);
 				tabMemberAll.setEnabled(false);
+			}
+			else 
+			{
+				Log.i(MemberFragment.class, "MemberFragment else id  = " + id);
 			}
 		}
 		catch (Exception e)
@@ -249,14 +259,14 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 
 	private void refreshSearch(int id)
 	{
-		Iterator<Integer> iter = ids.keySet().iterator();
-		while (iter.hasNext())
-		{
-			Integer i = iter.next();
-			TextView v = ids.get(i);
-			v.setOnClickListener(this);
-			v.setSelected(i == id);
-		}
+		Log.i(MemberFragment.class, "MemberFragment refreshSearch id = " + id);
+//		Iterator<Integer> iter = ids.keySet().iterator();
+//		while (iter.hasNext())
+//		{
+//			Integer i = iter.next();
+//			TextView v = ids.get(i);
+//			v.setSelected(i == id);
+//		}
 		try
 		{
 			if (id == R.id.tab_member_session) // 频道成员
@@ -306,6 +316,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	public void onClick(View v)
 	{
 		// TODO Auto-generated method stub
+		Log.i(MemberFragment.class, "MemberFragment onClick v.id = " + v.getId());
 		switch (v.getId())
 		{
 			case R.id.tab_member_session:
@@ -325,7 +336,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 			}
 			case R.id.iv_search_icon:
 			{
-				refreshTab(currentSelectPage);
+				//refreshTab(currentSelectPage);
 				refreshSearch(currentSelectPage);
 				break;
 			}
@@ -478,7 +489,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 							public void onDialogCancel(int reason)
 							{
 								// TODO Auto-generated method stub
-								Log.i(MemberFragment.class, "MemberFragment reason = "+reason);
+								Log.i(MemberFragment.class, "MemberFragment reason = " + reason);
 								switch (reason)
 								{
 									case AirSession.SESSION_RELEASE_REASON_NOTREACH:
@@ -627,7 +638,7 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	@Override
 	public void beforeTextChanged(CharSequence s, int start, int count, int after)
 	{
-		
+
 	}
 
 	@Override
@@ -658,6 +669,6 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	@Override
 	public void afterTextChanged(Editable s)
 	{
-		
+
 	}
 }

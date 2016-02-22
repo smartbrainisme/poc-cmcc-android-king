@@ -3,7 +3,6 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:background="?theme_selector_group_item"
-    android:descendantFocusability="blocksDescendants"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
 
@@ -21,6 +20,7 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/user_state_offline" />
 		
+        <!-- com.airtalkee.activity.home.widget.MarqueeTextView -->
         <TextView
             android:id="@id/talk_tv_group_member"
             android:layout_width="wrap_content"
@@ -28,6 +28,7 @@
             android:layout_marginRight="10dp"
             android:ellipsize="marquee"
             android:gravity="center_vertical"
+            android:scrollHorizontally="true"
             android:singleLine="true"
             android:textColor="?theme_color_text1"
             android:textSize="18dip" />

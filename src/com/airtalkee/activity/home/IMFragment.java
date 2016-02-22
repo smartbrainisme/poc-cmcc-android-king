@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.Spannable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -348,6 +349,8 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				textPannel.setVisibility(View.VISIBLE);
 			if (mediaStatusBar != null)
 				mediaStatusBar.setMediaStatusBarVisibility(View.GONE);
+			etMsg.setFocusable(true);
+			etMsg.setFocusableInTouchMode(true);
 			etMsg.requestFocus();
 		}
 	}

@@ -59,6 +59,7 @@
                     android:bufferType="spannable"
                     android:gravity="center_vertical"
                     android:hint="@string/talk_typewriter_init"
+                    android:inputType="text|textPersonName"
                     android:maxLength="300"
                     android:minHeight="45dp"
                     android:paddingLeft="5dp"

@@ -399,7 +399,7 @@ public class AirMessageTransaction implements OnMessageListener,
 					final AirSession s = SessionController.SessionMatchSpecial(AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER, context.getString(R.string.talk_tools_call_center));
 					if (s != null)
 					{
-						alertDialog = new CallAlertDialog(context, "正在呼叫" + s.getDisplayName(), "请稍后...", s.getSessionCode(), DIALOG_CALL_CENTER, new OnAlertDialogCancelListener()
+						alertDialog = new CallAlertDialog(HomeActivity.getInstance(), "正在呼叫" + s.getDisplayName(), "请稍后...", s.getSessionCode(), DIALOG_CALL_CENTER, new OnAlertDialogCancelListener()
 						{
 							@Override
 							public void onDialogCancel(int reason)
@@ -408,7 +408,7 @@ public class AirMessageTransaction implements OnMessageListener,
 								switch (reason)
 								{
 									case AirSession.SESSION_RELEASE_REASON_NOTREACH:
-										dialog = new AlertDialog(context, null, context.getString(R.string.talk_call_offline_tip), context.getString(R.string.talk_session_call_cancel), context.getString(R.string.talk_call_leave_msg), AirMessageTransaction.this, DIALOG_2_SEND_MESSAGE, s.getSessionCode());
+										dialog = new AlertDialog(HomeActivity.getInstance(), null, context.getString(R.string.talk_call_offline_tip), context.getString(R.string.talk_session_call_cancel), context.getString(R.string.talk_call_leave_msg), AirMessageTransaction.this, DIALOG_2_SEND_MESSAGE, s.getSessionCode());
 										dialog.show();
 										break;
 									case AirSession.SESSION_RELEASE_REASON_REJECTED:
