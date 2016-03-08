@@ -84,6 +84,7 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		com.airtalkee.sdk.util.Log.i(HomeActivity.class, "HomeActivity onCreate");
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
+		toMarquee();
 		session = AirSessionControl.getInstance().getCurrentSession();
 		mInstance = this;
 
@@ -125,7 +126,6 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 				channel.setRoleAppling(true);
 			}
 		}
-		toMarquee();
 	}
 
 	//解决 部分机型的textView设置android:ellipsize="marquee"后 仍会显示省略号

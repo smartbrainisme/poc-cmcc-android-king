@@ -182,9 +182,10 @@ public class AdapterMemberAll extends BaseAdapter
 					}
 				}
 			}
-
+			
 			switch (member.getCusertype())
 			{
+				/* 全部成员去除成员级别
 				case AirContact.CURSETYPE_CREATEER:
 					holder.ivRole.setVisibility(View.VISIBLE);
 					holder.ivRole.setImageResource(R.drawable.media_role_creater);
@@ -200,7 +201,7 @@ public class AdapterMemberAll extends BaseAdapter
 				case AirContact.CURSETYPE_LISTEN_ONLY:
 					holder.ivRole.setVisibility(View.VISIBLE);
 					holder.ivRole.setImageResource(R.drawable.media_role_listen);
-					break;
+					break; */
 				default:
 					holder.ivRole.setVisibility(View.GONE);
 					break;

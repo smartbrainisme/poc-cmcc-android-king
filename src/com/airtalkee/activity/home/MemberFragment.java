@@ -78,13 +78,18 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	private boolean memberAllChecked = false;
 	List<AirContact> memberSearchResult = new ArrayList<AirContact>();
 	AlertDialog dialog;
-
+	
+	private static MemberFragment mInstance;
+	public static MemberFragment getInstance()
+	{
+		return mInstance;
+	}
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		// registerViewReSize();
+		mInstance = this;
 	}
 
 	@Override
@@ -157,7 +162,6 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 			{
 				addMemberPanel.setVisibility(View.VISIBLE);
 			}
-
 		}
 	}
 

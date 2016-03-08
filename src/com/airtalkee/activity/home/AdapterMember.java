@@ -7,7 +7,6 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.TextUtils;
-import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,15 +17,15 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.airtalkee.R;
+import com.airtalkee.activity.home.widget.MarqueeMemberTextView;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeContactPresence;
-import com.airtalkee.sdk.OnContactPresenceListener;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactTiny;
 import com.airtalkee.sdk.entity.AirSession;
 
 @SuppressLint("UseSparseArrays")
-public class AdapterMember extends BaseAdapter 
+public class AdapterMember extends BaseAdapter
 {
 	private Context context = null;
 	private AirSession session = null;
@@ -153,9 +152,6 @@ public class AdapterMember extends BaseAdapter
 			holder = new ViewHolder();
 			holder.checkBox = (CheckBox) convertView.findViewById(R.id.talk_cb_group_member);
 			holder.tvName = (TextView) convertView.findViewById(R.id.talk_tv_group_member);
-			holder.tvName.setMovementMethod(ScrollingMovementMethod.getInstance());
-			holder.tvName.requestFocus();
-			holder.tvName.setFocusableInTouchMode(true);
 			holder.ivSPresence = (ImageView) convertView.findViewById(R.id.talk_iv_presence);
 			holder.ivRole = (ImageView) convertView.findViewById(R.id.talk_iv_group_role);
 			convertView.setTag(holder);
@@ -236,7 +232,7 @@ public class AdapterMember extends BaseAdapter
 			String myIpocId = (AirtalkeeAccount.getInstance() != null) ? AirtalkeeAccount.getInstance().getUserId() : "";
 			if (myIpocId.equals(member.getIpocId()))
 			{
-				//holder.tvName.setText(member.getDisplayName());
+				// holder.tvName.setText(member.getDisplayName());
 				holder.checkBox.setClickable(false);
 				holder.checkBox.setVisibility(View.INVISIBLE);
 			}
@@ -291,25 +287,14 @@ public class AdapterMember extends BaseAdapter
 	}
 
 	/*
-	@Override
-	public void onContactPresence(boolean isSubscribed, HashMap<String, Integer> presenceMap)
-	{
-		// TODO Auto-generated method stub
-		if (session != null && session.getType() == AirSession.TYPE_DIALOG)
-		{
-			session.MembersSort();
-		}
-		notifyDataSetChanged();
-	}
-
-	@Override
-	public void onContactPresence(boolean isSubscribed, String uid, int state)
-	{
-		// TODO Auto-generated method stub
-		if (session != null && session.getType() == AirSession.TYPE_DIALOG)
-		{
-			session.MembersSort();
-		}
-		notifyDataSetChanged();
-	}*/
+	 * @Override public void onContactPresence(boolean isSubscribed,
+	 * HashMap<String, Integer> presenceMap) { // TODO Auto-generated method
+	 * stub if (session != null && session.getType() == AirSession.TYPE_DIALOG)
+	 * { session.MembersSort(); } notifyDataSetChanged(); }
+	 * 
+	 * @Override public void onContactPresence(boolean isSubscribed, String uid,
+	 * int state) { // TODO Auto-generated method stub if (session != null &&
+	 * session.getType() == AirSession.TYPE_DIALOG) { session.MembersSort(); }
+	 * notifyDataSetChanged(); }
+	 */
 }

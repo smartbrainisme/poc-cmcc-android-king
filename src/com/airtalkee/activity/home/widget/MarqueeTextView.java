@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 public class MarqueeTextView extends TextView
 {
-
+	
 	public MarqueeTextView(Context context)
 	{
 		super(context);

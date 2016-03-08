@@ -99,7 +99,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	{
 		// TODO Auto-generated method stub
 		v = inflater.inflate(getLayout(), container, false);
-		
+
 		textVoicePannel = findViewById(R.id.voic_text_pannel);
 		textPannel = findViewById(R.id.text_pannel);
 		voicePannel = findViewById(R.id.voice_pannel);
@@ -112,14 +112,12 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		findViewById(R.id.btn_text_close).setOnClickListener(this);
 		findViewById(R.id.btn_voice_close).setOnClickListener(this);
 		etMsg.addTextChangedListener(this);
-		
 		adapterMessage = new AdapterSessionMessage(getActivity(), this, this);
 		adapterMessage.notifyDataSetChanged();
 		lvMessage = (PullToRefreshListView) findViewById(R.id.lv_message);
 		lvMessage.setAdapter(adapterMessage);
 		lvMessage.setOnRefreshListener(this);
 		lvMessage.setOnItemClickListener(this);
-		
 
 		animRefresh = AnimationUtils.loadAnimation(getActivity(), R.anim.refresh);
 
@@ -390,8 +388,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				mHandler.sendEmptyMessageDelayed(1, 10);
 			}
 			catch (Exception e)
-			{
-			}
+			{}
 		}
 		this.session = s;
 		Log.d(SessionBoxMessage.class, "SessionBoxMessage - setSession");
