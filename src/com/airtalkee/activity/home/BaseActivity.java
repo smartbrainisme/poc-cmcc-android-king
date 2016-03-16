@@ -1,22 +1,27 @@
 package com.airtalkee.activity.home;
 
+import java.util.LinkedHashMap;
+import java.util.List;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import com.airtalkee.R;
 import com.airtalkee.activity.home.widget.AlertDialog;
+import com.airtalkee.activity.home.widget.SessionAndChannelView;
 import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.config.Config;
 import com.airtalkee.control.AirAccountManager;
 import com.airtalkee.listener.OnMmiAccountListener;
+import com.airtalkee.listener.OnMmiChannelListener;
 import com.airtalkee.sdk.AirtalkeeAccount;
+import com.airtalkee.sdk.entity.AirChannel;
+import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.widget.PageIndicator;
 
-public class BaseActivity extends FragmentActivity implements OnMmiAccountListener
+public class BaseActivity extends FragmentActivity implements OnMmiAccountListener, OnMmiChannelListener
 {
 
 	public static final int PAGE_MEMBER = 0;
@@ -154,6 +159,41 @@ public class BaseActivity extends FragmentActivity implements OnMmiAccountListen
 				}
 			}, false).show();
 		}
+	}
+
+	@Override
+	public void onChannelListGet(boolean isOk, List<AirChannel> channels)
+	{
+		// TODO Auto-generated method stub
+		SessionAndChannelView.getInstance().refreshChannelAndDialog();
+	}
+
+	@Override
+	public void onChannelMemberListGet(String channelId, List<AirContact> members)
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onChannelOnlineCount(LinkedHashMap<String, Integer> online)
+	{
+		
+	}
+
+	@Override
+	public void onChannelPersonalCreateNotify(AirChannel ch)
+	{
+		MemberFragment.getInstance().refreshMembers();
+		MemberFragment.getInstance().refreshAllMembers();
+	}
+
+	@Override
+	public void onChannelPersonalDeleteNotify(AirChannel ch)
+	{
+		// TODO Auto-generated method stub
+		MemberFragment.getInstance().refreshMembers();
+		MemberFragment.getInstance().refreshAllMembers();
 	}
 
 	

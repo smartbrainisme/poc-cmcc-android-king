@@ -3,6 +3,22 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
+    <RelativeLayout
+        android:layout_width="50dp"
+        android:layout_height="fill_parent" >
+
+        <RelativeLayout
+            android:id="@id/talk_video_panel"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:visibility="gone" >
+
+            <include layout="@layout/layout_popup_window_video_item" />
+            <include layout="@layout/layout_popup_window_video_settings" />
+            <include layout="@layout/layout_popup_window_video_fps" />
+        </RelativeLayout>
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/bottom"
         android:layout_width="fill_parent"
@@ -37,21 +53,38 @@
             android:id="@+id/tv_video_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
             android:text="正在连接"
             android:textColor="#FFFFFF"
-            android:textSize="18dp" />
+            android:textSize="18dp"
+            android:visibility="gone" />
+        
+        <ImageView 
+            android:id="@+id/iv_video_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/ch_timer"
+            android:layout_marginRight="4dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_session_video_record"/>
 
         <Chronometer
-            android:id="@+id/ch_timer"
+            android:id="@id/ch_timer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="18dp" />
+
+        <ImageView
+            android:id="@+id/iv_video_setting"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
-            android:textSize="18dp"
-            android:textColor="@color/white" />
+            android:src="@drawable/ic_session_video_setting_normal" />
     </RelativeLayout>
 
     <TextView
@@ -65,7 +98,7 @@
         android:padding="3dip"
         android:text="0 kbps"
         android:textColor="@android:color/white"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <ImageButton
         android:id="@+id/start"
@@ -78,7 +111,7 @@
         android:contentDescription="Start/Stop Streaming"
         android:src="@drawable/ic_switch_video"
         android:text="Start/Stop Streaming"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <FrameLayout
         android:layout_width="wrap_content"

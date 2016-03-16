@@ -15,6 +15,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.webkit.URLUtil;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.airtalkee.R;
@@ -23,8 +25,8 @@ import com.airtalkee.sdk.util.IOoperate;
 @SuppressLint("SdCardPath")
 public class DialogVersionUpdate extends Dialog implements android.view.View.OnClickListener
 {
-	public static float datesum=0;
-	private float downsum=0.1f;
+	public static float datesum = 0;
+	private float downsum = 0.1f;
 	private int size;
 	private Context context = null;
 	private File myTempFile;
@@ -32,7 +34,11 @@ public class DialogVersionUpdate extends Dialog implements android.view.View.OnC
 	private IOoperate io;
 	private TextView tvDowloadPro;
 	private String currentFilePath = "";
-	
+	private Button btBackDownload;
+	private DialogVersionUpdate mInstance;
+
+	private ProgressBar reportBar;
+
 	public DialogVersionUpdate(Context context, String path)
 	{
 		super(context, R.style.MyDialog);
@@ -40,6 +46,7 @@ public class DialogVersionUpdate extends Dialog implements android.view.View.OnC
 		this.setCancelable(false);
 		io = new IOoperate();
 		this.path = path;
+		mInstance = this;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -48,11 +55,12 @@ public class DialogVersionUpdate extends Dialog implements android.view.View.OnC
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.dialog_version_update);
-		tvDowloadPro = (TextView) findViewById(R.id.tv_dowload_pro);
-		tvDowloadPro.setOnClickListener(this);
-		tvDowloadPro.setEnabled(false);
-		tvDowloadPro.setClickable(false);
+		setContentView(R.layout.dialog_alert_version_update);
+		reportBar = (ProgressBar) findViewById(R.id.report_progress);
+		reportBar.setMax(100);
+		tvDowloadPro = (TextView) findViewById(R.id.tv_file_progress);
+		btBackDownload = (Button) findViewById(R.id.report_back);
+		btBackDownload.setOnClickListener(this);
 		getFile();
 	}
 
@@ -143,12 +151,11 @@ public class DialogVersionUpdate extends Dialog implements android.view.View.OnC
 				is.close();
 			}
 			catch (Exception ex)
-			{
-			}
+			{}
 			io.putBoolean("downover", true);
 			myTempFile = file;
 			Message msg = handle.obtainMessage();
-			msg.arg1 = size+1;
+			msg.arg1 = size + 1;
 			handle.sendMessage(msg);
 		}
 	}
@@ -180,8 +187,7 @@ public class DialogVersionUpdate extends Dialog implements android.view.View.OnC
 			type = "*";
 		}
 		if (end.equals("apk"))
-		{
-		}
+		{}
 		else
 		{
 			type += "/*";
@@ -193,10 +199,15 @@ public class DialogVersionUpdate extends Dialog implements android.view.View.OnC
 	public void onClick(View v)
 	{
 		// TODO Auto-generated method stub
-		if(downsum == datesum)
+		switch (v.getId())
 		{
-			openFile(myTempFile);
+			case R.id.report_back:
+			{
+				this.dismiss();
+				break;
+			}
 		}
+		
 	}
 
 	Handler handle = new Handler()
@@ -205,13 +216,16 @@ public class DialogVersionUpdate extends Dialog implements android.view.View.OnC
 		{
 			if (downsum == datesum)
 			{
-				tvDowloadPro.setText(R.string.version_update_install);
-				tvDowloadPro.setEnabled(true);
-				tvDowloadPro.setClickable(true);
+				openFile(myTempFile);
+				reportBar.setProgress(100);
+				tvDowloadPro.setText("进度 100%");
+				MenuAboutActivity.getInstance().setDownloading(false);
+				mInstance.cancel();
 			}
 			else
 			{
-				String message = String.format(context.getString(R.string.version_update_pro), msg.arg1);
+				reportBar.setProgress(msg.arg1);
+				String message = "进度 " + msg.arg1 + "%";
 				tvDowloadPro.setText(message);
 			}
 		};

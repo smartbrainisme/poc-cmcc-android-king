@@ -28,8 +28,7 @@ import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.services.AirServices;
 
-public class AirAccountManager implements OnAccountListener, OnChannelListener,
-		OnAccountSettingListener, OnMediaVideoListener
+public class AirAccountManager implements OnAccountListener, OnChannelListener, OnAccountSettingListener, OnMediaVideoListener
 {
 	public static final String KEY_ID = "USER_ID";
 	public static final String KEY_PWD = "USER_PWD";
@@ -204,7 +203,7 @@ public class AirAccountManager implements OnAccountListener, OnChannelListener,
 				AirtalkeeChannel.getInstance().ChannelMemberGet(channels.get(i).getId());
 			}
 		}
-
+		//AirtalkeeSessionManager.getInstance().GroupBroadcastRun();
 		AirSessionControl.getInstance().channelAttachLoad();
 		AirSessionControl.getInstance().SessionChannelAttach(AirServices.iOperator.getBoolean(AirAccountManager.KEY_HB, false));
 		AirServices.iOperator.putBoolean(AirAccountManager.KEY_HB, true);

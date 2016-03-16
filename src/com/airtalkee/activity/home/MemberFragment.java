@@ -418,6 +418,11 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	{
 		adapterMember.notifyDataSetChanged();
 	}
+	
+	public void refreshAllMembers()
+	{
+		memberAllView.adapterMember.notifyDataSetChanged();
+	}
 
 	@Override
 	public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key)

@@ -139,10 +139,10 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		{
 			mVideoView.setVideoPath(videoPath);
 			videoSize = AirServices.iOperator.getFileSize("", videoPath, true);
-			String format = AirServices.iOperator.getFileExtension(videoPath);
-			rbBig.setText(MenuReportActivity.sizeMKB(videoSize) + " (" + format + ")");
+			// String format = AirServices.iOperator.getFileExtension(videoPath);
+			rbBig.setText("高清 " + MenuReportActivity.sizeMKB(videoSize));
 			float smallSize = videoSize * 0.8F;
-			rbSmall.setText(MenuReportActivity.sizeMKB((int) smallSize) + " (" + format + ")");
+			rbSmall.setText("压缩 " + MenuReportActivity.sizeMKB((int) smallSize));
 		}
 	}
 
@@ -172,7 +172,10 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		// TODO Auto-generated method stub
 		super.finish();
 		AirReportManager.getInstance().setReportListener(null);
-		reportDialog.cancel();
+		if (reportDialog != null)
+		{
+			reportDialog.cancel();
+		}
 	}
 
 	@Override
@@ -358,7 +361,7 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 			int size = rbBig.isChecked() ? videoSize : (int) (videoSize * 0.8f);
 			if (mInstance != null)
 			{
-				reportDialog = new ReportProgressAlertDialog(AirServices.getInstance(), MenuReportActivity.sizeMKB(size));
+				reportDialog = new ReportProgressAlertDialog(this, MenuReportActivity.sizeMKB(size));
 				try
 				{
 					reportDialog.show();

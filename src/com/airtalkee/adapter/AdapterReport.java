@@ -175,7 +175,7 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 				holder.icon.setVisibility(View.VISIBLE);
 			}
 
-			holder.time.setText(context.getString(R.string.talk_tools_report_date) + "：" + report.getTime().substring(0, 16));
+			holder.time.setText(context.getString(R.string.talk_tools_report_date) + "：" + report.getTime().substring(0, 15));
 			// holder.size.setText(MenuReportActivity.sizeMKB(report.getResSize()));
 
 			if (report.getTarget() == AirReport.TARGET_TASK_DISPATCH)

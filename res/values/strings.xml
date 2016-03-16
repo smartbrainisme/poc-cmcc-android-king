@@ -47,6 +47,7 @@
 	<string name="talk_tools_report_success">上传成功，可在更多界面查看</string>
 	<string name="talk_tools_call_center">调度管理中心</string>
 	<string name="talk_tools_call_center_confirm">确定呼叫调度管理中心?</string>
+	<string name="talk_tools_session_video_confirm">检测到当前为2G网络，确定进行视频回传吗?</string>
 	<string name="talk_tools_session">会话管理</string>
 	<string name="talk_tools_channel">频道管理</string>
 	<string name="talk_tools_setting">设置</string>
@@ -83,6 +84,11 @@
 	<string name="talk_tools_notice_comment_send">发表</string>
 	<string name="talk_tools_location">位置回传</string> 
 	<string name="talk_tools_location_tip">打开后，定期回传我的位置信息</string> 
+	<string name="talk_tools_video">实时视频设置</string> 
+	<string name="talk_tools_video_rate">分辨率</string> 
+	<string name="talk_tools_video_rate_tip">分辨率越高，视频越清晰，也越消耗流量。</string> 
+	<string name="talk_tools_video_fps">帧率</string> 
+	<string name="talk_tools_video_fps_tip">帧率越高，视频画面越流畅，也越消耗流量。</string> 
 	<string name="talk_fence_warning_title">告警</string>
 	<string name="talk_fence_warning_tip">请注意，您跨越了电子围栏设定的区域！</string>
 	<string name="talk_task_dispatch_title">您有新任务</string>
@@ -112,6 +118,10 @@
 	<string name="talk_incoming_channel_alert_reject">忽略</string>
 	<string name="talk_session_alert_channel">呼入成员</string>
 	<string name="talk_session_video_share">视频分享</string>
+	<string name="talk_session_video_start">开始录制</string>
+	<string name="talk_session_video_stop">结束录制</string>
+	<string name="talk_session_video_message">我发起了实时视频</string>
+	<string name="talk_session_video_message_time">实时视频时长</string>
 	<string name="talk_session_building">正在连接...</string>
 	<string name="talk_session_calling">呼叫中...</string>
 	<string name="talk_session_end_call">挂断</string>

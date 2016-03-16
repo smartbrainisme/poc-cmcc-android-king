@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical" android:layout_width="200dip" android:layout_height="100dip"  android:background="#ccc">
-		 <TextView android:layout_width="fill_parent"   android:layout_height="fill_parent" android:text="@string/version_update"  android:gravity="center"  android:layout_weight="1"  android:textSize="18dp"  android:textColor="#8f000000"/>
-  		 <TextView android:layout_width="fill_parent"   android:layout_height="40dip" android:background="@drawable/selector_btn_update"   android:id="@+id/tv_dowload_pro"  android:gravity="center"   android:textColor="#dfffffff" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="200dip"
+    android:layout_height="100dip"
+    android:background="#ccc"
+    android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/version_update"
+        android:textColor="#8f000000"
+        android:textSize="18dp" />
+
+    <TextView
+        android:id="@+id/tv_dowload_pro"
+        android:layout_width="fill_parent"
+        android:layout_height="40dip"
+        android:background="@drawable/selector_btn_update"
+        android:gravity="center"
+        android:textColor="#dfffffff" />
+
 </LinearLayout>

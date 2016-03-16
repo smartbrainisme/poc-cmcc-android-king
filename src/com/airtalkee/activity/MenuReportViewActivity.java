@@ -95,11 +95,11 @@ public class MenuReportViewActivity extends ActivityBase implements OnClickListe
 				}
 				if (Utils.isEmpty(report.getResContent()))
 				{
-					content.setVisibility(View.GONE);
+					content.setText(getString(R.string.talk_tools_report_description) + "：" + getString(R.string.talk_report_upload_no_content));
 				}
 				else
 				{
-					content.setText(report.getResContent());
+					content.setText(getString(R.string.talk_tools_report_description) + "：" + (report.getResContent().contains("\r") ? report.getResContent().substring(0, report.getResContent().lastIndexOf('\r')) : getString(R.string.talk_report_upload_no_content)));
 				}
 				int state = report.getState();
 				if (state == AirReport.STATE_RESULT_FAIL)
@@ -112,7 +112,7 @@ public class MenuReportViewActivity extends ActivityBase implements OnClickListe
 					tvFail.setVisibility(View.GONE);
 					btResend.setVisibility(View.GONE);
 				}
-				time.setText(getString(R.string.talk_tools_report_date) + "：" + report.getTime());
+				time.setText(getString(R.string.talk_tools_report_date) + "：" + report.getTime().substring(0, 15));
 			}
 			else
 			{

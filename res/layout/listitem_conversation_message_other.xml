@@ -166,16 +166,48 @@
                         android:visibility="gone" />
                 </RelativeLayout>
                 <!-- Record Message -->
+                <!-- session video Message -->
+
+                <RelativeLayout
+                    android:id="@+id/session_video_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:minWidth="30dp" >
+
+                    <ImageView
+                        android:id="@+id/video_pic"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dip"
+                        android:src="@drawable/ic_session_video" />
+
+                    <TextView
+                        android:id="@+id/video_body"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@id/video_pic"
+                        android:bufferType="spannable"
+                        android:gravity="left"
+                        android:minWidth="50dip"
+                        android:paddingRight="10dp"
+                        android:textColor="#cfffffff"
+                        android:textSize="14dip" />
+                </RelativeLayout>
+                <!-- session video Message -->
             </RelativeLayout>
 
             <ImageView
                 android:id="@+id/un_read"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/body_content"
                 android:layout_alignTop="@id/body_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@id/body_content"
                 android:src="@drawable/msg_unread" />
 
             <ImageView

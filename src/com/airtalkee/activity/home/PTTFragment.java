@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -18,6 +17,7 @@ import android.widget.TextView;
 import com.airtalkee.R;
 import com.airtalkee.Util.Const;
 import com.airtalkee.Util.DateUtils;
+import com.airtalkee.Util.Toast;
 import com.airtalkee.Util.Util;
 import com.airtalkee.activity.MenuReportAsPicActivity;
 import com.airtalkee.activity.VideoSessionActivity;
@@ -26,6 +26,8 @@ import com.airtalkee.activity.home.widget.AlertDialog.DialogListener;
 import com.airtalkee.activity.home.widget.CallAlertDialog;
 import com.airtalkee.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.airtalkee.config.Config;
+import com.airtalkee.listener.OnMmiLocationListener;
+import com.airtalkee.location.AirLocation;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeMediaVisualizer;
 import com.airtalkee.sdk.AirtalkeeMessage;
@@ -39,13 +41,13 @@ import com.airtalkee.sdk.util.Utils;
 import com.airtalkee.widget.AudioVisualizerView;
 import com.airtalkee.widget.VideoCamera;
 
-public class PTTFragment extends BaseFragment implements OnClickListener,
-		DialogListener, OnMediaAudioVisualizerListener
+public class PTTFragment extends BaseFragment implements OnClickListener, DialogListener, OnMediaAudioVisualizerListener
 {
 
 	private static final int DIALOG_CALL_CENTER_CONFIRM = 100;
 	private static final int DIALOG_CALL_CENTER = 101;
 	private static final int DIALOG_2_SEND_MESSAGE = 102;
+
 	private LinearLayout recPlayback;
 	private ImageView recPlaybackIcon;
 	private TextView recPlaybackUser;
@@ -126,7 +128,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 		refreshPlayback();
 		return v;
 	}
-	
+
 	public RelativeLayout getIvSpetrum()
 	{
 		return ivSpetrum;
@@ -183,6 +185,21 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 			{
 				if (AirtalkeeAccount.getInstance().isEngineRunning())
 				{
+					AirLocation.getInstance(getActivity()).onceGet(new OnMmiLocationListener()
+					{
+
+						@Override
+						public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time, String address)
+						{
+							// TODO Auto-generated method stub
+						}
+
+						@Override
+						public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time)
+						{
+							// TODO Auto-generated method stub
+						}
+					}, 20);
 					final AirSession s = SessionController.SessionMatchSpecial(AirtalkeeSessionManager.SPECIAL_NUMBER_DISPATCHER, getString(R.string.talk_tools_call_center));
 					if (s != null)
 					{
@@ -374,9 +391,12 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 		switch (id)
 		{
 			case DIALOG_CALL_CENTER_CONFIRM:
+			{
 				callStationCenter();
 				break;
+			}
 			case DIALOG_2_SEND_MESSAGE:
+			{
 				if (obj != null)
 				{
 					String sessionCode = obj.toString();
@@ -387,6 +407,7 @@ public class PTTFragment extends BaseFragment implements OnClickListener,
 					HomeActivity.getInstance().panelCollapsed();
 				}
 				break;
+			}
 		}
 	}
 

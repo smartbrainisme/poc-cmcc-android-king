@@ -17,13 +17,13 @@ public class Config
 	public final static int MARKET_CMCC = 130;	//@string/app_name_cmcc
 	// VERSION
 	public static final String VERSION_PLATFORM = "ANDROID";
-	public static final String VERSION_TYPE = "CMCC";
+	public static final String VERSION_TYPE = "ANDROID STD 2.0~";
 	public static String VERSION_CODE = "";
 	
 	public static int marketCode = MARKET_CMCC;
 	// =======================================================
 
-	public static final int TRACE_MODE = TRACE_MODE_ON_FILE;
+	public static final int TRACE_MODE = TRACE_MODE_OFF;
 
 	// =======================================================
 	// DEFINE
@@ -100,7 +100,7 @@ public class Config
 	/** 是否有广播 */
 	public static boolean funcBroadcast = true;
 	/** 是否有视频 */
-	public static boolean funcVideo = false;
+	public static boolean funcVideo = true;
 	/** 是佛支持视频摄像头 **/
 	public static boolean funcVideoDevice = false;
 	/** 短视频支持的最长时间 **/

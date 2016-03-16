@@ -514,10 +514,10 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 			Log.i(AccountActivity.class, "AccountActivity onChannelListGet OK!");
 			Intent it = new Intent(this, HomeActivity.class);
 			startActivity(it);
-			if (AirServices.getInstance() != null)
-			{
-				AirServices.getInstance().versionCheck();
-			}
+			// if (AirServices.getInstance() != null)
+			// {
+			// 	   AirServices.getInstance().versionCheck();
+			// }
 			finish();
 		}
 		else

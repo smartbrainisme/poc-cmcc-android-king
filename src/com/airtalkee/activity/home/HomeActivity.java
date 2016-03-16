@@ -47,8 +47,7 @@ import com.airtalkee.widget.SlidingUpPanelLayout;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelSlideListener;
 import com.airtalkee.widget.SlidingUpPanelLayout.PanelState;
 
-public class HomeActivity extends BaseActivity implements PanelSlideListener,
-		OnPageChangeListener, ViewChangeListener
+public class HomeActivity extends BaseActivity implements PanelSlideListener, OnPageChangeListener, ViewChangeListener
 {
 	private AirSession session;
 	private PageFragmentAdapter adapter;
@@ -117,14 +116,6 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 		if (null != session)
 		{
 			checkNewIM(false);
-		}
-		if (session != null)
-		{
-			if (session.getType() == AirSession.TYPE_CHANNEL)
-			{
-				AirChannel channel = session.getChannel();
-				channel.setRoleAppling(true);
-			}
 		}
 	}
 
@@ -348,6 +339,14 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener,
 			mediaStatusBar.setSession(session);
 		}
 		StatusBarTitle.getInstance().checkBrodcast();
+		if (session != null)
+		{
+			if (session.getType() == AirSession.TYPE_CHANNEL)
+			{
+				AirChannel channel = session.getChannel();
+				channel.setRoleAppling(true);
+			}
+		}
 	}
 
 	@Override

@@ -18,7 +18,6 @@ import com.airtalkee.Util.AirMmiTimerListener;
 import com.airtalkee.Util.Language;
 import com.airtalkee.Util.ThemeUtil;
 import com.airtalkee.Util.Util;
-import com.airtalkee.activity.home.HomeActivity;
 import com.airtalkee.config.Config;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeVersionUpdate;
@@ -35,16 +34,35 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 	private int gStatSent = 0;
 	private long gStatTime = 0;
 	private IOoperate iOperate = null;
+	private boolean isDownloading = false;
+	private boolean isShow = false;
+
+	public boolean isDownloading()
+	{
+		return isDownloading;
+	}
+
+	public void setDownloading(boolean isDownloading)
+	{
+		this.isDownloading = isDownloading;
+	}
 
 	private final String STAT_RECV = "STAT_RECV";
 	private final String STAT_SENT = "STAT_SENT";
 	private final String STAT_TIME = "STAT_TIME";
+	
+	private static MenuAboutActivity mInstance;
+	public static MenuAboutActivity getInstance()
+	{
+		return mInstance;
+	}
 
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
+		mInstance = this;
 		setRequestedOrientation(Config.screenOrientation);
 		setContentView(R.layout.activity_tool_about);
 		iOperate = new IOoperate();
@@ -63,6 +81,8 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 		{
 			AirMmiTimer.getInstance().TimerRegister(this, this, false, false, 1000, true, null);
 		}
+		isShow = false;
+		checkVersion();
 	}
 
 	@Override
@@ -106,7 +126,6 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 		ivUpdateIcon = (ImageView) findViewById(R.id.talk_iv_update_icon);
 		checkVersionLayout = (LinearLayout) findViewById(R.id.talk_check_version);
 		checkVersionLayout.setOnClickListener(this);
-		checkVersion();
 
 		statLayout = (LinearLayout) findViewById(R.id.talk_tv_statistic);
 		statLayoutTime = (TextView) findViewById(R.id.talk_tv_statistic_time);
@@ -128,7 +147,11 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 			}
 			case R.id.talk_check_version:
 			{
-				checkVersion();
+				if(!isDownloading)
+				{
+					isShow = true;
+					checkVersion();
+				}
 				break;
 			}
 			case R.id.talk_iv_refresh:
@@ -224,7 +247,6 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 			// versionMsg.setVisibility(View.VISIBLE);
 			versionMsg.setText(R.string.talk_verion_latest);
 			versionMsg.setTextColor(getResources().getColor(R.color.update_text_none));
-
 			versionCode.setVisibility(View.GONE);
 			ivUpdateIcon.setVisibility(View.GONE);
 		}
@@ -232,7 +254,6 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 		{
 			ivUpdateIcon.setVisibility(View.VISIBLE);
 			versionCode.setText(versionInfo);
-			// versionCode.setText("V2.3.1");
 			versionCode.setVisibility(View.VISIBLE);
 			versionMsg.setText(R.string.talk_version_new);
 			versionMsg.setTextColor(getResources().getColor(R.color.update_text_new));
@@ -246,8 +267,11 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 					try
 					{
 						dialog.cancel();
-						DialogVersionUpdate update = new DialogVersionUpdate(HomeActivity.getInstance(), url);
+						DialogVersionUpdate update = new DialogVersionUpdate(MenuAboutActivity.this, url);
 						update.show();
+						versionMsg.setText("更新中...");
+						isDownloading = true;
+						versionCode.setVisibility(View.GONE);
 					}
 					catch (Exception e)
 					{
@@ -278,7 +302,10 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 			}
 			Dialog d = builder.create();
 			d.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_ALERT);
-			d.show();
+			if (isShow)
+			{
+				d.show();
+			}
 		}
 	}
 }

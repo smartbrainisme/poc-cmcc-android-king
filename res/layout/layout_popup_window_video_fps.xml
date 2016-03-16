@@ -15,45 +15,71 @@
         android:paddingRight="10dp" >
 
         <RadioGroup
-            android:id="@+id/radio_rate_panel"
+            android:id="@+id/radio_fps_panel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
             <RadioButton
-                android:id="@+id/radio_low"
+                android:id="@+id/radio_fps_10"
                 style="@style/RadioButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="急速（480 * 320）" />
+                android:text="10fps" />
 
             <View
-                android:layout_width="170dp"
+                android:layout_width="100dp"
                 android:layout_height="1dp"
                 android:background="@drawable/ic_login_divider" />
 
             <RadioButton
-                android:id="@+id/radio_normal"
+                android:id="@+id/radio_fps_15"
                 style="@style/RadioButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:gravity="center"
-                android:text="标清（640 * 480）" />
+                android:text="15fps" />
 
             <View
-                android:layout_width="170dp"
+                android:layout_width="100dp"
                 android:layout_height="1dp"
                 android:background="@drawable/ic_login_divider" />
 
             <RadioButton
-                android:id="@+id/radio_best"
+                android:id="@+id/radio_fps_20"
                 style="@style/RadioButton"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="高清（1280 * 720）" />
+                android:text="20fps" />
+            
+            <View
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:background="@drawable/ic_login_divider" />
+
+            <RadioButton
+                android:id="@+id/radio_fps_25"
+                style="@style/RadioButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="25fps" />
+            
+            <View
+                android:layout_width="100dp"
+                android:layout_height="1dp"
+                android:background="@drawable/ic_login_divider" />
+
+            <RadioButton
+                android:id="@+id/radio_fps_30"
+                style="@style/RadioButton"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="30fps" />
         </RadioGroup>
     </LinearLayout>
 

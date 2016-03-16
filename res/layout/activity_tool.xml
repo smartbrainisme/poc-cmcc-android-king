@@ -275,6 +275,47 @@
                             android:layout_height="1dip"
                             android:background="@drawable/dicider_line2" />
 
+                        <!-- 实时视频设置 -->
+
+                        <LinearLayout
+                            android:id="@+id/talk_lv_tool_video"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:background="?theme_sider_title_bg"
+                            android:gravity="center_vertical"
+                            android:padding="10dip" >
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                android:orientation="horizontal" >
+	
+                                <TextView
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center_vertical"
+                                    android:paddingLeft="10dip"
+                                    android:text="@string/talk_tools_video"
+                                    android:textColor="?theme_color_text"
+                                    android:textSize="16dip" />
+                            </LinearLayout>
+
+                            <ImageView
+                                android:id="@id/talk_tv_enter"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginRight="10dip"
+                                android:background="@drawable/btn_enter" />
+                        </LinearLayout>
+                        <!-- 实时视频设置end -->
+
+                        <View
+                            android:layout_width="fill_parent"
+                            android:layout_height="1dip"
+                            android:background="@drawable/dicider_line2" />
+
                         <LinearLayout
                             android:id="@+id/talk_lv_tools_task"
                             android:layout_width="fill_parent"
@@ -356,8 +397,8 @@
                                     android:id="@+id/iv_Unread"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center_vertical"
                                     android:layout_marginLeft="2dp"
+                                    android:gravity="center_vertical"
                                     android:src="@drawable/record_unread" />
                             </LinearLayout>
 

@@ -151,6 +151,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		super.onResume();
 		setSession(getSession());
 		AirMessageTransaction.getInstance().setOnMessageListener(this);
+		lvMessage.setSelection(adapterMessage.getCount());
 	}
 
 	@Override
@@ -622,7 +623,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 			if (!isCustom && message != null && session != null && TextUtils.equals(session.getSessionCode(), message.getSessionCode()))
 			{
 				adapterMessage.notifyDataSetChanged();
-				// refreshMessageNewCount(toClean);
 				HomeActivity.getInstance().checkNewIM(toClean);
 				SessionAndChannelView.getInstance().refreshChannelAndDialog();
 				isHandled = true;
@@ -827,7 +827,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	@Override
 	public void onMessageRecordStart()
 	{
-		// TODO Auto-generated method stub
 		Sound.playSound(Sound.PLAYER_MEDIAN_REC_PLAY_START, false, getActivity());
 		mvRecording.registerMessage(MacRecordingView.START_TIME, null);
 	}
@@ -835,7 +834,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	@Override
 	public void onMessageRecordStop(int seconds, String msgCode)
 	{
-		// TODO Auto-generated method stub
 		mvRecording.registerMessage(MacRecordingView.STOP_TIME, recordCancel);
 		switch (seconds)
 		{
@@ -858,14 +856,12 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	@Override
 	public void onMessageRecordTransfered(String msgCode, String resId)
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void onMessageListLoad(String sessionCode, List<AirMessage> messages)
 	{
-		// TODO Auto-generated method stub
 		int position = 10;
 		adapterMessage.notifyDataSetChanged();
 		adapterMessage.notifyDataSetInvalidated();

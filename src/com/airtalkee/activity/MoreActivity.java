@@ -25,8 +25,7 @@ import com.airtalkee.sdk.controller.AccountController;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactGroup;
 
-public class MoreActivity extends ActivityBase implements OnClickListener,
-		OnUserInfoListener, OnSeekBarChangeListener
+public class MoreActivity extends ActivityBase implements OnClickListener, OnUserInfoListener, OnSeekBarChangeListener
 {
 
 	public TextView tvUserName;
@@ -107,6 +106,7 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 		findViewById(R.id.talk_lv_tool_gps_divider).setVisibility(View.VISIBLE);
 		
 		findViewById(R.id.talk_setting_voice).setOnClickListener(this);
+		findViewById(R.id.talk_lv_tool_video).setOnClickListener(this);// 实时视频设置
 		findViewById(R.id.talk_lv_tool_upload_record).setOnClickListener(this);// 上报记录
 		findViewById(R.id.talk_lv_tool_help).setOnClickListener(this);// 使用和帮助
 		findViewById(R.id.talk_tv_notice).setOnClickListener(this);// 广播
@@ -222,6 +222,12 @@ public class MoreActivity extends ActivityBase implements OnClickListener,
 			case R.id.talk_tv_user_name_panel:
 			{
 				Intent it = new Intent(this, MenuAccountActivity.class);
+				startActivity(it);
+				break;
+			}
+			case R.id.talk_lv_tool_video:
+			{
+				Intent it = new Intent(this, MenuSettingSessionVideoActivity.class);
 				startActivity(it);
 				break;
 			}

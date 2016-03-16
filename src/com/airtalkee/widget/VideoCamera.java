@@ -175,7 +175,6 @@ public class VideoCamera extends Activity implements OnClickListener, CallbackRe
 				session.startRecord();
 			else
 				session.stopRecord();
-
 			currentMillis = Utils.getCurrentTimeInMillis();
 		}
 		// else
