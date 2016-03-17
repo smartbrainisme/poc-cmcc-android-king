@@ -80,7 +80,7 @@ public class Util
 			Notification notification;
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 			{
-				notification = new Notification.Builder(context).setSmallIcon(drawableId, 3).setContentText(from).setContentTitle(from).setContentIntent(contentIntent).setTicker(ticker).build();
+				notification = new Notification.Builder(context).setSmallIcon(drawableId, 3).setContentText(message).setContentTitle(from).setContentIntent(contentIntent).setTicker(ticker).build();
 			}
 			else
 			{

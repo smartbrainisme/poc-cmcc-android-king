@@ -97,7 +97,6 @@ public class AirMessageTransaction implements OnMessageListener,
 	public void onMessageIncomingRecv(boolean isCustom, AirMessage message)
 	{
 		// TODO Auto-generated method stub
-
 		Log.i(AirMessageTransaction.class, "AirMessageTransaction onMessageIncomingRecv");
 		Context ct = AirServices.getInstance();
 		String from = "";
@@ -122,7 +121,7 @@ public class AirMessageTransaction implements OnMessageListener,
 					msg = typeText;
 					break;
 				case AirMessage.TYPE_SYSTEM:
-					typeText = Config.app_name + ct.getString(R.string.talk_session_msg);
+					typeText = message.getBody();
 					msg = typeText;
 					break;
 				case AirMessage.TYPE_CHANNEL_ALERT:
