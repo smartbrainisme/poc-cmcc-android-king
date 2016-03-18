@@ -95,13 +95,14 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 		{
 			picPathTemp = savedInstanceState.getString(MediaStore.EXTRA_OUTPUT);
 			type = savedInstanceState.getInt("type");
-//			mContext = (Context) savedInstanceState.get("context");
+			// mContext = (Context) savedInstanceState.get("context");
 		}
+		/*
 		if (type == AlbumChooseActivity.TYPE_IM)
 		{
 			mButtonToAlbum.setVisibility(View.INVISIBLE);
 			mButtonToVideo.setVisibility(View.INVISIBLE);
-		}
+		}*/
 	}
 
 	@Override

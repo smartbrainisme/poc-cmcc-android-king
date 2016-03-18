@@ -3,7 +3,6 @@ package com.airtalkee.activity.home;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,8 +13,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
-import android.text.InputType;
-import android.text.Spannable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -66,8 +63,8 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 {
 	private static final int REQUEST_CODE_BROWSE_IMAGE = 111;
 
-	public View textVoicePannel, textPannel, voicePannel;
-	private ImageView btnVoice;
+	public View textVoicePannel, textPannel, voicePannel, toolsPannel;
+	private ImageView btnVoice, btnClose, btnImage, btnCamera, btnVideo;
 	private PullToRefreshListView lvMessage;
 	private AdapterSessionMessage adapterMessage;
 	private AirMessage currentMessage;
@@ -103,15 +100,24 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		textVoicePannel = findViewById(R.id.voic_text_pannel);
 		textPannel = findViewById(R.id.text_pannel);
 		voicePannel = findViewById(R.id.voice_pannel);
+		toolsPannel = findViewById(R.id.tools_pannel);
 		etMsg = (EditText) findViewById(R.id.et_msg);
+		etMsg.addTextChangedListener(this);
 		btnSend = (Button) findViewById(R.id.send);
-		btnVoice = (ImageView) findViewById(R.id.btn_voice);
-
-		btnVoice.setOnTouchListener(this);
 		btnSend.setOnClickListener(this);
+		btnVoice = (ImageView) findViewById(R.id.btn_voice);
+		btnVoice.setOnTouchListener(this);
+		btnClose = (ImageView) findViewById(R.id.tools_btn_close);
+		btnClose.setOnClickListener(this);
+		btnImage = (ImageView) findViewById(R.id.tools_btn_image);
+		btnImage.setOnClickListener(this);
+		btnCamera = (ImageView) findViewById(R.id.tools_btn_camera);
+		btnCamera.setOnClickListener(this);
+		btnVideo = (ImageView) findViewById(R.id.tools_btn_video);
+		btnVideo.setOnClickListener(this);
 		findViewById(R.id.btn_text_close).setOnClickListener(this);
 		findViewById(R.id.btn_voice_close).setOnClickListener(this);
-		etMsg.addTextChangedListener(this);
+
 		adapterMessage = new AdapterSessionMessage(getActivity(), this, this);
 		adapterMessage.notifyDataSetChanged();
 		lvMessage = (PullToRefreshListView) findViewById(R.id.lv_message);
@@ -165,21 +171,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 					setVoicePannelVisiblity(View.VISIBLE);
 					break;
 				case R.id.bar_mid:
-					String status = Environment.getExternalStorageState();
-					if (!status.equals(Environment.MEDIA_MOUNTED))
-					{
-						Util.Toast(getActivity(), getActivity().getString(R.string.insert_sd_card));
-						return;
-					}
-					// 系统相册
-					// Intent localIntent = new
-					// Intent("android.intent.action.GET_CONTENT", null);
-					// localIntent.setType("image/*");
-					// 自定义相册
-					Activity activity = getActivity();
-					Intent localIntent = new Intent(activity, AlbumChooseActivity.class);
-					localIntent.putExtra("type", AlbumChooseActivity.TYPE_IM);
-					startActivityForResult(localIntent, REQUEST_CODE_BROWSE_IMAGE);
+					setToolsPannelVisiblity(View.VISIBLE);
 					break;
 				case R.id.bar_right:
 					InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -283,6 +275,36 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				}
 				break;
 			}
+			case R.id.tools_btn_close:
+				setToolsPannelVisiblity(View.GONE);
+				break;
+			case R.id.tools_btn_image:
+			{
+				String status = Environment.getExternalStorageState();
+				if (!status.equals(Environment.MEDIA_MOUNTED))
+				{
+					Util.Toast(getActivity(), getActivity().getString(R.string.insert_sd_card));
+					return;
+				} 
+				// 系统相册 
+				// Intent localIntent = new Intent("android.intent.action.GET_CONTENT", null); 
+				// localIntent.setType("image/*"); 
+				// 自定义相册 
+				Intent localIntent = new Intent(getActivity(), AlbumChooseActivity.class);
+				localIntent.putExtra("type", AlbumChooseActivity.TYPE_IM);
+				startActivityForResult(localIntent, REQUEST_CODE_BROWSE_IMAGE);
+				break;
+			}
+			case R.id.tools_btn_camera:
+			{
+				
+				break;
+			}
+			case R.id.tools_btn_video:
+			{
+				
+				break;
+			}
 		}
 	}
 
@@ -337,6 +359,8 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				textVoicePannel.setVisibility(View.GONE);
 			if (textPannel != null)
 				textPannel.setVisibility(View.GONE);
+			if (toolsPannel != null)
+				toolsPannel.setVisibility(View.GONE);
 			if (mediaStatusBar != null)
 				mediaStatusBar.setMediaStatusBarVisibility(View.VISIBLE);
 		}
@@ -362,6 +386,8 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				textVoicePannel.setVisibility(View.GONE);
 			if (voicePannel != null)
 				voicePannel.setVisibility(View.GONE);
+			if (toolsPannel != null)
+				toolsPannel.setVisibility(View.GONE);
 			if (mediaStatusBar != null)
 				mediaStatusBar.setMediaStatusBarVisibility(View.VISIBLE);
 		}
@@ -371,6 +397,30 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 				textVoicePannel.setVisibility(View.VISIBLE);
 			if (voicePannel != null)
 				voicePannel.setVisibility(View.VISIBLE);
+			if (mediaStatusBar != null)
+				mediaStatusBar.setMediaStatusBarVisibility(View.GONE);
+		}
+	}
+
+	private void setToolsPannelVisiblity(int visiblility)
+	{
+		if (visiblility == View.GONE)
+		{
+			if (textVoicePannel != null)
+				textVoicePannel.setVisibility(View.GONE);
+			if (voicePannel != null)
+				voicePannel.setVisibility(View.GONE);
+			if (toolsPannel != null)
+				toolsPannel.setVisibility(View.GONE);
+			if (mediaStatusBar != null)
+				mediaStatusBar.setMediaStatusBarVisibility(View.VISIBLE);
+		}
+		else
+		{
+			if (textVoicePannel != null)
+				textVoicePannel.setVisibility(View.VISIBLE);
+			if (toolsPannel != null)
+				toolsPannel.setVisibility(View.VISIBLE);
 			if (mediaStatusBar != null)
 				mediaStatusBar.setMediaStatusBarVisibility(View.GONE);
 		}

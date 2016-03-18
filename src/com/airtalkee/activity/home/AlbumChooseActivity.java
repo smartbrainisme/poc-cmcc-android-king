@@ -31,8 +31,7 @@ import com.airtalkee.entity.ImageBucket;
 import com.airtalkee.widget.PhotoCamera;
 
 // 相册选择
-public class AlbumChooseActivity extends Activity implements
-		OnItemClickListener, OnClickListener
+public class AlbumChooseActivity extends Activity implements OnItemClickListener, OnClickListener
 {
 	public static final String EXTRA_IMAGE_LIST = "imagelist";
 	public static final int TYPE_REPORT = 1;

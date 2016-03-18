@@ -114,6 +114,53 @@
                     android:scaleType="center"
                     android:src="@drawable/ic_close1" />
             </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/tools_pannel"
+                android:layout_width="fill_parent"
+                android:layout_height="80dp"
+                android:layout_gravity="bottom"
+                android:background="#4A4A4A"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:id="@+id/tools_btn_close"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/app_name_cmcc"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_close_cicle" />
+
+                <ImageView
+                    android:id="@+id/tools_btn_image"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/app_name_cmcc"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_image" />
+
+                <ImageView
+                    android:id="@+id/tools_btn_camera"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/app_name_cmcc"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_fun_video" />
+
+                <ImageView
+                    android:id="@+id/tools_btn_video"
+                    android:layout_width="fill_parent"
+                    android:layout_height="45dp"
+                    android:layout_weight="1"
+                    android:contentDescription="@string/app_name_cmcc"
+                    android:scaleType="center"
+                    android:src="@drawable/ic_fun_gps" />
+            </LinearLayout>
         </FrameLayout>
     </LinearLayout>
 

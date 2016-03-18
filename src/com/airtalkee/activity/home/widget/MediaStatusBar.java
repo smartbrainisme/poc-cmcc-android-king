@@ -64,7 +64,7 @@ public class MediaStatusBar extends LinearLayout implements
 	private StatusTalkBtn talkBtn;
 	private int[] memRes = new int[] { R.drawable.selector_fun_call, R.drawable.selector_fun_msg, R.drawable.selector_fun_cancel };
 	private int[] pttRes = new int[] { R.drawable.ic_fun_report, R.drawable.ic_fun_video, R.drawable.ic_fun_call_center };
-	private int[] IMRes = new int[] { R.drawable.ic_fun_voice, R.drawable.ic_fun_pic, R.drawable.ic_fun_input };
+	private int[] IMRes = new int[] { R.drawable.ic_fun_voice, R.drawable.ic_fun_other, R.drawable.ic_fun_input };
 
 	private int[][] barArray = new int[][] { memRes, pttRes, IMRes };
 

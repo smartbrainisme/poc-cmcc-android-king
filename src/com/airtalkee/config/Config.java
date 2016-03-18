@@ -23,7 +23,7 @@ public class Config
 	public static int marketCode = MARKET_CMCC;
 	// =======================================================
 
-	public static final int TRACE_MODE = TRACE_MODE_OFF;
+	public static final int TRACE_MODE = TRACE_MODE_ON_SCREEN;
 
 	// =======================================================
 	// DEFINE

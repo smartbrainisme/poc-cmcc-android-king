@@ -290,7 +290,14 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 			}
 			case R.id.button_rate:
 			{
-				popRateWindow.showAtLocation(popRateView, Gravity.RIGHT | Gravity.TOP, 500, 300);
+				if (Config.model.startsWith("SM"))// 三星note
+				{
+					popRateWindow.showAtLocation(popRateView, Gravity.RIGHT | Gravity.TOP, 500, 300);
+				}
+				else 
+				{
+					popRateWindow.showAtLocation(popRateView, Gravity.RIGHT | Gravity.TOP, 250, 150);
+				}
 				popFpsWindow.dismiss();
 				((Button) popItemView.findViewById(R.id.button_rate)).setTextColor(0X7fFF9400);
 				((Button) popItemView.findViewById(R.id.button_fps)).setTextColor(getResources().getColorStateList(R.color.white));
@@ -315,7 +322,14 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 			}
 			case R.id.button_fps:
 			{
-				popFpsWindow.showAtLocation(popFpsView, Gravity.RIGHT | Gravity.TOP, 500, 300);
+				if (Config.model.startsWith("SM"))// 三星note
+				{
+					popFpsWindow.showAtLocation(popFpsView, Gravity.RIGHT | Gravity.TOP, 500, 300);
+				}
+				else 
+				{
+					popFpsWindow.showAtLocation(popFpsView, Gravity.RIGHT | Gravity.TOP, 300, 150);
+				}
 				((Button) popItemView.findViewById(R.id.button_rate)).setTextColor(getResources().getColorStateList(R.color.white));
 				((Button) popItemView.findViewById(R.id.button_fps)).setTextColor(0X7fff9400);
 				popRateWindow.dismiss();
