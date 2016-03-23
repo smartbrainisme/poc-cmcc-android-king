@@ -25,7 +25,6 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.R;
 import com.cmccpoc.Util.Util;
-import com.cmccpoc.activity.SessionBoxTalk;
 import com.cmccpoc.activity.home.BaseFragment;
 import com.cmccpoc.activity.home.PTTFragment;
 import com.cmccpoc.activity.home.widget.StatusBarBottom.OnBarItemClickListener;
@@ -258,7 +257,6 @@ public class MediaStatusBar extends LinearLayout implements
 		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
-			Log.i(SessionBoxTalk.class, "onMediaStateListen");
 			talkBtn.refreshPttButton();
 		}
 	}
@@ -266,32 +264,14 @@ public class MediaStatusBar extends LinearLayout implements
 	@Override
 	public void onMediaStateTalk(AirSession session)
 	{
-		// TODO Auto-generated method stub
-		// if (this.session != null &&
-		// TextUtils.equals(this.session.getSessionCode(),
-		// session.getSessionCode()))
-		// {
-		Log.i(SessionBoxTalk.class, "onMediaStateTalk");
 		barTitle.refreshMediaStatus();
 		talkBtn.refreshPttButton();
-
-		// tvSpeakerTime.setText("00:00");
-		// mSpeakingTimeStamp = System.currentTimeMillis();
-		// AirMmiTimer.getInstance().TimerRegister(contextMain, mSpeakingTimer,
-		// false, false, 1000, true, null);
-		// if (MainActivity.getInstance() != null &&
-		// MainActivity.getInstance().viewControllerSlideView.isShowMenuLeft())
-		// {
-		// MainActivity.getInstance().viewLeft.refreshList();
-		// }
-		// }
 	}
 
 	@Override
 	public void onMediaStateTalkEnd(AirSession session, int reason)
 	{
 		// TODO Auto-generated method stub
-		Log.i(SessionBoxTalk.class, "onMediaStateTalkEnd");
 		switch (reason)
 		{
 			case AirtalkeeSessionManager.TALK_FINISH_REASON_EXCEPTION:
@@ -333,7 +313,6 @@ public class MediaStatusBar extends LinearLayout implements
 		{
 			if (TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 			{
-				Log.i(SessionBoxTalk.class, "onMediaStateListen");
 				barTitle.refreshMediaStatus();
 			}
 			else
@@ -350,7 +329,6 @@ public class MediaStatusBar extends LinearLayout implements
 		{
 			if (TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 			{
-				Log.i(SessionBoxTalk.class, "onMediaStateListenEnd");
 				barTitle.refreshMediaStatus();
 				PTTFragment.getInstance().refreshPlayback();
 			}
@@ -374,7 +352,6 @@ public class MediaStatusBar extends LinearLayout implements
 		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
-			Log.i(SessionBoxTalk.class, "onMediaStateListen");
 			talkBtn.refreshPttButton();
 			// Util.Toast(getContext(), getContext().getString(R.string.talk_channel_tip_media_queue_in));
 		}
@@ -386,7 +363,6 @@ public class MediaStatusBar extends LinearLayout implements
 		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
-			Log.i(SessionBoxTalk.class, "onMediaStateInListen");
 			talkBtn.refreshPttButton();
 			Util.Toast(getContext(), getContext().getString(R.string.talk_channel_tip_media_queue_in));
 		}
@@ -398,7 +374,6 @@ public class MediaStatusBar extends LinearLayout implements
 		// TODO Auto-generated method stub
 		if (this.session != null && TextUtils.equals(this.session.getSessionCode(), session.getSessionCode()))
 		{
-			Log.i(SessionBoxTalk.class, "onMediaStateListen");
 			talkBtn.refreshPttButton();
 			Util.Toast(getContext(), getContext().getString(R.string.talk_channel_tip_media_queue_out));
 		}

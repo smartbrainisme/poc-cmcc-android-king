@@ -21,7 +21,6 @@ import com.cmccpoc.Util.AirMmiTimer;
 import com.cmccpoc.Util.AirMmiTimerListener;
 import com.cmccpoc.Util.Toast;
 import com.cmccpoc.Util.Util;
-import com.cmccpoc.activity.MainSessionView;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.control.AirSessionControl;
 import com.cmccpoc.services.AirServices;
@@ -195,7 +194,6 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 								{
 									isTalkLongClick = false;
 									v.setPressed(true);
-									Log.i(MainSessionView.class, "TalkButton Start timeout!");
 									AirMmiTimer.getInstance().TimerRegister(getContext(), this, false, true, TIMEOUT_LONG_CLICK, false, null);
 								}
 								else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
@@ -205,14 +203,12 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 									{
 										if (isTalkLongClick)
 										{
-											Log.i(MainSessionView.class, "TalkButton onLongClick released!");
 											AirtalkeeSessionManager.getInstance().TalkRelease(session);
 											isTalkLongClick = false;
 											v.setPressed(false);
 										}
 										else
 										{
-											Log.i(MainSessionView.class, "TalkButton onClick!");
 											AirtalkeeSessionManager.getInstance().TalkButtonClick(session, channel != null ? channel.isRoleAppling() : false);
 										}
 									}
@@ -223,12 +219,10 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 							{
 								if (event.getAction() == MotionEvent.ACTION_DOWN)
 								{
-									Log.i(MainSessionView.class, "TalkButton onLongClick TalkRequest!");
 									AirtalkeeSessionManager.getInstance().TalkRequest(session, channel != null ? channel.isRoleAppling() : false);
 								}
 								else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
 								{
-									Log.i(MainSessionView.class, "TalkButton onLongClick TalkRelease!");
 									AirtalkeeSessionManager.getInstance().TalkRelease(session);
 								}
 							}
@@ -299,7 +293,6 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 		try
 		{
 			isTalkLongClick = true;
-			Log.i(MainSessionView.class, "TalkButton Stop timeout!");
 			AirtalkeeSessionManager.getInstance().TalkRequest(session, channel != null ? channel.isRoleAppling() : false);
 		}
 		catch (Exception e)

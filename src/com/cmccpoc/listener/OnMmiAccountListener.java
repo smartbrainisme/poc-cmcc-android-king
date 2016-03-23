@@ -1,5 +1,9 @@
 package com.cmccpoc.listener;
 
+/**
+ * 监听用户登录状态
+ * @author Yao
+ */
 public interface OnMmiAccountListener
 {
     public void onMmiHeartbeatLogin(int result);

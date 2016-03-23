@@ -1,9 +1,7 @@
 package com.cmccpoc.activity.home.widget;
 
 import java.util.List;
-import android.R.integer;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,17 +9,12 @@ import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
-import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.R;
-import com.cmccpoc.Util.Toast;
-import com.cmccpoc.activity.TempSessionActivity;
 import com.cmccpoc.activity.home.HomeActivity;
-import com.cmccpoc.activity.home.SessionDialogActivity;
 import com.cmccpoc.activity.home.SessionNewActivity;
 import com.cmccpoc.activity.home.widget.AlertDialog.DialogListener;
 import com.cmccpoc.control.AirSessionControl;
 import com.cmccpoc.listener.OnMmiSessionListener;
-import com.cmccpoc.services.AirServices;
 
 public class CallAlertDialog extends AlertDialog implements android.view.View.OnClickListener, DialogListener, OnMmiSessionListener
 {
@@ -93,7 +86,6 @@ public class CallAlertDialog extends AlertDialog implements android.view.View.On
 
 	private void finishCall()
 	{
-		Log.e(TempSessionActivity.class, "handleSession.SessionBye(session)");
 		if (session != null && session.getSessionState() != AirSession.SESSION_STATE_IDLE)
 		{
 			AirSessionControl.getInstance().SessionEndCall(session);

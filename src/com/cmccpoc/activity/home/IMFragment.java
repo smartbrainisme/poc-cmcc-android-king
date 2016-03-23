@@ -45,8 +45,6 @@ import com.cmccpoc.Util.Sound;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.activity.ActivityImagePager;
-import com.cmccpoc.activity.MainActivity;
-import com.cmccpoc.activity.SessionBoxMessage;
 import com.cmccpoc.activity.home.widget.SessionAndChannelView;
 import com.cmccpoc.adapter.AdapterSessionMessage;
 import com.cmccpoc.control.AirMessageTransaction;
@@ -442,7 +440,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 			{}
 		}
 		this.session = s;
-		Log.d(SessionBoxMessage.class, "SessionBoxMessage - setSession");
 		if (s != null && s.getMessageTextDraft() != null)
 		{
 			etMsg.setText(s.getMessageTextDraft());
@@ -796,7 +793,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	public void onMessageRecordPlayStop(String msgCode, String resId)
 	{
 		// TODO Auto-generated method stub
-		Log.i(SessionBoxMessage.class, "onMessageRecordPlayStop");
 		// AirMmiTimer.getInstance().TimerUnregister(this, this);
 		// if (SetRecordPlayState(msgCode, false))
 		{
@@ -999,7 +995,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		switch (requestCode)
 		{
 			case REQUEST_CODE_BROWSE_IMAGE:
-				if (resultCode == MainActivity.RESULT_OK)
+				if (resultCode == HomeActivity.RESULT_OK)
 				{
 					try
 					{
