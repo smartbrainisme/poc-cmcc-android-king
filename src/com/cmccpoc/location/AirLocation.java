@@ -14,6 +14,10 @@ import com.cmccpoc.config.Config;
 import com.cmccpoc.listener.OnMmiLocationListener;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 位置信息
+ * @author Yao
+ */
 public class AirLocation implements OnMapListener, AirMmiTimerListener
 {
 	private final static String AIR_GPS_STATE = "AIR_GPS_STATE";
@@ -54,13 +58,15 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 	{
 		this.context = context;
 	}
-
+	
+	// 获取系统GPS状态
 	public boolean getSettingState()
 	{
 		boolean gpsState = AirServices.iOperator.getBoolean(AirLocation.AIR_GPS_STATE, true);
 		return gpsState;
 	}
 
+	// 获取回传频率
 	public int getSettingFrequence()
 	{
 		int gpsFreq = AirServices.iOperator.getInt(AirLocation.AIR_GPS_FREQUENCE, AIR_LOCATION_FRE_MINUTE_5);
@@ -90,6 +96,7 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 		}
 	}
 
+	// 设置默认频率
 	public void setFrequenceDefault(int frequence, boolean isForce)
 	{
 		if (isForce)
@@ -106,6 +113,7 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 		}
 	}
 
+	// GPS是否激活
 	public boolean GpsIsActive()
 	{
 		boolean isActive = false;
@@ -117,6 +125,7 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 		return isActive;
 	}
 
+	// 激活GPS
 	public void GpsActive()
 	{
 		Intent callGPSSettingIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
@@ -141,7 +150,6 @@ public class AirLocation implements OnMapListener, AirMmiTimerListener
 	// =================================
 	// LOOP
 	// =================================
-
 	public void loopCheck()
 	{
 		if (Config.funcCenterLocation == AirFunctionSetting.SETTING_ENABLE || Config.funcCenterLocation == AirFunctionSetting.SETTING_LOCATION_FORCE)

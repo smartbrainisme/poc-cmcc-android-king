@@ -10,11 +10,13 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
 
+/**
+ * 消息操作类
+ * @author Yao
+ */
 public class TableMessageDao
 {
-
 	private static final TableMessageDao instance = new TableMessageDao();
-
 	private TableMessageDao()
 	{};
 

@@ -17,6 +17,10 @@ import com.cmccpoc.config.Config;
 import com.cmccpoc.control.AirSessionControl;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 接收媒体按键广播：专业对讲手机的PTT按键，按下和抬起时会发送广播，poc接收到广播后会进行处理
+ * @author Yao
+ */
 public class ReceiverMediaButton extends BroadcastReceiver
 {
 	public static boolean isPttPressed = false;
@@ -166,8 +170,5 @@ public class ReceiverMediaButton extends BroadcastReceiver
 		Intent it = new Intent(context,AccountActivity.class);
 		it.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		context.startActivity(it);  
-		
-		//Intent intent = new Intent(AirServices.SERVICE_PATH);
-		//context.startService(intent);	
 	}
 }

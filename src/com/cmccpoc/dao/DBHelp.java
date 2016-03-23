@@ -18,7 +18,8 @@ import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.entity.AirReport;
 
 /**
- * @author ����� TODO �ṩһ�� ��ɾ�Ĳ�� UTIL���� ͬʱ�����Ҳ�ṩ����ݿ�Ĵ����ͱ�Ĵ���
+ * 数据库帮助类
+ * @author Yao
  */
 
 public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
@@ -35,7 +36,6 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 	public DBHelp(Context context)
 	{
 		super(context, DBDefine.DBNAME, null, DBDefine.DBVERSION);
-		// TODO ����database
 		iReportDao = TableReportDao.getInstance(this);
 		iChannelDao = TableChannelDao.getInstance(this);
 		iMessageDao = TableMessageDao.getInstance(this);
@@ -43,6 +43,7 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		iReportDao = TableReportDao.getInstance(this);
 	}
 
+	// 数据库更新
 	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2)
 	{
 		Log.e(DBHelp.class, "DB dbUpgrade!!");
@@ -55,12 +56,12 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 	@SuppressWarnings("static-access")
 	public void onCreate(SQLiteDatabase db)
 	{
-		// TODO ����table
 		Log.e(DBHelp.class, "DB onCreate!!");
 		this.db = db;
 		createTable();
 	}
 
+	// 初始化创建数据库
 	private void createTable()
 	{
 		Log.e(DBHelp.class, "DB CREATE!!");
@@ -71,6 +72,7 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		db.execSQL(DBDefine.CREATE_T_SESSION_MEMBER);
 	}
 
+	// 删除数据库
 	private void dropTable()
 	{
 		Log.e(DBHelp.class, "DB DROP!!");
@@ -95,6 +97,7 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 	private boolean isDbReading = false;
 	private boolean isDbWriting = false;
 
+	// 获取数据库读权限
 	public SQLiteDatabase DatabaseReadableGet()
 	{
 		SQLiteDatabase db = null;
@@ -117,6 +120,7 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		return db;
 	}
 
+	// 取消数据库读权限
 	public void DatabaseReadableClose(SQLiteDatabase db)
 	{
 		try
@@ -131,6 +135,7 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		isDbReading = false;
 	}
 
+	// 获取数据库写权限
 	public SQLiteDatabase DatabaseWritableGet()
 	{
 		SQLiteDatabase db = null;
@@ -153,6 +158,7 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		return db;
 	}
 
+	// 取消数据库写权限
 	public void DatabaseWritableClose(SQLiteDatabase db)
 	{
 		try
@@ -222,9 +228,9 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		dbWriteThread.start();
 	}
 
+	// 数据库CRUD操作
 	private Thread dbWriteThread = new Thread()
 	{
-
 		@SuppressWarnings("unchecked")
 		public void run()
 		{

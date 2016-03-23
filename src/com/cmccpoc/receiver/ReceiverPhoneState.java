@@ -12,11 +12,14 @@ import com.cmccpoc.Util.AirMmiTimerListener;
 import com.cmccpoc.control.VoiceManager;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 接收手机拨打、接听电话行为的广播
+ * @author Yao
+ *
+ */
 public class ReceiverPhoneState extends BroadcastReceiver implements AirMmiTimerListener
 {
-
 	public static boolean isCalling = false;
-
 	private static final int CALL_RETRY_TIMER = 10 * 1000;
 
 	@Override
@@ -39,6 +42,7 @@ public class ReceiverPhoneState extends BroadcastReceiver implements AirMmiTimer
 		}
 	}
 
+	// 是否正在通话中
 	public static boolean isPhoneCalling(Context context)
 	{
 		try
@@ -72,12 +76,14 @@ public class ReceiverPhoneState extends BroadcastReceiver implements AirMmiTimer
 		return isCalling;
 	}
 
+	// 开始通话时
 	private void callStart()
 	{
 		AirtalkeeAccount.getInstance().CallStart();
 		AirMmiTimer.getInstance().TimerRegister(AirServices.getInstance(), this, true, false, CALL_RETRY_TIMER, true, null);
 	}
 
+	// 通话结束时
 	private void callStop()
 	{
 		AirMmiTimer.getInstance().TimerUnregister(AirServices.getInstance(), this);

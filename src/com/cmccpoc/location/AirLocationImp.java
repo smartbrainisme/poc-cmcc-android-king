@@ -15,12 +15,19 @@ import com.cmccpoc.Util.AirMmiTimer;
 import com.cmccpoc.Util.AirMmiTimerListener;
 import com.cmccpoc.Util.Util;
 
+/**
+ * 获取位置信息
+ * @author Yao
+ */
 public class AirLocationImp
 {
 
 	public final static int LOCATION_TYPE_GPS = 0;
 	public final static int LOCATION_TYPE_CELL_BAIDU = 2;
 
+	/**
+	 * 计时器参数
+	 */
 	public class TimerParam
 	{
 		public int id = 0;
@@ -46,6 +53,11 @@ public class AirLocationImp
 	public static String mTime = "";
 	public static String mAddress = "";
 
+	/**
+	 * 获取位置
+	 * @param actionId Id
+	 * @param timeoutSeconds 超时时间
+	 */
 	public void LocationGet(final Context context, final OnMapListener listener, final int actionId, final int timeoutSeconds)
 	{
 		LocationTerminate(context);
@@ -60,6 +72,9 @@ public class AirLocationImp
 		}
 	}
 
+	/**
+	 * 位置获取结束
+	 */
 	public void LocationTerminate(final Context context)
 	{
 		TimerParam param = (TimerParam) AirMmiTimer.getInstance().TimerUnregister(context, doGpsLocationTimeout);
@@ -165,7 +180,6 @@ public class AirLocationImp
 	// =========================================
 	// GPS Mode
 	// =========================================
-
 	private void doGpsLocation(final int id, final int timeoutSeconds, final Context context, final OnMapListener listener)
 	{
 		TimerParam param = new TimerParam();
@@ -217,6 +231,7 @@ public class AirLocationImp
 		mLocMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
 	}
 
+	// GPS获取超时
 	private AirMmiTimerListener doGpsLocationTimeout = new AirMmiTimerListener()
 	{
 		@Override
@@ -237,7 +252,6 @@ public class AirLocationImp
 	// =========================================
 	// Cell Mode
 	// =========================================
-
 	private void doCellLocation(final int id, final int timeoutSeconds, final Context context, final OnMapListener listener)
 	{
 		doCellLocation(id, true, timeoutSeconds, context, listener);
@@ -301,7 +315,6 @@ public class AirLocationImp
 	// =========================================
 	// Release getting
 	// =========================================
-
 	private void doRelease(Context context, TimerParam param)
 	{
 		switch (param.type)

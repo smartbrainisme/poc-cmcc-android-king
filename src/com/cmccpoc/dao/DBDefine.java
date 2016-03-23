@@ -3,7 +3,7 @@ package com.cmccpoc.dao;
 public final class DBDefine
 {
 
-	protected static final String DBNAME = "airtalkeedb";
+	protected static final String DBNAME = "cmccpocdb";
 	protected static final int DBVERSION = 8;
 
 	protected static String Tables[] = { DBDefine.db_report, DBDefine.db_channel, DBDefine.db_message, DBDefine.db_session, DBDefine.db_session_member };

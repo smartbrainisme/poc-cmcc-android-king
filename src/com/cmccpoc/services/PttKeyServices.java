@@ -13,6 +13,10 @@ import com.airtalkee.sdk.util.Utils;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.receiver.ReceiverMediaButton;
 
+/**
+ * PTT键注册服务
+ * @author Yao
+ */
 public class PttKeyServices extends Service
 {
 	public static  String ACTION = "com.airtalkee.services.PttKeyServices";
@@ -57,6 +61,7 @@ public class PttKeyServices extends Service
 		return START_STICKY;
 	}
 	
+	// 开始注册PTT键
 	public void resisterPTTKey()
 	{
 		Log.i(PttKeyServices.class, "Weptt resisterPTTKey begin");

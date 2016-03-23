@@ -62,6 +62,10 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.umeng.analytics.MobclickAgent;
 
+/**
+ * POC服务，处理app启动与初始化服务
+ * @author Yao
+ */
 public class AirServices extends Service implements OnSessionIncomingListener, OnVersionUpdateListener
 {
 	@SuppressWarnings("deprecation")
@@ -135,6 +139,7 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		System.exit(0);
 	}
 
+	// app运行时初始化一系列服务与类对象
 	private void appRun()
 	{
 		try
@@ -209,6 +214,7 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		return db_proxy;
 	}
 
+	// 注册屏幕状态广播
 	public void registerScreenReceiver()
 	{
 		IntentFilter filter = new IntentFilter();
@@ -217,6 +223,7 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		registerReceiver(receiverScreen, filter);
 	}
 
+	// 点亮屏幕
 	@SuppressWarnings("deprecation")
 	public void lightScreen()
 	{
@@ -225,6 +232,7 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		wakeLock.acquire(20 * 1000);
 	}
 
+	// 禁用锁屏功能
 	@SuppressWarnings("deprecation")
 	public void unlockScreen()
 	{
@@ -240,6 +248,9 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		}
 	}
 
+	/**
+	 * 尝试锁定屏幕
+	 */
 	@SuppressWarnings("deprecation")
 	public void lockScreen()
 	{
@@ -283,18 +294,6 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		if (session != null)
 		{
 			final AirSession temAirSession = session;
-//			try
-//			{
-//				if (MainActivity.getInstance() != null && MainActivity.getInstance().viewLeft != null)
-//				{
-//					MainActivity.getInstance().viewLeft.refreshList();
-//				}
-//			}
-//			catch (Exception e)
-//			{
-//				// TODO: handle exception
-//			}
-
 			if (Setting.getPttIsb())
 			{
 				AirtalkeeSessionManager.getInstance().SessionIncomingBusy(temAirSession);
@@ -355,6 +354,7 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 	 * 
 	 ***********************************/
 
+	// 版本检测
 	public void versionCheck()
 	{
 		String lang = Language.getLocalLanguage(this);
@@ -414,7 +414,6 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 	private void initImageLoader()
 	{
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).writeDebugLogs().build();
-		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
 	}
 
@@ -425,6 +424,7 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		return isSecretValid;
 	}
 
+	// 发送广播通用方法
 	public static void sendBroadcast(String action)
 	{
 		if (action != null && action.length() > 0)

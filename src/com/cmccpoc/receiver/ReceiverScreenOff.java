@@ -6,6 +6,10 @@ import android.content.Intent;
 import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 接收屏幕亮或灭状态的广播
+ * @author Yao
+ */
 public class ReceiverScreenOff extends BroadcastReceiver
 {
 

@@ -13,6 +13,10 @@ import com.cmccpoc.control.AirAccountManager;
 import com.cmccpoc.control.AirSessionMediaSound;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 接收网络连接广播
+ * @author Yao
+ */
 public class ReceiverConnectionChange extends BroadcastReceiver implements AirMmiTimerListener
 {
 	public static final String ACTION = "android.net.conn.CONNECTIVITY_CHANGE";
@@ -46,7 +50,6 @@ public class ReceiverConnectionChange extends BroadcastReceiver implements AirMm
 						Log.i(ReceiverConnectionChange.class, "ConnectionType changed!!!!");
 						networkClose();
 					}
-
 					networkOpen();
 					ConnectionType = activeNetInfo.getType();
 				}
@@ -59,6 +62,7 @@ public class ReceiverConnectionChange extends BroadcastReceiver implements AirMm
 		}
 	}
 
+	// 网络打开
 	private void networkOpen()
 	{
 		AirMmiTimer.getInstance().TimerUnregister(AirServices.getInstance(), this);
@@ -70,16 +74,13 @@ public class ReceiverConnectionChange extends BroadcastReceiver implements AirMm
 	
 	}
 
+	// 网络关闭
 	private void networkClose()
 	{
 		handleAccount.NetworkClose();
 		AirMmiTimer.getInstance().TimerRegister(AirServices.getInstance(), this, true, false, NETWORK_RETRY_TIMER, true, null);
 		try
 		{
-//			if (MainActivity.getInstance() != null)
-//			{
-//				MainActivity.getInstance().viewMiddle.sessionBox.sessionBoxTalk.videoFinish();
-//			}
 			AirSessionMediaSound.destoryState();
 		}
 		catch (Exception e)
