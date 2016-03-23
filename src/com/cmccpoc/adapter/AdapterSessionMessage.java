@@ -16,17 +16,17 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
-import com.cmccpoc.R;
-import com.cmccpoc.Util.Language;
-import com.cmccpoc.Util.ThemeUtil;
-import com.cmccpoc.Util.Util;
-import com.cmccpoc.adapter.AdapterBase.OnImageLoadCompletedListener;
 import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeUserInfo;
 import com.airtalkee.sdk.controller.AccountController;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
+import com.cmccpoc.R;
+import com.cmccpoc.Util.Language;
+import com.cmccpoc.Util.ThemeUtil;
+import com.cmccpoc.Util.Util;
+import com.cmccpoc.adapter.AdapterBase.OnImageLoadCompletedListener;
 
 public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCompletedListener
 {
