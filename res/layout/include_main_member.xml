@@ -4,7 +4,7 @@
 	  
 		<LinearLayout android:orientation="vertical" android:id="@id/talk_layout_session_content" android:layout_height="fill_parent" android:layout_width="fill_parent" >
 			<RelativeLayout android:layout_width="fill_parent"  android:layout_height="fill_parent" android:layout_weight="1">
-				<com.airtalkee.widget.MListView android:id="@id/talk_lv_session_member"  android:layout_width="fill_parent"  android:layout_height="fill_parent"  android:cacheColorHint="#00000000"  android:dividerHeight="1dip"  android:divider="?theme_divider_h"    android:descendantFocusability="blocksDescendants" />
+				<com.cmccpoc.widget.MListView android:id="@id/talk_lv_session_member"  android:layout_width="fill_parent"  android:layout_height="fill_parent"  android:cacheColorHint="#00000000"  android:dividerHeight="1dip"  android:divider="?theme_divider_h"    android:descendantFocusability="blocksDescendants" />
 			</RelativeLayout>
 			<LinearLayout android:id="@id/talk_btn_layout" android:layout_width="fill_parent"  android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center" android:background="@drawable/selector_group_item_dark" >
 			    <View android:layout_width="fill_parent" android:layout_height="1dip" android:background="?theme_divider_h"   />

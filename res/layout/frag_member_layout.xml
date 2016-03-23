@@ -118,7 +118,7 @@
             android:textSize="16dp" />
     </LinearLayout>
 
-    <com.airtalkee.widget.MListView
+    <com.cmccpoc.widget.MListView
         android:id="@+id/talk_lv_member"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

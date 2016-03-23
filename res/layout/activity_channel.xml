@@ -7,7 +7,7 @@
 	    <TextView android:id="@+id/channel_tip" android:layout_width="fill_parent" android:layout_height="wrap_content"
 	        android:text="@string/talk_channel_attach_tip" android:textColor="#cccccc" android:textSize="15dip"
 	        android:padding="10dip" android:gravity="center"/>
-		<com.airtalkee.widget.MListView
+		<com.cmccpoc.widget.MListView
 			android:id="@+id/channel_list" android:layout_below="@id/channel_tip"
 			android:layout_width="fill_parent" android:layout_height="fill_parent"
 			android:cacheColorHint="#00000000" android:dividerHeight="1dip"

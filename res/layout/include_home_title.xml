@@ -37,7 +37,7 @@
             android:layout_toLeftOf="@+id/right_button"
             android:layout_toRightOf="@id/left_button" >
 
-           	<com.airtalkee.activity.home.widget.MarqueeTextView
+           	<com.cmccpoc.activity.home.widget.MarqueeTextView
                 android:id="@+id/tv_title"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"

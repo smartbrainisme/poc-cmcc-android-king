@@ -21,8 +21,6 @@
             android:layout_marginRight="10dp"
             android:src="@drawable/user_state_offline" />
 
-        <!-- com.airtalkee.activity.home.widget.MarqueeTextView -->
-
         <TextView
             android:id="@id/talk_tv_group_member"
             android:layout_width="wrap_content"

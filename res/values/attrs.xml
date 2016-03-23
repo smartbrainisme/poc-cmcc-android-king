@@ -41,10 +41,10 @@
         <attr name="encrypt" format="boolean" />
         <attr name="onlyspp" format="boolean" />
     </declare-styleable>
-    <declare-styleable name="com.airtalkee.widget.PagerHorizontal">
+    <declare-styleable name="com.cmccpoc.widget.PagerHorizontal">
         <attr name="pageWidth" format="dimension" />
     </declare-styleable>
-    <declare-styleable name="com.airtalkee.widget.PagerControl">
+    <declare-styleable name="com.cmccpoc.widget.PagerControl">
         <attr name="barColor" format="color" />
         <attr name="highlightColor" format="color" />
         <attr name="fadeDelay" format="integer" />

@@ -13,7 +13,7 @@
         android:orientation="vertical"
         android:padding="10dp" >
 
-        <com.airtalkee.activity.home.widget.MarqueeTextView
+        <com.cmccpoc.activity.home.widget.MarqueeTextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

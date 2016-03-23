@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.airtalkee.activity.home.widget.StatusBarTitle
+    <com.cmccpoc.activity.home.widget.StatusBarTitle
         android:id="@+id/media_status_title_bar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" >
 
-        <com.airtalkee.activity.home.widget.MediaStatusBar
+        <com.cmccpoc.activity.home.widget.MediaStatusBar
             android:id="@+id/media_status_function_bar"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" />

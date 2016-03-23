@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:model="http://schemas.android.com/apk/res/com.airtalkee">
+	xmlns:model="http://schemas.android.com/apk/res/com.cmccpoc">
 	
     <item model:model="DATANG T98" 
 		model:pttButtonActionUp="android.intent.action.PTT.up"

@@ -1,84 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.airtalkee" android:versionCode="55" android:versionName="V1.3 D20160318" >
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.cmccpoc" android:versionCode="55" android:versionName="V1.3 D20160318" >
 	<uses-sdk android:minSdkVersion="9" />
-	<application android:persistent="true" android:icon="@drawable/icon_cmcc" android:label="@string/app_name_cmcc" android:theme="@style/AppTheme_Dark"
-		android:debuggable="true" android:name=".application.MainApplication">
-		<activity android:name=".activity.AccountActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask">
+	<application android:persistent="true" android:icon="@drawable/icon" android:label="@string/app_name_cmcc" android:theme="@style/AppTheme_Dark"
+		android:debuggable="true" android:name="com.cmccpoc.application.MainApplication">
+		<activity android:name="com.cmccpoc.activity.AccountActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter> 
 		</activity>
-		<activity android:name=".activity.home.SessionAddActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize|stateHidden"/>
-		<activity android:name=".activity.home.SessionNewActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize|stateHidden"/>
-		<activity android:name=".activity.home.SessionDialogActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask"/>
-		<activity android:name=".activity.home.MemberTempFragment" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustPan|stateHidden"/>
-		<activity android:name=".activity.home.AlbumChooseActivity" android:configChanges="orientation|keyboardHidden"/>
-		<activity android:name=".activity.home.AlbumEnterActivity" />
-		<activity android:name=".activity.home.HomeActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask"/>
-		<activity android:name=".activity.UserAllActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MoreActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.ChannelActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.ChannelManageActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuAboutActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuAccountActivity" android:configChanges="orientation|keyboardHidden" />
-		<activity android:name=".activity.MenuDisplayActivity" android:configChanges="orientation|keyboardHidden" />
-		<activity android:name=".activity.MenuPasswordActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuDefectReportActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuGpsActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuReportActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuReportViewActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuReportAsPicActivity" android:configChanges="orientation|keyboardHidden"  />
-		<activity android:name=".activity.MenuReportAsVidActivity" android:configChanges="orientation|keyboardHidden"  />
-		<activity android:name=".activity.MenuNoticeActivity" android:configChanges="orientation|keyboardHidden" />
-		<activity android:name=".activity.MenuManualActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuSettingActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuSettingPttActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuSettingSessionVideoActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.MenuHelpActivity"   android:configChanges="orientation|keyboardHidden"  android:launchMode="singleTask"/>
-		<activity android:name=".activity.UserChangePasswordActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
-		<activity android:name=".activity.ActivityImagePager"   android:configChanges="orientation|keyboardHidden" />
-		<activity android:name=".activity.VideoRecordActivity"   android:configChanges="orientation|keyboardHidden"     android:theme="@style/talk_theme"   android:screenOrientation="portrait"/>
-		<activity android:name=".activity.VideoSessionActivity" android:configChanges="orientation|keyboardHidden"  android:launchMode="singleTask" android:screenOrientation="portrait"/>
-		<activity android:name=".widget.VideoCamera" android:windowSoftInputMode="stateHidden"   android:label="@string/app_name_cmcc"     android:screenOrientation="portrait" />
-		<activity android:name=".widget.PhotoCamera" android:windowSoftInputMode="stateHidden"   android:label="@string/app_name_cmcc"     android:screenOrientation="portrait" />
-		<service android:exported="false" android:enabled="true" android:name=".services.AirServices" android:targetPackage="com.airtalkee">
+		<activity android:name="com.cmccpoc.activity.home.SessionAddActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize|stateHidden"/>
+		<activity android:name="com.cmccpoc.activity.home.SessionNewActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize|stateHidden"/>
+		<activity android:name="com.cmccpoc.activity.home.SessionDialogActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask"/>
+		<activity android:name="com.cmccpoc.activity.home.MemberTempFragment" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustPan|stateHidden"/>
+		<activity android:name="com.cmccpoc.activity.home.AlbumChooseActivity" android:configChanges="orientation|keyboardHidden"/>
+		<activity android:name="com.cmccpoc.activity.home.AlbumEnterActivity" />
+		<activity android:name="com.cmccpoc.activity.home.HomeActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask"/>
+		<activity android:name="com.cmccpoc.activity.UserAllActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MoreActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.ChannelActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.ChannelManageActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MenuActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MenuAboutActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MenuAccountActivity" android:configChanges="orientation|keyboardHidden" />
+		<activity android:name="com.cmccpoc.activity.MenuDisplayActivity" android:configChanges="orientation|keyboardHidden" />
+		<activity android:name="com.cmccpoc.activity.MenuPasswordActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MenuDefectReportActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MenuGpsActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MenuReportActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MenuReportViewActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MenuReportAsPicActivity" android:configChanges="orientation|keyboardHidden"  />
+		<activity android:name="com.cmccpoc.activity.MenuReportAsVidActivity" android:configChanges="orientation|keyboardHidden"  />
+		<activity android:name="com.cmccpoc.activity.MenuNoticeActivity" android:configChanges="orientation|keyboardHidden" />
+		<activity android:name="com.cmccpoc.activity.MenuManualActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MenuSettingActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MenuSettingPttActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MenuSettingSessionVideoActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.MenuHelpActivity"   android:configChanges="orientation|keyboardHidden"  android:launchMode="singleTask"/>
+		<activity android:name="com.cmccpoc.activity.UserChangePasswordActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
+		<activity android:name="com.cmccpoc.activity.ActivityImagePager"   android:configChanges="orientation|keyboardHidden" />
+		<activity android:name="com.cmccpoc.activity.VideoRecordActivity"   android:configChanges="orientation|keyboardHidden"     android:theme="@style/talk_theme"   android:screenOrientation="portrait"/>
+		<activity android:name="com.cmccpoc.activity.VideoSessionActivity" android:configChanges="orientation|keyboardHidden"  android:launchMode="singleTask" android:screenOrientation="portrait"/>
+		<activity android:name="com.cmccpoc.widget.VideoCamera" android:windowSoftInputMode="stateHidden"   android:label="@string/app_name_cmcc"     android:screenOrientation="portrait" />
+		<activity android:name="com.cmccpoc.widget.PhotoCamera" android:windowSoftInputMode="stateHidden"   android:label="@string/app_name_cmcc"     android:screenOrientation="portrait" />
+		<service android:exported="false" android:enabled="true" android:name="com.cmccpoc.services.AirServices" android:targetPackage="com.cmccpoc">
 			<intent-filter android:priority="1000">
-				<action android:name="com.airtalkee.services.AirServices" />
+				<action android:name="com.cmccpoc.services.AirServices" />
 			</intent-filter>
 		</service>
-		<service android:exported="false" android:enabled="true" android:name=".services.PttKeyServices" android:targetPackage="com.airtalkee">
+		<service android:exported="false" android:enabled="true" android:name="com.cmccpoc.services.PttKeyServices" android:targetPackage="com.cmccpoc">
 			<intent-filter android:priority="1000">
-				<action android:name="com.airtalkee.services.PttKeyServices" />
+				<action android:name="com.cmccpoc.services.PttKeyServices" />
 			</intent-filter>
 		</service>
 		<service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote">
 		    
 		</service>
 		<receiver android:name="com.airtalkee.sdk.engine.AirTimer" />
-		<receiver android:name="com.airtalkee.Util.AirMmiTimer" />
+		<receiver android:name="com.cmccpoc.Util.AirMmiTimer" />
 		<!-- 创建Receive监控打电话和接电话 -->
-		<receiver android:name=".receiver.ReceiverPhoneState">
+		<receiver android:name="com.cmccpoc.receiver.ReceiverPhoneState">
 			<intent-filter>
 				<action android:name="android.intent.action.PHONE_STATE" />
 				<action android:name="android.intent.action.NEW_OUTGOING_CALL" />
 			</intent-filter>
 		</receiver>
 		<!-- 创建 Receive监控耳机按键 -->
-		<receiver android:name=".receiver.ReceiverMediaButton">
+		<receiver android:name="com.cmccpoc.receiver.ReceiverMediaButton">
 		 
 		</receiver>
 		
 		<!-- 创建 Receive监控开机启动 -->
-		<receiver android:name=".receiver.ReceiverBoot">
+		<receiver android:name="com.cmccpoc.receiver.ReceiverBoot">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED" />
 			</intent-filter>
 		</receiver>
 
 		<!-- 监听屏幕 SCREEN ON OR OFF -->
-		<receiver android:name=".receiver.ReceiverScreenOff">
+		<receiver android:name="com.cmccpoc.receiver.ReceiverScreenOff">
 			<intent-filter android:priority="10000">
 				<action android:name="android.intent.action.SCREEN_OFF" />
 			</intent-filter>

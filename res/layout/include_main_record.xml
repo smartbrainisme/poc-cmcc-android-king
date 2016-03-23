@@ -23,7 +23,7 @@
                 android:layout_alignParentBottom="true"
                 android:orientation="vertical" >
 
-                <com.airtalkee.widget.PullToRefreshListView
+                <com.cmccpoc.widget.PullToRefreshListView
                     android:id="@+id/lv_message"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"

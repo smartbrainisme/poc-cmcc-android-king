@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.airtalkee.widget.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.cmccpoc.widget.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
@@ -18,12 +18,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical" >
 
-        <com.airtalkee.widget.MyRelativeLayout
+        <com.cmccpoc.widget.MyRelativeLayout
             android:id="@+id/mylayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-            <com.airtalkee.activity.home.widget.StatusBarTitle
+            <com.cmccpoc.activity.home.widget.StatusBarTitle
                 android:id="@+id/media_status_title_bar"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
@@ -41,12 +41,12 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true" >
 
-                <com.airtalkee.activity.home.widget.MediaStatusBar
+                <com.cmccpoc.activity.home.widget.MediaStatusBar
                     android:id="@+id/media_status_function_bar"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content" />
             </FrameLayout>
-        </com.airtalkee.widget.MyRelativeLayout>
+        </com.cmccpoc.widget.MyRelativeLayout>
     </FrameLayout>
 
     <!-- SLIDING LAYOUT -->
@@ -59,4 +59,4 @@
         android:orientation="vertical" >
     </LinearLayout>
 
-</com.airtalkee.widget.SlidingUpPanelLayout>
+</com.cmccpoc.widget.SlidingUpPanelLayout>

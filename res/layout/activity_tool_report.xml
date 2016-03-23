@@ -25,7 +25,7 @@
             android:layout_height="fill_parent"
             android:gravity="top" >
 
-            <com.airtalkee.widget.MListView
+            <com.cmccpoc.widget.MListView
                 android:id="@+id/talk_report_list"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"

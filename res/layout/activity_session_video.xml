@@ -22,7 +22,7 @@
         android:layout_height="640dp"
         android:visibility="gone" />
 
-    <com.airtalkee.widget.VideoSufaceView
+    <com.cmccpoc.widget.VideoSufaceView
         android:id="@id/talk_video_surface_recorder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

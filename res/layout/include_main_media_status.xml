@@ -11,7 +11,7 @@
         android:layout_gravity="center"
         android:background="?theme_talk_panel" />
 
-    <com.airtalkee.widget.AudioVisualizerView
+    <com.cmccpoc.widget.AudioVisualizerView
         android:id="@+id/talk_audio_visualizer"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

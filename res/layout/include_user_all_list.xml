@@ -35,7 +35,7 @@
 	<View android:id="@+id/user_all_line1" android:layout_below="@id/user_all_path_layout"
 		android:layout_width="fill_parent" android:layout_height="1dip"
 		android:background="?theme_divider_h" />
-	<com.airtalkee.widget.MListView
+	<com.cmccpoc.widget.MListView
 		android:id="@+id/user_all_list" android:layout_below="@id/user_all_line1"
 		android:layout_width="fill_parent" android:layout_height="fill_parent"
 		android:cacheColorHint="#00000000" android:dividerHeight="1dip"

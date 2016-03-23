@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.airtalkee.widget.MacRecordingView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.cmccpoc.widget.MacRecordingView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mac_talking"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -90,4 +90,4 @@
             android:textSize="18dp" />
     </LinearLayout>
 
-</com.airtalkee.widget.MacRecordingView>
+</com.cmccpoc.widget.MacRecordingView>
