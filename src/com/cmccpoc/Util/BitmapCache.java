@@ -146,8 +146,15 @@ public class BitmapCache extends Activity
 		return bitmap;
 	}
 
+	
 	public interface ImageCallback
 	{
+		/**
+		 * 图片加载
+		 * @param imageView imageView控件
+		 * @param bitmap Bitmap图
+		 * @param params 多参数
+		 */
 		public void imageLoad(ImageView imageView, Bitmap bitmap, Object... params);
 	}
 }

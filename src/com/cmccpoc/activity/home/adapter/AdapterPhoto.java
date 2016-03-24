@@ -3,7 +3,6 @@ package com.cmccpoc.activity.home.adapter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Vector;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
@@ -14,15 +13,16 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ImageView;
 import com.cmccpoc.R;
-import com.cmccpoc.Util.Bimp;
 import com.cmccpoc.Util.BitmapCache;
 import com.cmccpoc.Util.BitmapCache.ImageCallback;
 import com.cmccpoc.entity.ImageItem;
 
+/**
+ * 图片列表 适配器
+ * @author Yao
+ */
 public class AdapterPhoto extends BaseAdapter
 {
 	final String TAG = getClass().getSimpleName();
@@ -163,12 +163,19 @@ public class AdapterPhoto extends BaseAdapter
 		private CheckBox cbSelected;
 	}
 
+	/**
+	 * 点击选中图片
+	 * 若果是IM消息，则可以多选图片，最多9张
+	 * 若是上报记录，则只能选中一张
+	 * @param position 位置
+	 * @param holder holder
+	 * @param item 图片项目
+	 */
 	private void imageClick(final int position, final Holder holder, final ImageItem item)
 	{
 		String path = dataList.get(position).imagePath;
 		if (type == TYPE_IM)
 		{
-			// 若果是IM消息，则可以多选图片，最多9张。
 			if ((selectTotal) < 9)
 			{
 				item.isSelected = !item.isSelected;

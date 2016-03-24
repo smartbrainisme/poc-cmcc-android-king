@@ -14,6 +14,10 @@ import com.cmccpoc.Util.BitmapCache;
 import com.cmccpoc.Util.BitmapCache.ImageCallback;
 import com.cmccpoc.entity.ImageBucket;
 
+/**
+ * 自定义相册 适配器
+ * @author Yao
+ */
 public class AdapterAlbum extends BaseAdapter
 {
 	final String TAG = getClass().getSimpleName();
