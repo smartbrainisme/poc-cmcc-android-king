@@ -29,8 +29,8 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.R;
 import com.cmccpoc.Util.Util;
-import com.cmccpoc.activity.home.AdapterMemberAll;
-import com.cmccpoc.activity.home.AdapterMemberAll.CheckedCallBack;
+import com.cmccpoc.activity.home.adapter.AdapterMemberAll;
+import com.cmccpoc.activity.home.adapter.AdapterMemberAll.CheckedCallBack;
 import com.cmccpoc.widget.MListView;
 
 /**

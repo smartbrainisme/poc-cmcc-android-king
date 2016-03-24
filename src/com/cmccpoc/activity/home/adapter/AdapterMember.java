@@ -18,20 +18,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeContactPresence;
-import com.airtalkee.sdk.OnContactPresenceListener;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactTiny;
 import com.airtalkee.sdk.entity.AirSession;
 import com.cmccpoc.R;
-import com.cmccpoc.Util.ThemeUtil;
-import com.cmccpoc.config.Config;
 
 /**
- * 成员用户适配器
+ * 成员用户 适配器
  * @author Yao
  */
 @SuppressLint("UseSparseArrays")
-public class AdapterMember extends BaseAdapter implements OnContactPresenceListener
+public class AdapterMember extends BaseAdapter
 {
 	private Context context = null;
 	private AirSession session = null;
@@ -40,9 +37,17 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 	private View vMemberBottom = null;
 	private boolean allowCheck = false;
 	private boolean allowRole = false;
-	private View layoutBtns; 
-	public AdapterMember(Context _context, View v,View v2, boolean allowCheck, boolean allowRole)
+	private View layoutBtns;
+	private CheckedCallBack checkedCallBack;
+
+	public interface CheckedCallBack
+	{ // shiyishi
+		public void onChecked(boolean isChecked);
+	}
+
+	public AdapterMember(Context _context, View v, View v2, boolean allowCheck, boolean allowRole, CheckedCallBack checkedCallBack)
 	{
+		this.checkedCallBack = checkedCallBack;
 		context = _context;
 		vMemberBottom = v;
 		this.layoutBtns = v2;
@@ -147,8 +152,7 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 			ct = (memberList != null) ? memberList.get(position) : null;
 		}
 		catch (Exception e)
-		{
-		}
+		{}
 		return ct;
 	}
 
@@ -167,13 +171,10 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 		// Log.e(AdapterMember.class, "AdapterMember getView");
 		if (convertView == null)
 		{
-			convertView = LayoutInflater.from(context).inflate(R.layout.listitem_member, null);
+			convertView = LayoutInflater.from(context).inflate(R.layout.listitem_member1, null);
 			holder = new ViewHolder();
 			holder.checkBox = (CheckBox) convertView.findViewById(R.id.talk_cb_group_member);
 			holder.tvName = (TextView) convertView.findViewById(R.id.talk_tv_group_member);
-			holder.tvUid = (TextView) convertView.findViewById(R.id.talk_tv_group_member_id);
-			holder.tvPresence = (TextView) convertView.findViewById(R.id.talk_tv_group_presence);
-			holder.ivPresence = (ImageView) convertView.findViewById(R.id.talk_iv_group_presence);
 			holder.ivSPresence = (ImageView) convertView.findViewById(R.id.talk_iv_presence);
 			holder.ivRole = (ImageView) convertView.findViewById(R.id.talk_iv_group_role);
 			convertView.setTag(holder);
@@ -185,21 +186,18 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 		final AirContact member = (AirContact) getItem(position);
 		if (member != null)
 		{
-			holder.tvUid.setText(member.getIpocId());
-			holder.tvName.setText(member.getDisplayName());
+			holder.tvName.setText(member.getDisplayName() + "(" + member.getIpocId() + ")");
 			if (TextUtils.equals(AirtalkeeAccount.getInstance().getUserId(), member.getIpocId()))
 			{
-				holder.tvPresence.setText(R.string.talk_presence_channel_online);
-				holder.ivPresence.setImageResource(R.drawable.user_state_chat);
-				holder.ivSPresence.setImageResource(ThemeUtil.getResourceId(R.attr.theme_user_icon_online, context));
+				holder.ivSPresence.setImageResource(R.drawable.user_state_online);
+				holder.tvName.setTextColor(context.getResources().getColor(R.color.white));
 			}
 			else
 			{
 				if (member.getStateInChat() == AirContact.IN_CHAT_STATE_ONLINE)
 				{
-					holder.tvPresence.setText(R.string.talk_presence_channel_online);
-					holder.ivPresence.setImageResource(R.drawable.user_state_chat);
-					holder.ivSPresence.setImageResource(ThemeUtil.getResourceId(R.attr.theme_user_icon_online, context));
+					holder.ivSPresence.setImageResource(R.drawable.user_state_online);
+					holder.tvName.setTextColor(context.getResources().getColor(R.color.white));
 				}
 				else
 				{
@@ -207,19 +205,13 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 					switch (state)
 					{
 						case AirContact.CONTACT_STATE_NONE:
-							holder.ivSPresence.setImageResource(ThemeUtil.getResourceId(R.attr.theme_user_icon_offline, context));
-							holder.tvPresence.setText(R.string.talk_presence_offline);
-							holder.ivPresence.setImageResource(R.drawable.user_state_offline);
+							holder.ivSPresence.setImageResource(R.drawable.user_state_offline);
+							holder.tvName.setTextColor(context.getResources().getColor(R.color.color_hint_dark));
 							break;
 						case AirContact.CONTACT_STATE_ONLINE:
-							holder.ivSPresence.setImageResource(ThemeUtil.getResourceId(R.attr.theme_user_icon_online_bg, context));
-							holder.tvPresence.setText(R.string.talk_presence_online);
-							holder.ivPresence.setImageResource(R.drawable.user_state_online);
-							break;
 						case AirContact.CONTACT_STATE_ONLINE_BG:
-							holder.ivSPresence.setImageResource(ThemeUtil.getResourceId(R.attr.theme_user_icon_online_bg, context));
-							holder.tvPresence.setText(R.string.talk_presence_online);
-							holder.ivPresence.setImageResource(R.drawable.user_state_online_bg);
+							holder.ivSPresence.setImageResource(R.drawable.user_state_online);
+							holder.tvName.setTextColor(context.getResources().getColor(R.color.white));
 							break;
 					}
 				}
@@ -263,36 +255,42 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 			String myIpocId = (AirtalkeeAccount.getInstance() != null) ? AirtalkeeAccount.getInstance().getUserId() : "";
 			if (myIpocId.equals(member.getIpocId()))
 			{
-				holder.tvName.setText(member.getDisplayName());
+				// holder.tvName.setText(member.getDisplayName());
 				holder.checkBox.setClickable(false);
 				holder.checkBox.setVisibility(View.INVISIBLE);
-				holder.tvPresence.setText(context != null ? context.getString(R.string.talk_presence_channel_online) : "");
-				holder.ivPresence.setImageResource(R.drawable.user_state_chat);
 			}
 			else
 			{
 				holder.checkBox.setVisibility(View.VISIBLE);
 				holder.checkBox.setClickable(true);
 			}
+
 			holder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
 			{
 				public void onCheckedChanged(CompoundButton arg0, boolean isCheck)
 				{
 					putSelected(position, member, isCheck);
-					if (vMemberBottom != null)
+
+					if (isSelected.size() > 0)
 					{
-						if (isSelected.size() > 0)
-						{
+						if (vMemberBottom != null)
 							vMemberBottom.setVisibility(View.VISIBLE);
+						if (layoutBtns != null)
 							layoutBtns.setVisibility(View.GONE);
-						}
-						else
-						{
+						if (checkedCallBack != null)
+							checkedCallBack.onChecked(true);
+					}
+					else
+					{
+						if (vMemberBottom != null)
 							vMemberBottom.setVisibility(View.GONE);
+						if (layoutBtns != null)
 							layoutBtns.setVisibility(View.VISIBLE);
-						}
+						if (checkedCallBack != null)
+							checkedCallBack.onChecked(false);
 					}
 				}
+
 			});
 			holder.checkBox.setChecked(!(isSelected != null && isSelected.get(position) == null));
 			if (!allowCheck)
@@ -307,33 +305,7 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 	{
 		CheckBox checkBox;
 		TextView tvName;
-		TextView tvPresence;
-		ImageView ivPresence;
 		ImageView ivSPresence;
-		TextView tvUid;
 		ImageView ivRole;
-	}
-
-
-	@Override
-	public void onContactPresence(boolean isSubscribed, HashMap<String, Integer> presenceMap)
-	{
-		// TODO Auto-generated method stub
-		if (session != null && session.getType() == AirSession.TYPE_DIALOG)
-		{
-			session.MembersSort();
-		}
-		notifyDataSetChanged();
-	}
-
-	@Override
-	public void onContactPresence(boolean isSubscribed, String uid, int state)
-	{
-		// TODO Auto-generated method stub
-		if (session != null && session.getType() == AirSession.TYPE_DIALOG)
-		{
-			session.MembersSort();
-		}
-		notifyDataSetChanged();
 	}
 }
