@@ -21,6 +21,10 @@ import com.cmccpoc.activity.home.widget.MediaStatusBar;
 import com.cmccpoc.listener.OnMmiSessionListener;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 
+ * @author Yao
+ */
 public class AirSessionControl implements OnSessionListener
 {
 

@@ -28,6 +28,10 @@ import com.cmccpoc.listener.OnMmiChannelListener;
 import com.cmccpoc.location.AirLocation;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 用户管理类
+ * @author Yao
+ */
 public class AirAccountManager implements OnAccountListener, OnChannelListener, OnAccountSettingListener, OnMediaVideoListener
 {
 	public static final String KEY_ID = "USER_ID";
@@ -64,6 +68,10 @@ public class AirAccountManager implements OnAccountListener, OnChannelListener, 
 		this.channelListener = listener;
 	}
 
+	/**
+	 * 用户账号功能配置
+	 * @param setting 配置项Entity
+	 */
 	@Override
 	public void onAccountFunctionSetting(AirFunctionSetting setting)
 	{
@@ -151,7 +159,6 @@ public class AirAccountManager implements OnAccountListener, OnChannelListener, 
 	@Override
 	public void onLogin(int result)
 	{
-		// TODO Auto-generated method stub
 		Log.e(AirAccountManager.class, "MMI ======================== onLogin =======================");
 		if (accountListener != null)
 		{
@@ -160,7 +167,6 @@ public class AirAccountManager implements OnAccountListener, OnChannelListener, 
 
 		if (result == AirtalkeeAccount.ACCOUNT_RESULT_OK)
 		{
-//			AirSessionMediaSound.toggleLedStatus(1, 0);
 			AirtalkeeMediaVideoControl.getInstance().VideoAddr();
 
 			AirServices.iOperator.putString(KEY_ID, AirtalkeeAccount.getInstance().getUserId());
@@ -276,6 +282,12 @@ public class AirAccountManager implements OnAccountListener, OnChannelListener, 
 		}
 	}
 
+	/**
+	 * 视频地址赋值 
+	 * @param isOk 状态
+	 * @param serverIp IP地址
+	 * @param serverPort 端口号
+	 */
 	@Override
 	public void onVideoAddr(boolean isOk, String serverIp, int serverPort)
 	{
@@ -285,18 +297,25 @@ public class AirAccountManager implements OnAccountListener, OnChannelListener, 
 		VIDEO_PORT = serverPort;
 	}
 
+	/**
+	 * 开始录制视频
+	 * @param sessionId 会话Id
+	 * @param result 结果状态
+	 */
 	@Override
 	public void onVideoRecorderStart(int sessionId, int result)
 	{
 		// TODO Auto-generated method stub
-		
 	}
 
+	/**
+	 * 结束录制视频
+	 * @param sessionId 会话Id
+	 */
 	@Override
 	public void onVideoRecorderStop(int sessionId)
 	{
 		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -5,7 +5,7 @@
     <issue id="InlinedApi">
         <ignore path="src/com/airtalkee/adapter/AdapterReport.java" />
     </issue>
-    <issue id="NewApi">
+    <issue id="NewApi" severity="ignore">
         <ignore path="src/com/airtalkee/Util/Util.java" />
         <ignore path="src/com/airtalkee/adapter/AdapterReport.java" />
     </issue>

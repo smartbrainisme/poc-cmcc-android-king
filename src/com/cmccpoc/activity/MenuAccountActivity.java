@@ -20,7 +20,6 @@ import com.cmccpoc.activity.home.widget.AlertDialog;
 import com.cmccpoc.activity.home.widget.AlertDialog.DialogListener;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.control.AirAccountManager;
-import com.cmccpoc.control.VoiceManager;
 import com.cmccpoc.services.AirServices;
 
 public class MenuAccountActivity extends ActivityBase implements OnClickListener, OnUserInfoListener, DialogListener

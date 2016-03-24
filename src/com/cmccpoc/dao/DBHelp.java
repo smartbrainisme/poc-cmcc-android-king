@@ -43,7 +43,9 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		iReportDao = TableReportDao.getInstance(this);
 	}
 
-	// 数据库更新
+	/**
+	 * 数据库更新
+	 */
 	public void onUpgrade(SQLiteDatabase db, int arg1, int arg2)
 	{
 		Log.e(DBHelp.class, "DB dbUpgrade!!");
@@ -61,7 +63,9 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		createTable();
 	}
 
-	// 初始化创建数据库
+	/**
+	 * 初始化创建数据库
+	 */
 	private void createTable()
 	{
 		Log.e(DBHelp.class, "DB CREATE!!");
@@ -72,7 +76,9 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		db.execSQL(DBDefine.CREATE_T_SESSION_MEMBER);
 	}
 
-	// 删除数据库
+	/**
+	 * 删除数据库
+	 */
 	private void dropTable()
 	{
 		Log.e(DBHelp.class, "DB DROP!!");
@@ -97,7 +103,10 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 	private boolean isDbReading = false;
 	private boolean isDbWriting = false;
 
-	// 获取数据库读权限
+	/**
+	 *  获取数据库读权限
+	 * @return SQLiteDB
+	 */
 	public SQLiteDatabase DatabaseReadableGet()
 	{
 		SQLiteDatabase db = null;
@@ -120,7 +129,10 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		return db;
 	}
 
-	// 取消数据库读权限
+	/**
+	 *  取消数据库读权限
+	 * @param SQLiteDB
+	 */
 	public void DatabaseReadableClose(SQLiteDatabase db)
 	{
 		try
@@ -135,7 +147,10 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		isDbReading = false;
 	}
 
-	// 获取数据库写权限
+	/**
+	 * 获取数据库写权限
+	 * @return SQLiteDB
+	 */
 	public SQLiteDatabase DatabaseWritableGet()
 	{
 		SQLiteDatabase db = null;
@@ -158,7 +173,10 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		return db;
 	}
 
-	// 取消数据库写权限
+	/**
+	 * 取消数据库写权限
+	 * @param SQLiteDB
+	 */
 	public void DatabaseWritableClose(SQLiteDatabase db)
 	{
 		try
@@ -228,7 +246,9 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 		dbWriteThread.start();
 	}
 
-	// 数据库CRUD操作
+	/**
+	 * 数据库CRUD操作
+	 */
 	private Thread dbWriteThread = new Thread()
 	{
 		@SuppressWarnings("unchecked")
@@ -257,10 +277,9 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 							try
 							{
 								Log.i(DBHelp.class, "[DB Action Begin] action = " + msg.arg1);
-								// android.util.Log.i("View",
-								// "------->  thread  -- " + msg.arg1);
 								switch (msg.arg1)
 								{
+									// 添加一条记录
 									case DB_WRITE_ACTION_TYPE_INSERT_CV:
 									{
 										ContentValues cv = (ContentValues) action.param2;
@@ -272,6 +291,7 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 										db.endTransaction();
 										break;
 									}
+									// 添加多条记录
 									case DB_WRITE_ACTION_TYPE_INSERT_CV_LIST:
 									{
 										List<ContentValues> cvs = (List<ContentValues>) action.param2;
@@ -286,6 +306,7 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 										}
 										break;
 									}
+									// 更新一条记录
 									case DB_WRITE_ACTION_TYPE_UPDATE:
 									{
 										// Object []bindArgs =
@@ -296,6 +317,7 @@ public class DBHelp extends SQLiteOpenHelper implements DBProxy, DBProxyReport
 										db.endTransaction();
 										break;
 									}
+									// 删除一条记录
 									case DB_WRITE_ACTION_TYPE_DELETE:
 									{
 										db.beginTransaction();

@@ -129,6 +129,9 @@ public class MoreActivity extends ActivityBase implements OnClickListener, OnUse
 		//checkBrodcast();
 	}
 	
+	/**
+	 * 检测是否有广播，如果有则显示未读标记
+	 */
 	public void checkBrodcast()
 	{
 		if (Config.funcBroadcast && AirtalkeeAccount.getInstance().SystemBroadcastNumberGet() > 0)

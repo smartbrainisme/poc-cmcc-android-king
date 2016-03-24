@@ -44,6 +44,10 @@ import com.cmccpoc.listener.OnMmiMessageListener;
 import com.cmccpoc.listener.OnMmiNoticeListener;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 消息业务处理类
+ * @author Yao
+ */
 public class AirMessageTransaction implements OnMessageListener,
 		OnMessagePttListener, OnSystemBroadcastListener,
 		OnSystemFenceWarningListener, AirTaskPushListener, DialogListener
@@ -85,6 +89,10 @@ public class AirMessageTransaction implements OnMessageListener,
 		this.noticeListener = l;
 	}
 
+	/**
+	 * 接收到消息时
+	 * @param messageList 消息列表
+	 */
 	@Override
 	public void onMessageIncomingRecv(List<AirMessage> messageList)
 	{
@@ -93,6 +101,12 @@ public class AirMessageTransaction implements OnMessageListener,
 			msgListener.onMessageIncomingRecv(messageList);
 	}
 
+	/**
+	 * 接收到消息时
+	 * @param isCustom 消息类型
+	 * @param message 消息Entity
+	 * @return
+	 */
 	@Override
 	public void onMessageIncomingRecv(boolean isCustom, AirMessage message)
 	{
@@ -166,6 +180,12 @@ public class AirMessageTransaction implements OnMessageListener,
 		}
 	}
 
+	/**
+	 * 发送消息
+	 * @param isCustom 消息类型
+	 * @param message 消息Entity
+	 * @param isSent 是否发送
+	 */
 	@Override
 	public void onMessageOutgoingSent(boolean isCustom, AirMessage message, boolean isSent)
 	{
@@ -174,6 +194,10 @@ public class AirMessageTransaction implements OnMessageListener,
 			msgListener.onMessageOutgoingSent(isCustom, message, isSent);
 	}
 
+	/**
+	 * 消息更新
+	 * @param message 消息Entity
+	 */
 	@Override
 	public void onMessageUpdated(AirMessage message)
 	{
@@ -182,6 +206,11 @@ public class AirMessageTransaction implements OnMessageListener,
 			msgListener.onMessageUpdated(message);
 	}
 
+	/**
+	 * 录音加载中
+	 * @param msgCode 消息code
+	 * @param resId 录音资源Id
+	 */
 	@Override
 	public void onMessageRecordPlayLoaded(boolean isOk, String msgCode, String resId, byte[] resBytes)
 	{
@@ -190,6 +219,11 @@ public class AirMessageTransaction implements OnMessageListener,
 			msgListener.onMessageRecordPlayLoaded(isOk, msgCode, resId);
 	}
 
+	/**
+	 * 录音加载中
+	 * @param msgCode 消息code
+	 * @param resId 录音资源Id
+	 */
 	@Override
 	public void onMessageRecordPlayLoading(String msgCode, String resId)
 	{
@@ -198,6 +232,11 @@ public class AirMessageTransaction implements OnMessageListener,
 			msgListener.onMessageRecordPlayLoading(msgCode, resId);
 	}
 
+	/**
+	 * 开始播放录音
+	 * @param msgCode 消息code
+	 * @param resId 录音资源Id
+	 */
 	@Override
 	public void onMessageRecordPlayStart(String msgCode, String resId)
 	{
@@ -206,6 +245,11 @@ public class AirMessageTransaction implements OnMessageListener,
 			msgListener.onMessageRecordPlayStart(msgCode, resId);
 	}
 
+	/**
+	 * 停止播放录音
+	 * @param msgCode 消息code
+	 * @param resId 录音资源Id
+	 */
 	@Override
 	public void onMessageRecordPlayStop(String msgCode, String resId)
 	{
@@ -214,6 +258,9 @@ public class AirMessageTransaction implements OnMessageListener,
 			msgListener.onMessageRecordPlayStop(msgCode, resId);
 	}
 
+	/**
+	 * 开始录音
+	 */
 	@Override
 	public void onMessageRecordStart()
 	{
@@ -222,6 +269,11 @@ public class AirMessageTransaction implements OnMessageListener,
 			msgListener.onMessageRecordStart();
 	}
 
+	/**
+	 * 录音录制结束
+	 * @param seconds 录音时长
+	 * @param msgCode 消息code
+	 */
 	@Override
 	public void onMessageRecordStop(int seconds, String msgCode)
 	{
@@ -230,6 +282,11 @@ public class AirMessageTransaction implements OnMessageListener,
 			msgListener.onMessageRecordStop(seconds, msgCode);
 	}
 
+	/**
+	 * 录音传输后
+	 * @param msgCode 消息code
+	 * @param resId 录音资源Id
+	 */
 	@Override
 	public void onMessageRecordTransfered(String msgCode, String resId)
 	{
@@ -238,6 +295,13 @@ public class AirMessageTransaction implements OnMessageListener,
 			msgListener.onMessageRecordTransfered(msgCode, resId);
 	}
 
+	/**
+	 * 监听PTT消息
+	 * @param session 会话Entity
+	 * @param message 消息Entity
+	 * @param msgCode 消息code
+	 * @param resId 录音资源Id
+	 */
 	@Override
 	public void onMessagePttRecord(AirSession session, AirMessage message, String msgCode, String resId)
 	{
@@ -265,12 +329,10 @@ public class AirMessageTransaction implements OnMessageListener,
 			msgListener.onMessageRecordPtt(session, message, msgCode, resId);
 	}
 
-	/**********************************
-	 * 
-	 * �㲥
-	 * 
-	 **********************************/
-
+	/**
+	 * 系统广播
+	 * @param number 广播数量
+	 */
 	@Override
 	public void onSystemBroadcastNumber(int number)
 	{
@@ -281,6 +343,11 @@ public class AirMessageTransaction implements OnMessageListener,
 		}
 	}
 
+	/**
+	 * 系统广播接收处理
+	 * @param title 广播标题
+	 * @param url 广播地址
+	 */
 	@Override
 	public void onSystemBroadcastPush(final String title, String url)
 	{
@@ -328,12 +395,10 @@ public class AirMessageTransaction implements OnMessageListener,
 		}
 	}
 
-	/**********************************
-	 * 
+	/**
 	 * 告警 电子围栏
-	 * 
-	 **********************************/
-
+	 * @param fenceName 围栏名称
+	 */
 	@Override
 	public void onSystemFenceWarningPush(String[] fenceName)
 	{
@@ -386,6 +451,9 @@ public class AirMessageTransaction implements OnMessageListener,
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * 呼叫调度中心
+	 */
 	private void callStationCenter()
 	{
 		final Context context = AirServices.getInstance();
@@ -432,6 +500,11 @@ public class AirMessageTransaction implements OnMessageListener,
 		}
 	}
 
+	/**
+	 * 任务派发
+	 * @param taskId 任务Id
+	 * @param taskName 任务名称
+	 */
 	@Override
 	public void onTaskDispatch(String taskId, String taskName)
 	{
