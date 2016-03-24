@@ -16,6 +16,10 @@ import com.cmccpoc.activity.home.widget.AlertDialog.DialogListener;
 import com.cmccpoc.control.AirSessionControl;
 import com.cmccpoc.listener.OnMmiSessionListener;
 
+/**
+ * 临时呼叫的接听和挂断弹窗（主叫）
+ * @author Yao
+ */
 public class CallAlertDialog extends AlertDialog implements android.view.View.OnClickListener, DialogListener, OnMmiSessionListener
 {
 	private String sessionCode;
@@ -65,6 +69,9 @@ public class CallAlertDialog extends AlertDialog implements android.view.View.On
 
 	}
 
+	/**
+	 * 根据不同的构造函数，确定是否显示取消按钮等
+	 */
 	protected void fillView()
 	{
 
@@ -84,6 +91,9 @@ public class CallAlertDialog extends AlertDialog implements android.view.View.On
 		tvContent.setText(content);
 	}
 
+	/**
+	 * 挂断会话
+	 */
 	private void finishCall()
 	{
 		if (session != null && session.getSessionState() != AirSession.SESSION_STATE_IDLE)

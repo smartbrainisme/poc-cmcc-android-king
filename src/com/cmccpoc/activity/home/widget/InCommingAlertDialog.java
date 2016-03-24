@@ -19,6 +19,10 @@ import com.cmccpoc.activity.home.widget.AlertDialog.DialogListener;
 import com.cmccpoc.control.AirSessionControl;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 临时呼叫的接听和挂断弹窗（被叫）
+ * @author Yao
+ */
 public class InCommingAlertDialog extends AlertDialog implements DialogListener
 {
 	private AirSession temAirSession;
@@ -131,6 +135,10 @@ public class InCommingAlertDialog extends AlertDialog implements DialogListener
 		return super.onKeyDown(keyCode, event);
 	}
 
+	/**
+	 * 从当前会话切换到临时会话
+	 * @param session 会话Entity
+	 */
 	private void switchToSessionDialog(AirSession session)
 	{
 		AirSessionControl.getInstance().setOnMmiSessionListener(null);

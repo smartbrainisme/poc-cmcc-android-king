@@ -29,10 +29,22 @@ import com.cmccpoc.config.Config;
 import com.cmccpoc.control.AirSessionControl;
 import com.cmccpoc.widget.SlidingUpPanelLayout.PanelState;
 
-public class SessionAndChannelView extends LinearLayout implements OnClickListener, OnItemClickListener
+/**
+ * 会话和频道自定义View控件
+ * 
+ * @author Yao
+ */
+public class SessionAndChannelView extends LinearLayout implements
+		OnClickListener, OnItemClickListener
 {
 	public interface ViewChangeListener
 	{
+		/**
+		 * view改变时
+		 * 
+		 * @param sessionCode
+		 *            会话code
+		 */
 		public void onViewChanged(String sessionCode);
 	}
 
@@ -97,6 +109,9 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 		refreshChannelAndDialog();
 	}
 	
+	/**
+	 * 检测广播消息，有则显示未读标记
+	 */
 	public void checkBrodcast()
 	{
 		if (Config.funcBroadcast && AirtalkeeAccount.getInstance().SystemBroadcastNumberGet() > 0)
@@ -116,6 +131,9 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 		super.onFinishInflate();
 	}
 
+	/**
+	 * 界面恢复时
+	 */
 	public void resume()
 	{
 		if (adapterChannel != null)
@@ -240,11 +258,12 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 								refreshChannelAndDialog();
 								PTTFragment.getInstance().getVideoPannel().setVisibility(View.GONE);
 							}
+
 							@Override
 							public void onClickOk(int id, Object obj)
 							{
 							}
-							
+
 							@Override
 							public void onClickCancel(int id)
 							{
@@ -252,7 +271,7 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 							}
 						}, 0);
 						AirSession s = (AirSession) adapterSession.getItem(position);
-						if(showDialog && session.getType() == AirSession.TYPE_DIALOG && !s.getSessionCode().equals(session.getSessionCode()))
+						if (showDialog && session.getType() == AirSession.TYPE_DIALOG && !s.getSessionCode().equals(session.getSessionCode()))
 						{
 							dialog.show();
 						}
@@ -273,27 +292,31 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 							PTTFragment.getInstance().getVideoPannel().setVisibility(View.GONE);
 						}
 						/*
-						AirSession s = (AirSession) adapterSession.getItem(position);
-						if (session.getType() == AirSession.TYPE_DIALOG && session.getSessionState() == AirSession.SESSION_STATE_DIALOG && !s.getSessionCode().equals(session.getSessionCode()))
-						{
-							AirSessionControl.getInstance().SessionEndCall(session);
-						}
-						
-						if (s != null)
-						{
-							if (listener != null)
-							{
-								listener.onViewChanged(s.getSessionCode());
-							}
-						}
-						refreshChannelAndDialog();
-						PTTFragment.getInstance().getVideoPannel().setVisibility(View.GONE);*/
+						 * AirSession s = (AirSession)
+						 * adapterSession.getItem(position); if
+						 * (session.getType() == AirSession.TYPE_DIALOG &&
+						 * session.getSessionState() ==
+						 * AirSession.SESSION_STATE_DIALOG &&
+						 * !s.getSessionCode().equals(session.getSessionCode()))
+						 * {
+						 * AirSessionControl.getInstance().SessionEndCall(session
+						 * ); }
+						 * 
+						 * if (s != null) { if (listener != null) {
+						 * listener.onViewChanged(s.getSessionCode()); } }
+						 * refreshChannelAndDialog();
+						 * PTTFragment.getInstance().getVideoPannel
+						 * ().setVisibility(View.GONE);
+						 */
 					}
 				}
 				break;
 		}
 	}
 
+	/**
+	 * 注册会话更新的监听
+	 */
 	private void registerSessionUpdateListener()
 	{
 		final IntentFilter filter = new IntentFilter();
@@ -301,7 +324,10 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 		filter.addCategory(Intent.CATEGORY_DEFAULT);
 		getContext().registerReceiver(receiver, filter);
 	}
-	
+
+	/**
+	 * 广播接收器，监听会话是否被更新
+	 */
 	BroadcastReceiver receiver = new BroadcastReceiver()
 	{
 		@Override
@@ -325,12 +351,12 @@ public class SessionAndChannelView extends LinearLayout implements OnClickListen
 			}
 		}
 	};
-	
+
 	public void unRegisterReceiver()
 	{
 		getContext().unregisterReceiver(receiver);
 	}
-	
+
 	public void refreshChannelAndDialog()
 	{
 		adapterChannel.notifyDataSetChanged();

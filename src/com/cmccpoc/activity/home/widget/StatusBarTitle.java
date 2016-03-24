@@ -28,6 +28,10 @@ import com.cmccpoc.activity.home.HomeActivity;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.control.AirSessionControl;
 
+/**
+ * 顶部标题控件（锁定频道+频道名称+更多）
+ * @author Yao
+ */
 public class StatusBarTitle extends LinearLayout implements OnClickListener
 {
 	private TextView tvTitle, tvMediaStatus;
@@ -58,6 +62,9 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		mInstance = this;
 	}
 
+	/**
+	 * 初始化绑定控件
+	 */
 	private void initFindView()
 	{
 		ivUnReadDot = (ImageView) findViewById(R.id.unread_dot);
@@ -89,6 +96,10 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		}
 	}
 
+	/**
+	 * 设置session会话
+	 * @param s 会话Entity
+	 */
 	public void setSession(AirSession s)
 	{
 		this.session = s;
@@ -96,6 +107,9 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		refreshNewMsg();
 	}
 
+	/**
+	 * 刷新媒体会话状态
+	 */
 	public void refreshMediaStatus()
 	{
 		if (session != null)
@@ -217,6 +231,9 @@ public class StatusBarTitle extends LinearLayout implements OnClickListener
 		}
 	}
 
+	/**
+	 * 刷新新消息，检测是否有未读
+	 */
 	public void refreshNewMsg()
 	{
 		if (session != null)

@@ -32,6 +32,10 @@ import com.cmccpoc.control.AirMessageTransaction;
 import com.cmccpoc.control.AirSessionControl;
 import com.cmccpoc.listener.OnMmiSessionListener;
 
+/**
+ * 主界面上PTT媒体按键状态
+ * @author Yao
+ */
 public class MediaStatusBar extends LinearLayout implements
 		OnBarItemClickListener, OnMmiSessionListener, OnMediaListener,
 		OnContactPresenceListener
@@ -84,25 +88,34 @@ public class MediaStatusBar extends LinearLayout implements
 		this.sessionSp = context.getSharedPreferences(BaseFragment.SESSION_EVENT_KEY, 0);
 	}
 
+	/**
+	 * 初始化
+	 * @param title StatusBarTitle控件
+	 * @param s 会话Entity
+	 */
 	public void init(StatusBarTitle title, AirSession s)
 	{
 		this.barTitle = title;
 		setSession(s);
 	}
 
+	/**
+	 * 设置Session会话
+	 * @param s 会话Entity
+	 */
 	public void setSession(AirSession s)
 	{
 		listenerEnable();
 		this.session = s;
-		if (null != this.session)
-		{
-			
-		}
 		barTitle.setSession(this.session);
 		talkBtn.setSession(this.session);
 		sessionRefresh();
 	}
 
+	/**
+	 * 获取会话
+	 * @return 会话Entity
+	 */
 	public AirSession getSession()
 	{
 		return this.session;
@@ -116,6 +129,9 @@ public class MediaStatusBar extends LinearLayout implements
 		initFindView();
 	}
 
+	/**
+	 * 初始化控件
+	 */
 	private void initFindView()
 	{
 		barGroup = (LinearLayout) findViewById(R.id.tools_bar);
@@ -128,6 +144,10 @@ public class MediaStatusBar extends LinearLayout implements
 		return barGroup;
 	}
 
+	/**
+	 * 页面切换
+	 * @param arg0 当前页面索引
+	 */
 	public void onPageChanged(int arg0)
 	{
 		// TODO Auto-generated method stub
@@ -138,6 +158,9 @@ public class MediaStatusBar extends LinearLayout implements
 		bar.setVisibility(View.VISIBLE);
 	}
 
+	/**
+	 * 按钮初始化
+	 */
 	private void barInit()
 	{
 		for (int i = 0; i < barArray.length; i++)
@@ -148,6 +171,11 @@ public class MediaStatusBar extends LinearLayout implements
 		}
 	}
 
+	/**
+	 * 设置按钮是否可以
+	 * @param pageIndex 界面索引
+	 * @param enabled 是否可用
+	 */
 	public void setBarEnable(int pageIndex, boolean enabled)
 	{
 		if (bars != null && bars.size() > 0)
@@ -165,6 +193,10 @@ public class MediaStatusBar extends LinearLayout implements
 		}
 	}
 
+	/**
+	 * 设置按钮可见
+	 * @param visibility 可见state
+	 */
 	public void setMediaStatusBarVisibility(int visibility)
 	{
 		this.setVisibility(visibility);
@@ -177,12 +209,18 @@ public class MediaStatusBar extends LinearLayout implements
 		// Toast.makeText(getContext(), itemId + "--" + page, 0).show();
 	}
 
+	/**
+	 * 监听器开启
+	 */
 	public void listenerEnable()
 	{
 		AirtalkeeSessionManager.getInstance().setOnMediaListener(this);
 		AirSessionControl.getInstance().setOnMmiSessionListener(this);
 	}
 
+	/**
+	 * 监听器关闭
+	 */
 	public void listenerDisable()
 	{
 		AirtalkeeSessionManager.getInstance().setOnMediaListener(null);
@@ -193,6 +231,9 @@ public class MediaStatusBar extends LinearLayout implements
 		AirtalkeeMessage.getInstance().setOnMessageListListener(null);
 	}
 
+	/**
+	 * 会话刷新
+	 */
 	public void sessionRefresh()
 	{
 		if (barTitle != null && talkBtn != null)
@@ -379,6 +420,11 @@ public class MediaStatusBar extends LinearLayout implements
 		}
 	}
 
+	/**
+	 * 发送广播 通知更新View
+	 * @param sessionCode 会话code
+	 * @param type 类型
+	 */
 	private void notify2UpdateView(String sessionCode, int type)
 	{
 		final Intent intent = new Intent();

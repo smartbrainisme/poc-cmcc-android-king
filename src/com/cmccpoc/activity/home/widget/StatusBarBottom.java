@@ -9,6 +9,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.cmccpoc.R;
 
+/**
+ * PTT媒体按键下方的底部按钮
+ * @author Yao
+ */
 public class StatusBarBottom extends LinearLayout implements OnClickListener
 {
 	public interface OnBarItemClickListener
@@ -40,6 +44,9 @@ public class StatusBarBottom extends LinearLayout implements OnClickListener
 		setVisibility(View.GONE);
 	}
 
+	/**
+	 * 初始化绑定控件
+	 */
 	private void initFindView()
 	{
 		ivBtnLeft = (ImageView) findViewById(R.id.bar_left);
