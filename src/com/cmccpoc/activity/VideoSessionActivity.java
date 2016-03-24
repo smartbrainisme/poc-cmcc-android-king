@@ -151,11 +151,6 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		else
 		{
 			int cameraType = Session.CAMERA_EXTERNAL_TYPE_NONE;
-			if (videoSufaceRecord.isCameraUsbReady())
-			{
-				// cameraType = Session.CAMERA_EXTERNAL_TYPE_USB;
-				cameraType = Session.CAMERA_EXTERNAL_TYPE_NONE;
-			}
 			videoSufaceRecord.start(new OnVideoStateChangeListener()
 			{
 				@Override

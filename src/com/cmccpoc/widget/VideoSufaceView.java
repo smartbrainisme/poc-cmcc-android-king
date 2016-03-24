@@ -13,7 +13,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.hardware.usb.UsbDevice;
 import android.os.Build;
-import android.os.Handler;
 import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -55,6 +54,10 @@ import com.cmccpoc.activity.home.widget.AlertDialog.DialogListener;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.control.AirSessionControl;
 
+/**
+ * 实时视频回传时，自定义视频显示器。
+ * @author Yao
+ */
 public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		CallbackRtspClient, CallbackVideoSession, SurfaceHolder.Callback,
 		SensorEventListener, DialogListener, OnCheckedChangeListener
@@ -87,7 +90,6 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 	UsbDevice usbConCB0 = null;
 	@SuppressWarnings("unused")
 	private boolean allowCheckedChangeEvent = true;
-	private boolean isCameraUsbReady = false;
 
 	private TextView tv_status;
 	private Chronometer ch_time;
@@ -131,7 +133,10 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 			initView();
 		}
 	}
-
+	
+	/**
+	 * 初始化绑定控件
+	 */
 	public void initView()
 	{
 		sm = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
@@ -162,11 +167,18 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		initPopupFpsWindow();
 	}
 
-	public boolean isCameraUsbReady()
-	{
-		return isCameraUsbReady;
-	}
-
+	/**
+	 * 开始录制
+	 * @param listener
+	 * @param cameraType camera类型
+	 * @param parent 
+	 * @param session 会话Entity
+	 * @param serverIp 服务器IP
+	 * @param serverPort 服务器端口号
+	 * @param screenWidth 屏幕宽度
+	 * @param screenHeight 屏幕高度
+	 * @param flag 
+	 */
 	public void start(OnVideoStateChangeListener listener, int cameraType, View parent, AirSession session, String serverIp, int serverPort, int screenWidth, int screenHeight, boolean flag)
 	{
 		this.parentView = parent;
@@ -195,6 +207,10 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		this.setVisibility(View.VISIBLE);
 	}
 
+	/**
+	 * 结束时调用
+	 * @param flag 是否释放session
+	 */
 	public void finish(boolean flag)
 	{
 		if (mClient != null && mClient.isStreaming())
@@ -355,6 +371,9 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 初始化设置窗口
+	 */
 	private void initPopupItemWindow()
 	{
 		popItemView = LayoutInflater.from(getContext()).inflate(R.layout.layout_popup_window_video_item, null);
@@ -364,6 +383,9 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		popItemView.findViewById(R.id.button_fps).setOnClickListener(this);
 	}
 
+	/**
+	 * 初始化分辨率设置窗口
+	 */
 	private void initPopupRateWindow()
 	{
 		popRateView = LayoutInflater.from(getContext()).inflate(R.layout.layout_popup_window_video_settings, null);
@@ -392,6 +414,9 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		videoRateRadio.setOnCheckedChangeListener(this);
 	}
 
+	/**
+	 * 初始化FPS设置窗口
+	 */
 	private void initPopupFpsWindow()
 	{
 		popFpsView = LayoutInflater.from(getContext()).inflate(R.layout.layout_popup_window_video_fps, null);
@@ -423,6 +448,11 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		videoFpsRadio.setOnCheckedChangeListener(this);
 	}
 
+	/**
+	 * 设置选择视频质量
+	 * @param radioButtonId 
+	 * @param flag 选中状态
+	 */
 	public void selectQuality(int radioButtonId, boolean flag)
 	{
 		RadioButton button = (RadioButton) parentView.findViewById(radioButtonId);
@@ -453,7 +483,6 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 				bitrate = 500;
 				break;
 		}
-
 		//mSession.setVideoQuality(new VideoQuality(mVideoWidth, mVideoHeight, mFramerate, bitrate * 1000));
 		if (flag)
 		{
@@ -474,7 +503,9 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		mButtonCamera.setEnabled(true);
 	}
 
-	// Connects/disconnects to the RTSP server and starts/stops the stream
+	/**
+	 * Connects/disconnects to the RTSP server and starts/stops the stream
+	 */
 	public void toggleStream()
 	{
 		finish(false);
@@ -648,6 +679,9 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 
 	}
 
+	/**
+	 * 自动对焦
+	 */
 	public void autoFoucs()
 	{
 		if (mSession != null)
@@ -732,8 +766,6 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 
 	}
 
-	private Handler mHandler = new Handler();
-
 	@Override
 	public void onCheckedChanged(RadioGroup group, int checkedId)
 	{
@@ -766,6 +798,9 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 		}
 	}
 	
+	/**
+	 * 初始化FPS的RadioGroup
+	 */
 	private void initRgFps()
 	{
 		for (int i = 0; i < videoFpsRadio.getChildCount(); i++)

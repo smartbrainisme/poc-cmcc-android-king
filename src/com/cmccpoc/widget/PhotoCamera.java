@@ -35,6 +35,10 @@ import com.cmccpoc.Util.Sound;
 import com.cmccpoc.activity.MenuReportAsPicActivity;
 import com.cmccpoc.activity.home.AlbumChooseActivity;
 
+/**
+ * 上报图片时，选择拍照上传时显示的自定义Camera控件
+ * @author Yao
+ */
 public class PhotoCamera extends Activity implements OnClickListener, Callback
 {
 	// 拍照按钮
@@ -194,6 +198,10 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 		}
 	}
 
+	/**
+	 * 刷新拍照按钮状态
+	 * @param state 状态
+	 */
 	public void refreshStartButton(int state)
 	{
 		switch (state)
@@ -289,6 +297,11 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 		}
 	};
 
+	/**
+	 * 获取预览界面的角度
+	 * @param activity 界面
+	 * @return 角度
+	 */
 	public static int getPreviewDegree(Activity activity)
 	{
 		// 获得手机的方向
@@ -313,6 +326,11 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 		return degree;
 	}
 
+	/**
+	 * 获取图片角度 
+	 * @param path 图片路径
+	 * @return 角度
+	 */
 	public int getPictureDegree(String path)
 	{
 		int degree = 0;
@@ -343,6 +361,12 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 		return degree;
 	}
 
+	/**
+	 * 调整图片角度
+	 * @param angle 角度值
+	 * @param bitmap 
+	 * @return new bitmap
+	 */
 	public Bitmap rotaingImageView(int angle, Bitmap bitmap)
 	{
 		// 旋转图片 动作

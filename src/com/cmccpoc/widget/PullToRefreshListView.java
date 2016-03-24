@@ -15,6 +15,10 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import com.cmccpoc.R;
 
+/**
+ * 下拉刷新IM消息列表，并获取显示更早的消息记录
+ * @author Yao
+ */
 public class PullToRefreshListView extends ListView implements OnScrollListener
 {
 
@@ -60,6 +64,10 @@ public class PullToRefreshListView extends ListView implements OnScrollListener
 		this.isHaveMore = isHaveMore;
 	}
 
+	/**
+	 * 初始化控件
+	 * @param context 上下文
+	 */
 	private void init(Context context)
 	{
 		setCacheColorHint(context.getResources().getColor(android.R.color.transparent));
@@ -80,12 +88,18 @@ public class PullToRefreshListView extends ListView implements OnScrollListener
 		state = DONE;
 	}
 
+	/**
+	 * 滑动时触发
+	 */
 	public void onScroll(AbsListView arg0, int firstVisiableItem, int visibleItemCount, int totalItemCount)
 	{
 		firstItemIndex = firstVisiableItem;
 		visibleCount = visibleItemCount;
 	}
 
+	/**
+	 * 滚动状态改变时
+	 */
 	public void onScrollStateChanged(AbsListView arg0, int scrollState)
 	{
 		Log.i("m", "firstItemIndex" + firstItemIndex);
@@ -102,6 +116,7 @@ public class PullToRefreshListView extends ListView implements OnScrollListener
 
 	}
 
+	@Override
 	public boolean onTouchEvent(MotionEvent event)
 	{
 		try
@@ -123,7 +138,6 @@ public class PullToRefreshListView extends ListView implements OnScrollListener
 					{
 						if (state == DONE)
 						{
-							// ʲô������
 						}
 						if (state == PULL_To_REFRESH)
 						{
@@ -215,6 +229,9 @@ public class PullToRefreshListView extends ListView implements OnScrollListener
 		}
 	}
 
+	/**
+	 * 根据状态改变头部View显示
+	 */
 	public void changeHeaderViewByState()
 	{
 
@@ -251,13 +268,19 @@ public class PullToRefreshListView extends ListView implements OnScrollListener
 	{
 		public void onPullToRefresh(int firstVisibleItem, int visibleCount);
 	}
-
+	
+	/**
+	 * 刷新完成
+	 */
 	public void onRefreshComplete()
 	{
 		state = DONE;
 		changeHeaderViewByState();
 	}
 
+	/**
+	 * 正在刷新
+	 */
 	private void onRefresh()
 	{
 		if (refreshListener != null)
