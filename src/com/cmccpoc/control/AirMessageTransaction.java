@@ -31,14 +31,13 @@ import com.cmccpoc.Util.Util;
 import com.cmccpoc.activity.AccountActivity;
 import com.cmccpoc.activity.MenuNoticeActivity;
 import com.cmccpoc.activity.MoreActivity;
-import com.cmccpoc.activity.SessionDialogActivity;
 import com.cmccpoc.activity.home.HomeActivity;
 import com.cmccpoc.activity.home.widget.AlertDialog;
+import com.cmccpoc.activity.home.widget.AlertDialog.DialogListener;
 import com.cmccpoc.activity.home.widget.CallAlertDialog;
+import com.cmccpoc.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.cmccpoc.activity.home.widget.SessionAndChannelView;
 import com.cmccpoc.activity.home.widget.StatusBarTitle;
-import com.cmccpoc.activity.home.widget.AlertDialog.DialogListener;
-import com.cmccpoc.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.listener.OnMmiMessageListener;
 import com.cmccpoc.listener.OnMmiNoticeListener;
@@ -425,15 +424,15 @@ public class AirMessageTransaction implements OnMessageListener,
 			case DIALOG_2_SEND_MESSAGE:
 				if (obj != null)
 				{
-					String sessionCode = obj.toString();
-					Context context = AirServices.getInstance();
-					if (null != context)
-					{
-						Intent it = new Intent(context, SessionDialogActivity.class);
-						it.putExtra("sessionCode", sessionCode);
-						it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
-						context.startActivity(it);
-					}
+//					String sessionCode = obj.toString();
+//					Context context = AirServices.getInstance();
+//					if (null != context)
+//					{
+//						Intent it = new Intent(context, SessionDialogActivity.class);
+//						it.putExtra("sessionCode", sessionCode);
+//						it.putExtra("type", AirServices.TEMP_SESSION_TYPE_MESSAGE);
+//						context.startActivity(it);
+//					}
 				}
 				break;
 		}
