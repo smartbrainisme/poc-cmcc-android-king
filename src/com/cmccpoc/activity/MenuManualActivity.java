@@ -18,15 +18,16 @@ import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.config.Config;
 
+/**
+ * 更多：使用手册
+ * 做了一个web静态页面，理由webview加载出来就得了
+ * @author Yao
+ */
 @SuppressLint("SetJavaScriptEnabled")
 public class MenuManualActivity extends ActivityBase implements OnClickListener
 {
-
-	// private static final String MANUAL_URL =
-	// "http://www.haoliantech.com/atk/client_manual.php?market=%s&vplatform=%s&vtype=%s&vcode=%s&lang=%s";
 	private static final String MANUAL_URL = "file:///android_asset/manual/page_help/help.html";
 	private static String manual_url = MANUAL_URL;
-
 	private MenuManualActivity mInstance;
 	private WebView webView;
 	private ProgressBar webViewProgress;
@@ -52,6 +53,9 @@ public class MenuManualActivity extends ActivityBase implements OnClickListener
 		webLoad();
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
@@ -100,6 +104,9 @@ public class MenuManualActivity extends ActivityBase implements OnClickListener
 		}
 	}
 	
+	/**
+	 * 获取页面的JS事件
+	 */
 	private void loadJS()
 	{
 		if (!isShowAll)
@@ -116,6 +123,9 @@ public class MenuManualActivity extends ActivityBase implements OnClickListener
 		}
 	}
 
+	/**
+	 * 加载web页面
+	 */
 	private void webLoad()
 	{
 		String lang = Language.getLocalLanguageZH(this);

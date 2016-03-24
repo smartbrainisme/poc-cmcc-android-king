@@ -1,8 +1,6 @@
 package com.cmccpoc.activity;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,8 +18,14 @@ import com.cmccpoc.config.Config;
 import com.cmccpoc.listener.OnMmiLocationListener;
 import com.cmccpoc.location.AirLocation;
 
-public class MenuGpsActivity extends ActivityBase implements OnClickListener,
-		OnMmiLocationListener, OnCheckedChangeListener
+/**
+ * 更多：位置回传
+ * 就是上报位置坐标信息的
+ * 开启后，将会以一定频率回传我的位置信息
+ * 优先获取GPS，若GPS获取不到则获取基站定位
+ * @author Yao
+ */
+public class MenuGpsActivity extends ActivityBase implements OnClickListener,OnMmiLocationListener, OnCheckedChangeListener
 {
 	private TextView gps_t, gps_t_text;
 	int[] mFrequenceValue = { AirLocation.AIR_LOCATION_FRE_NAVIGATE, AirLocation.AIR_LOCATION_FRE_MINUTE_1, AirLocation.AIR_LOCATION_FRE_MINUTE_5, AirLocation.AIR_LOCATION_FRE_MINUTE_15, AirLocation.AIR_LOCATION_FRE_MINUTE_30, AirLocation.AIR_LOCATION_FRE_MINUTE_60 };
@@ -67,16 +71,11 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 	protected void onResume()
 	{
 		super.onResume();
-		// if (AirLocation.getInstance(this).GpsIsActive())
-		// {
-		// setGpsView(true);
-		// }
-		// else
-		// {
-		// setGpsView(false);
-		// }
 	}
 
+	/**
+	 * 初始化绑定用户Id 
+	 */
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
@@ -120,6 +119,9 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		initRadioGroup(gpsState, mFrequenceValue[mFrequenceSelected]);
 	}
 
+	/**
+	 * radioButton更改check时触发
+	 */
 	private RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener()
 	{
 		@Override
@@ -165,6 +167,11 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		}
 	};
 
+	/**
+	 * 初始化RadioGroup控件
+	 * @param state GPS状态
+	 * @param value 回传频率
+	 */
 	private void initRadioGroup(boolean state, int value)
 	{
 		if (state)
@@ -328,6 +335,10 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 设置GPSView
+	 * @param b 是否选择
+	 */
 	private void setGpsView(boolean b)
 	{
 		if (b)
@@ -421,6 +432,10 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 选择高精度
+	 * @param b 是否选择
+	 */
 	private void setHighFreView(boolean b)
 	{
 		if (b) // 高精度
@@ -459,6 +474,10 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 选择1分钟
+	 * @param b 是否选择
+	 */
 	private void set1MinView(boolean b)
 	{
 		if (b)
@@ -477,6 +496,10 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 选择5分钟
+	 * @param b 是否选择
+	 */
 	private void set5MinView(boolean b)
 	{
 		if (b)
@@ -495,6 +518,10 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 选择15分钟
+	 * @param b 是否选择
+	 */
 	private void set15MinView(boolean b)
 	{
 		if (b)
@@ -513,6 +540,10 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 选择30分钟
+	 * @param b 是否选择
+	 */
 	private void set30MinView(boolean b)
 	{
 		if (b)
@@ -531,6 +562,10 @@ public class MenuGpsActivity extends ActivityBase implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 选择60分钟
+	 * @param b 是否选择
+	 */
 	private void set60MinView(boolean b)
 	{
 		if (b)

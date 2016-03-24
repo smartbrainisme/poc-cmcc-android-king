@@ -19,10 +19,13 @@ import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.config.Config;
 
-public class MenuDefectReportActivity extends ActivityBase implements
-		OnClickListener, OnSystemDefectListener
+/**
+ * 更多：意见反馈
+ * 就是提交意见用的。。
+ * @author Yao
+ */
+public class MenuDefectReportActivity extends ActivityBase implements OnClickListener, OnSystemDefectListener
 {
-
 	private EditText mDefectContent;
 	private ProgressBar mDefectWait;
 	private Button mDefectButton;
@@ -45,6 +48,9 @@ public class MenuDefectReportActivity extends ActivityBase implements
 		super.onStart();
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
@@ -88,6 +94,9 @@ public class MenuDefectReportActivity extends ActivityBase implements
 		}
 	};
 
+	/**
+	 * 检查EditText是否为空，如果是空，则提交按钮不可点击
+	 */
 	private void checkEditTextNull()
 	{
 		String content = mDefectContent.getText().toString().trim();

@@ -16,13 +16,26 @@ import com.cmccpoc.activity.home.widget.MediaStatusBar;
 import com.cmccpoc.activity.home.widget.StatusBarBottom;
 import com.cmccpoc.activity.home.widget.StatusBarTitle;
 
+/**
+ * 片段的基类，为三大块Fragment提供了共同的方法与变量等
+ * @author Yao
+ */
 public abstract class BaseFragment extends Fragment implements OnSharedPreferenceChangeListener
 {
 
 	public static final String SESSION_EVENT_KEY = "session_event_key";
 
+	/**
+	 * 抽象方法 获取Layout的Id
+	 * @return
+	 */
 	public abstract int getLayout();
 
+	/**
+	 * 抽象方法 为每个Fragment底部，三个不同的按钮定义了方法
+	 * @param page pageIndex
+	 * @param id 按钮的ViewId
+	 */
 	public abstract void dispatchBarClickEvent(int page, int id);
 
 	protected View v;
@@ -31,12 +44,23 @@ public abstract class BaseFragment extends Fragment implements OnSharedPreferenc
 
 	protected SharedPreferences sessionSp;
 
+	/**
+	 * 获取Fragment实例
+	 * @param context 上下文
+	 * @param name 名称
+	 * @param view mediaStatusBar实例
+	 * @return
+	 */
 	public static BaseFragment newInstantiate(Context context, String name, MediaStatusBar view)
 	{
 		mediaStatusBar = view;
 		return (BaseFragment) Fragment.instantiate(context, name);
 	}
 
+	/**
+	 * 获取当前Session会话
+	 * @return
+	 */
 	protected AirSession getSession()
 	{
 		if (null == mediaStatusBar)
@@ -44,6 +68,10 @@ public abstract class BaseFragment extends Fragment implements OnSharedPreferenc
 		return mediaStatusBar.getSession();
 	}
 
+	/**
+	 * 获取顶部自定义控件StatusBarTitle实例对象
+	 * @return
+	 */
 	protected StatusBarTitle getStatusBarTitle()
 	{
 		return mediaStatusBar.getStatusBarTitle();
@@ -95,6 +123,9 @@ public abstract class BaseFragment extends Fragment implements OnSharedPreferenc
 		return v.findViewById(id);
 	}
 
+	/**
+	 * 注册按钮点击接收器
+	 */
 	protected void registerOnBarClickReceiver()
 	{
 		final IntentFilter filter = new IntentFilter();
@@ -118,11 +149,19 @@ public abstract class BaseFragment extends Fragment implements OnSharedPreferenc
 		}
 	};
 
+	/**
+	 * 取消注册点击事件
+	 */
 	public void unRegisterOnBarClickReceiver()
 	{
 		getActivity().unregisterReceiver(receiver);
 	}
 
+	/**
+	 * 抽象方法 列表项长按
+	 * @param id 控件Id
+	 * @param selectedItem 被选项
+	 */
 	public abstract void onListItemLongClick(int id, int selectedItem);
 
 }

@@ -22,6 +22,11 @@ import android.widget.Toast;
 import com.airtalkee.sdk.util.IOoperate;
 import com.cmccpoc.R;
 
+/**
+ * 版本升级时 会弹出这个Dialog
+ * 主要显示下载进度条
+ * @author Yao
+ */
 @SuppressLint("SdCardPath")
 public class DialogVersionUpdate extends Dialog implements android.view.View.OnClickListener
 {
@@ -64,6 +69,9 @@ public class DialogVersionUpdate extends Dialog implements android.view.View.OnC
 		getFile();
 	}
 
+	/**
+	 * 获取下载完成的apk文件
+	 */
 	public void getFile()
 	{
 		try
@@ -95,6 +103,11 @@ public class DialogVersionUpdate extends Dialog implements android.view.View.OnC
 		}
 	}
 
+	/**
+	 * 获取数据源
+	 * @param strPath 本地路径
+	 * @throws Exception 异常
+	 */
 	@SuppressWarnings("resource")
 	private void getDataSource(String strPath) throws Exception
 	{
@@ -160,6 +173,10 @@ public class DialogVersionUpdate extends Dialog implements android.view.View.OnC
 		}
 	}
 
+	/**
+	 * 打开文件
+	 * @param f 文件对象
+	 */
 	private void openFile(File f)
 	{
 		Intent intent = new Intent();
@@ -172,6 +189,11 @@ public class DialogVersionUpdate extends Dialog implements android.view.View.OnC
 
 	}
 
+	/**
+	 * 获取文件扩展名
+	 * @param f 文件对象
+	 * @return 扩展名
+	 */
 	private String getMIMEType(File f)
 	{
 		String type = "";

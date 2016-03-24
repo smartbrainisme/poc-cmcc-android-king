@@ -31,6 +31,11 @@ import com.cmccpoc.entity.AirReport;
 import com.cmccpoc.listener.OnMmiReportListener;
 import com.cmccpoc.widget.MListView;
 
+/**
+ * 
+ * @author Yao
+ *
+ */
 public class MenuReportActivity extends ActivityBase implements
 		OnClickListener, OnMmiReportListener, OnItemClickListener,
 		onReportCheckedListener, OnCheckedChangeListener

@@ -27,7 +27,8 @@ import com.cmccpoc.entity.ImageBucket;
 import com.cmccpoc.widget.PhotoCamera;
 
 /**
- * 相册选择
+ * 相册选择Activity。
+ * 获取系统相册的内容，赋值到当前自定义相册列表中
  * @author Yao
  */
 public class AlbumChooseActivity extends Activity implements OnItemClickListener, OnClickListener
@@ -68,14 +69,18 @@ public class AlbumChooseActivity extends Activity implements OnItemClickListener
 		mInstance = this;
 	}
 
-	// 初始化相册列表
+	/**
+	 * 初始化相册列表
+	 */
 	private void initData()
 	{
 		dataList = helper.getImagesBucketList(false);
 		bimap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_addpic_unfocused);
 	}
 
-	// 初始化view视图
+	/**
+	 * 初始化view视图
+	 */
 	private void initView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
@@ -153,7 +158,6 @@ public class AlbumChooseActivity extends Activity implements OnItemClickListener
 		{
 			return;
 		}
-
 		/*
 		 * switch (requestCode) { // 自定义相册 case
 		 * Const.image_select.REQUEST_CODE_BROWSE_IMAGE: // 自定义相机 case

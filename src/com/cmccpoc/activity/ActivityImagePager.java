@@ -10,8 +10,8 @@ import com.cmccpoc.activity.home.adapter.AdapterImagePager;
 
 /**
  * IM消息--图片消息原图展示Activity
+ * IM图片消息，点击后显示大图，可以左右滑动切换
  * @author Yao
- *
  */
 public class ActivityImagePager extends Activity 
 {

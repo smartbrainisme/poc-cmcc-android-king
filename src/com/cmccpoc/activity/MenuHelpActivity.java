@@ -11,6 +11,11 @@ import com.cmccpoc.R;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.config.Config;
 
+/**
+ * 更多：帮助和反馈
+ * 有两个选项按钮，一个跳转到使用手册，一个跳转到意见反馈
+ * @author Yao
+ */
 public class MenuHelpActivity extends ActivityBase implements OnClickListener
 {
 	@Override
@@ -30,6 +35,9 @@ public class MenuHelpActivity extends ActivityBase implements OnClickListener
 		super.onStart();
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);

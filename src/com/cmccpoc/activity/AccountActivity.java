@@ -1,9 +1,5 @@
 package com.cmccpoc.activity;
 
-/**
- * 处理用户登录界面的Activity 
- * */
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import android.app.AlertDialog;
@@ -46,6 +42,11 @@ import com.cmccpoc.listener.OnMmiAccountListener;
 import com.cmccpoc.listener.OnMmiChannelListener;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 处理用户登录界面的Activity 
+ * 登录成功：获取频道列表信息
+ * 登录失败：根据不同原因会弹出不同的Toast提示
+ */
 public class AccountActivity extends ActivityBase implements OnClickListener, OnMmiAccountListener, OnMmiChannelListener, OnUserInfoListener, OnTouchListener, AccountByImeiListener
 {
 	private EditText etIpocid;
@@ -60,7 +61,10 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 	private final int STATE_LOADING = 2;
 
 	private static AccountActivity instance = null;
-
+	/**
+	 * 获取AccountActivity的实例对象
+	 * @return
+	 */
 	public static AccountActivity getInstance()
 	{
 		return instance;
@@ -250,6 +254,9 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 		AirAccountManager.getInstance().setAccountListener(null);
 	}
 
+	/**
+	 * 根据不同状态，构建Dialog窗口提示
+	 */
 	@SuppressWarnings("deprecation")
 	protected Dialog onCreateDialog(int id)
 	{
@@ -306,7 +313,6 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 					new Task().execute();
 				}
 			});
-
 			builder.setNegativeButton(R.string.talk_no, new DialogInterface.OnClickListener()
 			{
 				public void onClick(DialogInterface dialog, int whichButton)
