@@ -22,12 +22,15 @@ import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.control.AirSessionControl;
 
-
+/**
+ * 频道列表适配器
+ * @author Yao
+ */
 @SuppressLint("UseSparseArrays")
 public class AdapterChannelList extends BaseAdapter
 {
 	private Context context = null;
-	
+
 	public AdapterChannelList(Context _context)
 	{
 		context = _context;
@@ -50,8 +53,7 @@ public class AdapterChannelList extends BaseAdapter
 			ch = AirtalkeeChannel.getInstance().getChannels().get(position);
 		}
 		catch (Exception e)
-		{
-		}
+		{}
 		return ch;
 	}
 
@@ -87,20 +89,20 @@ public class AdapterChannelList extends BaseAdapter
 		{
 			if (channel.getLevel() == AirChannel.LEVEL_ALL)
 			{
-				holder.chIcon.setImageResource(ThemeUtil.getResourceId(R.attr.theme_group_all,context));
+				holder.chIcon.setImageResource(ThemeUtil.getResourceId(R.attr.theme_group_all, context));
 			}
 			else
-			{	
+			{
 				int resid = ThemeUtil.getResourceId(isChannelRoot(channel) ? R.attr.theme_group_me : R.attr.theme_group_others, context);
 				holder.chIcon.setImageResource(resid);
 			}
-			
+
 			holder.chName.setText(channel.getDisplayName());
-			
+
 			if (channel.getLevel() == AirChannel.LEVEL_NORMAL)
 			{
 				holder.actDel.setVisibility(View.VISIBLE);
-				holder.actDel.setOnClickListener(new OnClickListener() 
+				holder.actDel.setOnClickListener(new OnClickListener()
 				{
 					@Override
 					public void onClick(View v)
@@ -131,7 +133,7 @@ public class AdapterChannelList extends BaseAdapter
 			{
 				holder.actDel.setVisibility(View.GONE);
 			}
-			
+
 			holder.checkBox.setChecked(channel.isAttachItem());
 			holder.checkBox.setOnCheckedChangeListener(new OnCheckedChangeListener()
 			{
@@ -153,6 +155,12 @@ public class AdapterChannelList extends BaseAdapter
 		ImageView actDel;
 	}
 
+	/**
+	 * 是否有频道的root权限
+	 * 
+	 * @param channel
+	 * @return
+	 */
 	private boolean isChannelRoot(AirChannel channel)
 	{
 		boolean isRoot = false;
@@ -164,5 +172,5 @@ public class AdapterChannelList extends BaseAdapter
 		}
 		return isRoot;
 	}
-	
+
 }
