@@ -51,6 +51,10 @@ public class AirReportManager implements OnReportListener
 		return mInstance;
 	}
 	
+	/**
+	 * 设置正在上传的上报记录
+	 * @param report 上报记录Entity
+	 */
 	public void setReportDoing(AirReport report)
 	{
 		reportDoing = report;

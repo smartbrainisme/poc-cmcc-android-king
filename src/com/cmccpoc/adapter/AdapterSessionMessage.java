@@ -28,6 +28,10 @@ import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.adapter.AdapterBase.OnImageLoadCompletedListener;
 
+/**
+ * 会话消息适配器
+ * @author Yao
+ */
 public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCompletedListener
 {
 	AirSession currentSession = null;
@@ -57,6 +61,7 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		super.notifyDataSetChanged();
 	}
 
+	@Override
 	public int getCount()
 	{
 		int size = 0;
@@ -67,6 +72,7 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		return size;
 	}
 
+	@Override
 	public Object getItem(int position)
 	{
 		// TODO Auto-generated method stub
@@ -84,12 +90,14 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		return null;
 	}
 
+	@Override
 	public long getItemId(int position)
 	{
 		// TODO Auto-generated method stub
 		return position;
 	}
 
+	@Override
 	public View getView(int position, View convertView, ViewGroup parent)
 	{
 		AirMessage iMessage = (AirMessage) getItem(position);
@@ -190,6 +198,13 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 
 	}
 
+	/**
+	 * 构建“我”发送的消息记录
+	 * @param position 位置
+	 * @param convertView view
+	 * @param iMessage 消息Entity
+	 * @return View
+	 */
 	private View buildMessageItemWithMe(int position, View convertView, AirMessage iMessage)
 	{
 		int type = iMessage.getType();
@@ -312,6 +327,13 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		return convertView;
 	}
 
+	/**
+	 * 构建其他人发送的消息记录
+	 * @param position 位置
+	 * @param convertView view
+	 * @param iMessage 消息Entity
+	 * @return View
+	 */
 	private View buildMessageItemWithOther(int position, View convertView, final AirMessage iMessage)
 	{
 		int type = iMessage.getType();
@@ -416,6 +438,11 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		return convertView;
 	}
 
+	/**
+	 * 显示收到的图片
+	 * @param holder 结构体
+	 * @param message 消息Entity
+	 */
 	private void viewHolder2_showImageDownload(ViewHolder2 holder, final AirMessage message)
 	{
 		holder.downlaod_btn.setVisibility(View.VISIBLE);
@@ -474,24 +501,22 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		}
 	}
 
-	/**
-	 * @author CQF �Լ�������Ϣ
-	 */
 	protected class ViewHolder1 extends ViewHolder
 	{
 		ImageView report_icon;
 	}
 
-	/**
-	 * 
-	 * @author CQF ���˷�����Ϣ
-	 */
 	class ViewHolder2 extends ViewHolder
 	{
 		TextView downlaod_btn;
 		ImageView unRead;
 	}
 
+	/**
+	 * 是否需要显示时间分割线
+	 * @param position 位置
+	 * @return
+	 */
 	private boolean needShowDateline(int position)
 	{
 		try
@@ -529,6 +554,11 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		return false;
 	}
 
+	/**
+	 * 通过消息code获取消息Entity
+	 * @param code 消息code
+	 * @return 消息Entity
+	 */
 	public AirMessage getMessageByCode(String code)
 	{
 		AirMessage msg = null;
@@ -548,6 +578,11 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		return msg;
 	}
 
+	/**
+	 * 获取图片的Url地址
+	 * @param url 地址
+	 * @return url地址列表
+	 */
 	public ArrayList<String> getPicUrls(String[] url)
 	{
 		ArrayList<String> array = new ArrayList<String>();
@@ -583,24 +618,10 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 	public void onImageLoadCompleted(int orientation, View v, int width, int height)
 	{
 		LayoutParams params = (LayoutParams) v.getLayoutParams();
-		int pwidth = params.width;
-		int pheight = params.height;
 		switch (orientation)
 		{
 			case AdapterSessionMessage.ORIENTATION_HORIZONTAL:
-				// params.width = (int)
-				// (mContext.getResources().getDimension(R.dimen.msg_pic_widht)
-				// * ((float) (width) / (float) (height)) * 2);
-				// params.height = (int)
-				// (mContext.getResources().getDimension(R.dimen.msg_pic_height)
-				// * ((float) (width) / (float) (height)) * 2);
 			case AdapterSessionMessage.ORIENTATION_VERTICAL:
-				// params.width = (int)
-				// (mContext.getResources().getDimension(R.dimen.msg_pic_height)
-				// * ((float) (height) / (float) (width)) * 2);
-				// params.height = (int)
-				// (mContext.getResources().getDimension(R.dimen.msg_pic_widht)
-				// * ((float) (height) / (float) (width)) * 2);
 				params.width = width;
 				params.height = height;
 				break;

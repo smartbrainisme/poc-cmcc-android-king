@@ -26,6 +26,13 @@ public abstract class AdapterBase extends BaseAdapter
 
 	protected interface OnImageLoadCompletedListener
 	{
+		/**
+		 * 当图片加载完成时
+		 * @param orientation 图片方向
+		 * @param v view
+		 * @param width 宽
+		 * @param height 高
+		 */
 		public void onImageLoadCompleted(int orientation, View v, int width, int height);
 	}
 
