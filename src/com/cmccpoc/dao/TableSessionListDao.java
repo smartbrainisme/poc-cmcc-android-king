@@ -10,6 +10,10 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
 
+/**
+ * 会话列表操作类
+ * @author Yao
+ */
 public class TableSessionListDao
 {
 	private static DBHelp dbHelp;
@@ -28,6 +32,10 @@ public class TableSessionListDao
 	 * Session List
 	 ********************************/
 
+	/**
+	 * 加载会话列表
+	 * @return 会话列表
+	 */
 	protected List<AirSession> sessionLoad()
 	{
 		List<AirSession> sessions = new ArrayList<AirSession>();
@@ -60,6 +68,9 @@ public class TableSessionListDao
 		return sessions;
 	}
 
+	/**
+	 * 会话清除
+	 */
 	protected void sessionClean()
 	{
 		String sql = null;
@@ -71,6 +82,10 @@ public class TableSessionListDao
 		dbHelp.del(sql);
 	}
 
+	/**
+	 * 清除会话未读记录
+	 * @param sid 会话Id
+	 */
 	protected void sessionCleanUnread(String sid)
 	{
 		String sql = String.format("UPDATE " + DBDefine.db_session + " SET " + DBDefine.t_session.unreadCount + " = 0 " + "WHERE " + DBDefine.t_session.UID + "=%s AND "
@@ -78,6 +93,10 @@ public class TableSessionListDao
 		dbHelp.update(sql);
 	}
 
+	/**
+	 * 添加一个会话
+	 * @param session 会话Entity
+	 */
 	protected void sessionAppend(final AirSession session)
 	{
 		if (session.getType() == AirSession.TYPE_DIALOG)
@@ -96,6 +115,10 @@ public class TableSessionListDao
 		}
 	}
 
+	/**
+	 * 删除会话 
+	 * @param sid 会话Id
+	 */
 	protected void sessionDelete(String sid)
 	{
 		String sql = null;
@@ -107,6 +130,11 @@ public class TableSessionListDao
 		dbHelp.del(sql);
 	}
 
+	/**
+	 * 更新会话
+	 * @param sid 会话Id
+	 * @param session 会话Entity
+	 */
 	protected void sessionUpdate(final String sid, final AirSession session)
 	{
 		String sql = null;
@@ -128,6 +156,10 @@ public class TableSessionListDao
 		}
 	}
 	
+	/**
+	 * 会话排序
+	 * @param sid 会话Id
+	 */
 	protected void sessionOrder(String sid)
 	{
 		String sql = "UPDATE " + DBDefine.db_session + " SET " + DBDefine.t_session.sOrder + " = (SELECT max(" + DBDefine.t_session.sOrder + ") FROM " + DBDefine.db_session
@@ -140,6 +172,10 @@ public class TableSessionListDao
 	 * Session member
 	 ********************************/
 
+	/**
+	 * 会话成员加载
+	 * @param session 会话Entity
+	 */
 	protected void sessionMemberLoad(AirSession session)
 	{
 		SQLiteDatabase db = dbHelp.DatabaseReadableGet();
@@ -169,6 +205,10 @@ public class TableSessionListDao
 		}
 	}
 
+	/**
+	 * 会有成员清除
+	 * @param sid 会话Id
+	 */
 	protected void sessionMemberClean(String sid)
 	{
 		String sql = "DELETE FROM " + DBDefine.db_session_member + " WHERE " + DBDefine.t_session_member.UID + "=" + dbHelp.getUid() + " AND " + DBDefine.t_session_member.sid
@@ -176,6 +216,11 @@ public class TableSessionListDao
 		dbHelp.del(sql);
 	}
 
+	/**
+	 * 成员保存
+	 * @param sid 会话Id
+	 * @param contacts 成员列表
+	 */
 	protected void sessionMemberSave(String sid, List<AirContact> contacts)
 	{
 		sessionMemberClean(sid);
@@ -188,12 +233,23 @@ public class TableSessionListDao
 		dbHelp.insert(DBDefine.db_session_member, cvs);
 	}
 
+	/**
+	 * 添加会话成员
+	 * @param sid 会话Id
+	 * @param contact 成员Entity
+	 */
 	protected void sessionMemberAppend(String sid, final AirContact contact)
 	{
 		ContentValues cv = sessionMemberAppendBuild(sid, contact);
 		dbHelp.insert(DBDefine.db_session_member, cv);
 	}
 
+	/**
+	 * 会话成员赋值
+	 * @param sid 会话ID
+	 * @param contact 会话成员Entity
+	 * @return ContentValues
+	 */
 	protected ContentValues sessionMemberAppendBuild(String sid, final AirContact contact)
 	{
 		ContentValues cv = new ContentValues();
@@ -205,6 +261,11 @@ public class TableSessionListDao
 		return cv;
 	}
 
+	/**
+	 * 会话成员删除
+	 * @param sid 会话Id
+	 * @param ipocid 用户Id
+	 */
 	protected void sessionMemberDelete(String sid, String ipocid)
 	{
 		String sql = "DELETE FROM " + DBDefine.db_session_member + " WHERE " + DBDefine.t_session_member.sid + " = '" + sid + "' " + " AND " + DBDefine.t_session_member.iId

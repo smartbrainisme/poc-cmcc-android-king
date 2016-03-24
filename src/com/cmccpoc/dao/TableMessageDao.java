@@ -31,7 +31,12 @@ public class TableMessageDao
 	/********************************
 	 * Message List
 	 ********************************/
-
+	
+	/**
+	 * 添加一条消息
+	 * @param sid 消息sessionId
+	 * @param msg 消息Entity
+	 */
 	protected void messageAppend(String sid, final AirMessage msg)
 	{
 		ContentValues cv = new ContentValues();
@@ -52,6 +57,10 @@ public class TableMessageDao
 		dbHelp.insert(DBDefine.db_message, cv);
 	}
 
+	/**
+	 * 加载消息列表
+	 * @param session 会话Entity
+	 */
 	protected void messageLoad(AirSession session)
 	{
 		SQLiteDatabase db = dbHelp.DatabaseReadableGet();
@@ -94,6 +103,13 @@ public class TableMessageDao
 
 	private boolean loading = false;
 
+	/**
+	 * 加载消息数据
+	 * @param sid 消息sessionId
+	 * @param msgPosition 消息列表的第msgPosition条
+	 * @param msgCount 取列表的总数
+	 * @return
+	 */
 	protected List<AirMessage> MessageDbLoad(String sid, int msgPosition, int msgCount)
 	{
 		boolean hasException = true;
@@ -160,6 +176,10 @@ public class TableMessageDao
 		return messages;
 	}
 
+	/**
+	 * 消息更新
+	 * @param msg 消息Entity
+	 */
 	protected void messageUpdate(final AirMessage msg)
 	{
 		String sql = String.format("UPDATE " + DBDefine.db_message + " SET " + DBDefine.t_message.sid + " = '%s', " + DBDefine.t_message.dtTime + " = '%s', "
@@ -170,6 +190,11 @@ public class TableMessageDao
 		dbHelp.update(sql);
 	}
 
+	/**
+	 * 消息删除
+	 * @param sid 消息sessionId
+	 * @param msgId 消息Id
+	 */
 	protected void messageDelete(String sid, String msgId)
 	{
 		String sql = "DELETE FROM " + DBDefine.db_message + " WHERE " + DBDefine.t_message.UID + "=" + dbHelp.getUid() + " AND " + DBDefine.t_message.sid + " = '" + sid + "' AND "
@@ -177,12 +202,19 @@ public class TableMessageDao
 		dbHelp.del(sql);
 	}
 
+	/**
+	 * 清除某会话下的消息
+	 * @param sid sessionId
+	 */
 	protected void messageClean(String sid)
 	{
 		String sql = "DELETE FROM " + DBDefine.db_message + " WHERE " + DBDefine.t_message.UID + "=" + dbHelp.getUid() + " AND " + DBDefine.t_message.sid + " = '" + sid + "'";
 		dbHelp.del(sql);
 	}
 
+	/**
+	 * 清除所有会话消息
+	 */
 	protected void messageCleanAll()
 	{
 		String sql = "DELETE FROM " + DBDefine.db_message + " WHERE " + DBDefine.t_message.UID + "=" + dbHelp.getUid();

@@ -9,6 +9,10 @@ import android.net.Uri;
 import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.entity.AirReport;
 
+/**
+ * 上报记录操作类
+ * @author Yao
+ */
 public class TableReportDao
 {
 
@@ -29,6 +33,10 @@ public class TableReportDao
 	 * Message List
 	 ********************************/
 
+	/**
+	 * 加载上报记录
+	 * @param reports 上报列表
+	 */
 	protected void ReportLoad(List<AirReport> reports)
 	{
 		SQLiteDatabase db = dbHelp.DatabaseReadableGet();
@@ -66,6 +74,10 @@ public class TableReportDao
 		}
 	}
 
+	/**
+	 * 添加一个上报记录
+	 * @param report 上报Entity
+	 */
 	protected void ReportNew(AirReport report)
 	{
 		ContentValues cv = new ContentValues();
@@ -83,6 +95,10 @@ public class TableReportDao
 		dbHelp.insert(DBDefine.db_report, cv);
 	}
 
+	/**
+	 * 新上报记录状态
+	 * @param code 上报记录code
+	 */
 	protected void ReportResultOk(String code)
 	{
 		String sql = "UPDATE " + DBDefine.db_report + " SET " + DBDefine.t_report.state + " = 1 " + " WHERE " + DBDefine.t_report.UID + "=" + dbHelp.getUid() + " AND "
@@ -90,12 +106,19 @@ public class TableReportDao
 		dbHelp.update(sql);
 	}
 
+	/**
+	 * 删除一条上报记录
+	 * @param code 上报记录code
+	 */
 	protected void ReportDelete(String code)
 	{
 		String sql = "DELETE FROM " + DBDefine.db_report + " WHERE " + DBDefine.t_report.UID + "=" + dbHelp.getUid() + " AND " + DBDefine.t_report.code + " = '" + code + "'";
 		dbHelp.del(sql);
 	}
 
+	/**
+	 * 清除所有上报记录
+	 */
 	protected void ReportClean()
 	{
 		String sql = "DELETE FROM " + DBDefine.db_report + " WHERE " + DBDefine.t_report.UID + "=" + dbHelp.getUid() + " AND " + DBDefine.t_report.state + " = 1";
