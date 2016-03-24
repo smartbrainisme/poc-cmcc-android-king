@@ -34,10 +34,11 @@ import com.cmccpoc.listener.OnMmiSessionListener;
 import com.cmccpoc.widget.VideoSufaceView;
 import com.cmccpoc.widget.VideoSufaceView.OnVideoStateChangeListener;
 
-//import android.app.AlertDialog;
-
-public class VideoSessionActivity extends Activity implements OnClickListener,
-		OnTouchListener, OnMmiSessionListener, OnMediaListener, DialogListener
+/**
+ * 实时视频回传界面
+ * @author Yao
+ */
+public class VideoSessionActivity extends Activity implements OnClickListener,OnTouchListener, OnMmiSessionListener, OnMediaListener, DialogListener
 {
 
 	private static VideoSessionActivity mInstance;
@@ -59,11 +60,19 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 	private ImageView ivVideoBtn;
 	private TextView tvVideoText;
 
+	/**
+	 * 获取VideoSessionActivity实例对象
+	 * @return
+	 */
 	public static VideoSessionActivity getInstance()
 	{
 		return mInstance;
 	}
 
+	/**
+	 * 获取录制状态
+	 * @return
+	 */
 	public boolean getRecordingState()
 	{
 		return getInstance().isVideoRecording;
@@ -88,6 +97,9 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		videoRecordStart();
 	}
 
+	/**
+	 * 初始化 绑定 控件ID
+	 */
 	private void loadView()
 	{
 		mSurfacePlayer = (SurfaceView) findViewById(R.id.talk_video_surface_player);
@@ -141,6 +153,9 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		super.finish();
 	}
 
+	/**
+	 * 开始录制实时视频
+	 */
 	public void videoRecordStart()
 	{
 		if (AirAccountManager.VIDEO_PORT == 0)
@@ -170,6 +185,9 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 录制结束
+	 */
 	public void videoRecordFinish()
 	{
 		isVideoRecording = false;
@@ -179,6 +197,9 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		refreshVideoRecorderStop();
 	}
 
+	/**
+	 * 刷新PTT按钮状态
+	 */
 	public void refreshPttState()
 	{
 		if (session == null)
@@ -218,6 +239,9 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 刷新录制按钮状态--开始
+	 */
 	private void refreshVideoRecorderStart()
 	{
 		if (videoSufaceRecord.getVisibility() == View.GONE)
@@ -234,6 +258,9 @@ public class VideoSessionActivity extends Activity implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 刷新录制按钮状态--停止
+	 */
 	private void refreshVideoRecorderStop()
 	{
 		if (videoSufaceRecord.getVisibility() == View.VISIBLE)

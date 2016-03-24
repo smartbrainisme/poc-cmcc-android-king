@@ -12,6 +12,10 @@ import com.airtalkee.sdk.engine.AirPower;
 import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 计时器
+ * @author Yao
+ */
 public class AirMmiTimer extends BroadcastReceiver
 {
 
@@ -31,9 +35,11 @@ public class AirMmiTimer extends BroadcastReceiver
 	}
 
 	private final static String TIMER_WAKEUP_NAME = "MMI-TIMER-";
-
 	private static AirMmiTimer mInstance = new AirMmiTimer();
-
+	/**
+	 * 获取AirMmiTimer实例
+	 * @return
+	 */
 	public static AirMmiTimer getInstance()
 	{
 		return mInstance;
@@ -52,6 +58,16 @@ public class AirMmiTimer extends BroadcastReceiver
 	private static int timerFlag = 0;
 	private static int timerIndex = 0;
 
+	/**
+	 * 注册Timer计时器
+	 * @param context
+	 * @param listener
+	 * @param isAlarm 是否告警
+	 * @param isWakeup 是否唤醒
+	 * @param timeout 超时时长
+	 * @param loop 是否循环
+	 * @param userData user数据
+	 */
 	public void TimerRegister(Context context, AirMmiTimerListener listener, boolean isAlarm, boolean isWakeup, int timeout, boolean loop, Object userData)
 	{
 		if (listener != null)
@@ -132,6 +148,12 @@ public class AirMmiTimer extends BroadcastReceiver
 		}
 	}
 
+	/**
+	 * 取消注册Timer
+	 * @param context
+	 * @param listener
+	 * @return
+	 */
 	public Object TimerUnregister(Context context, AirMmiTimerListener listener)
 	{
 		Object userObject = null;

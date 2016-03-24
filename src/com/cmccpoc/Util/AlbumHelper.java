@@ -19,8 +19,7 @@ import android.util.Log;
 /**
  * 专辑帮助类
  * 
- * @author Administrator
- * 
+ * @author Yao
  */
 public class AlbumHelper
 {

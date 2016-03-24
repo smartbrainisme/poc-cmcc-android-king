@@ -5,6 +5,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.Intent;
@@ -31,7 +32,6 @@ import com.airtalkee.sdk.listener.AccountByImeiListener;
 import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.Utils;
 import com.cmccpoc.R;
-import com.cmccpoc.Util.ApnManager;
 import com.cmccpoc.Util.Toast;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.activity.home.HomeActivity;
@@ -286,7 +286,19 @@ public class AccountActivity extends ActivityBase implements OnClickListener, On
 				public void onClick(DialogInterface dialog, int whichButton)
 				{
 					dialog.cancel();
-					ApnManager.startActivitySetting(AccountActivity.this);
+					Intent intent = null;
+					if (android.os.Build.VERSION.SDK_INT > 10)
+					{
+						intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
+					}
+					else
+					{
+						intent = new Intent(Intent.ACTION_MAIN);
+						ComponentName componentName = new ComponentName("com.android.settings", "com.android.settings.WirelessSettings");
+						intent.setComponent(componentName);
+					}
+					if (intent != null)
+						startActivity(intent);
 				}
 			});
 
