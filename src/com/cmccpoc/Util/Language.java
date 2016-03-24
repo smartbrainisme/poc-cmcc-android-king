@@ -3,6 +3,11 @@ package com.cmccpoc.Util;
 import android.content.Context;
 import android.text.TextUtils;
 
+/**
+ * 语言工具类
+ * @author Yao
+ *
+ */
 public class Language
 {
 	public static final String LANG_CN = "CN";
@@ -11,6 +16,11 @@ public class Language
 	public static final String LAND_EN = "EN";
 	public static final String LAND_FR = "FR";
 
+	/**
+	 * 获取本地语言
+	 * @param context
+	 * @return
+	 */
 	public static String getLocalLanguage(Context context)
 	{
 		String ret = LAND_EN;
@@ -34,6 +44,11 @@ public class Language
 		return ret;
 	}
 
+	/**
+	 * 获取本地汉语
+	 * @param context
+	 * @return
+	 */
 	public static String getLocalLanguageZH(Context context)
 	{
 		String ret = LAND_EN;
@@ -68,6 +83,12 @@ public class Language
 		return ret;
 	}
 
+	/**
+	 * 日期转换
+	 * @param date 日期字符串
+	 * @param isChinese 是否是汉语
+	 * @return
+	 */
 	public static String convertDate(String date, boolean isChinese)
 	{
 		String d = "";
@@ -100,6 +121,13 @@ public class Language
 		return d;
 	}
 
+	/**
+	 * 日期格式转换
+	 * @param date 日期字符串
+	 * @param time 时刻
+	 * @param isChinese 是否是汉语
+	 * @return
+	 */
 	public static String convertDate(String date, String time, boolean isChinese)
 	{
 		String d = "";

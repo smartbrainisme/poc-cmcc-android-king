@@ -539,11 +539,6 @@ public class Util
 	 */
 	public static Spannable buildPlainMessageSpannable(Context context, byte[] content)
 	{
-		return buildPlainMessageSpannable(context, content, false);
-	}
-
-	public static Spannable buildPlainMessageSpannable(Context context, byte[] content, boolean isfontheight)
-	{
 		try
 		{
 			String msg = "";
@@ -557,7 +552,7 @@ public class Util
 				{}
 			}
 			SpannableString spannable = new SpannableString(msg);
-			Smilify.getInstance(context).addSmiley(spannable, isfontheight);
+			Smilify.getInstance(context).addSmiley(spannable);
 			return spannable;
 		}
 		catch (Exception e)

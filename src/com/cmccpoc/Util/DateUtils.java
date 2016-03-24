@@ -8,11 +8,20 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+/**
+ * 日期帮助类
+ * @author Yao
+ */
 public class DateUtils
 {
-
 	private static final long INTERVAL_IN_MILLISECONDS = 30 * 1000;
 
+	/**
+	 * 转化时间字符串
+	 * @param messageDate 日期
+	 * @param curLocale 时区
+	 * @return
+	 */
 	public static String getTimestampString(Date messageDate, Locale curLocale)
 	{
 		String languageCode = curLocale.getLanguage();
@@ -92,10 +101,14 @@ public class DateUtils
 		}
 	}
 
+	/**
+	 * 比较时间是否足够接近
+	 * @param time1
+	 * @param time2
+	 * @return
+	 */
 	public static boolean isCloseEnough(long time1, long time2)
 	{
-		// long time1 = date1.getTime();
-		// long time2 = date2.getTime();
 		long delta = time1 - time2;
 		if (delta < 0)
 		{
@@ -104,6 +117,11 @@ public class DateUtils
 		return delta < INTERVAL_IN_MILLISECONDS;
 	}
 
+	/**
+	 * 是否是同一天
+	 * @param inputTime 时间
+	 * @return
+	 */
 	private static boolean isSameDay(long inputTime)
 	{
 
@@ -113,6 +131,11 @@ public class DateUtils
 		return false;
 	}
 
+	/**
+	 * 是否是昨天
+	 * @param inputTime 时间
+	 * @return
+	 */
 	private static boolean isYesterday(long inputTime)
 	{
 		TimeInfo yStartAndEndTime = getYesterdayStartAndEndTime();
@@ -121,6 +144,12 @@ public class DateUtils
 		return false;
 	}
 
+	/**
+	 * 字符串转日期
+	 * @param dateStr 日期字符串
+	 * @param formatStr 日期格式
+	 * @return
+	 */
 	public static Date StringToDate(String dateStr, String formatStr)
 	{
 		DateFormat format = new SimpleDateFormat(formatStr);
@@ -137,9 +166,8 @@ public class DateUtils
 	}
 
 	/**
-	 * 
-	 * @param timeLength
-	 *            Millisecond
+	 * 转化时间
+	 * @param timeLength Millisecond
 	 * @return
 	 */
 	public static String toTime(int timeLength)
@@ -158,9 +186,8 @@ public class DateUtils
 	}
 
 	/**
-	 * 
-	 * @param timeLength
-	 *            second
+	 * 转化时间
+	 * @param timeLength second
 	 * @return
 	 */
 	public static String toTimeBySecond(int timeLength)
@@ -178,6 +205,10 @@ public class DateUtils
 		return String.format("%02d:%02d", minute, second);
 	}
 
+	/**
+	 * 获取昨天的起止时间
+	 * @return
+	 */
 	public static TimeInfo getYesterdayStartAndEndTime()
 	{
 		Calendar calendar1 = Calendar.getInstance();
@@ -204,6 +235,10 @@ public class DateUtils
 		return info;
 	}
 
+	/**
+	 * 获取今天的起止时间
+	 * @return
+	 */
 	public static TimeInfo getTodayStartAndEndTime()
 	{
 		Calendar calendar1 = Calendar.getInstance();
@@ -229,6 +264,10 @@ public class DateUtils
 		return info;
 	}
 
+	/**
+	 * 获取前天的起止时间
+	 * @return
+	 */
 	public static TimeInfo getBeforeYesterdayStartAndEndTime()
 	{
 		Calendar calendar1 = Calendar.getInstance();
@@ -256,7 +295,6 @@ public class DateUtils
 
 	/**
 	 * endtime为今天
-	 * 
 	 * @return
 	 */
 	public static TimeInfo getCurrentMonthStartAndEndTime()
@@ -283,6 +321,10 @@ public class DateUtils
 		return info;
 	}
 
+	/**
+	 * 上个月起止时间信息
+	 * @return
+	 */
 	public static TimeInfo getLastMonthStartAndEndTime()
 	{
 		Calendar calendar1 = Calendar.getInstance();
@@ -311,6 +353,10 @@ public class DateUtils
 		return info;
 	}
 
+	/**
+	 * 获取当前时间戳
+	 * @return
+	 */
 	public static String getTimestampStr()
 	{
 		return Long.toString(System.currentTimeMillis());

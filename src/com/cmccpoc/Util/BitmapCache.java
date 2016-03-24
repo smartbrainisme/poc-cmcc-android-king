@@ -15,6 +15,10 @@ import android.util.Log;
 import android.widget.ImageView;
 import com.cmccpoc.activity.AlbumChooseActivity;
 
+/**
+ * Bitmap缓存类
+ * @author Yao
+ */
 public class BitmapCache extends Activity
 {
 
@@ -22,6 +26,11 @@ public class BitmapCache extends Activity
 	public final String TAG = getClass().getSimpleName();
 	private HashMap<String, SoftReference<Bitmap>> imageCache = new HashMap<String, SoftReference<Bitmap>>();
 
+	/**
+	 * 添加到Map列表
+	 * @param path 路径
+	 * @param bmp Bitmap对象
+	 */
 	public void put(String path, Bitmap bmp)
 	{
 		if (!TextUtils.isEmpty(path) && bmp != null)
@@ -30,6 +39,13 @@ public class BitmapCache extends Activity
 		}
 	}
 
+	/**
+	 * 展示图片Bitmap
+	 * @param iv imageView控件
+	 * @param thumbPath 缩略图路径
+	 * @param sourcePath 资源路径
+	 * @param callback
+	 */
 	public void displayBmp(final ImageView iv, final String thumbPath, final String sourcePath, final ImageCallback callback)
 	{
 		if (TextUtils.isEmpty(thumbPath) && TextUtils.isEmpty(sourcePath))
@@ -122,6 +138,12 @@ public class BitmapCache extends Activity
 
 	}
 
+	/**
+	 * 修正图片大小
+	 * @param path 图片路径
+	 * @return Bitmap对象
+	 * @throws IOException IO异常
+	 */
 	public Bitmap revitionImageSize(String path) throws IOException
 	{
 		BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(path)));
