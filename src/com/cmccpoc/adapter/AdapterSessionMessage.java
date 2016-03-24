@@ -16,13 +16,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+import com.cmccpoc.R;
 import com.airtalkee.sdk.AirtalkeeMessage;
 import com.airtalkee.sdk.AirtalkeeUserInfo;
 import com.airtalkee.sdk.controller.AccountController;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
-import com.cmccpoc.R;
 import com.cmccpoc.Util.Language;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
@@ -49,26 +49,16 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 	public void setSession(AirSession session)
 	{
 		currentSession = session;
-
-		String able = Language.getLocalLanguage(mContext);
-		// isChinese = able.equals(Language.LANG_CN) ||
-		// able.equals(Language.LANG_CN_HK) || able.equals(Language.LANG_CN_TW);
 	}
 
 	@Override
 	public void notifyDataSetChanged()
 	{
-		// TODO Auto-generated method stub
-		String able = Language.getLocalLanguage(mContext);
-		// isChinese = able.equals(Language.LANG_CN) ||
-		// able.equals(Language.LANG_CN_HK) || able.equals(Language.LANG_CN_TW);
-
 		super.notifyDataSetChanged();
 	}
 
 	public int getCount()
 	{
-		// TODO Auto-generated method stub
 		int size = 0;
 		if (currentSession != null && currentSession.getMessages() != null)
 		{
@@ -110,13 +100,11 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 
 			ViewHolder holder = null;
 			String ipocIdFrom = iMessage.getIpocidFrom();
-			// TODO: ������Լ�����
 			String ipocId = (AccountController.getUserInfo() != null) ? AccountController.getUserInfo().getIpocId() : "";
 			if (ipocIdFrom.equals(ipocId))
 			{
 				convertView = buildMessageItemWithMe(position, convertView, iMessage);
 			}
-			// TODO: ����ǶԷ�����
 			else
 			{
 				convertView = buildMessageItemWithOther(position, convertView, iMessage);
@@ -171,7 +159,17 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 							holder.userName.setVisibility(View.VISIBLE);
 							holder.bodyLayout.setVisibility(View.VISIBLE);
 							holder.tvSystem.setVisibility(View.GONE);
-							holder.body.setText(spannable);
+							if(iMessage.getType()==AirMessage.TYPE_SESSION_VIDEO)
+							{
+								holder.videoBody.setText(spannable);
+								holder.videoPic.setVisibility(View.VISIBLE);
+							}
+							else
+							{
+								holder.body.setText(spannable);
+								holder.videoPic.setVisibility(View.GONE);
+							}
+							
 							break;
 						}
 					}
@@ -197,7 +195,6 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		int type = iMessage.getType();
 		int state = iMessage.getState();
 		ViewHolder1 holder1 = null;
-
 		if (convertView == null || !(convertView.getTag() instanceof ViewHolder1))
 		{
 			// Log.i( "ME convertView == null");
@@ -219,28 +216,29 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		holder1.pro.setVisibility(View.GONE);
 		holder1.tvAndIvLayout.setVisibility(View.VISIBLE);
 		holder1.record_layout.setVisibility(View.GONE);
+		holder1.videoSessionLayout.setVisibility(View.GONE);
 		holder1.bodyContent.setTag(iMessage);
 		holder1.bodyContent.setOnClickListener(onClicklistener);
 		holder1.pic.setVisibility(View.GONE);
 		holder1.bodyContent.setOnLongClickListener(onLongClickListener);
 		if (type == AirMessage.TYPE_RECORD)// Record Message
 		{
+			holder1.videoSessionLayout.setVisibility(View.GONE);
 			holder1.tvAndIvLayout.setVisibility(View.GONE);
 			holder1.record_layout.setVisibility(View.VISIBLE);
-			holder1.record_time.setVisibility(View.VISIBLE);
 			holder1.record_default.setVisibility(View.VISIBLE);
+			holder1.record_time.setVisibility(View.VISIBLE);
+			holder1.videoPic.setVisibility(View.GONE);
 			holder1.record_layout.setTag(iMessage.getMessageCode());
 			if (!iMessage.isRecordPlaying())
 			{
 				holder1.record_time.setText("" + iMessage.getImageLength() + "''");
 				holder1.record_default.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_play, mContext));
-				// holder1.record_default.setSelected(false);
 			}
 			else
 			{
 				holder1.record_time.setText("" + iMessage.getRecordTimer() + "''");
 				holder1.record_default.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_stop, mContext));
-				// holder1.record_default.setSelected(true);
 			}
 		}
 		else
@@ -250,7 +248,17 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 				holder1.pic.setVisibility(View.VISIBLE);
 				holder1.body.setVisibility(View.GONE);
 				holder1.record_layout.setVisibility(View.GONE);
+				holder1.videoPic.setVisibility(View.GONE);
 				displayImageByUrl(iMessage.getImageUri(), holder1.pic, this);
+			}
+			else if (type == AirMessage.TYPE_SESSION_VIDEO)
+			{
+				holder1.pic.setVisibility(View.GONE);
+				holder1.body.setVisibility(View.GONE);
+				holder1.tvAndIvLayout.setVisibility(View.GONE);
+				holder1.record_layout.setVisibility(View.GONE);
+				holder1.videoSessionLayout.setVisibility(View.VISIBLE);
+				holder1.videoPic.setVisibility(View.VISIBLE);
 			}
 		}
 		holder1.report_icon.setVisibility(View.VISIBLE);
@@ -272,6 +280,10 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 				holder1.time.setText(iMessage.getTime());
 				holder1.pro.setVisibility(View.GONE);
 				holder1.report_icon.setImageResource(R.drawable.msg_state_send_error);
+				if (iMessage.getType() == AirMessage.TYPE_SESSION_VIDEO)
+				{
+					holder1.report_icon.setVisibility(View.GONE);
+				}
 				break;
 			case AirMessage.STATE_GENERATING:
 				holder1.time.setVisibility(View.INVISIBLE);
@@ -295,6 +307,7 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		{
 			holder1.msg_ptt.setVisibility(View.INVISIBLE);
 		}
+		
 		holder1.userHead.setTag(AccountController.getUserIpocId());
 		return convertView;
 	}
@@ -337,18 +350,17 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 			holder2.unRead.setVisibility(iMessage.getState() == AirMessage.STATE_NEW ? View.VISIBLE : View.GONE);
 			holder2.tvAndIvLayout.setVisibility(View.INVISIBLE);
 			holder2.record_layout.setVisibility(View.VISIBLE);
+			holder2.videoPic.setVisibility(View.GONE);
 			holder2.record_layout.setTag(iMessage.getMessageCode());
 			if (!iMessage.isRecordPlaying())
 			{
 				holder2.record_time.setText("" + iMessage.getImageLength() + "''");
 				holder2.record_default.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_play, mContext));
-				// holder2.record_default.setSelected(false);
 			}
 			else
 			{
 				holder2.record_time.setText("" + iMessage.getRecordTimer() + "''");
 				holder2.record_default.setImageResource(ThemeUtil.getResourceId(R.attr.theme_msg_audio_stop, mContext));
-				// holder2.record_default.setSelected(true);
 			}
 		}
 		else if (type == AirMessage.TYPE_PICTURE)
@@ -356,7 +368,18 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 			holder2.record_default.setVisibility(View.GONE);
 			holder2.pic.setVisibility(View.VISIBLE);
 			holder2.record_layout.setVisibility(View.GONE);
+			holder2.videoPic.setVisibility(View.GONE);
 			displayImageByUrl(iMessage.getImageUri(), holder2.pic, this);
+		}
+		else if (type == AirMessage.TYPE_SESSION_VIDEO)
+		{
+			holder2.record_default.setVisibility(View.GONE);
+			holder2.tvAndIvLayout.setVisibility(View.GONE);
+			holder2.record_layout.setVisibility(View.GONE);
+			holder2.videoSessionLayout.setVisibility(View.VISIBLE);
+			holder2.videoPic.setVisibility(View.VISIBLE);
+			holder2.videoBody.setVisibility(View.VISIBLE);
+			holder2.body.setVisibility(View.VISIBLE);
 		}
 
 		holder2.time.setText(iMessage.getTime());
@@ -413,11 +436,12 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		protected TextView time;
 		protected TextView body;
 		protected TextView date;
+		protected TextView videoBody;
 		protected ImageView pic;
 		protected ImageView userHead;
 		protected TextView record_time;
 		protected ProgressBar pro;
-		protected View tvAndIvLayout, record_layout;
+		protected View tvAndIvLayout, record_layout, videoSessionLayout;
 		protected ImageView loading;
 		protected ImageView record_default;
 		protected View bodyLayout;
@@ -425,17 +449,14 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 		protected ImageView msg_ptt;
 		protected View bodyContent;
 		protected TextView userName;
-
-		// protected View layoutFriendInfo;
-		// protected View btnAddFriend;
-		// protected View btnAddBlack;
-		// protected TextView tvAddFriendsTips;
+		protected ImageView videoPic;
 
 		protected void ViewHolderInit(View convertView)
 		{
 			this.time = (TextView) convertView.findViewById(R.id.time);
 			this.body = (TextView) convertView.findViewById(R.id.body);
 			this.date = (TextView) convertView.findViewById(R.id.sessionDate);
+			this.videoBody = (TextView) convertView.findViewById(R.id.video_body);
 			this.pic = (ImageView) convertView.findViewById(R.id.pic);
 			this.userHead = (ImageView) convertView.findViewById(R.id.user_head);
 			this.loading = (ImageView) convertView.findViewById(R.id.loading);
@@ -444,16 +465,12 @@ public class AdapterSessionMessage extends AdapterBase implements OnImageLoadCom
 			this.record_default = (ImageView) convertView.findViewById(R.id.record_pic);
 			this.record_layout = convertView.findViewById(R.id.record_layout);
 			this.tvAndIvLayout = convertView.findViewById(R.id.text_and_picture_layout);
+			this.videoSessionLayout = convertView.findViewById(R.id.session_video_layout);
 			this.bodyLayout = convertView.findViewById(R.id.body_layout);
 			this.bodyContent = convertView.findViewById(R.id.body_content);
 			this.tvSystem = (TextView) convertView.findViewById(R.id.tv_system);
 			this.msg_ptt = (ImageView) convertView.findViewById(R.id.msg_ptt);
-			// this.layoutFriendInfo =
-			// convertView.findViewById(R.id.layout_friend_info);
-			// this.btnAddFriend = convertView.findViewById(R.id.tv_agree);
-			// this.btnAddBlack = convertView.findViewById(R.id.tv_reject);
-			// this.tvAddFriendsTips =
-			// (TextView)convertView.findViewById(R.id.tv_add_friend_tips);
+			this.videoPic = (ImageView) convertView.findViewById(R.id.video_pic);
 		}
 	}
 
