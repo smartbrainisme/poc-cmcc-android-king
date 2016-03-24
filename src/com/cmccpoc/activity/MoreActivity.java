@@ -25,9 +25,12 @@ import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.config.Config;
 
+/**
+ * 更多 选项设置Activity
+ * @author Yao
+ */
 public class MoreActivity extends ActivityBase implements OnClickListener, OnUserInfoListener, OnSeekBarChangeListener
 {
-
 	public TextView tvUserName;
 	public TextView tvUserIpocid;
 
@@ -35,9 +38,11 @@ public class MoreActivity extends ActivityBase implements OnClickListener, OnUse
 	private CheckBox mVoiceMode;
 
 	private ImageView ivUnread;
-
 	private static MoreActivity mInstance = null;
-
+	/**
+	 * 获取MoreActivity实例对象
+	 * @return
+	 */
 	public static MoreActivity getInstance()
 	{
 		return mInstance;
@@ -59,6 +64,9 @@ public class MoreActivity extends ActivityBase implements OnClickListener, OnUse
 		tvUserName.setText(AirtalkeeAccount.getInstance().getUserName());
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 		mInstance = this;

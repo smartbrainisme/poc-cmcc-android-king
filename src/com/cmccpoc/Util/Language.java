@@ -1,7 +1,5 @@
 package com.cmccpoc.Util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import android.content.Context;
 import android.text.TextUtils;
 

@@ -45,8 +45,12 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
-public class MenuReportAsPicActivity extends ActivityBase implements
-		OnClickListener, OnMmiLocationListener, OnCheckedChangeListener,
+/**
+ * 上报图片
+ * 主要包括：上传图片资源，可选压缩或高清的
+ * @author Yao
+ */
+public class MenuReportAsPicActivity extends ActivityBase implements OnClickListener, OnMmiLocationListener, OnCheckedChangeListener,
 		DialogListener, OnMmiReportListener
 {
 
@@ -73,7 +77,11 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 	private String reportCode;
 	ReportProgressAlertDialog reportDialog;
 	private static MenuReportAsPicActivity mInstance;
-
+	
+	/**
+	 * 获取MenuReportAsPicActivity实例对象
+	 * @return
+	 */
 	public static MenuReportAsPicActivity getInstance()
 	{
 		return mInstance;
@@ -82,7 +90,6 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 	private android.widget.Toast myToast;
 
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
-
 	DisplayImageOptions options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.msg_image).showImageOnFail(R.drawable.msg_image).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
 
 	@Override
@@ -107,6 +114,10 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		AirReportManager.getInstance().setReportListener(this);
 	}
 
+	/**
+	 * 加载系统Camera
+	 * @param type 类型：照相 or 相册
+	 */
 	private void loadCamera(String type)
 	{
 		if (type != null)
@@ -146,6 +157,9 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		}
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
@@ -173,6 +187,9 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		btn_post.setOnClickListener(this);
 	}
 
+	/**
+	 * 刷新UI状态
+	 */
 	private void refreshUI()
 	{
 		if (isUploading)
@@ -244,6 +261,9 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		}
 	}
 
+	/**
+	 * 开始上报
+	 */
 	public void reportPost()
 	{
 		if (isUploading)
@@ -259,11 +279,8 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		isUploading = true;
 		Util.hideSoftInput(this);
 		refreshUI();
-		// Util.Toast(this,
-		// getString(R.string.talk_report_upload_getting_gps), 60, -1);
 		myToast = Toast.makeText1(this, true, getString(R.string.talk_report_upload_getting_gps), Toast.LENGTH_LONG);
 		myToast.show();
-		// report_image_progress.setText(getString(R.string.talk_report_upload_getting_gps));
 		AirLocation.getInstance(this).onceGet(this, 30);
 	}
 
@@ -280,12 +297,6 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 					resizePicture(true);
 					picSize = AirServices.iOperator.getFileSize("", picPath, true);
 					refreshUI();
-					/*
-					 * picUriTemp = Uri.fromFile(new File(picPathTemp)); picUri
-					 * = picUriTemp; picPath = picPathTemp; resizePicture(true);
-					 * picSize = AirServices.iOperator.getFileSize("",
-					 * picPathTemp, true); refreshUI();
-					 */
 				}
 				else
 				{
@@ -326,6 +337,10 @@ public class MenuReportAsPicActivity extends ActivityBase implements
 		}
 	}
 
+	/**
+	 * 计算图片大小
+	 * @param toCreateFile 是否需要创建新图片
+	 */
 	private void resizePicture(boolean toCreateFile)
 	{
 		if (!isHighQuality)

@@ -106,7 +106,7 @@ public class MenuDisplayActivity extends ActivityBase implements OnClickListener
 				tvUserName.setHint(AirtalkeeUserInfo.getInstance().getUserInfo().getDisplayName());
 				if (!Utils.isEmpty(value))
 				{
-					if (value.length() > MenuSettingActivity.SETTING_DISPLAYNAME_LEN)
+					if (value.length() > 11)
 					{
 						Util.Toast(this, getString(R.string.talk_user_info_update_name_error));
 					}

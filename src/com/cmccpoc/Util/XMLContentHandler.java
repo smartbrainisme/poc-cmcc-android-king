@@ -51,7 +51,7 @@ public class XMLContentHandler extends DefaultHandler
 			users.add(user);
 			user = null;
 		}
-		preTag = null; // ��һ������У�����XML��ʱ�����׳��?ע�⣡
+		preTag = null; 
 	}
 
 	@Override
@@ -73,11 +73,7 @@ public class XMLContentHandler extends DefaultHandler
 	public static List<AirContact> readXML(InputStream inStream) throws Exception
 	{
 		SAXParserFactory spf = SAXParserFactory.newInstance();
-		SAXParser saxParser = spf.newSAXParser(); // ����������
-		// ���ý�������������ԣ�http://xml.org/sax/features/namespaces = true
-		// ��ʾ��������ռ�����
-		// saxParser.setProperty("http://xml.org/sax/features/namespaces",
-		// true);
+		SAXParser saxParser = spf.newSAXParser(); 
 		XMLContentHandler handler = new XMLContentHandler();
 		saxParser.parse(inStream, handler);
 		inStream.close();
