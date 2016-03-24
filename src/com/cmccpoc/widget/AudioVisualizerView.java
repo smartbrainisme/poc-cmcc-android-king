@@ -8,6 +8,10 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
 
+/**
+ * 自定义控件--对讲界面的音柱均衡器
+ * @author Yao
+ */
 public class AudioVisualizerView extends View
 {
 	private byte[] mBytes = null;
@@ -16,7 +20,8 @@ public class AudioVisualizerView extends View
 
 	private Paint mForePaint = new Paint();
 
-	private int mVisualizerSpectrumNum = 10;
+	// 音柱默认条数
+	private int mVisualizerSpectrumNum = 10; 
 
 	public AudioVisualizerView(Context context, AttributeSet attrs)
 	{
@@ -25,17 +30,24 @@ public class AudioVisualizerView extends View
 		mForePaint.setColor(Color.rgb(255, 189, 0));
 	}
 
+	/**
+	 * 设置音柱条数
+	 * @param SpectrumNum 条数
+	 */
 	public void setSpectrumNum(int SpectrumNum)
 	{
 		mVisualizerSpectrumNum = SpectrumNum;
 	}
 
+	/**
+	 * 更新均衡器属性
+	 * @param fft 
+	 */
 	public void updateVisualizer(byte[] fft)
 	{
 		mBytes = fft;
 		int length = mBytes.length;
 		mForePaint.setStrokeWidth((float) getWidth() / (float) (mVisualizerSpectrumNum));
-//		mForePaint.setStrokeWidth(mVisualizerSpectrumNum * 4);
 		invalidate();
 	}
 
@@ -43,7 +55,6 @@ public class AudioVisualizerView extends View
 	protected void onDraw(Canvas canvas)
 	{
 		super.onDraw(canvas);
-
 		try
 		{
 			if (mBytes == null)
@@ -71,8 +82,6 @@ public class AudioVisualizerView extends View
 				mPoints[i * 4 + 2] = xi;
 				mPoints[i * 4 + 3] = height - mBytes[i];
 			}
-			// Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_spectrum_point);
-			// canvas.drawBitmap(bitmap, null, mForePaint);
 			canvas.drawLines(mPoints, mForePaint);
 		}
 		catch (Exception e)

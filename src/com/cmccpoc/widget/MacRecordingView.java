@@ -15,6 +15,11 @@ import android.widget.TextView;
 import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.R;
 
+/**
+ * IM消息中，在选择录音消息，长按录音时，会在界面上弹出一个区域，将触摸移动至该区域会取消当前的录音。
+ * 本类就是弹出的取消录音界面的View
+ * @author Yao
+ */
 public class MacRecordingView extends RelativeLayout
 {
 	public static final int START_RECORD = 0;
@@ -45,6 +50,9 @@ public class MacRecordingView extends RelativeLayout
 		mInstance = context;
 	}
 
+	/**
+	 * 定义一个Handler,根据不同的状态执行各中操作
+	 */
 	public Handler handler = new Handler()
 	{
 		@Override
@@ -77,6 +85,10 @@ public class MacRecordingView extends RelativeLayout
 		}
 	};
 
+	/**
+	 * 计算大小
+	 * @param bufSend 发送的二进制数据
+	 */
 	public void countSize(byte[] bufSend)
 	{
 		int v = 0;
@@ -88,6 +100,11 @@ public class MacRecordingView extends RelativeLayout
 		registerMessage(START_RECORD, value);
 	}
 
+	/**
+	 * 发送系统Message
+	 * @param eventId 事件Id
+	 * @param obj 传递对象
+	 */
 	public void registerMessage(int eventId, Object obj)
 	{
 		Log.e(MacRecordingView.class, "registerMessage eventId =" + eventId);
@@ -104,6 +121,9 @@ public class MacRecordingView extends RelativeLayout
 			text_view.setText(text);
 	}
 
+	/**
+	 * 计时器开始
+	 */
 	private void startTime()
 	{
 		if (getVisibility() != View.VISIBLE)
@@ -131,6 +151,10 @@ public class MacRecordingView extends RelativeLayout
 		}
 	}
 
+	/**
+	 * 停止计时器
+	 * @param recorderCancel 录音是否取消
+	 */
 	private void stopTime(boolean recorderCancel)
 	{
 		setVisibility(View.INVISIBLE);
@@ -141,6 +165,9 @@ public class MacRecordingView extends RelativeLayout
 		}
 	}
 
+	/**
+	 * 初始化控件View
+	 */
 	public void initChild()
 	{
 		chronometer = (Chronometer) findViewById(R.id.chronometer);
@@ -152,6 +179,9 @@ public class MacRecordingView extends RelativeLayout
 		porLay = findViewById(R.id.pro_lay);
 	}
 
+	/**
+	 * 取消录音消息
+	 */
 	private void recordCancel()
 	{
 		if (mac_image.getVisibility() != View.INVISIBLE)
@@ -166,6 +196,9 @@ public class MacRecordingView extends RelativeLayout
 			text_view.setText(mInstance.getString(R.string.talk_rec_release));
 	}
 
+	/**
+	 * 正在录音
+	 */
 	private void recording()
 	{
 		if (mac_image.getVisibility() != View.VISIBLE)
@@ -181,6 +214,10 @@ public class MacRecordingView extends RelativeLayout
 			text_view.setText(mInstance.getString(R.string.talk_rec_cancel));
 	}
 
+	/**
+	 * 刷新View
+	 * @param high 高度
+	 */
 	private void reflashView(int high)
 	{
 		if (high > temp)
@@ -191,61 +228,5 @@ public class MacRecordingView extends RelativeLayout
 		{
 			pro2.setVisibility(View.VISIBLE);
 		}
-
-		/*
-		 * high = resetHeight(high);
-		 * android.view.ViewGroup.LayoutParams localLayoutParams = screen_image
-		 * .getLayoutParams();
-		 * localLayoutParams.height = (int) (view_high - high);
-		 * localLayoutParams.width = mac_image.getWidth();
-		 * screen_image.setLayoutParams(localLayoutParams);
-		 * screen_image.setBackgroundColor(R.color.profile_avater_bg);
-		 */
 	}
-
-	/*
-	 * private int resetHeight(int high){
-	 * view_high = mac_image.getHeight();
-	 * if (high < temp) {
-	 * high = 0;
-	 * } else if (high >= temp && high < temp + 10) {
-	 * high = (int) ((view_high / 20) * 2);
-	 * } else if (high >= temp + 10 && high < temp + 20) {
-	 * high = (int) ((view_high / 20) * 3);
-	 * } else if (high >= temp + 20 && high < temp + 50) {
-	 * high = (int) ((view_high / 20) * 4);
-	 * } else if (high >= temp + 50 && high < temp + 80) {
-	 * high = (int) ((view_high / 20) * 5);
-	 * } else if (high >= temp + 80 && high < temp + 100) {
-	 * high = (int) ((view_high / 20) * 6);
-	 * } else if (high >= temp + 100 && high < temp + 150) {
-	 * high = (int) ((view_high / 20) * 7);
-	 * } else if (high >= temp + 150 && high < temp + 180) {
-	 * high = (int) ((view_high / 20) * 8);
-	 * } else if (high >= temp + 180 && high < temp + 210) {
-	 * high = (int) ((view_high / 20) * 8.5);
-	 * } else if (high >= temp + 210 && high < temp + 300) {
-	 * high = (int) ((view_high / 20) * 9);
-	 * } else if (high >= temp + 300 && high < temp + 350) {
-	 * high = (int) ((view_high / 20) * 10);
-	 * } else if (high >= temp + 350 && high < temp + 400) {
-	 * high = (int) ((view_high / 20) * 11);
-	 * } else if (high >= temp + 400 && high < temp + 500) {
-	 * high = (int) ((view_high / 20) * 12);
-	 * } else if (high >= temp + 500 && high < temp + 600) {
-	 * high = (int) ((view_high / 20) * 13);
-	 * } else if (high >= temp + 600 && high < temp + 800) {
-	 * high = (int) ((view_high / 20) * 14);
-	 * } else if (high >= temp + 800 && high < temp + 1100) {
-	 * high = (int) ((view_high / 20) * 15);
-	 * } else if (high >= temp + 1100 && high < temp + 1500) {
-	 * high = (int) ((view_high / 20) * 16);
-	 * } else if (high >= temp + 1500 && high < temp + 2500) {
-	 * high = (int) ((view_high / 20) * 17);
-	 * } else {
-	 * high = (int) ((view_high / 20) * 18);
-	 * }
-	 * return high;
-	 * }
-	 */
 }

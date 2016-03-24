@@ -15,6 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.cmccpoc.R;
 
+/**
+ * app主界面中的页面切换的三个标点
+ * left：频道成员 middle：对讲界面 right：IM消息
+ * @author Yao
+ */
 public class PageIndicator extends LinearLayout
 {
 	public static final int INDICATOR_TYPE_CIRCLE = 0;
@@ -22,17 +27,19 @@ public class PageIndicator extends LinearLayout
 	public static final String ACTION_PAGE_CHANGED = "com.airtalkee.ACTION_PAGE_CHANGED";
 	public static final String EXTRA_PAGE_INDEX = "EXTRA_PAGE_INDEX";
 
+	/**
+	 * 枚举：指示器类型
+	 * 可以指定不同的形状
+	 * @author Yao
+	 */
 	public enum IndicatorType
 	{
 		CIRCLE(INDICATOR_TYPE_CIRCLE), FRACTION(INDICATOR_TYPE_FRACTION), UNKNOWN(-1);
-
 		private int type;
-
 		IndicatorType(int type)
 		{
 			this.type = type;
 		}
-
 		public static IndicatorType of(int value)
 		{
 			switch (value)
@@ -48,7 +55,6 @@ public class PageIndicator extends LinearLayout
 	}
 
 	public static final int DEFAULT_INDICATOR_SPACING = 15;
-
 	private int mActivePosition = -1;
 	private int mIndicatorSpacing;
 	private boolean mIndicatorTypeChanged = false;
@@ -85,7 +91,9 @@ public class PageIndicator extends LinearLayout
 		init();
 	}
 
-	@SuppressLint("InlinedApi")
+	/**
+	 * 初始化View
+	 */
 	private void init()
 	{
 		setOrientation(HORIZONTAL);
@@ -97,12 +105,20 @@ public class PageIndicator extends LinearLayout
 		}
 	}
 
+	/**
+	 * 设置ViewPager
+	 * @param pager ViewPager
+	 */
 	public void setViewPager(ViewPager pager)
 	{
 		mViewPager = pager;
 		setIndicatorType(mIndicatorType);
 	}
 
+	/**
+	 * 设置指示器类型
+	 * @param indicatorType 类型
+	 */
 	public void setIndicatorType(IndicatorType indicatorType)
 	{
 		mIndicatorType = indicatorType;
@@ -113,11 +129,18 @@ public class PageIndicator extends LinearLayout
 		}
 	}
 
+	/**
+	 * 移除指示器
+	 */
 	private void removeIndicator()
 	{
 		removeAllViews();
 	}
 
+	/**
+	 * 添加分页指示器
+	 * @param count 分页数
+	 */
 	private void addIndicator(int count)
 	{
 		removeIndicator();
@@ -139,7 +162,7 @@ public class PageIndicator extends LinearLayout
 		{
 			TextView textView = new TextView(getContext());
 			textView.setTextColor(Color.WHITE);
-//			int padding = dp2px(getContext(), 10);
+			// int padding = dp2px(getContext(), 10);
 			int padding = 10;
 			textView.setPadding(padding, padding >> 1, padding, padding >> 1);
 			textView.setBackgroundResource(R.drawable.fraction_indicator_bg);
@@ -150,6 +173,10 @@ public class PageIndicator extends LinearLayout
 		updateIndicator(mViewPager.getCurrentItem());
 	}
 
+	/**
+	 * 更新换页标点显示
+	 * @param position 页面位置
+	 */
 	private void updateIndicator(int position)
 	{
 		if (mIndicatorTypeChanged || mActivePosition != position)
@@ -210,6 +237,10 @@ public class PageIndicator extends LinearLayout
 		return (int) context.getResources().getDisplayMetrics().density * dpValue;
 	}
 
+	/**
+	 * 当页面切换时
+	 * @param position
+	 */
 	public void onPageChanged(int position)
 	{
 		updateIndicator(position);

@@ -14,7 +14,6 @@ import com.cmccpoc.R;
 
 public class PagerControl extends View
 {
-
 	private int DEFAULT_BAR_COLOR = 0xffdcdcdc;
 	private int DEFAULT_HIGHLIGHT_COLOR = 0xff4acdff;
 	private static final int DEFAULT_FADE_DURATION = 500;
