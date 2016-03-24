@@ -8,6 +8,10 @@ import android.media.SoundPool;
 import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.R;
 
+/**
+ * 声音播放类
+ * @author Yao
+ */
 public class SoundPlayer
 {
 	public static final int PLAYER_MEDIA_ME_ON = 0;
@@ -30,8 +34,12 @@ public class SoundPlayer
 	}
 
 	private static Map<Integer, SoundInfo> soundIds = new HashMap<Integer, SoundInfo>();
-	private static int[] rawRes = new int[] { R.raw.sound_media_me_on, R.raw.sound_media_me_off, R.raw.sound_media_other_on,R.raw.sound_media_other_off,R.raw.sound_media_me_on_low ,R.raw.sound_media_me_off_low,R.raw.sound_media_other_on_low};
+	private static int[] rawRes = new int[] { R.raw.sound_media_me_on, R.raw.sound_media_me_off, R.raw.sound_media_other_on, R.raw.sound_media_other_off, R.raw.sound_media_me_on_low, R.raw.sound_media_me_off_low, R.raw.sound_media_other_on_low };
 
+	/**
+	 * 初始化
+	 * @param context 上下文
+	 */
 	public static void soundInit(Context context)
 	{
 		audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
@@ -45,8 +53,9 @@ public class SoundPlayer
 	}
 
 	/**
-	 * @param isLoop
-	 *            loop mode (0 = no loop, -1 = loop forever n= 0 loop to n)
+	 * 播放音频
+	 * @param playerId 音频资源Id
+	 * @param isLoop loop mode (0 = no loop, -1 = loop forever n= 0 loop to n)
 	 */
 	public static boolean soundPlay(int playerId, boolean loop)
 	{
@@ -63,6 +72,10 @@ public class SoundPlayer
 		return ok;
 	}
 
+	/**
+	 * 音频停止
+	 * @param playerID 音频资源Id
+	 */
 	public static void soundStop(int playerID)
 	{
 		SoundInfo info = soundIds.get(playerID);
@@ -72,6 +85,9 @@ public class SoundPlayer
 		}
 	}
 
+	/**
+	 * 释放音频资源
+	 */
 	public static void soundRelease()
 	{
 		if (pool != null)
@@ -85,7 +101,14 @@ public class SoundPlayer
 		}
 	}
 
-	public static void setStreamVolume(Context context, int streamVolume, int streamType,int flag)
+	/**
+	 * 设置音量值
+	 * @param context 上下文
+	 * @param streamVolume 音量
+	 * @param streamType 音频通道
+	 * @param flag  One or more flags
+	 */
+	public static void setStreamVolume(Context context, int streamVolume, int streamType, int flag)
 	{
 		try
 		{
@@ -97,7 +120,13 @@ public class SoundPlayer
 
 		}
 	}
-	
+
+	/**
+	 * 获取最大音量
+	 * @param context 上下文
+	 * @param streamType 音频类型
+	 * @return
+	 */
 	public static int getStreamVolumeMax(Context context, int streamType)
 	{
 		int streamVolume = 0;
@@ -113,6 +142,12 @@ public class SoundPlayer
 		return streamVolume;
 	}
 
+	/**
+	 * 获取音量大小
+	 * @param context 上下文
+	 * @param streamType 音频类型
+	 * @return
+	 */
 	public static int getStreamVolume(Context context, int streamType)
 	{
 		int streamVolume = 0;

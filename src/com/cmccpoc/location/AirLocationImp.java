@@ -282,7 +282,7 @@ public class AirLocationImp
 			public void onReceiveLocation(BDLocation location)
 			{
 				
-				long ts = Util.getTimeGap(location.getTime());
+				long ts = 0;
 				
 				Log.i(AirLocationImp.class, "[LOCATION][ID:" + id + "][BAIDU-CELL][FINAL: " + isFinal + "] X:" + location.getLatitude() + " Y:" + location.getLongitude() + " Time:" + location.getTime() + " TimeGap:" + ts + "s");
 				if (ts > -AirLocation.AIR_LOCATION_CELL_TIME_GAP)

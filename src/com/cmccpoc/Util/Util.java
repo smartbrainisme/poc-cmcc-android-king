@@ -1,7 +1,6 @@
 package com.cmccpoc.Util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -42,6 +41,11 @@ import com.airtalkee.sdk.util.Utils;
 import com.cmccpoc.R;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * app通用工具类
+ * @author Yao
+ *
+ */
 public class Util
 {
 	public static final int NOTIFI_ID_MESSAGE = 0;
@@ -54,6 +58,16 @@ public class Util
 
 	static NotificationManager nm = null;
 
+	/**
+	 * 显示通知
+	 * @param id 通知类型
+	 * @param context 上下文
+	 * @param intent intent对象
+	 * @param from 发送人id
+	 * @param ticker 标题
+	 * @param message 消息内容
+	 * @param object 对象参数
+	 */
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	public static void showNotification(int id, Context context, Intent intent, String from, String ticker, String message, Object object)
@@ -104,6 +118,10 @@ public class Util
 		}
 	}
 
+	/**
+	 * 关闭通知
+	 * @param id
+	 */
 	public static void closeNotification(int id)
 	{
 		try
@@ -117,6 +135,11 @@ public class Util
 		{}
 	}
 
+	/**
+	 * 获取app版本
+	 * @param context 上下文
+	 * @return
+	 */
 	public static String appVersion(Context context)
 	{
 		String version = "";
@@ -133,6 +156,10 @@ public class Util
 		return version;
 	}
 
+	/**
+	 * 调节音量--增大
+	 * @param context 上下文
+	 */
 	public static void setStreamVolumeUp(Context context)
 	{
 		AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
@@ -153,6 +180,10 @@ public class Util
 
 	}
 
+	/**
+	 * 调节音量--减小
+	 * @param context 上下文
+	 */
 	public static void setStreamVolumeDown(Context context)
 	{
 
@@ -171,6 +202,11 @@ public class Util
 		}
 	}
 
+	/**
+	 * 设置音量大小
+	 * @param context 上下文
+	 * @param streamVolume 音量
+	 */
 	public static void setStreamVolume(Context context, int streamVolume)
 	{
 		try
@@ -184,21 +220,11 @@ public class Util
 		}
 	}
 
-	public static boolean getBuleToothModeState(Context context)
-	{
-		boolean b = false;
-		try
-		{
-			AudioManager am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-			b = am.isBluetoothScoOn();
-		}
-		catch (Exception e)
-		{
-			// TODO: handle exception
-		}
-		return b;
-	}
-
+	/**
+	 * 获取当前语音模式
+	 * @param context 上下文
+	 * @return
+	 */
 	public static int getMode(Context context)
 	{
 		if (context != null)
@@ -209,6 +235,10 @@ public class Util
 		return -1;
 	}
 
+	/**
+	 * 设置当前语音模式
+	 * @param context 上下文
+	 */
 	public static void setMode(Context context)
 	{
 		try
@@ -236,6 +266,11 @@ public class Util
 		}
 	}
 
+	/**
+	 * 获取音量值
+	 * @param context 上下文
+	 * @return
+	 */
 	public static int getStreamVolume(Context context)
 	{
 		int streamVolume = 0;
@@ -251,6 +286,10 @@ public class Util
 		return streamVolume;
 	}
 
+	/**
+	 * 获取日期
+	 * @return
+	 */
 	public static String getCurrentDate()
 	{
 		String currentTime = "";
@@ -268,6 +307,10 @@ public class Util
 		return currentTime;
 	}
 
+	/**
+	 * 获取时刻
+	 * @return
+	 */
 	public static String getCurrentTime()
 	{
 		Time t = new Time();
@@ -283,63 +326,12 @@ public class Util
 		return time;
 	}
 
-	public static long getTimeGap(String time)
-	{
-		long gap = 0;
-		/*
-		 * try { SimpleDateFormat dFormat = new
-		 * SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); Date date =
-		 * dFormat.parse(time); long c = date.getTime() / 1000; long now =
-		 * AirtalkeeAccount.getInstance().AirBaseSeconds(); Log.i(Util.class,
-		 * "getTimeGap = " + now); if (now > 0) gap = c - now; else gap = 0; }
-		 * catch (ParseException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 */
-		return gap;
-	}
-
-	public static AirContact getUser()
-	{
-		AirContact ct = null;
-		if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED))
-		{
-			File xml = new File(Environment.getExternalStorageDirectory() + "/user_properties.xml");
-			try
-			{
-				FileInputStream inStream = new FileInputStream(xml);
-				List<AirContact> users = XMLContentHandler.readXML(inStream);
-				if (users != null)
-				{
-					ct = users.get(0);
-				}
-
-			}
-			catch (Exception er)
-			{
-
-			}
-		}
-		return ct;
-	}
-
-	public static String filterDisplayName(String displayName)
-	{
-		String ret = "";
-		if (displayName != null && displayName.length() > 0)
-		{
-			displayName = displayName.replace('\r', ' ');
-			displayName = displayName.replace('\n', ' ');
-			displayName = displayName.replace('\\', ' ');
-			displayName = displayName.replace('"', ' ');
-			displayName = displayName.replace('\'', ' ');
-			displayName = displayName.replace('<', ' ');
-			displayName = displayName.replace('>', ' ');
-			ret = displayName.trim();
-		}
-		return ret;
-	}
-
-	// ��¼�ص���Ϣ
+	/**
+	 * 登陆信息
+	 * @param result 登陆结果
+	 * @param context 上下文
+	 * @return
+	 */
 	public static String loginInfo(int result, Context context)
 	{
 		String info = "";
@@ -393,6 +385,10 @@ public class Util
 		return info;
 	}
 
+	/**
+	 * 版本配置
+	 * @param context
+	 */
 	public static void versionConfig(Context context)
 	{
 		int preVersion = AirServices.iOperator.getInt("KEY_VERSION");
@@ -410,86 +406,10 @@ public class Util
 		AirServices.VERSION_NEW = currentVersion > preVersion;
 	}
 
-	public static boolean IsUserName(String user)
-	{
-		boolean re = false;
-		if (IsUserNumber(user))
-			re = true;
-		else
-		{
-			re = !TextUtils.isDigitsOnly(user);
-		}
-		return re;
-	}
-
-	public static boolean IsUserNumber(String num)
-	{
-		boolean re = false;
-		if (num.length() == 11)
-		{
-			if (num.startsWith("13"))
-			{
-				re = true;
-			}
-			else if (num.startsWith("15"))
-			{
-				re = true;
-			}
-			else if (num.startsWith("18"))
-			{
-				re = true;
-			}
-		}
-		return re;
-	}
-
-	public static String GetNumber(String num)
-	{
-		if (num != null)
-		{
-			if (num.startsWith("+86"))
-			{
-				num = num.substring(3);
-			}
-			else if (num.startsWith("86"))
-			{
-				num = num.substring(2);
-			}
-		}
-		else
-		{
-			num = "";
-		}
-		return num;
-	}
-
-	public static boolean IsContain(ArrayList<AirContact> list, String userNumber)
-	{
-		for (int i = 0; i < list.size(); i++)
-		{
-			if (userNumber.equals(list.get(i).getiPhoneNumber()))
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	public static String getImei(Context context)
-	{
-		String deviceid = "";
-		try
-		{
-			TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-			deviceid = tm.getDeviceId();
-		}
-		catch (Exception e)
-		{
-			// TODO: handle exception
-		}
-		return deviceid;
-	}
-
+	/**
+	 * 隐藏软键盘
+	 * @param context 上下文
+	 */
 	public static void hideSoftInput(Context context)
 	{
 		try
@@ -503,6 +423,10 @@ public class Util
 		}
 	}
 
+	/**
+	 * 显示软键盘
+	 * @param context 上下文
+	 */
 	public static void showSoftInput(Context context)
 	{
 		try
@@ -517,12 +441,23 @@ public class Util
 		}
 	}
 
+	/**
+	 * 软键盘是否打开
+	 * @param context 上下文
+	 * @return
+	 */
 	public static boolean isSoftKeybordOpen(Context context)
 	{
 		InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
 		return imm.isFullscreenMode();
 	}
 
+	/**
+	 * 获取Spannable对象
+	 * @param context 上下文
+	 * @param text 文字内容
+	 * @return
+	 */
 	public static Spannable getSpannable(Context context, String text)
 	{
 		Spannable name = null;
@@ -532,9 +467,9 @@ public class Util
 	}
 
 	/**
-	 * 
-	 * @param context
-	 * @param content
+	 * 构建消息容器
+	 * @param context 上下文
+	 * @param content 文字内容
 	 * @return
 	 */
 	public static Spannable buildPlainMessageSpannable(Context context, byte[] content)
@@ -562,6 +497,11 @@ public class Util
 		}
 	}
 
+	/**
+	 * 文字截取
+	 * @param context 上下文
+	 * @param clipStr 截取字符串
+	 */
 	@SuppressWarnings("deprecation")
 	public static void textClip(Context context, String clipStr)
 	{
@@ -574,6 +514,10 @@ public class Util
 		{}
 	}
 
+	/**
+	 * 获取图片临时名称
+	 * @return
+	 */
 	public static String getImageTempFileName()
 	{
 		String saveDir = Environment.getExternalStorageDirectory() + "/DCIM/Camera";
@@ -586,6 +530,11 @@ public class Util
 		return fileName;
 	}
 
+	/**
+	 * 转换English时间格式
+	 * @param date 时间字符串
+	 * @return
+	 */
 	public static String convertEnglishDate(String date)
 	{
 		String edateString = date;
@@ -605,6 +554,11 @@ public class Util
 		return edateString;
 	}
 
+	/**
+	 * 拼命是否亮
+	 * @param context 上下文
+	 * @return
+	 */
 	public static boolean isScreenOn(Context context)
 	{
 		boolean isOn = true;
@@ -627,6 +581,11 @@ public class Util
 
 	private static Toast mToast = null;
 
+	/**
+	 * 显示Toast提示
+	 * @param context 上下文
+	 * @param content 内容
+	 */
 	public static void Toast(Context context, String content)
 	{
 		try
@@ -639,6 +598,12 @@ public class Util
 		}
 	}
 
+	/**
+	 * 显示Toast提示
+	 * @param context 上下文
+	 * @param content 内容
+	 * @param icon icon图标
+	 */
 	public static void Toast(Context context, String content, int icon)
 	{
 		try
@@ -651,6 +616,13 @@ public class Util
 		}
 	}
 
+	/**
+	 * 显示Toast提示
+	 * @param context 上下文
+	 * @param content 内容
+	 * @param seconds 显示时长
+	 * @param icon icon图标
+	 */
 	public static void Toast(Context context, String content, int seconds, int icon)
 	{
 		try
@@ -663,16 +635,18 @@ public class Util
 		}
 	}
 
+	/**
+	 * 获取MD5加密后字符串
+	 * @param str 原字符串
+	 * @return
+	 */
 	public static String getMD5Str(String str)
 	{
 		MessageDigest messageDigest = null;
-
 		try
 		{
 			messageDigest = MessageDigest.getInstance("MD5");
-
 			messageDigest.reset();
-
 			messageDigest.update(str.getBytes("UTF-8"));
 		}
 		catch (NoSuchAlgorithmException e)
@@ -684,11 +658,8 @@ public class Util
 		{
 			e.printStackTrace();
 		}
-
 		byte[] byteArray = messageDigest.digest();
-
 		StringBuffer md5StrBuff = new StringBuffer();
-
 		for (int i = 0; i < byteArray.length; i++)
 		{
 			if (Integer.toHexString(0xFF & byteArray[i]).length() == 1)
@@ -699,6 +670,11 @@ public class Util
 		return md5StrBuff.toString();
 	}
 
+	/**
+	 * 获取图片Url地址
+	 * @param photoid 图片Id
+	 * @return
+	 */
 	public static String getPhotoUrl(String photoid)
 	{
 		String pwd = getMD5Str(AirtalkeeAccount.getInstance().getUserKey());
@@ -709,6 +685,11 @@ public class Util
 		return ret;
 	}
 
+	/**
+	 * 是否在后台运行
+	 * @param context 上下文
+	 * @return
+	 */
 	public static boolean isBackground(Context context)
 	{
 		ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -730,6 +711,10 @@ public class Util
 		return false;
 	}
 
+	/**
+	 * 获取当前网络状态
+	 * @return
+	 */
 	public static String getCurrentNetType()
 	{
 		String type = "";

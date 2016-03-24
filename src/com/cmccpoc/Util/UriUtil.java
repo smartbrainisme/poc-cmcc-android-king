@@ -10,12 +10,21 @@ import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 
+/**
+ * Uri工具类
+ * @author Yao
+ */
 public class UriUtil
 {
+	/**
+	 * 获取路径地址
+	 * @param context 上下文
+	 * @param uri uri对象
+	 * @return 路径
+	 */
 	@SuppressLint("NewApi")
 	public static String getPath(final Context context, final Uri uri)
 	{
-
 		if (uri == null)
 			return null;
 		final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
@@ -131,6 +140,7 @@ public class UriUtil
 	}
 
 	/**
+	 * 是否是外部存储文档
 	 * @param uri
 	 *            The Uri to check.
 	 * @return Whether the Uri authority is ExternalStorageProvider.
@@ -141,6 +151,7 @@ public class UriUtil
 	}
 
 	/**
+	 * 是否下载文档
 	 * @param uri
 	 *            The Uri to check.
 	 * @return Whether the Uri authority is DownloadsProvider.
@@ -151,6 +162,7 @@ public class UriUtil
 	}
 
 	/**
+	 * 是否是媒体文档
 	 * @param uri
 	 *            The Uri to check.
 	 * @return Whether the Uri authority is MediaProvider.
@@ -161,6 +173,7 @@ public class UriUtil
 	}
 
 	/**
+	 * 是否是google图片uri
 	 * @param uri
 	 *            The Uri to check.
 	 * @return Whether the Uri authority is Google Photos.
