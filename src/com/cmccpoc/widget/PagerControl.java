@@ -12,6 +12,10 @@ import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import com.cmccpoc.R;
 
+/**
+ * 页面切换控制器
+ * @author Yao
+ */
 public class PagerControl extends View
 {
 	private int DEFAULT_BAR_COLOR = 0xffdcdcdc;
