@@ -9,13 +9,13 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter> 
 		</activity>
-		<activity android:name="com.cmccpoc.activity.home.SessionAddActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize|stateHidden"/>
-		<activity android:name="com.cmccpoc.activity.home.SessionNewActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize|stateHidden"/>
-		<activity android:name="com.cmccpoc.activity.home.SessionDialogActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask"/>
-		<activity android:name="com.cmccpoc.activity.home.MemberTempFragment" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustPan|stateHidden"/>
-		<activity android:name="com.cmccpoc.activity.home.AlbumChooseActivity" android:configChanges="orientation|keyboardHidden"/>
-		<activity android:name="com.cmccpoc.activity.home.AlbumEnterActivity" />
 		<activity android:name="com.cmccpoc.activity.home.HomeActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask"/>
+		
+		<activity android:name="com.cmccpoc.activity.SessionAddActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize|stateHidden"/>
+		<activity android:name="com.cmccpoc.activity.SessionNewActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" android:windowSoftInputMode="adjustResize|stateHidden"/>
+		<activity android:name="com.cmccpoc.activity.SessionDialogActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask"/>
+		<activity android:name="com.cmccpoc.activity.AlbumChooseActivity" android:configChanges="orientation|keyboardHidden"/>
+		<activity android:name="com.cmccpoc.activity.AlbumEnterActivity" />
 		<activity android:name="com.cmccpoc.activity.UserAllActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name="com.cmccpoc.activity.MoreActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />
 		<activity android:name="com.cmccpoc.activity.ChannelActivity" android:configChanges="orientation|keyboardHidden" android:launchMode="singleTask" />

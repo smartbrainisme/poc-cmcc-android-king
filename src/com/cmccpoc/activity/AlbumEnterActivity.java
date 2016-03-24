@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home;
+package com.cmccpoc.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,7 +29,6 @@ import com.cmccpoc.Util.Bimp;
 import com.cmccpoc.Util.Const;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
-import com.cmccpoc.activity.MenuReportAsPicActivity;
 import com.cmccpoc.activity.home.adapter.AdapterPhoto;
 import com.cmccpoc.activity.home.adapter.AdapterPhoto.TextCallback;
 import com.cmccpoc.entity.ImageItem;

@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home;
+package com.cmccpoc.activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,8 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.cmccpoc.R;
 import com.cmccpoc.Util.Toast;
 import com.cmccpoc.Util.Util;
+import com.cmccpoc.activity.home.BaseActivity;
+import com.cmccpoc.activity.home.HomeActivity;
 import com.cmccpoc.activity.home.widget.AlertDialog;
 import com.cmccpoc.activity.home.widget.CallAlertDialog;
 import com.cmccpoc.activity.home.widget.MemberAllView;

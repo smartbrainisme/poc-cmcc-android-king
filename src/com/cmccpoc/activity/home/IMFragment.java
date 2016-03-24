@@ -45,6 +45,7 @@ import com.cmccpoc.Util.Sound;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.activity.ActivityImagePager;
+import com.cmccpoc.activity.AlbumChooseActivity;
 import com.cmccpoc.activity.home.adapter.AdapterSessionMessage;
 import com.cmccpoc.activity.home.widget.SessionAndChannelView;
 import com.cmccpoc.control.AirMessageTransaction;

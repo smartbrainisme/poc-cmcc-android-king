@@ -44,6 +44,7 @@ import com.baidu.location.n;
 import com.cmccpoc.R;
 import com.cmccpoc.Util.Toast;
 import com.cmccpoc.Util.Util;
+import com.cmccpoc.activity.SessionAddActivity;
 import com.cmccpoc.activity.home.adapter.AdapterMember;
 import com.cmccpoc.activity.home.adapter.AdapterMember.CheckedCallBack;
 import com.cmccpoc.activity.home.widget.AlertDialog;

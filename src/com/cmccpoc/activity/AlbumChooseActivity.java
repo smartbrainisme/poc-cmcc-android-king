@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home;
+package com.cmccpoc.activity;
 
 import java.io.Serializable;
 import java.util.List;
@@ -22,12 +22,14 @@ import com.cmccpoc.Util.AlbumHelper;
 import com.cmccpoc.Util.Const;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
-import com.cmccpoc.activity.MenuReportAsPicActivity;
 import com.cmccpoc.activity.home.adapter.AdapterAlbum;
 import com.cmccpoc.entity.ImageBucket;
 import com.cmccpoc.widget.PhotoCamera;
 
-// 相册选择
+/**
+ * 相册选择
+ * @author Yao
+ */
 public class AlbumChooseActivity extends Activity implements OnItemClickListener, OnClickListener
 {
 	public static final String EXTRA_IMAGE_LIST = "imagelist";

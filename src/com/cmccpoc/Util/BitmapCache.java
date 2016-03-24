@@ -13,7 +13,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.ImageView;
-import com.cmccpoc.activity.home.AlbumChooseActivity;
+import com.cmccpoc.activity.AlbumChooseActivity;
 
 public class BitmapCache extends Activity
 {

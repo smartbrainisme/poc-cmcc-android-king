@@ -32,8 +32,8 @@ import android.widget.RelativeLayout;
 import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.R;
 import com.cmccpoc.Util.Sound;
+import com.cmccpoc.activity.AlbumChooseActivity;
 import com.cmccpoc.activity.MenuReportAsPicActivity;
-import com.cmccpoc.activity.home.AlbumChooseActivity;
 
 /**
  * 上报图片时，选择拍照上传时显示的自定义Camera控件

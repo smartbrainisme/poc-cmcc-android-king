@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home;
+package com.cmccpoc.activity;
 
 import java.util.ArrayList;
 import java.util.List;

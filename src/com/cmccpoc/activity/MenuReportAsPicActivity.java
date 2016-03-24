@@ -31,7 +31,6 @@ import com.cmccpoc.Util.Const;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Toast;
 import com.cmccpoc.Util.Util;
-import com.cmccpoc.activity.home.AlbumChooseActivity;
 import com.cmccpoc.activity.home.widget.ReportProgressAlertDialog;
 import com.cmccpoc.activity.home.widget.AlertDialog.DialogListener;
 import com.cmccpoc.config.Config;
