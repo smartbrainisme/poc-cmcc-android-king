@@ -19,6 +19,10 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 
+/**
+ * IM消息--图片消息原图展示容器
+ * @author Yao
+ */
 public class AdapterImagePager extends PagerAdapter
 {
 	protected ImageLoader imageLoader = ImageLoader.getInstance();

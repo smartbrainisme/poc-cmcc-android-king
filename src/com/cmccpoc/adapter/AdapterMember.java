@@ -26,7 +26,10 @@ import com.cmccpoc.R;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.config.Config;
 
-
+/**
+ * 成员用户适配器
+ * @author Yao
+ */
 @SuppressLint("UseSparseArrays")
 public class AdapterMember extends BaseAdapter implements OnContactPresenceListener
 {
@@ -47,6 +50,12 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 		this.allowRole = allowRole;
 	}
 
+	/**
+	 * 设置被选中的成员列表
+	 * @param key 键值
+	 * @param value 成员Entity
+	 * @param isCheck 是否选中
+	 */
 	private void putSelected(Integer key, AirContact value, boolean isCheck)
 	{
 		if (isCheck)
@@ -59,6 +68,9 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 		}
 	}
 
+	/**
+	 * 获取被选中的成员列表
+	 */
 	public List<AirContact> getSelectedMemberList()
 	{
 		List<AirContact> selectList = new ArrayList<AirContact>();
@@ -74,6 +86,9 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 		return selectList;
 	}
 
+	/**
+	 * 获取被选中的成员列表
+	 */
 	public List<AirContactTiny> getSelectedMemberListTiny()
 	{
 		List<AirContactTiny> selectList = new ArrayList<AirContactTiny>();
@@ -93,6 +108,11 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 		return selectList;
 	}
 
+	/**
+	 * 刷新member列表与选中状态
+	 * @param _session 会话Entity
+	 * @param _memberList 
+	 */
 	public void notifyMember(AirSession _session, List<AirContact> _memberList)
 	{
 		session = _session;
@@ -100,6 +120,9 @@ public class AdapterMember extends BaseAdapter implements OnContactPresenceListe
 		resetCheckBox();
 	}
 
+	/**
+	 * 重置选中状态
+	 */
 	public void resetCheckBox()
 	{
 		isSelected = new HashMap<Integer, AirContact>();

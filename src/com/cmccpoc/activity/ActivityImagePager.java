@@ -8,19 +8,21 @@ import android.view.MotionEvent;
 import com.cmccpoc.R;
 import com.cmccpoc.adapter.AdapterImagePager;
 
-
-
+/**
+ * IM消息--图片消息原图展示Activity
+ * @author Yao
+ *
+ */
 public class ActivityImagePager extends Activity 
 {
 	ViewPager pager;
 
-	
 	@Override
 	protected void onCreate(Bundle bundle)
 	{
 		// TODO Auto-generated method stub
 		super.onCreate(bundle);
-		setContentView( R.layout.activity_image_pager);
+		setContentView(R.layout.activity_image_pager);
 		pager = (ViewPager) findViewById(R.id.pager);
 		bundle = this.getIntent().getExtras();
 		if (bundle != null)
