@@ -30,8 +30,8 @@ import com.cmccpoc.Util.Const;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.activity.MenuReportAsPicActivity;
-import com.cmccpoc.activity.home.widget.AdapterPhoto;
-import com.cmccpoc.activity.home.widget.AdapterPhoto.TextCallback;
+import com.cmccpoc.activity.home.adapter.AdapterPhoto;
+import com.cmccpoc.activity.home.adapter.AdapterPhoto.TextCallback;
 import com.cmccpoc.entity.ImageItem;
 import com.cmccpoc.widget.PhotoCamera;
 

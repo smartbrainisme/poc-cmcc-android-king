@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home.widget;
+package com.cmccpoc.activity.home.adapter;
 
 import java.util.HashMap;
 import java.util.List;

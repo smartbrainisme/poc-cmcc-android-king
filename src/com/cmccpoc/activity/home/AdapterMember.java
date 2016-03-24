@@ -22,7 +22,6 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactTiny;
 import com.airtalkee.sdk.entity.AirSession;
 import com.cmccpoc.R;
-import com.cmccpoc.activity.home.widget.MarqueeMemberTextView;
 
 @SuppressLint("UseSparseArrays")
 public class AdapterMember extends BaseAdapter

@@ -1,4 +1,4 @@
-package com.cmccpoc.adapter;
+package com.cmccpoc.activity.home.adapter;
 
 import java.io.File;
 import java.util.HashMap;

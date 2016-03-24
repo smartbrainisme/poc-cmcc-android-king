@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home.widget;
+package com.cmccpoc.activity.home.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.R;
+import com.cmccpoc.activity.home.widget.SessionAndChannelView;
 import com.cmccpoc.control.AirSessionControl;
 
 public class AdapterSession extends BaseAdapter

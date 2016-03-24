@@ -1,4 +1,4 @@
-package com.cmccpoc.adapter;
+package com.cmccpoc.activity.home.adapter;
 
 import java.util.List;
 import android.content.Context;

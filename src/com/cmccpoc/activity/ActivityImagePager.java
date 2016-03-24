@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import com.cmccpoc.R;
-import com.cmccpoc.adapter.AdapterImagePager;
+import com.cmccpoc.activity.home.adapter.AdapterImagePager;
 
 /**
  * IM消息--图片消息原图展示Activity

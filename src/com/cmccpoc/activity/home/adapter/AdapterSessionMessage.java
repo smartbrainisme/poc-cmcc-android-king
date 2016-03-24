@@ -1,4 +1,4 @@
-package com.cmccpoc.adapter;
+package com.cmccpoc.activity.home.adapter;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.Util.Language;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
-import com.cmccpoc.adapter.AdapterBase.OnImageLoadCompletedListener;
+import com.cmccpoc.activity.home.adapter.AdapterBase.OnImageLoadCompletedListener;
 
 /**
  * 会话消息适配器

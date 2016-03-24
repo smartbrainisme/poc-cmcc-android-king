@@ -22,6 +22,8 @@ import com.cmccpoc.activity.MoreActivity;
 import com.cmccpoc.activity.home.HomeActivity;
 import com.cmccpoc.activity.home.PTTFragment;
 import com.cmccpoc.activity.home.SessionNewActivity;
+import com.cmccpoc.activity.home.adapter.AdapterChannel;
+import com.cmccpoc.activity.home.adapter.AdapterSession;
 import com.cmccpoc.activity.home.widget.AlertDialog.DialogListener;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.control.AirSessionControl;

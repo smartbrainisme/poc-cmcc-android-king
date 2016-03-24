@@ -23,7 +23,7 @@ import com.cmccpoc.Util.Const;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.activity.MenuReportAsPicActivity;
-import com.cmccpoc.activity.home.widget.AdapterAlbum;
+import com.cmccpoc.activity.home.adapter.AdapterAlbum;
 import com.cmccpoc.entity.ImageBucket;
 import com.cmccpoc.widget.PhotoCamera;
 
