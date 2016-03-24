@@ -9,13 +9,15 @@ import android.os.Environment;
 import android.text.format.Time;
 import android.util.Log;
 
+/**
+ * poc异常处理类
+ * @author Yao
+ */
 public class AppExcepiton implements UncaughtExceptionHandler
 {
 
-	// ��ȡapplication ����
 	// private Context mContext;
 	private Thread.UncaughtExceptionHandler defaultExceptionHandler;
-	// ��������CustomException;
 	private static AppExcepiton appException;
 
 	private AppExcepiton()
@@ -30,6 +32,9 @@ public class AppExcepiton implements UncaughtExceptionHandler
 		return appException;
 	}
 
+	/**
+	 * 抛出异常
+	 */
 	@Override
 	public void uncaughtException(Thread thread, Throwable ex)
 	{
@@ -83,8 +88,7 @@ public class AppExcepiton implements UncaughtExceptionHandler
 	}
 
 	/**
-	 * ��õ�ǰʱ��
-	 * 
+	 * 获取当前时间
 	 * @return
 	 */
 	public String getCurrentTime()
@@ -109,6 +113,10 @@ public class AppExcepiton implements UncaughtExceptionHandler
 		Thread.setDefaultUncaughtExceptionHandler(this);
 	}
 
+	/**
+	 * 删除旧文件
+	 * @param path 文件路径
+	 */
 	public void deleteOldFile(final String path)
 	{
 		File file = new File(path);

@@ -10,6 +10,10 @@ import com.cmccpoc.Util.XmlModelReader;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.services.PttKeyServices;
 
+/**
+ * 主程序类 处理第一次程序开启时需要启动或需要初始化的功能
+ * @author Yao
+ */
 public class MainApplication extends Application
 {
 	private static boolean firstLaunch = true;
@@ -53,6 +57,11 @@ public class MainApplication extends Application
 		Log.e(MainApplication.class, "Weptt Application Stop!");
 	}
 	
+	/**
+	 * 设置是否是第一次运行程序
+	 * @param b
+	 * @return
+	 */
 	public static boolean  setFirstLaunch(boolean b)
 	{
 		new IOoperate().putBoolean("firstLaunch", b);
@@ -60,6 +69,10 @@ public class MainApplication extends Application
 		return firstLaunch;
 	}
 	
+	/**
+	 * 返回是否是第一次运行程序
+	 * @return
+	 */
 	public static boolean isFisrtLaunch()
 	{
 		return firstLaunch;

@@ -14,15 +14,13 @@ import com.airtalkee.sdk.controller.ChannelController;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirSession;
-import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.Util.Sound;
 import com.cmccpoc.Util.Toast;
-import com.cmccpoc.activity.home.widget.MediaStatusBar;
 import com.cmccpoc.listener.OnMmiSessionListener;
 import com.cmccpoc.services.AirServices;
 
 /**
- * 
+ * 会话业务管理类
  * @author Yao
  */
 public class AirSessionControl implements OnSessionListener
@@ -47,6 +45,10 @@ public class AirSessionControl implements OnSessionListener
 	{
 	}
 
+	/**
+	 * 获取AirSessionControl实例
+	 * @return AirSessionControl实例
+	 */
 	public static AirSessionControl getInstance()
 	{
 		if (mInstance == null)
@@ -66,6 +68,10 @@ public class AirSessionControl implements OnSessionListener
 	// Session
 	// ==============================
 
+	/**
+	 * 频道附着
+	 * @param isKeep 保持状态
+	 */
 	public void SessionChannelAttach(boolean isKeep)
 	{
 		List<AirChannel> channels = new ArrayList<AirChannel>();
@@ -98,6 +104,10 @@ public class AirSessionControl implements OnSessionListener
 		channelJsonBuild(KEY_GROUP_KEEP, mChannels);
 	}
 
+	/**
+	 * 进入频道
+	 * @param channelId 频道Id
+	 */
 	public void SessionChannelIn(String channelId)
 	{
 		AirSession s = mSessionMap.get(channelId);
@@ -113,23 +123,39 @@ public class AirSessionControl implements OnSessionListener
 		}
 	}
 
+	/**
+	 * 退出频道
+	 * @param channelId 频道Id
+	 */
 	public void SessionChannelOut(String channelId)
 	{
 		AirtalkeeSessionManager.getInstance().SessionBye(channelId);
 	}
 
+	/**
+	 * 发起临时组呼叫
+	 * @param session 会话Entity
+	 */
 	public void SessionMakeCall(AirSession session)
 	{
 		sessionListPut(session, false);
 		AirtalkeeSessionManager.getInstance().SessionCall(session);
 	}
 
+	/**
+	 * 发起临时组呼叫
+	 * @param session 会话Entity
+	 */
 	public void SessionMakeSpecialCall(AirSession session)
 	{
 		sessionListPut(session, false);
 		AirtalkeeSessionManager.getInstance().SessionCallSpecial(session);
 	}
 
+	/**
+	 * 挂断会话
+	 * @param session 会话Entity
+	 */
 	public void SessionEndCall(AirSession session)
 	{
 		Sound.stopSound(Sound.PLAYER_CALL_DIAL);
@@ -140,6 +166,10 @@ public class AirSessionControl implements OnSessionListener
 	// Session list management
 	// ==============================
 
+	/**
+	 * 获取当前所在会话
+	 * @return 会话Entity
+	 */
 	public AirSession getCurrentSession()
 	{
 		AirSession session = null;
@@ -150,6 +180,10 @@ public class AirSessionControl implements OnSessionListener
 		return session;
 	}
 
+	/**
+	 * 当前频道是否开启抢断模式
+	 * @return true/false
+	 */
 	public boolean getCurrentSessionGrap()
 	{
 		boolean isGrap = false;
@@ -161,6 +195,10 @@ public class AirSessionControl implements OnSessionListener
 		return isGrap;
 	}
 
+	/**
+	 * 为当前频道赋值session
+	 * @param session 会话Entity
+	 */
 	public void setCurrentChannelSession(AirSession session)
 	{
 		if (session != null && session.getSessionState() == AirSession.SESSION_STATE_DIALOG)
@@ -169,11 +207,20 @@ public class AirSessionControl implements OnSessionListener
 		}
 	}
 
+	/**
+	 * 获取当前频道session对象
+	 * @return
+	 */
 	public AirSession getCurrentChannelSession()
 	{
 		return mSessionCurrentChannel;
 	}
 
+	/**
+	 * 添加到会话列表中
+	 * @param session 会话Entity
+	 * @param save 是否保存
+	 */
 	private void sessionListPut(AirSession session, boolean save)
 	{
 		if (session != null)
@@ -201,6 +248,10 @@ public class AirSessionControl implements OnSessionListener
 		}
 	}
 
+	/**
+	 * 从会话列表中移除
+	 * @param session 会话Entity
+	 */
 	private void sessionListRemove(AirSession session)
 	{
 		if (session != null)
@@ -325,6 +376,11 @@ public class AirSessionControl implements OnSessionListener
 	// GROUP keep & attach JSON
 	// ==============================
 
+	/**
+	 * Json格式化频道信息
+	 * @param key 键
+	 * @param channels 频道列表
+	 */
 	private void channelJsonParse(String key, List<AirChannel> channels)
 	{
 		String string = AirServices.iOperator.getString(key);
@@ -354,6 +410,11 @@ public class AirSessionControl implements OnSessionListener
 		}
 	}
 
+	/**
+	 * 构建Json格式频道信息
+	 * @param key 键
+	 * @param channels 频道列表
+	 */
 	private void channelJsonBuild(String key, List<AirChannel> channels)
 	{
 		try
@@ -374,6 +435,9 @@ public class AirSessionControl implements OnSessionListener
 		}
 	}
 
+	/**
+	 * 加载频道附着
+	 */
 	public void channelAttachLoad()
 	{
 		List<AirChannel> channels = new ArrayList<AirChannel>();
@@ -386,6 +450,9 @@ public class AirSessionControl implements OnSessionListener
 		}
 	}
 
+	/**
+	 * 保存频道附着
+	 */
 	public void channelAttachSave()
 	{
 		List<AirChannel> channels = new ArrayList<AirChannel>();
@@ -397,6 +464,10 @@ public class AirSessionControl implements OnSessionListener
 		channelJsonBuild(KEY_GROUP_ATTACH + AirtalkeeAccount.getInstance().getUserId(), channels);
 	}
 
+	/**
+	 * 频道切换
+	 * @return true/false
+	 */
 	public boolean channelToggle()
 	{
 		boolean isToogle = currentSelectChannel != null && mSessionCurrentChannel != null && !currentSelectChannel.getId().equals(mSessionCurrentChannel.getSessionCode());
@@ -408,6 +479,10 @@ public class AirSessionControl implements OnSessionListener
 		return isToogle;
 	}
 
+	/**
+	 * 设置频道索引
+	 * @param ch 频道Entity
+	 */
 	public void channelIndexSet(AirChannel ch)
 	{
 		if (ch != null)
@@ -428,6 +503,10 @@ public class AirSessionControl implements OnSessionListener
 		}
 	}
 
+	/**
+	 * 频道选择
+	 * @param plus 索引增减状态
+	 */
 	public void channelSelect(boolean plus)
 	{
 		List<AirChannel> channels = ChannelController.dataChannelsGet();

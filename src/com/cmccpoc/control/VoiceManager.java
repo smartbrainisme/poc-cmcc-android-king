@@ -13,6 +13,10 @@ import android.widget.ImageView;
 import com.airtalkee.sdk.util.IOoperate;
 import com.airtalkee.sdk.util.Log;
 
+/**
+ * poc语音通道管理器
+ * @author Yao
+ */
 @SuppressLint("InlinedApi")
 public class VoiceManager
 {
@@ -21,7 +25,6 @@ public class VoiceManager
 	public static final int MESSAGE_TOAST = 5;
 
 	private static VoiceManager instance;
-	private AudioManager am = null;
 	private BroadcastReceiver receiverBtConnectState = null;
 	private BroadcastReceiver receiverBtState = null;
 
@@ -61,7 +64,6 @@ public class VoiceManager
 		this.context = context;
 		io = new IOoperate();
 		setMode(io.getInt("mode", AudioManager.MODE_NORMAL));
-		am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 	}
 
 	public static VoiceManager newInstance(Context context)
@@ -107,12 +109,18 @@ public class VoiceManager
 		}
 	}
 
+	/**
+	 * 切换到听筒
+	 */
 	public void doChangeVoiceCall()
 	{
 		Log.d(VoiceManager.class, "voice:  doChangeVoiceCall");
 		changeMode(AudioManager.MODE_IN_CALL);
 	}
 
+	/**
+	 * 切换到扬声器
+	 */
 	public void doChangeSpeaker()
 	{
 		Log.d(VoiceManager.class, "voice:  doChangeSpeaker");

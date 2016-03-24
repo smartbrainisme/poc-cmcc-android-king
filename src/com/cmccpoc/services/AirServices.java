@@ -15,7 +15,6 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.text.TextUtils;
 import android.view.WindowManager;
 import com.airtalkee.sdk.AirtalkeeAccount;
 import com.airtalkee.sdk.AirtalkeeChannel;
@@ -139,7 +138,9 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		System.exit(0);
 	}
 
-	// app运行时初始化一系列服务与类对象
+	/**
+	 * app运行时初始化一系列服务与类对象
+	 */
 	private void appRun()
 	{
 		try
@@ -177,8 +178,6 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 			AirtalkeeMediaVisualizer.getInstance().setMediaAudioVisualizerSpectrumNumber(18);
 			AirtalkeeAccount.getInstance().AirTalkeeConfig(this, Config.serverAddress, 4001);
 			AirtalkeeAccount.getInstance().AirTalkeeConfigMarketCode(Config.marketCode);
-			if (Config.SUB_PLATFORM_VALID)
-				AirtalkeeAccount.getInstance().AirTalkeeConfigSubServer(Config.SUB_PLATFORM_ADDRESS_DM, Config.SUB_PLATFORM_ADDRESS_WEB, Config.SUB_PLATFORM_ADDRESS_NOTICE);
 			AirtalkeeAccount.getInstance().dbProxySet(db_proxy);
 			AirtalkeeSessionManager.getInstance().setMediaEngineSetting(Setting.getPttHeartbeat(), Config.engineMediaSettingHbPackSize);
 			AirtalkeeSessionManager.getInstance().setOnSessionIncomingListener(this);
@@ -214,7 +213,9 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		return db_proxy;
 	}
 
-	// 注册屏幕状态广播
+	/**
+	 * 注册屏幕状态广播
+	 */
 	public void registerScreenReceiver()
 	{
 		IntentFilter filter = new IntentFilter();
@@ -223,7 +224,9 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		registerReceiver(receiverScreen, filter);
 	}
 
-	// 点亮屏幕
+	/**
+	 * 点亮屏幕
+	 */
 	@SuppressWarnings("deprecation")
 	public void lightScreen()
 	{
@@ -232,7 +235,9 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		wakeLock.acquire(20 * 1000);
 	}
 
-	// 禁用锁屏功能
+	/**
+	 * 禁用锁屏功能
+	 */
 	@SuppressWarnings("deprecation")
 	public void unlockScreen()
 	{
@@ -354,7 +359,9 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 	 * 
 	 ***********************************/
 
-	// 版本检测
+	/**
+	 * 版本检测
+	 */
 	public void versionCheck()
 	{
 		String lang = Language.getLocalLanguage(this);
@@ -411,6 +418,9 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		d.show();
 	}
 
+	/**
+	 * 初始化图片加载器
+	 */
 	private void initImageLoader()
 	{
 		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext()).threadPriority(Thread.NORM_PRIORITY - 2).denyCacheImageMultipleSizesInMemory().discCacheFileNameGenerator(new Md5FileNameGenerator()).tasksProcessingOrder(QueueProcessingType.LIFO).writeDebugLogs().build();
@@ -424,7 +434,10 @@ public class AirServices extends Service implements OnSessionIncomingListener, O
 		return isSecretValid;
 	}
 
-	// 发送广播通用方法
+	/**
+	 * 发送广播通用方法
+	 * @param action action标记
+	 */
 	public static void sendBroadcast(String action)
 	{
 		if (action != null && action.length() > 0)

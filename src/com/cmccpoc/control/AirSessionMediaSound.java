@@ -14,6 +14,10 @@ import com.cmccpoc.Util.Util;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.receiver.ReceiverPhoneState;
 
+/**
+ * 会话媒体音管理类
+ * @author Yao
+ */
 public class AirSessionMediaSound implements OnMediaSoundListener
 {
 	private static final String PTT_ACTION = "com.android.action.PTT_LIGHT_CONTROL_ACTION";
@@ -26,13 +30,18 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		am = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
 	}
 
+	/**
+	 * 开始听时操作处理
+	 * @param session 会话Entity
+	 * @param content 内容
+	 */
 	@Override
 	public void onMediaSoundListenBegin(AirSession session, String content)
 	{
+		// LED灯状态
 		pttLightStateRefresh(session, SessionMediaController.MEDIA_SOUND_OTHER_ON);
 		if (!ReceiverPhoneState.isCalling)
 		{
-
 			if (VoiceManager.getInstance().getMode() == AudioManager.MODE_IN_COMMUNICATION)
 				SoundPlayer.soundPlay(SoundPlayer.PLAYER_MEDIA_OTHER_ON_LOW, false);
 			else
@@ -41,6 +50,10 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		}
 	}
 
+	/**
+	 * 听结束时操作处理
+	 * @param session 会话Entity
+	 */
 	@Override
 	public void onMediaSoundListenEnd(AirSession session)
 	{
@@ -55,6 +68,10 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 
 	}
 
+	/**
+	 * 开始说话时
+	 * @param session 会话Entity
+	 */
 	@Override
 	public void onMediaSoundTalkBegin(AirSession session)
 	{
@@ -68,19 +85,25 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 
 	}
 
+	/**
+	 * 讲话被拒绝时
+	 * @param session 会话Entity
+	 */
 	@Override
 	public void onMediaSoundTalkDeny(AirSession session)
 	{
-		// TODO Auto-generated method stub
 		Sound.playSound(Sound.PLAYER_MEDIA_ERROR, context);
 		Sound.vibrate(50, context);
 		pttLightStateRefresh(session, SessionMediaController.MEDIA_SOUND_TALK_DENY);
 	}
 
+	/**
+	 * 讲话结束时
+	 * @param session 会话Entity
+	 */
 	@Override
 	public void onMediaSoundTalkEnd(AirSession session)
 	{
-		// TODO Auto-generated method stub
 		pttLightStateRefresh(session, SessionMediaController.MEDIA_SOUND_ME_OFF);
 		if (Config.funcPlayMediaTalkOff)
 		{
@@ -89,11 +112,12 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 			else
 				SoundPlayer.soundPlay(SoundPlayer.PLAYER_MEDIA_ME_OFF, false);
 		}
-
-		// am.setBluetoothScoOn(false);
-		// am.stopBluetoothSco();
 	}
 
+	/**
+	 * 开始请求说话
+	 * @param session 会话Entity
+	 */
 	@Override
 	public void onMediaSoundTalkRequestBegin(AirSession session)
 	{
@@ -102,12 +126,21 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 			Sound.playSound(Sound.PLAYER_MEDIAN_TALK_PREPARE, context);
 	}
 
+	/**
+	 * 请求说话结束
+	 * @param session 会话Entity
+	 */
 	@Override
 	public void onMediaSoundTalkRequestEnd(AirSession session)
 	{
 		// TODO Auto-generated method stub
 	}
 
+	/**
+	 * LED灯状态刷新
+	 * @param session 会话Entity
+	 * @param state 说话状态
+	 */
 	private void pttLightStateRefresh(AirSession session, int state)
 	{
 		try
@@ -157,17 +190,14 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 
 			if (on)
 			{
-				// Log.i(AirSessionMediaSound.class, "PTT LIGHT "+color+" ON");
 				com.airtalkee.sdk.util.Log.d(AirSessionMediaSound.class, "pttLightStateRefresh PTT LIGHT " + color + " ON");
 			}
 			else
 			{
-				// Log.i(AirSessionMediaSound.class, "PTT LIGHT "+color+" OFF");
 				com.airtalkee.sdk.util.Log.d(AirSessionMediaSound.class, "pttLightStateRefresh PTT LIGHT " + color + " OFF");
 			}
 			toggleLight(on, color, context);
 			changeAudioFocus(on, context);
-//			toggleLedStatus(color == 0xFFFF0000 ? 0 : 1, on ? 1 : 0);
 			com.airtalkee.sdk.util.Log.d(AirSessionMediaSound.class, "pttLightStateRefresh end");
 		}
 		catch (Exception e)
@@ -176,6 +206,12 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		}
 	}
 
+	/**
+	 * LED灯开关
+	 * @param on 是否打开
+	 * @param color 颜色
+	 * @param context 上下文
+	 */
 	public static void toggleLight(boolean on, int color, Context context)
 	{
 		try
@@ -191,6 +227,11 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		}
 	}
 
+	/**
+	 * 更改媒体焦点
+	 * @param pause 是否停止
+	 * @param context 上下文
+	 */
 	public static void changeAudioFocus(boolean pause, Context context)
 	{
 		try
@@ -214,18 +255,16 @@ public class AirSessionMediaSound implements OnMediaSoundListener
 		}
 	};
 
+	/**
+	 * 清除状态
+	 */
 	public static void destoryState()
 	{
 		toggleLight(false, 0xFF00FF00, context);
 		toggleLight(false, 0xFFFF0000, context);
 		changeAudioFocus(false, context);
-//		toggleLedStatus(0, 0);
-//		toggleLedStatus(1, 0);
 	}
 
-	private static native void setGreenLedStatusNative(int status);// status: 0
-																	// 关闭灯 1 开灯
-
-	private static native void setRedLedStatusNative(int status);// status: 0
-																	// 关闭灯 1 开灯
+	private static native void setGreenLedStatusNative(int status);// status: 0 关闭灯 1 开灯
+	private static native void setRedLedStatusNative(int status);// status: 0 关闭灯 1 开灯
 }
