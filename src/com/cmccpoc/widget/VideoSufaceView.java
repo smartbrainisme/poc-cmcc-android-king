@@ -560,6 +560,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 			l.onVideoStateChange(true);
 		}
 		iv_video_recording.setVisibility(View.GONE);
+		/*
 		AirSession session = AirSessionControl.getInstance().getCurrentChannelSession();
 		AirtalkeeMessage.getInstance().MessageRemove(session.getSessionCode(), iMessage);
 		if (session != null)
@@ -571,8 +572,7 @@ public class VideoSufaceView extends FrameLayout implements OnClickListener,
 				//AirtalkeeMessage.getInstance().MessageSessionVideoSend(session, msg, true);
 				IMFragment.getInstance().refreshMessages();
 			}
-		}
-		
+		}*/
 	}
 
 	@Override

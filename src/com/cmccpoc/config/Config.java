@@ -142,7 +142,6 @@ public class Config
 	public static String serverAddress = "";
 	public static String serverUrlInfosys = "";
 	
-	public static String serverUrlNotice = "http://ptt.weptt.com:2880/airtalkeenotice/jsp/";
 
 	public static void marketConfig(Context context)
 	{
@@ -158,7 +157,7 @@ public class Config
 		
 		if (model.startsWith("HUAWEI"))
 		{
-			AirEngine._video_fixed_color_format = true;
+			//AirEngine._video_fixed_color_format = true;
 		}
 	}
 
