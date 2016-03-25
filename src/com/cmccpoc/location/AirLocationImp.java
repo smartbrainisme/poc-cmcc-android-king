@@ -177,9 +177,13 @@ public class AirLocationImp
 		}
 	}
 
-	// =========================================
-	// GPS Mode
-	// =========================================
+	/**
+	 * GPS Mode
+	 * @param id Id
+	 * @param timeoutSeconds 超时时长
+	 * @param context 上下文
+	 * @param listener listener
+	 */
 	private void doGpsLocation(final int id, final int timeoutSeconds, final Context context, final OnMapListener listener)
 	{
 		TimerParam param = new TimerParam();
@@ -231,7 +235,9 @@ public class AirLocationImp
 		mLocMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
 	}
 
-	// GPS获取超时
+	/**
+	 * GPS获取超时
+	 */
 	private AirMmiTimerListener doGpsLocationTimeout = new AirMmiTimerListener()
 	{
 		@Override
@@ -249,9 +255,13 @@ public class AirLocationImp
 		}
 	};
 
-	// =========================================
-	// Cell Mode
-	// =========================================
+	/**
+	 * Cell Mode
+	 * @param id Id
+	 * @param timeoutSeconds 超时时长
+	 * @param context 上下文
+	 * @param listener
+	 */
 	private void doCellLocation(final int id, final int timeoutSeconds, final Context context, final OnMapListener listener)
 	{
 		doCellLocation(id, true, timeoutSeconds, context, listener);
@@ -312,9 +322,11 @@ public class AirLocationImp
 		mClientCell.start();
 	}
 
-	// =========================================
-	// Release getting
-	// =========================================
+	/**
+	 * Release getting
+	 * @param context 上下文
+	 * @param param timer参数
+	 */
 	private void doRelease(Context context, TimerParam param)
 	{
 		switch (param.type)

@@ -58,7 +58,7 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 	private SurfaceView mSurfaceView;
 	
 	private int type;
-//	private Context mContext;
+	//	private Context mContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -364,7 +364,7 @@ public class PhotoCamera extends Activity implements OnClickListener, Callback
 	/**
 	 * 调整图片角度
 	 * @param angle 角度值
-	 * @param bitmap 
+	 * @param bitmap Bitmap对象
 	 * @return new bitmap
 	 */
 	public Bitmap rotaingImageView(int angle, Bitmap bitmap)
