@@ -44,7 +44,9 @@ import com.baidu.location.n;
 import com.cmccpoc.R;
 import com.cmccpoc.Util.Toast;
 import com.cmccpoc.Util.Util;
-import com.cmccpoc.activity.home.AdapterMember.CheckedCallBack;
+import com.cmccpoc.activity.SessionAddActivity;
+import com.cmccpoc.activity.home.adapter.AdapterMember;
+import com.cmccpoc.activity.home.adapter.AdapterMember.CheckedCallBack;
 import com.cmccpoc.activity.home.widget.AlertDialog;
 import com.cmccpoc.activity.home.widget.CallAlertDialog;
 import com.cmccpoc.activity.home.widget.MemberAllView;
@@ -55,6 +57,10 @@ import com.cmccpoc.services.AirServices;
 import com.cmccpoc.widget.MListView;
 import com.cmccpoc.widget.MyRelativeLayout;
 
+/**
+ * 三大Fragment之一：成员列表Fragment。主要包含当前频道成员和全部成员，在这个fragment中可以进行临时呼叫，或者直接留言等
+ * @author Yao
+ */
 public class MemberFragment extends BaseFragment implements OnClickListener,
 		OnItemClickListener, CheckedCallBack, MemberCheckListener,
 		OnContactPresenceListener, TextWatcher
@@ -80,6 +86,10 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 	AlertDialog dialog;
 	
 	private static MemberFragment mInstance;
+	/**
+	 * 获取成员列表Fragment实例对象
+	 * @return
+	 */
 	public static MemberFragment getInstance()
 	{
 		return mInstance;
@@ -204,6 +214,10 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 刷新 频道成员/全部成员 选项卡
+	 * @param id 频道成员 or 全部成员
+	 */
 	public void refreshTab(int id)
 	{
 		Log.i(MemberFragment.class, "MemberFragment refreshTab start id = " + id);
@@ -261,16 +275,13 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 刷新搜索成员区域
+	 * @param id 频道成员 or 全部成员
+	 */
 	private void refreshSearch(int id)
 	{
 		Log.i(MemberFragment.class, "MemberFragment refreshSearch id = " + id);
-//		Iterator<Integer> iter = ids.keySet().iterator();
-//		while (iter.hasNext())
-//		{
-//			Integer i = iter.next();
-//			TextView v = ids.get(i);
-//			v.setSelected(i == id);
-//		}
 		try
 		{
 			if (id == R.id.tab_member_session) // 频道成员
@@ -352,6 +363,9 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 通过关键词进行搜索
+	 */
 	private void searchByKey()
 	{
 		String key = searchEditChannel.getText().toString();
@@ -368,6 +382,10 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		refreshMembers(getSession(), memberSearchResult);
 	}
 
+	/**
+	 * 设置session会话
+	 * @param s 会话Entity
+	 */
 	public void setSession(AirSession s)
 	{
 		if (s != null)
@@ -400,6 +418,11 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 刷新成员状态
+	 * @param session 会话Entity
+	 * @param members 成员列表
+	 */
 	public void refreshMembers(AirSession session, List<AirContact> members)
 	{
 		try
@@ -414,11 +437,17 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 
 	}
 
+	/**
+	 * 刷新频道成员列表
+	 */
 	public void refreshMembers()
 	{
 		adapterMember.notifyDataSetChanged();
 	}
 	
+	/**
+	 * 刷新全部成员
+	 */
 	public void refreshAllMembers()
 	{
 		memberAllView.adapterMember.notifyDataSetChanged();
@@ -453,6 +482,10 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 呼叫选中的成员
+	 * @param isCall 是否呼叫
+	 */
 	public void callSelectMember(boolean isCall)
 	{
 		if ((adapterMember.getSelectedMemberList() != null && adapterMember.getSelectedMemberList().size() > 0) || memberAllView.getSelectedMemberSize() > 0)
@@ -541,6 +574,9 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 清除选中的成员
+	 */
 	public void callSelectClean()
 	{
 		memberAllChecked = false;
@@ -597,30 +633,6 @@ public class MemberFragment extends BaseFragment implements OnClickListener,
 
 		}
 	};
-
-	private void registerViewReSize()
-	{
-		final IntentFilter filter = new IntentFilter();
-		filter.addAction(MyRelativeLayout.ACTION_ON_VIEW_RESIZE);
-		filter.addCategory(Intent.CATEGORY_DEFAULT);
-
-		getActivity().registerReceiver(new BroadcastReceiver()
-		{
-			@Override
-			public void onReceive(Context context, Intent intent)
-			{
-				// TODO Auto-generated method stub
-				if (intent.getAction().equals(MyRelativeLayout.ACTION_ON_VIEW_RESIZE))
-				{
-					boolean isShow = intent.getBooleanExtra(MyRelativeLayout.EXTRA_IS_SOFTKEYBOARD_SHOWN, false);
-					if (currentSelectPage != HomeActivity.PAGE_IM)
-					{
-						mediaStatusBar.setMediaStatusBarVisibility(isShow ? View.GONE : View.VISIBLE);
-					}
-				}
-			}
-		}, filter);
-	}
 
 	@Override
 	public void onContactPresence(boolean isSubscribed, HashMap<String, Integer> presenceMap)

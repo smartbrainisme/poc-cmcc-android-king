@@ -47,6 +47,10 @@ import com.cmccpoc.widget.SlidingUpPanelLayout;
 import com.cmccpoc.widget.SlidingUpPanelLayout.PanelSlideListener;
 import com.cmccpoc.widget.SlidingUpPanelLayout.PanelState;
 
+/**
+ * 主界面 登录之后首先呈现出来的Activity，中间为PTT，左侧为频道成员，右侧为IM消息，顶部下来为频道与会话列表
+ * @author Yao
+ */
 public class HomeActivity extends BaseActivity implements PanelSlideListener, OnPageChangeListener, ViewChangeListener
 {
 	private AirSession session;
@@ -62,16 +66,28 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 
 	private static HomeActivity mInstance;
 
+	/**
+	 * 获取HomeActivity实例
+	 * @return
+	 */
 	public static HomeActivity getInstance()
 	{
 		return mInstance;
 	}
 
+	/**
+	 * 获取当前会话
+	 * @return 会话Entity
+	 */
 	public AirSession getSession()
 	{
 		return session;
 	}
 
+	/**
+	 * 设置session会话
+	 * @param session 会话Entity
+	 */
 	public void setSession(AirSession session)
 	{
 		this.session = session;
@@ -119,7 +135,9 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		}
 	}
 
-	//解决 部分机型的textView设置android:ellipsize="marquee"后 仍会显示省略号
+	/**
+	 * 解决 部分机型的textView设置android:ellipsize="marquee"后 仍会显示省略号
+	 */
 	private void toMarquee()
 	{
 		ViewConfiguration configuration = ViewConfiguration.get(this);
@@ -132,17 +150,14 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		}
 		catch (NoSuchFieldException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (IllegalArgumentException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		catch (IllegalAccessException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -167,7 +182,9 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		}
 	}
 
-	// 滑动
+	/**
+	 * 滑动
+	 */
 	@Override
 	public void onPanelSlide(View panel, float slideOffset)
 	{
@@ -176,7 +193,9 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 			channelView.setVisibility(View.VISIBLE);
 	}
 
-	// 展开
+	/**
+	 * 展开
+	 */
 	@Override
 	public void onPanelExpanded(View panel)
 	{
@@ -197,13 +216,18 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		super.onPause();
 	}
 
-	// 收起
+	/**
+	 * 收起
+	 */
 	@Override
 	public void onPanelCollapsed(View panel)
 	{
 		panelCollapsed();
 	}
 
+	/**
+	 * 收起
+	 */
 	public void panelCollapsed()
 	{
 		Log.i("HOME_ACTIVITY", "onPanelCollapsed");
@@ -247,6 +271,9 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		this.onPageSelected(pageIndex);
 	}
 
+	/**
+	 * 页面被选择时
+	 */
 	@Override
 	public void onPageSelected(int page)
 	{
@@ -417,6 +444,10 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		return super.onCreateDialog(id);
 	}
 
+	/**
+	 * 获取IM消息Fragment实例
+	 * @return IMFragment实例
+	 */
 	private BaseFragment getIMFragment()
 	{
 		if (adapter != null)
@@ -426,7 +457,15 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		return null;
 	}
 
-	public SimpleAdapter mSimpleAdapter(Context contexts, String[] array, int layout, int id)
+	/**
+	 * 自定义适配器
+	 * @param context 上下文
+	 * @param array 数据
+	 * @param layout layout
+	 * @param id id
+	 * @return
+	 */
+	public SimpleAdapter mSimpleAdapter(Context context, String[] array, int layout, int id)
 	{
 		if (array == null)
 			return null;
@@ -441,6 +480,9 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		return new SimpleAdapter(this, data, layout, new String[] { "accountName" }, new int[] { id });
 	}
 
+	/**
+	 * 内部类：页面片段适配器 
+	 */
 	class PageFragmentAdapter extends FragmentPagerAdapter
 	{
 		private List<BaseFragment> fragments = new ArrayList<BaseFragment>();
@@ -467,6 +509,10 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 		}
 	}
 
+	/**
+	 * 检测是否有新im消息
+	 * @param toClean 是否清除所有未读消息
+	 */
 	public void checkNewIM(boolean toClean)
 	{
 		int count = 0;
@@ -535,31 +581,5 @@ public class HomeActivity extends BaseActivity implements PanelSlideListener, On
 
 		return super.dispatchKeyEvent(event);
 	}
-
-	// @Override
-	// public boolean dispatchTouchEvent(MotionEvent ev)
-	// {
-	// if (ev.getAction() == MotionEvent.ACTION_DOWN)
-	// {
-	// if(Config.model.contains("MT7"))
-	// {
-	// View v = mediaStatusBar.getBottomBarParent();
-	// if (isShouldHideInput(v, ev))
-	// {
-	// // RelativeLayout ivSpetrum = PTTFragment.getInstance().getIvSpetrum();
-	// // LayoutParams p = (LayoutParams) ivSpetrum.getLayoutParams();
-	// // p.setMargins(0, 14, 0, 0);
-	// // ivSpetrum.setLayoutParams(p);
-	// }
-	// }
-	// return super.dispatchTouchEvent(ev);
-	// }
-	//
-	// if (getWindow().superDispatchTouchEvent(ev))
-	// {
-	// return true;
-	// }
-	// return onTouchEvent(ev);
-	// }
 
 }

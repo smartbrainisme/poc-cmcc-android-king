@@ -23,14 +23,19 @@ import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.R;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Toast;
-import com.cmccpoc.adapter.AdapterReport;
-import com.cmccpoc.adapter.AdapterReport.onReportCheckedListener;
+import com.cmccpoc.activity.home.adapter.AdapterReport;
+import com.cmccpoc.activity.home.adapter.AdapterReport.onReportCheckedListener;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.control.AirReportManager;
 import com.cmccpoc.entity.AirReport;
 import com.cmccpoc.listener.OnMmiReportListener;
 import com.cmccpoc.widget.MListView;
 
+/**
+ * 更多：上报记录
+ * 可以删除，编辑
+ * @author Yao
+ */
 public class MenuReportActivity extends ActivityBase implements
 		OnClickListener, OnMmiReportListener, OnItemClickListener,
 		onReportCheckedListener, OnCheckedChangeListener
@@ -62,15 +67,14 @@ public class MenuReportActivity extends ActivityBase implements
 		setContentView(R.layout.activity_tool_report);
 		AirReportManager.getInstance().loadReports();
 		doInitView();
-
-		// bundle = getIntent().getExtras();
-		// if (bundle != null)
-		// {
-		// taskId = bundle.getString("taskId");
-		// taskName = bundle.getString("taskName");
-		// }
 	}
 
+	/**
+	 * 添加到选中列表 or 从选中列表中删除
+	 * @param code 上报记录code
+	 * @param value 上报记录Entity
+	 * @param isCheck 是否选中
+	 */
 	private void putSelected(String code, AirReport value, boolean isCheck)
 	{
 		if (isCheck)
@@ -113,6 +117,9 @@ public class MenuReportActivity extends ActivityBase implements
 			adapterReport.notifyDataSetChanged();
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
@@ -149,6 +156,9 @@ public class MenuReportActivity extends ActivityBase implements
 		mInstance = this;
 	}
 
+	/**
+	 * 刷新上报记录列表
+	 */
 	public void refreshListOrEmpty()
 	{
 		if (AirReportManager.getInstance().getReports().size() == 0)
@@ -160,31 +170,14 @@ public class MenuReportActivity extends ActivityBase implements
 		{
 			talk_report_list_panel.setVisibility(View.VISIBLE);
 			talk_report_empty.setVisibility(View.GONE);
-			/*AirReport currentReport = AirReportManager.getInstance().getCurrentReportDoing();
-			if (currentReport != null)
-			{
-				if (currentReport.getState() != AirReport.STATE_UPLOADING)
-					adapterReport.notifyDataSetChanged();
-			}
-			else
-				adapterReport.notifyDataSetChanged();
-			List<AirReport> reports = AirReportManager.getInstance().getReports();
-			if(reports != null && reports.size() > 0)
-			{
-				for (int i = 0; i < reports.size(); i++)
-				{
-					if(reports.get(i).getState() == AirReport.STATE_WAITING)
-					{
-						Log.i(MenuReportActivity.class, "report retry start");
-						AirReportManager.getInstance().ReportRetry(reports.get(i).getCode());
-						break;
-					}
-				}
-			}*/
 			adapterReport.notifyDataSetChanged();
 		}
 	}
 
+	/**
+	 * 计算上报资源大小
+	 * @param size 资源文件大小
+	 */
 	public static String sizeMKB(int size)
 	{
 		String str = "";
@@ -292,6 +285,14 @@ public class MenuReportActivity extends ActivityBase implements
 		}
 	}
 
+	/**
+	 * 自定义适配器
+	 * @param context 上下文
+	 * @param array 数据
+	 * @param layout layout
+	 * @param id id
+	 * @return
+	 */
 	public SimpleAdapter mSimpleAdapter(Context contexts, String[] array, int layout, int id)
 	{
 		if (array == null)

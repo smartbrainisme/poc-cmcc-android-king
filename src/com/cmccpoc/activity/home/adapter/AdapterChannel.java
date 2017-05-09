@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home.widget;
+package com.cmccpoc.activity.home.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +20,13 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.cmccpoc.R;
 import com.cmccpoc.control.AirSessionControl;
 
+/**
+ * 频道列表 适配器 
+ * @author Yao
+ */
 public class AdapterChannel extends BaseAdapter
 {
 	public static final int GROUP_POSITION = 0;
-	// int itemHeight;
 	Context mContext;
 
 	public AdapterChannel(Context mContext, ArrayList<AirChannel> data)
@@ -67,6 +70,10 @@ public class AdapterChannel extends BaseAdapter
 			tvUnread = (TextView) convertView.findViewById(R.id.tv_unread_count);
 		}
 
+		/**
+		 * 填充View
+		 * @param item 频道Entity
+		 */
 		public void fill(final AirChannel item)
 		{
 			AirSession currentChannel = AirSessionControl.getInstance().getCurrentChannelSession();

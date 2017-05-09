@@ -5,22 +5,41 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+/**
+ * 宽度高度 工具类
+ * @author Yao
+ */
 public class DensityUtil
 {
-	// public static int dividerHeight = dip2px(2);
-
+	/**
+	 * dip 转 px
+	 * @param context 上下文
+	 * @param dipValue dip值
+	 * @return
+	 */
 	public static int dip2px(Context context, float dipValue)
 	{
 		float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (dipValue * scale + 0.5f);
 	}
 
+	/**
+	 * px 转 dip
+	 * @param context 上下文
+	 * @param pxValue px值
+	 * @return
+	 */
 	public static int px2dip(Context context, float pxValue)
 	{
 		float scale = context.getResources().getDisplayMetrics().density;
 		return (int) (pxValue / scale + 0.5f);
 	}
 
+	/**
+	 * 获取屏幕宽度
+	 * @param context
+	 * @return
+	 */
 	public static int getWidth(Context context)
 	{
 		initScreen(context);
@@ -31,6 +50,11 @@ public class DensityUtil
 		return 0;
 	}
 
+	/**
+	 * 获取屏幕高度
+	 * @param context
+	 * @return
+	 */
 	public static int getHeight(Context context)
 	{
 		initScreen(context);
@@ -41,6 +65,10 @@ public class DensityUtil
 		return 0;
 	}
 
+	/**
+	 * 初始化屏幕
+	 * @param context
+	 */
 	public static void initScreen(Context context)
 	{
 		if (screen == null)
@@ -52,11 +80,11 @@ public class DensityUtil
 		}
 	}
 
-	public static final void setTextSize(TextView tv, int resId)
-	{
-
-	}
-
+	/**
+	 * 获取状态栏高度
+	 * @param context
+	 * @return
+	 */
 	public static int getStatusHeight(Context context)
 	{
 		if (STATUS_HEIGHT <= 0)

@@ -21,11 +21,14 @@ import com.cmccpoc.Util.AirMmiTimer;
 import com.cmccpoc.Util.AirMmiTimerListener;
 import com.cmccpoc.Util.Toast;
 import com.cmccpoc.Util.Util;
-import com.cmccpoc.activity.MainSessionView;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.control.AirSessionControl;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * PTT按键自定义控件 申请或释放话语权的时候，PTT按键根据不同的状态显示不同的图片 
+ * @author Yao
+ */
 public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirMmiTimerListener
 {
 	private final int TIMEOUT_LONG_CLICK = 200;
@@ -42,6 +45,10 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 		LayoutInflater.from(this.getContext()).inflate(R.layout.include_home_talkbtn, this);
 	}
 
+	/**
+	 * 设置session会话
+	 * @param s 会话Entity
+	 */
 	public void setSession(AirSession s)
 	{
 		this.session = s;
@@ -60,6 +67,9 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 		initFindView();
 	}
 
+	/**
+	 * 初始化绑定控件
+	 */
 	private void initFindView()
 	{
 		btnTalk = findViewById(R.id.media_ptt_box);
@@ -71,6 +81,9 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 		btnTalk.setOnTouchListener(this);
 	}
 
+	/**
+	 * 刷新PTT按钮状态，根据不同状态显示不同的图片
+	 */
 	public void refreshPttButton()
 	{
 		if (session == null)
@@ -195,7 +208,6 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 								{
 									isTalkLongClick = false;
 									v.setPressed(true);
-									Log.i(MainSessionView.class, "TalkButton Start timeout!");
 									AirMmiTimer.getInstance().TimerRegister(getContext(), this, false, true, TIMEOUT_LONG_CLICK, false, null);
 								}
 								else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
@@ -205,14 +217,12 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 									{
 										if (isTalkLongClick)
 										{
-											Log.i(MainSessionView.class, "TalkButton onLongClick released!");
 											AirtalkeeSessionManager.getInstance().TalkRelease(session);
 											isTalkLongClick = false;
 											v.setPressed(false);
 										}
 										else
 										{
-											Log.i(MainSessionView.class, "TalkButton onClick!");
 											AirtalkeeSessionManager.getInstance().TalkButtonClick(session, channel != null ? channel.isRoleAppling() : false);
 										}
 									}
@@ -223,12 +233,10 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 							{
 								if (event.getAction() == MotionEvent.ACTION_DOWN)
 								{
-									Log.i(MainSessionView.class, "TalkButton onLongClick TalkRequest!");
 									AirtalkeeSessionManager.getInstance().TalkRequest(session, channel != null ? channel.isRoleAppling() : false);
 								}
 								else if (event.getAction() == MotionEvent.ACTION_UP || event.getAction() == MotionEvent.ACTION_CANCEL)
 								{
-									Log.i(MainSessionView.class, "TalkButton onLongClick TalkRelease!");
 									AirtalkeeSessionManager.getInstance().TalkRelease(session);
 								}
 							}
@@ -295,11 +303,9 @@ public class StatusTalkBtn extends LinearLayout implements OnTouchListener, AirM
 	@Override
 	public void onMmiTimer(Context context, Object userData)
 	{
-		// TODO Auto-generated method stub
 		try
 		{
 			isTalkLongClick = true;
-			Log.i(MainSessionView.class, "TalkButton Stop timeout!");
 			AirtalkeeSessionManager.getInstance().TalkRequest(session, channel != null ? channel.isRoleAppling() : false);
 		}
 		catch (Exception e)

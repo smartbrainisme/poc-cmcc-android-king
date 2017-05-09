@@ -20,8 +20,12 @@ import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.config.Config;
 
-public class MenuDisplayActivity extends ActivityBase implements
-		OnClickListener, OnUserInfoListener
+/**
+ * 更多：编辑名称
+ * 修改昵称的
+ * @author Yao
+ */
+public class MenuDisplayActivity extends ActivityBase implements OnClickListener, OnUserInfoListener
 {
 	public EditText tvUserName;
 
@@ -59,6 +63,9 @@ public class MenuDisplayActivity extends ActivityBase implements
 		AirtalkeeUserInfo.getInstance().setOnUserInfoListener(this);
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
@@ -99,7 +106,7 @@ public class MenuDisplayActivity extends ActivityBase implements
 				tvUserName.setHint(AirtalkeeUserInfo.getInstance().getUserInfo().getDisplayName());
 				if (!Utils.isEmpty(value))
 				{
-					if (value.length() > MenuSettingActivity.SETTING_DISPLAYNAME_LEN)
+					if (value.length() > 11)
 					{
 						Util.Toast(this, getString(R.string.talk_user_info_update_name_error));
 					}
@@ -107,8 +114,6 @@ public class MenuDisplayActivity extends ActivityBase implements
 					{
 						try
 						{
-							// Util.Toast(this,
-							// getString(R.string.talk_user_info_update_name_doing));
 							AirtalkeeUserInfo.getInstance().UserInfoUpdate(value.trim());
 							Util.Toast(this, getString(R.string.talk_channel_editname_success), R.drawable.ic_success);
 							Intent it = new Intent(MenuDisplayActivity.this, MenuAccountActivity.class);

@@ -22,14 +22,16 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
+/**
+ * 更多：上报记录预览
+ * 就是查看一下某天上报记录的详细信息
+ * @author Yao
+ */
 public class MenuReportViewActivity extends ActivityBase implements OnClickListener
 {
-
 	private MediaController mVideoController;
 	private AirReport report = null;
-
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
-
 	DisplayImageOptions options = new DisplayImageOptions.Builder().showImageForEmptyUri(R.drawable.msg_image).showImageOnFail(R.drawable.msg_image).resetViewBeforeLoading(true).cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY).bitmapConfig(Bitmap.Config.RGB_565).considerExifParams(true).displayer(new FadeInBitmapDisplayer(300)).build();
 
 	@Override
@@ -42,6 +44,10 @@ public class MenuReportViewActivity extends ActivityBase implements OnClickListe
 		doInitView(bundle);
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 * @param bundle bundle参数，主要是为了获取reportCode
+	 */
 	private void doInitView(Bundle bundle)
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
@@ -83,14 +89,12 @@ public class MenuReportViewActivity extends ActivityBase implements OnClickListe
 					}
 					catch (Exception e)
 					{
-						// TODO: handle exception
 					}
 				}
 				else
 				{
 					iconVideo.setVisibility(View.GONE);
 					iconImage.setVisibility(View.VISIBLE);
-					// iconImage.setImageURI(report.getResUri());
 					imageLoader.displayImage(report.getResUri().toString(), iconImage);
 				}
 				if (Utils.isEmpty(report.getResContent()))

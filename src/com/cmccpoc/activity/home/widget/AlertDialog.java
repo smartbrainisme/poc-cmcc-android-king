@@ -11,6 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.cmccpoc.R;
 
+/**
+ * 自定义弹窗，可以自定义确定、取消按钮名称与功能（通过实现DialogListener接口，重写里面的方法）
+ * @author Yao
+ */
 public class AlertDialog extends Dialog implements android.view.View.OnClickListener
 {
 
@@ -148,6 +152,9 @@ public class AlertDialog extends Dialog implements android.view.View.OnClickList
 		fillView();
 	}
 
+	/**
+	 * 初始化绑定窗扣内空间
+	 */
 	protected void initView()
 	{
 		tvTitle = (TextView) findViewById(R.id.tv_title);
@@ -172,6 +179,9 @@ public class AlertDialog extends Dialog implements android.view.View.OnClickList
 
 	}
 
+	/**
+	 * 根据不同的构造函数，确定是否显示取消按钮等
+	 */
 	protected void fillView()
 	{
 		if (TextUtils.isEmpty(title))

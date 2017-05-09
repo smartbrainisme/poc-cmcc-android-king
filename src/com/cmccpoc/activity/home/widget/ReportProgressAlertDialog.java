@@ -1,6 +1,5 @@
 package com.cmccpoc.activity.home.widget;
 
-import com.cmccpoc.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,13 +8,17 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import com.cmccpoc.R;
 
+/**
+ * 视频、图片上报时，弹出的进度条窗口
+ * @author Yao
+ */
 public class ReportProgressAlertDialog extends Dialog implements OnClickListener
 {
 	private ProgressBar reportBar;
 	private TextView tvFileSize, tvFileProgress;
 	private Button cancel;
-	private Context context;
 
 	private String fileSize;
 
@@ -23,13 +26,11 @@ public class ReportProgressAlertDialog extends Dialog implements OnClickListener
 	{
 		super(context, R.style.alert_dialog);
 		this.fileSize = fileSize;
-		this.context = context;
 	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.dialog_alert_report);
 		reportBar = (ProgressBar) findViewById(R.id.report_progress);
@@ -42,6 +43,10 @@ public class ReportProgressAlertDialog extends Dialog implements OnClickListener
 		cancel.setOnClickListener(this);
 	}
 
+	/**
+	 * 设置进度值
+	 * @param progress 进度值
+	 */
 	public void setFileProgress(int progress)
 	{
 		tvFileProgress.setText("进度 " + progress + "%");

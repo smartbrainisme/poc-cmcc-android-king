@@ -14,10 +14,18 @@ import android.text.style.LineHeightSpan;
 import android.text.style.ReplacementSpan;
 import com.cmccpoc.R;
 
+/**
+ * 表情符号帮助类
+ * @author Yao
+ */
 public class Smilify
 {
 	private boolean m_isfontHeight;
 
+	/**
+	 * 内部类:表情容器
+	 * @author Yao
+	 */
 	private final class SmileySpan extends ReplacementSpan implements LineHeightSpan
 	{
 		private String mSmiley;
@@ -37,6 +45,7 @@ public class Smilify
 			drawable = getSmileyDrawable2(index);
 		}
 
+		@Override
 		public void draw(Canvas canvas, CharSequence text, int start, int end, float x, int top, int y, int bottom, Paint paint)
 		{
 			try
@@ -62,6 +71,7 @@ public class Smilify
 			}
 		}
 
+		@Override
 		public int getSize(Paint paint, CharSequence text, int start, int end, FontMetricsInt fm)
 		{
 			//			Drawable drawable = getSmileyDrawable();
@@ -82,6 +92,7 @@ public class Smilify
 			}
 		}
 
+		@Override
 		public void chooseHeight(CharSequence text, int start, int end, int istartv, int v, Paint.FontMetricsInt fm)
 		{
 			if (!m_isfontHeight)
@@ -275,9 +286,12 @@ public class Smilify
 		}
 	}
 
-	public void addSmiley(Spannable spannable, boolean is)
+	/**
+	 * 添加一个表情
+	 * @param spannable Spannable对象
+	 */
+	public void addSmiley(Spannable spannable)
 	{
-		m_isfontHeight = is;
 		Matcher m = mSmileyPattern.matcher(spannable);
 		while (m.find())
 		{

@@ -29,6 +29,11 @@ import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 更多：修改密码
+ * 密码规则：6~15位数字 or 字母
+ * @author Yao
+ */
 public class MenuPasswordActivity extends ActivityBase implements
 		OnClickListener, OnCheckedChangeListener, UserInfoListener,
 		UserAccountListener
@@ -57,6 +62,9 @@ public class MenuPasswordActivity extends ActivityBase implements
 		super.onStart();
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 
@@ -171,6 +179,9 @@ public class MenuPasswordActivity extends ActivityBase implements
 		}
 	};
 
+	/**
+	 * 检测三个EditText是否为空，如果有一个为空，保存按钮就无法点击
+	 */
 	private void checkEditTextNull()
 	{
 		String password = old_password.getText().toString().trim();;

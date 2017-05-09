@@ -20,6 +20,10 @@ import com.cmccpoc.R;
 import com.cmccpoc.activity.MenuReportAsPicActivity;
 import com.cmccpoc.activity.MenuReportAsVidActivity;
 
+/**
+ * 上报视频时，拍摄录像的自定义Camera控件
+ * @author Yao
+ */
 public class VideoCamera extends Activity implements OnClickListener, CallbackRecordVideoSession
 {
 	public static String EXTRA_VIDEO_PATH = "extra_video_path";
@@ -122,6 +126,10 @@ public class VideoCamera extends Activity implements OnClickListener, CallbackRe
 		}
 	}
 
+	/**
+	 * 刷新拍照按钮状态
+	 * @param state 状态
+	 */
 	public void refreshStartButton()
 	{
 		switch (session.getState())
@@ -166,9 +174,11 @@ public class VideoCamera extends Activity implements OnClickListener, CallbackRe
 
 	long currentMillis = 0;
 
+	/**
+	 * 开始录制时，传输流数据
+	 */
 	public void toggleStream()
 	{
-
 		if (Utils.getCurrentTimeInMillis() - currentMillis > 2000)
 		{
 			if (session.getState() == VideoSession.STATE_STOPPED)
@@ -177,11 +187,11 @@ public class VideoCamera extends Activity implements OnClickListener, CallbackRe
 				session.stopRecord();
 			currentMillis = Utils.getCurrentTimeInMillis();
 		}
-		// else
-		// Toast.makeText(this, "Frequent operation!",
-		// Toast.LENGTH_SHORT).show();
 	}
 
+	/**
+	 * 刷新录制状态
+	 */
 	private void refreshFlashState()
 	{
 		if (session.getFlashState())

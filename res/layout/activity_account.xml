@@ -104,7 +104,6 @@
                             android:focusableInTouchMode="false"
                             android:gravity="center_vertical"
                             android:hint="@string/talk_input_pwd"
-                            android:inputType="number"
                             android:isScrollContainer="true"
                             android:maxLength="20"
                             android:password="true"

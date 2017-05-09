@@ -1,4 +1,4 @@
-package com.cmccpoc.adapter;
+package com.cmccpoc.activity.home.adapter;
 
 import java.io.File;
 import java.util.HashMap;
@@ -30,17 +30,19 @@ import com.cmccpoc.R;
 import com.cmccpoc.Util.Toast;
 import com.cmccpoc.control.AirReportManager;
 import com.cmccpoc.entity.AirReport;
-import com.cmccpoc.listener.OnMmiLocationListener;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 
-public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmiLocationListener
+/**
+ * 上报记录适配器
+ * @author Yao
+ */
+public class AdapterReport extends BaseAdapter implements OnClickListener
 {
 	private Context context = null;
 	private List<AirReport> reports = null;
-	// private boolean isShowIcons = true;
 	Map<String, RelativeLayout> viewMap = new HashMap<String, RelativeLayout>();
 	protected ImageLoader imageLoader = ImageLoader.getInstance();
 	private onReportCheckedListener checkedListener;
@@ -154,6 +156,11 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 		return convertView;
 	}
 
+	/**
+	 * 填充每个上报记录的View
+	 * @param report 上报记录Entity
+	 * @param holder 结构
+	 */
 	private void fillView(final AirReport report, ViewHolder holder)
 	{
 		if (report != null)
@@ -337,6 +344,10 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 		}
 	}
 
+	/**
+	 * 刷新上报进度条
+	 * @param report 上报记录Entity
+	 */
 	public void refreshProgress(AirReport report)
 	{
 		RelativeLayout layout = viewMap.get(report.getCode());
@@ -363,17 +374,5 @@ public class AdapterReport extends BaseAdapter implements OnClickListener, OnMmi
 		{
 			// notifyDataSetChanged();
 		}
-	}
-
-	@Override
-	public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time, String address)
-	{
-	}
-
-	@Override
-	public void onLocationChanged(boolean isOk, int id, int type, double latitude, double longitude, double altitude, float speed, String time)
-	{
-		// TODO Auto-generated method stub
-		
 	}
 }

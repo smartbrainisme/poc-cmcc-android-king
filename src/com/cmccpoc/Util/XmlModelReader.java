@@ -10,12 +10,15 @@ import android.content.res.XmlResourceParser;
 import android.util.AttributeSet;
 import android.util.Xml;
 import android.view.InflateException;
-import android.view.KeyEvent;
 import android.view.View;
 import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.R;
 import com.cmccpoc.config.Config;
 
+/**
+ * XML模型读取类
+ * @author Yao
+ */
 public class XmlModelReader
 {
 	private static final String XML_MODELS = "menu";
@@ -28,6 +31,10 @@ public class XmlModelReader
 		
 	}
 
+	/**
+	 * 寻找xml资源
+	 * @param menuRes 资源文件id
+	 */
 	public void inflate(int menuRes)
 	{
 		Config.model = android.os.Build.MODEL;
@@ -57,10 +64,13 @@ public class XmlModelReader
 	/**
 	 * Called internally to fill the given menu. If a sub menu is seen, it will
 	 * call this recursively.
+	 * @param parser XmlPullParser对象
+	 * @param attrs 属性
+	 * @throws XmlPullParserException XML转换异常
+	 * @throws IOException IO异常
 	 */
 	private void parseMenu(XmlPullParser parser, AttributeSet attrs) throws XmlPullParserException, IOException
 	{
-
 		int eventType = parser.getEventType();
 		String tagName;
 		boolean lookingForEndOfUnknownTag = false;
@@ -129,6 +139,11 @@ public class XmlModelReader
 		}
 	}
 
+	/**
+	 * 解析项
+	 * @param attrs 属性
+	 * @param context 上下文
+	 */
 	public void parseItem(AttributeSet attrs, Context context)
 	{
 		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.PttConfig);

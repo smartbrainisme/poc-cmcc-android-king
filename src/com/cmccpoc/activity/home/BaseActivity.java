@@ -21,9 +21,12 @@ import com.cmccpoc.listener.OnMmiAccountListener;
 import com.cmccpoc.listener.OnMmiChannelListener;
 import com.cmccpoc.widget.PageIndicator;
 
+/**
+ * Activity的基类，在这定义了一些基本的方法和通用的变量
+ * @author Yao
+ */
 public class BaseActivity extends FragmentActivity implements OnMmiAccountListener, OnMmiChannelListener
 {
-
 	public static final int PAGE_MEMBER = 0;
 	public static final int PAGE_PTT = 1;
 	public static final int PAGE_IM = 2;
@@ -34,15 +37,15 @@ public class BaseActivity extends FragmentActivity implements OnMmiAccountListen
 	/* 1 */PTTFragment.class,
 	/* 2 */IMFragment.class, };
 
-	//	protected static final Class<?>[] TABS_ADD = {
-	//	/* 0 */MemberTempFragment.class,
-	//	/* 1 */PTTFragment.class,
-	//	/* 2 */IMFragment.class, };
-
 	protected ViewPager viewPager;
 	protected PageIndicator mPageIndicator;
-	
+
 	private static BaseActivity mInstance;
+
+	/**
+	 * 获取Activity实例
+	 * @return
+	 */
 	public static BaseActivity getInstance()
 	{
 		return mInstance;
@@ -61,6 +64,12 @@ public class BaseActivity extends FragmentActivity implements OnMmiAccountListen
 		mInstance = this;
 	}
 
+	/**
+	 * 是否需要隐藏软键盘
+	 * @param v 
+	 * @param event
+	 * @return
+	 */
 	public boolean isShouldHideInput(View v, MotionEvent event)
 	{
 		if (v != null)
@@ -172,13 +181,13 @@ public class BaseActivity extends FragmentActivity implements OnMmiAccountListen
 	public void onChannelMemberListGet(String channelId, List<AirContact> members)
 	{
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void onChannelOnlineCount(LinkedHashMap<String, Integer> online)
 	{
-		
+
 	}
 
 	@Override
@@ -196,5 +205,4 @@ public class BaseActivity extends FragmentActivity implements OnMmiAccountListen
 		MemberFragment.getInstance().refreshAllMembers();
 	}
 
-	
 }

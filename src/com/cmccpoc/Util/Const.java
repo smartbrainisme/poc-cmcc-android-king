@@ -2,20 +2,22 @@ package com.cmccpoc.Util;
 
 import com.airtalkee.sdk.util.PicFactory;
 
+/**
+ * 常量
+ * @author Yao
+ */
 public class Const
 {
 	public static final class image_select
 	{
 		/**
-		 * startActivityForResult��request�����͡�<br>
-		 * �������ͼƬ��ͷ��
+		 * startActivityForResult
 		 */
 		public static final int REQUEST_CODE_BROWSE_IMAGE = 111;
 		public static final int REQUEST_CODE_BROWSE_VIDEO = 112;
 
 		/**
-		 * startActivityForResult��request�����͡�<br>
-		 * ������ͷ��
+		 * startActivityForResult
 		 */
 		public static final int REQUEST_CODE_CREATE_IMAGE = 121;
 		public static final int REQUEST_CODE_CREATE_VIDEO = 122;

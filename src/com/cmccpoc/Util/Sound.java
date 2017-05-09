@@ -80,6 +80,10 @@ public class Sound
 		return alert;
 	}
 
+	/**
+	 * 震动
+	 * @param context 上下文
+	 */
 	public static void vibrate(Context context)
 	{
 		if (context != null)
@@ -90,6 +94,11 @@ public class Sound
 		}
 	}
 
+	/**
+	 * 震动
+	 * @param msecond 震动时长
+	 * @param context 上下文
+	 */
 	public static void vibrate(int msecond, Context context)
 	{
 		if (context != null)
@@ -113,6 +122,14 @@ public class Sound
 	{
 		playSound(playerId, isLooping, context, null);
 	}
+	
+	/**
+	 * 播放音频
+	 * @param playerId 音频资源Id
+	 * @param isLooping 是否循环
+	 * @param context
+	 * @param listener
+	 */
 	public static void playSound(int playerId, boolean isLooping, Context context,OnCompletionListener listener)
 	{
 		try
@@ -184,28 +201,11 @@ public class Sound
 		// soundPlaying = false;
 	}
 
-	public static void clearSound()
-	{
-		try
-		{
-			if (mediaPlayer == null)
-				return;
-			for (MediaPlayer mp : mediaPlayer)
-			{
-				if (mp != null)
-				{
-					mp.stop();
-					mp.release();
-				}
-			}
-			mediaPlayer = null;
-		}
-		catch (Exception e)
-		{
-			Log.e(Sound.class, " Exception clearSound��Error =" + e.toString());
-		}
-	}
 
+	/**
+	 * 停止播放
+	 * @param playerId 音频资源Id
+	 */
 	public static void stopSound(int playerId)
 	{
 		try
@@ -222,6 +222,11 @@ public class Sound
 		}
 	}
 
+	/**
+	 * 音频是否在播放
+	 * @param playerId 音频资源Id
+	 * @return
+	 */
 	public static boolean soundIsPlaying(int playerId)
 	{
 		boolean playing = false;
@@ -238,12 +243,4 @@ public class Sound
 		}
 		return playing;
 	}
-
-	@SuppressWarnings("deprecation")
-	public static boolean isWiredHeadSetOn(Context context)
-	{
-		AudioManager localAudioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-		return localAudioManager.isWiredHeadsetOn();
-	}
-
 }

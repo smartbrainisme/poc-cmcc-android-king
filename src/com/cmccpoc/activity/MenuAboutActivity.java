@@ -25,6 +25,11 @@ import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.config.Config;
 
+/**
+ * 更多：关于版本Activity
+ * 主要功能包括：检查更新并在线升级、查看运行时长与流量消耗
+ * @author Yao
+ */
 public class MenuAboutActivity extends ActivityBase implements OnClickListener, AirMmiTimerListener, OnVersionUpdateListener
 {
 	private LinearLayout statLayout, checkVersionLayout;
@@ -37,11 +42,19 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 	private boolean isDownloading = false;
 	private boolean isShow = false;
 
+	/**
+	 * 是否正在下载
+	 * @return
+	 */
 	public boolean isDownloading()
 	{
 		return isDownloading;
 	}
 
+	/**
+	 * 设置是否正在下载中
+	 * @param isDownloading
+	 */
 	public void setDownloading(boolean isDownloading)
 	{
 		this.isDownloading = isDownloading;
@@ -52,6 +65,10 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 	private final String STAT_TIME = "STAT_TIME";
 	
 	private static MenuAboutActivity mInstance;
+	/**
+	 * 获取关于版本Activity实例对象
+	 * @return
+	 */
 	public static MenuAboutActivity getInstance()
 	{
 		return mInstance;
@@ -103,6 +120,9 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 		super.onStart();
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
@@ -180,6 +200,10 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 		}
 	}
 
+	/**
+	 * 计时器：
+	 * 统计app当前运行时长与消耗流量
+	 */
 	@Override
 	public void onMmiTimer(Context context, Object userData)
 	{
@@ -230,6 +254,10 @@ public class MenuAboutActivity extends ActivityBase implements OnClickListener, 
 		}
 	}
 
+	/**
+	 * 检查版本
+	 * 如果有新版本，则弹出提示窗口通知要更新
+	 */
 	private void checkVersion()
 	{
 		String lang = Language.getLocalLanguage(MenuAboutActivity.this);

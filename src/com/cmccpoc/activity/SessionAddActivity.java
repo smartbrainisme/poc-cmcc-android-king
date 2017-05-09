@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home;
+package com.cmccpoc.activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +19,13 @@ import com.cmccpoc.R;
 import com.cmccpoc.activity.home.widget.MemberAllView;
 import com.cmccpoc.activity.home.widget.MemberAllView.MemberCheckListener;
 
+/**
+ * 临时会话 添加成员 界面
+ * 将选中的成员添加到当前临时会话中
+ * @author Yao
+ */
 public class SessionAddActivity extends Activity implements OnClickListener, MemberCheckListener
 {
-
 	private LinearLayout containner;
 	private MemberAllView memAllView;
 	private ViewGroup bottom;
@@ -67,12 +71,18 @@ public class SessionAddActivity extends Activity implements OnClickListener, Mem
 		}
 	}
 
+	/**
+	 * 清除选择成员
+	 */
 	public void callSelectClean()
 	{
 		memAllView.resetCheckBox();
 		refreshBottomView(false);
 	}
 
+	/**
+	 * 呼叫添加的成员
+	 */
 	public void callAddMember()
 	{
 		if (tempCallMembers == null)
@@ -107,6 +117,10 @@ public class SessionAddActivity extends Activity implements OnClickListener, Mem
 		}
 	}
 
+	/**
+	 * 刷新底部按钮状态
+	 * @param isChecked 是否选中
+	 */
 	private void refreshBottomView(boolean isChecked)
 	{
 		for (int i = 0; i < bottom.getChildCount(); i++)

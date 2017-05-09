@@ -29,9 +29,13 @@ import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.config.Config;
 
+/**
+ * 更多：广播
+ * 获取广播列表,webview而已
+ * @author Yao
+ */
 public class MenuNoticeActivity extends ActivityBase implements OnClickListener
 {
-
 	private final String NOTICE_LIST_BASE = "textAnnouncementAction_listTextUI.action?userId=<UID>&lang=<LANG>&type=1";
 	private final String NOTICE_LIST = "textAnnouncementAction_listTextUI.action";
 	private final String NOTICE_CONTENT = "textAnnouncementAction_commentTextUI.action";
@@ -75,6 +79,9 @@ public class MenuNoticeActivity extends ActivityBase implements OnClickListener
 		openWeb(url);
 	}
 	
+	/**
+	 * 初始化绑定控件Id
+	 */
 	@SuppressLint("SetJavaScriptEnabled")
 	private void doInitView()
 	{
@@ -186,6 +193,10 @@ public class MenuNoticeActivity extends ActivityBase implements OnClickListener
 		webViewContent.destroy();
 	}
 
+	/**
+	 * 打开web页面，然后用webview显示
+	 * @param url url地址
+	 */
 	private void openWeb(String url)
 	{
 		if (!Utils.isEmpty(url))
@@ -226,6 +237,9 @@ public class MenuNoticeActivity extends ActivityBase implements OnClickListener
 		}
 	}
 
+	/**
+	 * 关闭web页面
+	 */
 	private void closeWeb()
 	{
 		if (isWebContentShowing)
@@ -308,6 +322,10 @@ public class MenuNoticeActivity extends ActivityBase implements OnClickListener
 		return super.dispatchKeyEvent(event);
 	}
 
+	/**
+	 * 加载web中广播列表
+	 * @param url 地址
+	 */
 	private void webLoadList(String url)
 	{
 		if (!Utils.isEmpty(url))
@@ -373,6 +391,9 @@ public class MenuNoticeActivity extends ActivityBase implements OnClickListener
 		}
 	}
 
+	/**
+	 * 加载web内容
+	 */
 	@SuppressWarnings("deprecation")
 	private void webLoadContent()
 	{

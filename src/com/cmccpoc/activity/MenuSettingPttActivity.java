@@ -20,11 +20,14 @@ import com.cmccpoc.Util.Setting;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.config.Config;
 
-public class MenuSettingPttActivity extends ActivityBase implements
-		OnClickListener, OnCheckedChangeListener
+/**
+ * 更多：对讲设置
+ * 一堆对讲设置选项，具体内容详见layout即可
+ * @author Yao
+ */
+public class MenuSettingPttActivity extends ActivityBase implements OnClickListener, OnCheckedChangeListener
 {
-
-	private CheckBox mVoiceAmplifier, mPttClick, mPttVolume, mPttAnswer, mPttIsb;
+	private CheckBox mVoiceAmplifier, mPttClick, mPttVolume, mPttAnswer,mPttIsb;
 	View pttAnswerLayout;
 	private TextView mFrequenceText;
 	private int[] mFrequenceValue = { Config.ENGINE_MEDIA_HB_SECOND_HIGH, Config.ENGINE_MEDIA_HB_SECOND_FAST, Config.ENGINE_MEDIA_HB_SECOND_MEDIUM, Config.ENGINE_MEDIA_HB_SECOND_SLOW };
@@ -50,6 +53,9 @@ public class MenuSettingPttActivity extends ActivityBase implements
 		super.onStart();
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
@@ -157,9 +163,11 @@ public class MenuSettingPttActivity extends ActivityBase implements
 		super.finish();
 	}
 
+	/**
+	 * radioGroup checked change listner
+	 */
 	private RadioGroup.OnCheckedChangeListener listener = new RadioGroup.OnCheckedChangeListener()
 	{
-
 		@Override
 		public void onCheckedChanged(RadioGroup group, int checkedId)
 		{
@@ -282,6 +290,9 @@ public class MenuSettingPttActivity extends ActivityBase implements
 		}
 	}
 
+	/**
+	 * 刷新PTT应答模式选项
+	 */
 	private void refreshPttAnswerItem()
 	{
 		if (mPttIsb != null)

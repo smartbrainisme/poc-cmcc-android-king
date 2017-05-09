@@ -26,6 +26,10 @@ import com.cmccpoc.entity.AirReport;
 import com.cmccpoc.listener.OnMmiReportListener;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 上报记录管理类
+ * @author Yao
+ */
 public class AirReportManager implements OnReportListener
 {
 	private static AirReportManager mInstance;
@@ -47,6 +51,10 @@ public class AirReportManager implements OnReportListener
 		return mInstance;
 	}
 	
+	/**
+	 * 设置正在上传的上报记录
+	 * @param report 上报记录Entity
+	 */
 	public void setReportDoing(AirReport report)
 	{
 		reportDoing = report;
@@ -57,6 +65,9 @@ public class AirReportManager implements OnReportListener
 		this.reportListener = listener;
 	}
 
+	/**
+	 * 加载上报记录
+	 */
 	public void loadReports()
 	{
 		if (!isReportLoaded)
@@ -71,6 +82,11 @@ public class AirReportManager implements OnReportListener
 		return reports;
 	}
 
+	/**
+	 * 获取一条上报记录
+	 * @param code 上报记录code
+	 * @return 上报记录
+	 */
 	public AirReport getReport(String code)
 	{
 		AirReport report = null;
@@ -85,11 +101,35 @@ public class AirReportManager implements OnReportListener
 		return report;
 	}
 
+	/**
+	 * 执行资源上报
+	 * @param resType 资源类型
+	 * @param resTypeExtension 扩展资源类型
+	 * @param resUri 资源Uri地址
+	 * @param resPath 资源路径
+	 * @param resContent 资源描述内容
+	 * @param resSize 资源大小
+	 * @param locationX 纬度
+	 * @param locationY 精度
+	 */
 	public void Report(int resType, String resTypeExtension, Uri resUri, String resPath, String resContent, int resSize, double locationX, double locationY)
 	{
 		Report(null, null, resType, resTypeExtension, resUri, resPath, resContent, resSize, locationX, locationY);
 	}
 
+	/**
+	 * 执行资源上报
+	 * @param taskId 任务Id
+	 * @param taskName 任务名称
+	 * @param resType 资源类型
+	 * @param resTypeExtension 扩展资源类型
+	 * @param resUri 资源Uri地址
+	 * @param resPath 资源路径
+	 * @param resContent 资源描述内容
+	 * @param resSize 资源大小
+	 * @param locationX 纬度
+	 * @param locationY 精度
+	 */
 	public void Report(String taskId, String taskName, int resType, String resTypeExtension, Uri resUri, String resPath, String resContent, int resSize, double locationX, double locationY)
 	{
 		boolean toReport = true;
@@ -135,6 +175,10 @@ public class AirReportManager implements OnReportListener
 		}
 	}
 
+	/**
+	 * 重新上报（会产生新的上报记录）
+	 * @param report 上报记录Entity
+	 */
 	public void ReportResend(AirReport report)
 	{
 		AirReport r = new AirReport();
@@ -156,12 +200,19 @@ public class AirReportManager implements OnReportListener
 		reportActionDoNew(r);
 	}
 
+	/**
+	 * 重试上传（不会产生新的上报记录）
+	 * @param code
+	 */
 	public void ReportRetry(String code)
 	{
 		AirReport report = getReport(code);
 		reportActionDoRetry(report);
 	}
 
+	/**
+	 * 清理上报记录
+	 */
 	public void ReportClean()
 	{
 		List<AirReport> reportsTemp = new ArrayList<AirReport>();
@@ -184,6 +235,10 @@ public class AirReportManager implements OnReportListener
 		}
 	}
 
+	/**
+	 * 删除一条上报记录
+	 * @param code 上报记录code
+	 */
 	public void ReportDelete(String code)
 	{
 		AirReport report = getReport(code);
@@ -198,6 +253,10 @@ public class AirReportManager implements OnReportListener
 		}
 	}
 
+	/**
+	 * 删除多条上报记录
+	 * @param reports 要删除的上报记录列表
+	 */
 	public void ReportsDetele(Map<String, AirReport> reports)
 	{
 		if (null != reports && reports.size() > 0)
@@ -211,6 +270,11 @@ public class AirReportManager implements OnReportListener
 		}
 	}
 
+	/**
+	 * 获取上报任务
+	 * @param code 上报记录code
+	 * @return 上报记录Entity
+	 */
 	private AirReport reportGetTask(String code)
 	{
 		AirReport report = null;
@@ -233,7 +297,10 @@ public class AirReportManager implements OnReportListener
 	 * Actions
 	 * 
 	 ********************************************/
-
+	/**
+	 * 执行上报新记录
+	 * @param report 上报记录Entity
+	 */
 	private void reportActionDoNew(AirReport report)
 	{
 		if (reportDoing == null)
@@ -262,6 +329,10 @@ public class AirReportManager implements OnReportListener
 		broadCastReportState();
 	}
 
+	/**
+	 * 执行重试上报
+	 * @param report 上报记录Entity
+	 */
 	private void reportActionDoRetry(AirReport report)
 	{
 		if (report != null && report.getState() == AirReport.STATE_RESULT_FAIL)
@@ -289,6 +360,10 @@ public class AirReportManager implements OnReportListener
 		}
 	}
 
+	/**
+	 * 上报进度
+	 * @param progress 进度值 0~100
+	 */
 	private void reportActionProgress(int progress)
 	{
 		if (reportDoing != null)
@@ -302,6 +377,11 @@ public class AirReportManager implements OnReportListener
 		}
 	}
 
+	/**
+	 * 上报结果
+	 * @param statusCode 状态码
+	 * @param resId 资源Id
+	 */
 	private void reportActionResult(int statusCode, String resId)
 	{
 		if (reportDoing != null)
@@ -429,6 +509,11 @@ public class AirReportManager implements OnReportListener
 		}
 	}
 
+	/**
+	 * 上报到服务器
+	 * @param report 上报记录Entity
+	 * @return 是否成功
+	 */
 	private boolean reportToServer(AirReport report)
 	{
 		boolean isOk = false;
@@ -439,15 +524,15 @@ public class AirReportManager implements OnReportListener
 				AirtalkeeReport.getInstance().ReportResource(report.getType(), report.getTypeExtension(), data, report.getResContent(), AirtalkeeReport.LOCATION_TYPE_CELL, report.getLocLatitude() + "", report.getLocLongitude() + "");
 			else
 				AirtalkeeReport.getInstance().ReportResource(report.getTaskId(), report.getType(), report.getTypeExtension(), data, report.getResContent(), AirtalkeeReport.LOCATION_TYPE_CELL, report.getLocLatitude() + "", report.getLocLongitude() + "");
-			// AirtalkeeReport.getInstance().ReportResource(true,
-			// report.getType(), report.getResFileName(), data,
-			// report.getResContent(), AirtalkeeReport.LOCATION_TYPE_CELL,
-			// report.getLocLatitude() + "", report.getLocLongitude() + "");
 			isOk = true;
 		}
 		return isOk;
 	}
 
+	/**
+	 * 获取正在上报的记录Entity
+	 * @return 上报记录Entity
+	 */
 	public AirReport getCurrentReportDoing()
 	{
 		return reportDoing;
@@ -462,15 +547,12 @@ public class AirReportManager implements OnReportListener
 	@Override
 	public void onReportResourceProgress(int progress)
 	{
-		// TODO Auto-generated method stub
 		reportActionProgress(progress);
-
 	}
 
 	@Override
 	public void onReportResourceUploaded(int statusCode, String resId)
 	{
-		// TODO Auto-generated method stub
 		reportActionResult(statusCode, resId);
 	}
 
@@ -479,10 +561,13 @@ public class AirReportManager implements OnReportListener
 	 * BroadCast
 	 * 
 	 ********************************************/
-	public static final String AIR_ACTION = "com.airtalkee.action";
+	public static final String AIR_ACTION = "com.cmccpoc.action";
 	public static final int OPER_UPLOAD_PICTURE = 1000;
 	public static final int OPER_UPLOAD_VIDEO = 1001;
 
+	/**
+	 * 发送广播通知上报状态
+	 */
 	private void broadCastReportState()
 	{
 		Intent intent = new Intent(AIR_ACTION);

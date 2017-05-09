@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home;
+package com.cmccpoc.activity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,12 +29,17 @@ import com.cmccpoc.Util.Bimp;
 import com.cmccpoc.Util.Const;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
-import com.cmccpoc.activity.MenuReportAsPicActivity;
-import com.cmccpoc.activity.home.widget.AdapterPhoto;
-import com.cmccpoc.activity.home.widget.AdapterPhoto.TextCallback;
+import com.cmccpoc.activity.home.adapter.AdapterPhoto;
+import com.cmccpoc.activity.home.adapter.AdapterPhoto.TextCallback;
 import com.cmccpoc.entity.ImageItem;
 import com.cmccpoc.widget.PhotoCamera;
 
+/**
+ * 照片列表
+ * 在AlbumChooseActivity中，点击一个相册，即可进入当前Activity
+ * 当前列表在初始化时会判断是要发送IM消息，还是要上报记录，这两个用的同一个图片列表与相册列表
+ * @author Yao
+ */
 public class AlbumEnterActivity extends Activity implements OnClickListener
 {
 	public static final String EXTRA_IMAGE_LIST = "imagelist";
@@ -94,7 +99,9 @@ public class AlbumEnterActivity extends Activity implements OnClickListener
 		}
 	}
 
-	// 初始化view视图
+	/**
+	 * 初始化view视图
+	 */
 	private void initView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);

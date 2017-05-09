@@ -5,6 +5,11 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.widget.TextView;
 
+/**
+ * 自定义TextView，用在频道列表界面上，当频道名称过长时，会以跑马灯的形式滚动
+ * @author Yao
+ *
+ */
 public class MarqueeTextView extends TextView
 {
 	
@@ -27,11 +32,5 @@ public class MarqueeTextView extends TextView
 	public boolean isFocused()
 	{
 		return true;
-	}
-
-	@Override
-	protected void onFocusChanged(boolean focused, int direction, Rect previouslyFocusedRect)
-	{
-		
 	}
 }

@@ -29,20 +29,23 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.R;
 import com.cmccpoc.Util.Util;
-import com.cmccpoc.activity.home.AdapterMemberAll;
-import com.cmccpoc.activity.home.AdapterMemberAll.CheckedCallBack;
+import com.cmccpoc.activity.home.adapter.AdapterMemberAll;
+import com.cmccpoc.activity.home.adapter.AdapterMemberAll.CheckedCallBack;
 import com.cmccpoc.widget.MListView;
 
+/**
+ * 全体成员 自定义View控件
+ * @author Yao
+ */
 public class MemberAllView extends LinearLayout implements OnClickListener, OnItemClickListener, TextWatcher, CheckedCallBack
 {
 	public interface MemberCheckListener
 	{
+		/**
+		 * 成员选择
+		 * @param isChecked 是否选择
+		 */
 		public void onMemberChecked(boolean isChecked);
-	}
-
-	public interface OnEditTextViewFocus
-	{
-		public void onEditTextViewFocusListener();
 	}
 
 	public List<AirContact> memberAll;
@@ -77,11 +80,20 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 		ivSearch = (ImageView) findViewById(R.id.iv_search);
 	}
 	
+	/**
+	 * 成员搜索layout
+	 * @return LinearLayout
+	 */
 	public LinearLayout getSearchPannel()
 	{
 		return searchPannel;
 	}
 
+	/**
+	 * 获取全体成员
+	 * 将所有频道内的成员取并集
+	 * @return 全体成员列表
+	 */
 	public List<AirContact> getAllAirContacts()
 	{
 		List<AirContact> contacts = new ArrayList<AirContact>();
@@ -147,6 +159,9 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 		}
 	}
 
+	/**
+	 * 根据key模糊搜索成员
+	 */
 	private void searchByKey()
 	{
 		Log.i(MemberAllView.class, "memberall size = " + memberAll.size());
@@ -237,6 +252,9 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 			listener.onMemberChecked(isChecked);
 	}
 
+	/**
+	 * 重置全体成员的选中状态
+	 */
 	public void resetCheckBox()
 	{
 		if (adapterMember != null)
@@ -245,6 +263,10 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 		}
 	}
 
+	/**
+	 * 获取选择中的成员列表
+	 * @return 成员列表
+	 */
 	public List<AirContact> getSelectedMember()
 	{
 		if (adapterMember != null)
@@ -254,6 +276,10 @@ public class MemberAllView extends LinearLayout implements OnClickListener, OnIt
 		return null;
 	}
 
+	/**
+	 * 获取选择中的成员数
+	 * @return 成员数
+	 */
 	public int getSelectedMemberSize()
 	{
 		if (adapterMember != null)

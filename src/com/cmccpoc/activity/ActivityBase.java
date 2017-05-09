@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import com.cmccpoc.Util.ThemeUtil;
 
+/**
+ * 所有Activity的基类，主要设置了主题
+ * @author Yao
+ */
 public class ActivityBase extends Activity
 {
 	

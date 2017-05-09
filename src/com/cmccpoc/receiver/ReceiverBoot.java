@@ -7,6 +7,10 @@ import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.activity.AccountActivity;
 import com.cmccpoc.config.Config;
 
+/**
+ * 广播接收器：启动poc服务
+ * @author Yao
+ */
 public class ReceiverBoot extends BroadcastReceiver
 {
 

@@ -20,9 +20,13 @@ import com.cmccpoc.activity.home.widget.AlertDialog;
 import com.cmccpoc.activity.home.widget.AlertDialog.DialogListener;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.control.AirAccountManager;
-import com.cmccpoc.control.VoiceManager;
 import com.cmccpoc.services.AirServices;
 
+/**
+ * 更多：账户管理Activity
+ * 主要功能包括：修改名称，修改密码，退出登录。
+ * @author Yao
+ */
 public class MenuAccountActivity extends ActivityBase implements OnClickListener, OnUserInfoListener, DialogListener
 {
 	public TextView tvUserName;
@@ -47,6 +51,9 @@ public class MenuAccountActivity extends ActivityBase implements OnClickListener
 		super.onStart();
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);

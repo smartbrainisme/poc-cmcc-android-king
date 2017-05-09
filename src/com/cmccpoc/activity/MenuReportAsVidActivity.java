@@ -37,10 +37,13 @@ import com.cmccpoc.location.AirLocation;
 import com.cmccpoc.services.AirServices;
 import com.cmccpoc.widget.VideoCamera;
 
-public class MenuReportAsVidActivity extends ActivityBase implements
-		OnClickListener, OnMmiLocationListener, OnMmiReportListener
+/**
+ * 上报视频
+ * 主要包括：上传视频资源，可选压缩或高清的
+ * @author Yao
+ */
+public class MenuReportAsVidActivity extends ActivityBase implements OnClickListener, OnMmiLocationListener, OnMmiReportListener
 {
-
 	private final int VIDEO_MAX_SIZE = 100 * 1024 * 1024;
 
 	private EditText report_detail;
@@ -62,7 +65,10 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 	ReportProgressAlertDialog reportDialog;
 
 	private static MenuReportAsVidActivity mInstance;
-
+	/**
+	 * 获取MenuReportAsVidActivity对象实例
+	 * @return
+	 */
 	public static MenuReportAsVidActivity getInstance()
 	{
 		return mInstance;
@@ -90,6 +96,10 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		AirReportManager.getInstance().setReportListener(this);
 	}
 
+	/**
+	 * 加载视频相册
+	 * @param type 是否为视频类型
+	 */
 	private void loadAlbum(String type)
 	{
 		if (type != null && type.equals("video"))
@@ -106,6 +116,9 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		}
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
@@ -139,13 +152,15 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		{
 			mVideoView.setVideoPath(videoPath);
 			videoSize = AirServices.iOperator.getFileSize("", videoPath, true);
-			// String format = AirServices.iOperator.getFileExtension(videoPath);
 			rbBig.setText("高清 " + MenuReportActivity.sizeMKB(videoSize));
 			float smallSize = videoSize * 0.8F;
 			rbSmall.setText("压缩 " + MenuReportActivity.sizeMKB((int) smallSize));
 		}
 	}
 
+	/**
+	 * 刷新UI状态
+	 */
 	private void refreshUI()
 	{
 		if (isUploading)
@@ -209,16 +224,12 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 				Util.hideSoftInput(this);
 				break;
 			}
-			/*
-			 * case R.id.report_image_clean: { if (isUploading) {
-			 * Util.Toast(this, getString(R.string.talk_report_uploading));
-			 * break; } mVideoView.setVisibility(View.GONE);
-			 * mVideoView.stopPlayback(); // mVideoView.setVideoPath("");
-			 * videoPath = ""; videoUri = null; refreshUI(); break; }
-			 */
 		}
 	}
 
+	/**
+	 * 开始上报
+	 */
 	public void reportPost()
 	{
 		if (isUploading)
@@ -241,6 +252,10 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 
 	Uri gUri;
 
+	/**
+	 * 获取输出的媒体文件Uri
+	 * @return
+	 */
 	public Uri getOutputMediaFile()
 	{
 		// To be safe, you should check that the SDCard is mounted
@@ -254,7 +269,6 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 			// shared
 			// between applications and persist after your app has been
 			// uninstalled.
-
 			// Create the storage directory if it does not exist
 			if (!mediaStorageDir.exists())
 			{
@@ -264,13 +278,10 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 					return null;
 				}
 			}
-
 			// Create a media file name
 			String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 			File mediaFile;
-
 			mediaFile = new File(mediaStorageDir.getPath() + File.separator + "VID_" + timeStamp + ".mp4");
-
 			return Uri.fromFile(mediaFile);
 		}
 
@@ -290,8 +301,6 @@ public class MenuReportAsVidActivity extends ActivityBase implements
 		{
 			case Const.image_select.REQUEST_CODE_CREATE_VIDEO:
 			{
-				// uri = this.gUri;
-				// String filePath = uri.getPath();
 				String filePath = data.getExtras().getString(VideoCamera.EXTRA_VIDEO_PATH);
 				if (filePath != null)
 				{

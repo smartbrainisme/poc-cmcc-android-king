@@ -15,12 +15,19 @@ import com.cmccpoc.Util.AirMmiTimer;
 import com.cmccpoc.Util.AirMmiTimerListener;
 import com.cmccpoc.Util.Util;
 
+/**
+ * 获取位置信息
+ * @author Yao
+ */
 public class AirLocationImp
 {
 
 	public final static int LOCATION_TYPE_GPS = 0;
 	public final static int LOCATION_TYPE_CELL_BAIDU = 2;
 
+	/**
+	 * 计时器参数
+	 */
 	public class TimerParam
 	{
 		public int id = 0;
@@ -46,6 +53,11 @@ public class AirLocationImp
 	public static String mTime = "";
 	public static String mAddress = "";
 
+	/**
+	 * 获取位置
+	 * @param actionId Id
+	 * @param timeoutSeconds 超时时间
+	 */
 	public void LocationGet(final Context context, final OnMapListener listener, final int actionId, final int timeoutSeconds)
 	{
 		LocationTerminate(context);
@@ -60,6 +72,9 @@ public class AirLocationImp
 		}
 	}
 
+	/**
+	 * 位置获取结束
+	 */
 	public void LocationTerminate(final Context context)
 	{
 		TimerParam param = (TimerParam) AirMmiTimer.getInstance().TimerUnregister(context, doGpsLocationTimeout);
@@ -162,10 +177,13 @@ public class AirLocationImp
 		}
 	}
 
-	// =========================================
-	// GPS Mode
-	// =========================================
-
+	/**
+	 * GPS Mode
+	 * @param id Id
+	 * @param timeoutSeconds 超时时长
+	 * @param context 上下文
+	 * @param listener listener
+	 */
 	private void doGpsLocation(final int id, final int timeoutSeconds, final Context context, final OnMapListener listener)
 	{
 		TimerParam param = new TimerParam();
@@ -217,6 +235,9 @@ public class AirLocationImp
 		mLocMan.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
 	}
 
+	/**
+	 * GPS获取超时
+	 */
 	private AirMmiTimerListener doGpsLocationTimeout = new AirMmiTimerListener()
 	{
 		@Override
@@ -234,10 +255,13 @@ public class AirLocationImp
 		}
 	};
 
-	// =========================================
-	// Cell Mode
-	// =========================================
-
+	/**
+	 * Cell Mode
+	 * @param id Id
+	 * @param timeoutSeconds 超时时长
+	 * @param context 上下文
+	 * @param listener
+	 */
 	private void doCellLocation(final int id, final int timeoutSeconds, final Context context, final OnMapListener listener)
 	{
 		doCellLocation(id, true, timeoutSeconds, context, listener);
@@ -268,7 +292,7 @@ public class AirLocationImp
 			public void onReceiveLocation(BDLocation location)
 			{
 				
-				long ts = Util.getTimeGap(location.getTime());
+				long ts = 0;
 				
 				Log.i(AirLocationImp.class, "[LOCATION][ID:" + id + "][BAIDU-CELL][FINAL: " + isFinal + "] X:" + location.getLatitude() + " Y:" + location.getLongitude() + " Time:" + location.getTime() + " TimeGap:" + ts + "s");
 				if (ts > -AirLocation.AIR_LOCATION_CELL_TIME_GAP)
@@ -298,10 +322,11 @@ public class AirLocationImp
 		mClientCell.start();
 	}
 
-	// =========================================
-	// Release getting
-	// =========================================
-
+	/**
+	 * Release getting
+	 * @param context 上下文
+	 * @param param timer参数
+	 */
 	private void doRelease(Context context, TimerParam param)
 	{
 		switch (param.type)

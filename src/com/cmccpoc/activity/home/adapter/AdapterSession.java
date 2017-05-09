@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home.widget;
+package com.cmccpoc.activity.home.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,11 +13,16 @@ import com.airtalkee.sdk.AirtalkeeSessionManager;
 import com.airtalkee.sdk.entity.AirSession;
 import com.airtalkee.sdk.util.Log;
 import com.cmccpoc.R;
+import com.cmccpoc.activity.home.widget.SessionAndChannelView;
 import com.cmccpoc.control.AirSessionControl;
 
+/**
+ * 临时会话列表 适配器
+ * 临时会话列表的第一项为新建会话按钮，而非临时会话项，所以在计算总数的时候需要判断是否进入了编辑模式。（编辑模式没有新建会话按钮）
+ * @author Yao
+ */
 public class AdapterSession extends BaseAdapter
 {
-	// int itemHeight;
 	Context mContext;
 	private AdapterSession adapterSession;
 	private boolean isEditing = false;
@@ -33,6 +38,10 @@ public class AdapterSession extends BaseAdapter
 		return isEditing;
 	}
 
+	/**
+	 * 设置编辑模式
+	 * @param isEditing 是否为编辑模式
+	 */
 	public void setEditing(boolean isEditing)
 	{
 		this.isEditing = isEditing;
@@ -99,6 +108,10 @@ public class AdapterSession extends BaseAdapter
 			tvUnread = (TextView) convertView.findViewById(R.id.tv_unread_count);
 		}
 
+		/**
+		 * 填充View控件
+		 * @param item 会话Entity
+		 */
 		public void fill(final AirSession item)
 		{
 			if (item != null)

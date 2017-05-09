@@ -15,8 +15,11 @@ import com.cmccpoc.Util.Setting;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.config.Config;
 
-public class MenuSettingSessionVideoActivity extends ActivityBase implements
-		OnClickListener, OnCheckedChangeListener
+/**
+ * 更多：实时视频设置
+ * @author Yao
+ */
+public class MenuSettingSessionVideoActivity extends ActivityBase implements OnClickListener, OnCheckedChangeListener
 {
 	private RadioGroup rgRateFrequence, rgFpsFrequence;
 	private int[] fpsFrequence = { 10, 15, 20, 25, 30 };
@@ -38,6 +41,9 @@ public class MenuSettingSessionVideoActivity extends ActivityBase implements
 		super.onStart();
 	}
 
+	/**
+	 * 初始化绑定控件Id
+	 */
 	private void doInitView()
 	{
 		TextView ivTitle = (TextView) findViewById(R.id.tv_main_title);
@@ -57,6 +63,9 @@ public class MenuSettingSessionVideoActivity extends ActivityBase implements
 		initRgFps();
 	}
 
+	/**
+	 * 初始化分辨率 radioGroup
+	 */
 	private void initRgRate()
 	{
 		String currentRate = Setting.getVideoRate();
@@ -81,6 +90,9 @@ public class MenuSettingSessionVideoActivity extends ActivityBase implements
 		((RadioButton) rgRateFrequence.findViewById(R.id.rb_rate_high)).setOnCheckedChangeListener(this);
 	}
 
+	/**
+	 * 初始化FPS radioGroup
+	 */
 	private void initRgFps()
 	{
 		int currentFps = Setting.getVideoFrameRate();

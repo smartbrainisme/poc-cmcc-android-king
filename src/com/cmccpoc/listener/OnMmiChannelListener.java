@@ -5,6 +5,10 @@ import java.util.List;
 import com.airtalkee.sdk.entity.AirChannel;
 import com.airtalkee.sdk.entity.AirContact;
 
+/**
+ * 监听频道相关操作
+ * @author Yao
+ */
 public interface OnMmiChannelListener
 {
 	/**
@@ -22,20 +26,20 @@ public interface OnMmiChannelListener
 	public void onChannelMemberListGet(String channelId, final List<AirContact> members);
 
 	/**
-	 * 
-	 * @param online
+	 * 获取频道在线人数
+	 * @param online 在线成员map
 	 */
 	public void onChannelOnlineCount(final LinkedHashMap<String, Integer> online);
 
 	/**
-	 * 
-	 * @param ch
+	 * 被加入新频道时触发
+	 * @param ch 频道entity
 	 */
 	public void onChannelPersonalCreateNotify(AirChannel ch);
 
 	/**
-	 * 
-	 * @param ch
+	 * 从频道中删除时
+	 * @param ch 频道entity
 	 */
 	public void onChannelPersonalDeleteNotify(AirChannel ch);
 

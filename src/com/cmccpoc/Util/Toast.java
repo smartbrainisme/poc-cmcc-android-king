@@ -9,6 +9,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.cmccpoc.R;
 
+/**
+ * 自定义Toast弹窗
+ * @author Yao
+ */
 public class Toast extends android.widget.Toast
 {
 	private static View toastView = null;
@@ -38,6 +42,14 @@ public class Toast extends android.widget.Toast
 		return make(context, isProgressbar, textString, duration);
 	}
 
+	/**
+	 * 构建Toast
+	 * @param context 上下文
+	 * @param isProgressbar 显示loading标记
+	 * @param textString 文本内容
+	 * @param duration 显示时长
+	 * @return
+	 */
 	private static Toast make(Context context, boolean isProgressbar, String textString, int duration)
 	{
 		if (context != null)
@@ -81,6 +93,14 @@ public class Toast extends android.widget.Toast
 		return toast;
 	}
 
+	/**
+	 * 构建Toast
+	 * @param context 上下文
+	 * @param icon 图标
+	 * @param textString 文本内容
+	 * @param duration 显示时长
+	 * @return Toast对象
+	 */
 	private static Toast make(Context context, int icon, String textString, int duration)
 	{
 		if (context != null)

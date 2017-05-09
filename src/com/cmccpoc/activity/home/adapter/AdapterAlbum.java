@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home.widget;
+package com.cmccpoc.activity.home.adapter;
 
 import java.util.List;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.cmccpoc.R;
@@ -15,6 +14,10 @@ import com.cmccpoc.Util.BitmapCache;
 import com.cmccpoc.Util.BitmapCache.ImageCallback;
 import com.cmccpoc.entity.ImageBucket;
 
+/**
+ * 自定义相册 适配器
+ * @author Yao
+ */
 public class AdapterAlbum extends BaseAdapter
 {
 	final String TAG = getClass().getSimpleName();

@@ -9,12 +9,22 @@ import java.util.List;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+/**
+ * Bitmap处理工具类
+ * @author Yao
+ */
 public class Bimp
 {
 	public static int max = 0;
 	public static boolean act_bool = true;
 	public static List<Bitmap> bmp = new ArrayList<Bitmap>();
 
+	/**
+	 * 修正图片大小
+	 * @param path 图片路径
+	 * @return Bitmap对象
+	 * @throws IOException IO异常
+	 */
 	public static Bitmap revitionImageSize(String path) throws IOException
 	{
 		BufferedInputStream in = new BufferedInputStream(new FileInputStream(new File(path)));

@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home;
+package com.cmccpoc.activity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,8 @@ import com.airtalkee.sdk.entity.AirSession;
 import com.cmccpoc.R;
 import com.cmccpoc.Util.Toast;
 import com.cmccpoc.Util.Util;
+import com.cmccpoc.activity.home.BaseActivity;
+import com.cmccpoc.activity.home.HomeActivity;
 import com.cmccpoc.activity.home.widget.AlertDialog;
 import com.cmccpoc.activity.home.widget.CallAlertDialog;
 import com.cmccpoc.activity.home.widget.MemberAllView;
@@ -28,10 +30,12 @@ import com.cmccpoc.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListe
 import com.cmccpoc.activity.home.widget.MemberAllView.MemberCheckListener;
 import com.cmccpoc.services.AirServices;
 
-public class SessionNewActivity extends Activity implements OnClickListener,
-		MemberCheckListener
+/**
+ * 新建临时会话界面
+ * @author Yao
+ */
+public class SessionNewActivity extends Activity implements OnClickListener, MemberCheckListener
 {
-
 	private LinearLayout containner;
 	private MemberAllView memAllView;
 	private ViewGroup bottom;
@@ -45,7 +49,10 @@ public class SessionNewActivity extends Activity implements OnClickListener,
 	AlertDialog dialog;
 
 	private static SessionNewActivity mInstance;
-
+	/**
+	 * 获取SessionNewActivity实例对象
+	 * @return
+	 */
 	public static SessionNewActivity getInstance()
 	{
 		return mInstance;
@@ -95,12 +102,20 @@ public class SessionNewActivity extends Activity implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 清除选中的成员
+	 */
 	public void callSelectClean()
 	{
 		memAllView.resetCheckBox();
 		refreshBottomView(false);
 	}
 
+	/**
+	 * 呼叫被选中的成员
+	 * 若都没有在线，则会提示是否前去留言的提示窗口
+	 * @param isCall 是否呼叫
+	 */
 	public void callSelectMember(boolean isCall)
 	{
 		if (tempCallMembers == null)
@@ -115,7 +130,6 @@ public class SessionNewActivity extends Activity implements OnClickListener,
 				tempCallMembers.add(c);
 			}
 		}
-
 		if (tempCallMembers.size() > 0)
 		{
 			if (AirtalkeeAccount.getInstance().isEngineRunning())
@@ -172,6 +186,10 @@ public class SessionNewActivity extends Activity implements OnClickListener,
 		refreshBottomView(isChecked);
 	}
 
+	/**
+	 * 刷新底部按钮状态
+	 * @param isChecked 是否选中
+	 */
 	private void refreshBottomView(boolean isChecked)
 	{
 		for (int i = 0; i < bottom.getChildCount(); i++)

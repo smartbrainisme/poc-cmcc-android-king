@@ -1,4 +1,4 @@
-package com.cmccpoc.activity.home;
+package com.cmccpoc.activity.home.adapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +23,10 @@ import com.airtalkee.sdk.entity.AirContact;
 import com.airtalkee.sdk.entity.AirContactTiny;
 import com.cmccpoc.R;
 
+/**
+ * 全部成员适配器
+ * @author Yao
+ */
 @SuppressLint("UseSparseArrays")
 public class AdapterMemberAll extends BaseAdapter 
 {
@@ -42,6 +46,12 @@ public class AdapterMemberAll extends BaseAdapter
 		context = _context;
 	}
 
+	/**
+	 * 设置被选中的成员列表
+	 * @param key 键值
+	 * @param value 成员Entity
+	 * @param isCheck 是否选中
+	 */
 	private void putSelected(Integer key, AirContact value, boolean isCheck)
 	{
 		if (isCheck)
@@ -54,6 +64,9 @@ public class AdapterMemberAll extends BaseAdapter
 		}
 	}
 
+	/**
+	 * 获取被选中的成员列表
+	 */
 	public List<AirContact> getSelectedMemberList()
 	{
 		List<AirContact> selectList = new ArrayList<AirContact>();
@@ -69,6 +82,9 @@ public class AdapterMemberAll extends BaseAdapter
 		return selectList;
 	}
 
+	/**
+	 * 获取被选中的成员列表
+	 */
 	public List<AirContactTiny> getSelectedMemberListTiny()
 	{
 		List<AirContactTiny> selectList = new ArrayList<AirContactTiny>();
@@ -88,12 +104,19 @@ public class AdapterMemberAll extends BaseAdapter
 		return selectList;
 	}
 
+	/**
+	 * 刷新全部成员列表与选中状态
+	 * @param _memberList 
+	 */
 	public void notifyMember(List<AirContact> _memberList)
 	{
 		memberList = _memberList;
 		resetCheckBox();
 	}
 
+	/**
+	 * 重置选中状态
+	 */
 	public void resetCheckBox()
 	{
 		isSelected = new HashMap<Integer, AirContact>();
@@ -182,31 +205,7 @@ public class AdapterMemberAll extends BaseAdapter
 					}
 				}
 			}
-			
-			switch (member.getCusertype())
-			{
-				/* 全部成员去除成员级别
-				case AirContact.CURSETYPE_CREATEER:
-					holder.ivRole.setVisibility(View.VISIBLE);
-					holder.ivRole.setImageResource(R.drawable.media_role_creater);
-					break;
-				case AirContact.CURSETYPE_MANAGER:
-					holder.ivRole.setVisibility(View.VISIBLE);
-					holder.ivRole.setImageResource(R.drawable.media_role2);
-					break;
-				case AirContact.CURSETYPE_USER:
-					holder.ivRole.setVisibility(View.VISIBLE);
-					holder.ivRole.setImageResource(R.drawable.media_role1);
-					break;
-				case AirContact.CURSETYPE_LISTEN_ONLY:
-					holder.ivRole.setVisibility(View.VISIBLE);
-					holder.ivRole.setImageResource(R.drawable.media_role_listen);
-					break; */
-				default:
-					holder.ivRole.setVisibility(View.GONE);
-					break;
-			}
-
+			holder.ivRole.setVisibility(View.GONE);
 			String myIpocId = (AirtalkeeAccount.getInstance() != null) ? AirtalkeeAccount.getInstance().getUserId() : "";
 			if (myIpocId.equals(member.getIpocId()))
 			{
@@ -244,17 +243,4 @@ public class AdapterMemberAll extends BaseAdapter
 		ImageView ivSPresence;
 		ImageView ivRole;
 	}
-
-	/*
-	@Override
-	public void onContactPresence(boolean isSubscribed, HashMap<String, Integer> presenceMap)
-	{
-		notifyDataSetChanged();
-	}
-
-	@Override
-	public void onContactPresence(boolean isSubscribed, String uid, int state)
-	{
-		notifyDataSetChanged();
-	}*/
 }

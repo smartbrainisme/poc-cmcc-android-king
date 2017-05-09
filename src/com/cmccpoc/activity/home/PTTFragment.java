@@ -27,13 +27,12 @@ import com.airtalkee.sdk.util.Utils;
 import com.cmccpoc.R;
 import com.cmccpoc.Util.Const;
 import com.cmccpoc.Util.DateUtils;
-import com.cmccpoc.Util.Toast;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.activity.MenuReportAsPicActivity;
 import com.cmccpoc.activity.VideoSessionActivity;
 import com.cmccpoc.activity.home.widget.AlertDialog;
-import com.cmccpoc.activity.home.widget.CallAlertDialog;
 import com.cmccpoc.activity.home.widget.AlertDialog.DialogListener;
+import com.cmccpoc.activity.home.widget.CallAlertDialog;
 import com.cmccpoc.activity.home.widget.CallAlertDialog.OnAlertDialogCancelListener;
 import com.cmccpoc.config.Config;
 import com.cmccpoc.listener.OnMmiLocationListener;
@@ -41,9 +40,15 @@ import com.cmccpoc.location.AirLocation;
 import com.cmccpoc.widget.AudioVisualizerView;
 import com.cmccpoc.widget.VideoCamera;
 
+/**
+ * 三大fragment之一：PTT对讲Fragment。
+ * 主要包含音柱显示、上报、实时视频传输与呼叫中心。
+ * 上方显示最新一条的PTT对讲记录
+ * @author Yao
+ *
+ */
 public class PTTFragment extends BaseFragment implements OnClickListener, DialogListener, OnMediaAudioVisualizerListener
 {
-
 	private static final int DIALOG_CALL_CENTER_CONFIRM = 100;
 	private static final int DIALOG_CALL_CENTER = 101;
 	private static final int DIALOG_2_SEND_MESSAGE = 102;
@@ -66,12 +71,19 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 	AlertDialog dialog;
 
 	private static PTTFragment mInstance;
-
+	/**
+	 * 获取PTTFragment实例对象
+	 * @return
+	 */
 	public static PTTFragment getInstance()
 	{
 		return mInstance;
 	}
 
+	/**
+	 * 获取视频Pannel View
+	 * @return
+	 */
 	public View getVideoPannel()
 	{
 		return videoPannel;
@@ -171,12 +183,20 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 		}
 	}
 
+	/**
+	 * 设置session会话
+	 * @param s 会话Entity
+	 */
 	public void setSession(AirSession s)
 	{
 		this.session = s;
 		AirtalkeeMediaVisualizer.getInstance().setOnMediaAudioVisualizerListener(this);
 	}
 
+	/**
+	 * 呼叫中心
+	 * 若调度台不在线，则会弹出窗口，提示是否前去直接留言
+	 */
 	private void callStationCenter()
 	{
 		if (Config.funcCenterCall == AirFunctionSetting.SETTING_ENABLE)
@@ -285,6 +305,9 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 		}
 	}
 
+	/**
+	 * 刷新PTT语音留存
+	 */
 	public void refreshPlayback()
 	{
 		if (session != null && session.getMessagePlayback() != null)
@@ -328,6 +351,10 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 		}
 	}
 
+	/**
+	 * 刷新PTT语音留存
+	 * @param session 会话Entity
+	 */
 	public void refreshPlayback(AirSession session)
 	{
 		if (session != null && session.getMessagePlayback() != null)
@@ -424,6 +451,10 @@ public class PTTFragment extends BaseFragment implements OnClickListener, Dialog
 
 	}
 
+	/**
+	 * 设置上报区域可见性
+	 * @param visiblility 是否可见
+	 */
 	private void setViedoReportPannelVisiblity(int visiblility)
 	{
 		if (visiblility == View.GONE)

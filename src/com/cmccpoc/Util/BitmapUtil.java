@@ -16,8 +16,17 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 
+/**
+ * Bitmap处理工具类
+ * @author Yao
+ */
 public class BitmapUtil
 {
+	/**
+	 * 获取图片Bitmap对象
+	 * @param srcPath 路径
+	 * @return Bitmap对象
+	 */
 	public static Bitmap getimage(String srcPath)
 	{
 		BitmapFactory.Options newOpts = new BitmapFactory.Options();
@@ -49,6 +58,11 @@ public class BitmapUtil
 		return compressImage(bitmap);// 压缩好比例大小后再进行质量压缩
 	}
 
+	/**
+	 * 压缩图片
+	 * @param image Bitmap对象
+	 * @return 压缩后的图
+	 */
 	private static Bitmap compressImage(Bitmap image)
 	{
 		try
@@ -78,8 +92,13 @@ public class BitmapUtil
 		}
 	}
 
-	/*
-	 * * * 根据缩略的宽高比例和设定的最大宽高设置图片的宽高 长图会截取中间一段
+	/**
+	 * 根据缩略的宽高比例和设定的最大宽高设置图片的宽高 长图会截取中间一段
+	 * @param context 上下文
+	 * @param key 路径
+	 * @param width 宽度
+	 * @param height 高度
+	 * @return
 	 */
 	public static synchronized Bitmap readBitmap(Context context, String key, int width, int height)
 	{
@@ -176,6 +195,13 @@ public class BitmapUtil
 		return bitmap;
 	}
 
+	/**
+	 * 估算大小
+	 * @param options 选项
+	 * @param reqWidth 宽
+	 * @param reqHeight 高
+	 * @return
+	 */
 	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight)
 	{
 		// Raw height and width of image
@@ -201,8 +227,16 @@ public class BitmapUtil
 		return inSampleSize;
 	}
 	
+	/**
+	 * dp 转换 px
+	 * @param context 上下文
+	 * @param dpValue dp值
+	 * @return
+	 */
 	private static int dp2px(Context context, int dpValue)
 	{
 		return (int) context.getResources().getDisplayMetrics().density * dpValue;
 	}
+	
+	
 }

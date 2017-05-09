@@ -9,18 +9,21 @@ import com.airtalkee.sdk.entity.AirFunctionSetting;
 import com.cmccpoc.R;
 import com.cmccpoc.Util.Util;
 
+/**
+ * poc配置
+ * @author Yao
+ */
 public class Config
 {
 	public static final int TRACE_MODE_ON_SCREEN = 0;
 	public static final int TRACE_MODE_ON_FILE = 1;
 	public static final int TRACE_MODE_OFF = 2;
-	public final static int MARKET_CMCC = 130;	//@string/app_name_cmcc
 	// VERSION
 	public static final String VERSION_PLATFORM = "ANDROID";
 	public static final String VERSION_TYPE = "ANDROID STD 2.0~";
 	public static String VERSION_CODE = "";
 	
-	public static int marketCode = MARKET_CMCC;
+	public static int marketCode = 130;
 	// =======================================================
 
 	public static final int TRACE_MODE = TRACE_MODE_ON_SCREEN;
@@ -124,18 +127,6 @@ public class Config
 	
 	public static int defaultTheme = R.style.AppTheme_Dark;
 	// ========================================================================
-	
-	
-	// ========================================================================
-	// 二级平台配置
-	// ========================================================================
-	public static boolean SUB_PLATFORM_VALID = false;
-	public static String SUB_PLATFORM_ADDRESS_DM = "";
-	public static String SUB_PLATFORM_ADDRESS_WEB = "";
-	public static String SUB_PLATFORM_ADDRESS_NOTICE = "";
-	// ========================================================================
-	
-	
 
 	/** MARKET 不同配置 **/
 	public static String app_name = "";
@@ -154,11 +145,6 @@ public class Config
 		funcShowCustomLogoIconId = R.drawable.logo_cmcc;
 		funcShowCustomLogoStringId1 = R.string.copyright_cmcc1;
 		funcShowCustomLogoStringId2 = R.string.copyright_cmcc2;
-		
-		if (model.startsWith("HUAWEI"))
-		{
-			//AirEngine._video_fixed_color_format = true;
-		}
 	}
 
 }

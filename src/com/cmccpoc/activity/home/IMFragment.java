@@ -36,7 +36,6 @@ import com.airtalkee.sdk.OnMessageListListener;
 import com.airtalkee.sdk.controller.AccountController;
 import com.airtalkee.sdk.entity.AirMessage;
 import com.airtalkee.sdk.entity.AirSession;
-import com.airtalkee.sdk.util.Log;
 import com.airtalkee.sdk.util.PicFactory;
 import com.airtalkee.sdk.util.Utils;
 import com.cmccpoc.R;
@@ -45,10 +44,9 @@ import com.cmccpoc.Util.Sound;
 import com.cmccpoc.Util.ThemeUtil;
 import com.cmccpoc.Util.Util;
 import com.cmccpoc.activity.ActivityImagePager;
-import com.cmccpoc.activity.MainActivity;
-import com.cmccpoc.activity.SessionBoxMessage;
+import com.cmccpoc.activity.AlbumChooseActivity;
+import com.cmccpoc.activity.home.adapter.AdapterSessionMessage;
 import com.cmccpoc.activity.home.widget.SessionAndChannelView;
-import com.cmccpoc.adapter.AdapterSessionMessage;
 import com.cmccpoc.control.AirMessageTransaction;
 import com.cmccpoc.listener.OnMmiMessageListener;
 import com.cmccpoc.services.AirServices;
@@ -56,6 +54,10 @@ import com.cmccpoc.widget.MacRecordingView;
 import com.cmccpoc.widget.PullToRefreshListView;
 import com.cmccpoc.widget.PullToRefreshListView.OnPullToRefreshListener;
 
+/**
+ * 三大Fragment之一：IM消息Fragment，主要显示IM消息，可以发送语音、文字已经图片等消息
+ * @author Yao
+ */
 public class IMFragment extends BaseFragment implements OnClickListener,
 		OnMessageListListener, OnLongClickListener, TextWatcher,
 		OnMmiMessageListener, OnPullToRefreshListener, OnItemClickListener,
@@ -308,6 +310,10 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 录音消息播放
+	 * @param view 当前录音消息所在view
+	 */
 	private void messageRecordPlay(View view)
 	{
 		if (session != null)
@@ -351,6 +357,10 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 设置底部发送文字消息区域是否可见
+	 * @param visiblility 是否可见
+	 */
 	protected void setTextPannelVisiblity(int visiblility)
 	{
 		if (visiblility == View.GONE)
@@ -378,6 +388,10 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 设置底部发送录音消息区域是否可见
+	 * @param visiblility 是否可见
+	 */
 	private void setVoicePannelVisiblity(int visiblility)
 	{
 		if (visiblility == View.GONE)
@@ -402,6 +416,10 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 设置底部发送其他类型消息区域是否可见
+	 * @param visiblility 是否可见
+	 */
 	private void setToolsPannelVisiblity(int visiblility)
 	{
 		if (visiblility == View.GONE)
@@ -426,6 +444,10 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		}
 	}
 
+	/**
+	 * 设置Session会话
+	 * @param s 会话Entity
+	 */
 	public void setSession(AirSession s)
 	{
 		if ((s != null && session != null && !s.getSessionCode().equals(session.getSessionCode())) || (session == null && s != null))
@@ -442,7 +464,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 			{}
 		}
 		this.session = s;
-		Log.d(SessionBoxMessage.class, "SessionBoxMessage - setSession");
 		if (s != null && s.getMessageTextDraft() != null)
 		{
 			etMsg.setText(s.getMessageTextDraft());
@@ -450,6 +471,9 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		adapterMessage.setSession(s);
 	}
 
+	/**
+	 * 刷新消息列表
+	 */
 	public void refreshMessages()
 	{
 		adapterMessage.notifyDataSetChanged();
@@ -474,6 +498,9 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		}
 	};
 
+	/**
+	 * 发送消息
+	 */
 	private void messageSend()
 	{
 		if (session != null)
@@ -530,6 +557,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		}
 	}
 
+	@Override
 	public void onListItemLongClick(int id, int selectedItem)
 	{
 		if (currentMessage == null)
@@ -796,7 +824,6 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 	public void onMessageRecordPlayStop(String msgCode, String resId)
 	{
 		// TODO Auto-generated method stub
-		Log.i(SessionBoxMessage.class, "onMessageRecordPlayStop");
 		// AirMmiTimer.getInstance().TimerUnregister(this, this);
 		// if (SetRecordPlayState(msgCode, false))
 		{
@@ -992,6 +1019,9 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		return true;
 	}
 
+	/**
+	 * 主要处理发送图片消息
+	 */
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
@@ -999,7 +1029,7 @@ public class IMFragment extends BaseFragment implements OnClickListener,
 		switch (requestCode)
 		{
 			case REQUEST_CODE_BROWSE_IMAGE:
-				if (resultCode == MainActivity.RESULT_OK)
+				if (resultCode == HomeActivity.RESULT_OK)
 				{
 					try
 					{
