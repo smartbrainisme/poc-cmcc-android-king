@@ -99,7 +99,9 @@ public class Util
 			else
 			{
 				notification = new Notification(drawableId, ticker, System.currentTimeMillis());
+				/* deleted by trongyangking for compile.
 				notification.setLatestEventInfo(context, from, message, contentIntent);
+				*/
 			}
 			if (flag != -1)
 			{
